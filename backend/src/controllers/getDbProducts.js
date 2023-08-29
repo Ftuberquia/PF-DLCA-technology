@@ -1,9 +1,9 @@
 const productsData = require('../utils/data');
-const Products = require('../models/products');
+const {Products} = require('../db');
 
 const getDbProducts = async(req, res) => {
     try{
-        productsData.map((product) => {
+     await productsData.map((product) => {
             Products.create({
                 name: product.name,
                 href: product.href,
@@ -13,7 +13,7 @@ const getDbProducts = async(req, res) => {
                 stock: product.stock,
                 brand: product.brand,
                 category: product.category,
-                subCategory: product.subCategory,
+                subcategory: product.subcategory,
                 rating: product.rating,
                 description: product.description
             })
@@ -21,7 +21,7 @@ const getDbProducts = async(req, res) => {
         res.status(200).json({message: 'Productos guardados en la base de datos correcto'});
     }
     catch(error){
-        res.status(200).json({message: error.message});
+        res.status(400).json({message: error.message});
     }
 }
 

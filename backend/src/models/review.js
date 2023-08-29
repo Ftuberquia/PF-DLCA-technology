@@ -13,7 +13,7 @@ const Review = (sequelize) => {
             type: DataTypes.STRING,
         },
         rating: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.FLOAT,
         }
     }, {
         tableName: 'review',
