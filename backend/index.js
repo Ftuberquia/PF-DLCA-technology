@@ -17,8 +17,10 @@
 //     =====`-.____`.___ \_____/___.-`___.-'=====
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+require("dotenv").config(); // para leer las variables de entorno 
 const server = require('./src/server.js');
 const { conn } = require('./src/db.js');
+const port = process.env.PORT || 3001;
 
 // Syncing all the models at once.
 // antes de la presentacion ponerlo en false 
