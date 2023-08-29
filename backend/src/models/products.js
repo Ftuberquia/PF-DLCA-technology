@@ -4,9 +4,10 @@ const Products = (sequelize) => {
 	sequelize.define('products', {
 
         id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
-            autoIncrement: true
+            allowNull: false
         },
         name: {
             type: DataTypes.STRING,
@@ -45,8 +46,7 @@ const Products = (sequelize) => {
             allowNull: false
         },
         rating: {
-			type: DataTypes.DECIMAL,
-			allowNull: false,
+			type: DataTypes.FLOAT,
 		},
         description: {
             type: DataTypes.TEXT,
