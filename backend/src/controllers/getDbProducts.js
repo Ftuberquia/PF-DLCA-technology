@@ -1,4 +1,4 @@
-const productsData = require('../data');
+const productsData = require('../utils/data');
 const Products = require('../models/products');
 
 const getDbProducts = async(req, res) => {
