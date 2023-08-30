@@ -1,0 +1,19 @@
+module.exports=tagsData=[
+    "Wireless",
+    "Gaming",
+    "Wired",
+    "Mouse",
+    "Keyboard",
+    "Bluetooth",
+    "Notebook",
+    "Pro",
+    "Monitor",
+    "Laptops",
+    "Electronics",
+    "Audio",
+    "Microphone",
+    "Headphones",
+    "Mobiliarios",
+    "Cámaras",
+    "RGB"
+]
