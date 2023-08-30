@@ -1,6 +1,6 @@
 const {Router} = require ("express")
 const { getAllProductsHandler } = require("../../handlers/getAllProductsHandler");
-const { getDetailHandler } = require("../../handlers/getProductDetailHandler");
+const { getDetailHandler } = require("../../handlers/products/getProductDetailHandler");
 
 const postCreateProduct = require("../../controllers/postCreateProduct");
 
