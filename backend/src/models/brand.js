@@ -13,6 +13,11 @@ const Brand = (sequelize) => {
         name : {
             type: DataTypes.STRING,
             allowNull : false,
+        },
+
+        logo:{
+            type: DataTypes.STRING,
+            allowNull : false
         }
 
     }, { 
