@@ -4,10 +4,10 @@ const Subcategory = (sequelize) => {
     sequelize.define("subcategory", {
         
         id : {
-            type : DataTypes.INTEGER,
-            autoIncrement : true,
-            primaryKey : true,
-            allowNull : false,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+            allowNull: false
         },
         name : {
             type: DataTypes.STRING,
