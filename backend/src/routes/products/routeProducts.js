@@ -10,9 +10,7 @@ const products = Router()
 products.get("/", getAllProductsHandler)
 //este trae los detalles del producto
 products.get("/:id", getDetailHandler)
-//este guarda los productos en la base de datos : !!se usa una sola vez para llenar la base de datos!!
-products.get("/db", getDbProducts)
-//este crea un producto
+
 products.post("/", postCreateProduct)
 
 module.exports = products
