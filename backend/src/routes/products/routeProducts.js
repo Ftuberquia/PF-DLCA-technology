@@ -1,7 +1,7 @@
 const {Router} = require ("express")
 const { getAllProductsHandler } = require("../../handlers/getAllProductsHandler");
 const { getDetailHandler } = require("../../handlers/getProductDetailHandler");
-const getDbProducts = require("../../controllers/getDbProducts");
+
 const postCreateProduct = require("../../controllers/postCreateProduct");
 
 const products = Router()
