@@ -1,4 +1,4 @@
-const {Products} = require('../db')
+const {Products} = require('../../db')
 
 const getProductDetail = async (id) => {
     const detail=await Products.findByPk(id)

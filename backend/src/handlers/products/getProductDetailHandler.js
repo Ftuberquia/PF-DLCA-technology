@@ -1,4 +1,4 @@
-const getProductDetail = require('../../controllers/getProductDetail')
+const getProductDetail = require('../../controllers/products/getProductDetail')
 
 // Handler que muestra el detail a partir de su id
 const getDetailHandler = async (req, res) => {
