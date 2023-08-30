@@ -1,7 +1,7 @@
 const {
     getAllProducts,
     getProductByName,
-  } = require("../controllers/getAllProducts");
+  } = require("../controllers/products/getAllProducts");
   
   //Handler que muestra el producto cuando se lo busca por nombre y si no devuelve todos los productos
   const getAllProductsHandler = async (req, res) => {
