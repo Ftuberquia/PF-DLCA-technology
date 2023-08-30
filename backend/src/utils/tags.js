@@ -1,4 +1,4 @@
-[
+module.exports=tagsData=[
     "Wireless",
     "Gaming",
     "Wired",

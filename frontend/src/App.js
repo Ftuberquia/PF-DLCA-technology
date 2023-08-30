@@ -1,26 +1,29 @@
+import './App.css';
 import React from "react";
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import ProductDetail from './components/views/ProductDetail';
 import Landing from "./components/Landing/Landing";
-// import NavBar from "./components/NavBar/NavBar";
-import Home from "./views/Home/Home";
+import NavBar from "./components/NavBar/NavBar";
+import Home from "./components/views/Home/Home";
 // import Footer from "./components/Footer/Footer";
-// import UserPanel from "./components/UserPanel/UserPanel";
+
 
 const App = () => {
+  
   return (
-    <div className="App">
-      <Router>
+    <Router>
+      <Switch>
         <Route exact path="/">
           <Landing />
-          <Route exact path={"/home"}>
-            {/* <NavBar></NavBar> */}
-            <Home></Home>
-            {/* <Footer></Footer>
-            <UserPanel></UserPanel> */}
-          </Route>
         </Route>
-      </Router>
-    </div>
+        <Route exact path={"/home"}>
+          <NavBar />
+          <Home />
+          <Route path="/product/:productId" component={ProductDetail} />
+          {/* <Footer /> */}
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 

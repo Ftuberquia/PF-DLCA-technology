@@ -1,7 +1,7 @@
 import React from "react";
 // import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// import getdbProducts from "../../../Redux/Actions/index";
+// import getdbProducts from "../../../redux/actions/index";
 import "./Promos.css";
 
 export default function Promos() {

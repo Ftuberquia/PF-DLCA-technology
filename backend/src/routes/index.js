@@ -1,23 +1,20 @@
 const { Router } = require("express");
+const getDbProducts = require ("../controllers/getDbProducts")
+const products = require("../routes/products/routeProducts")
+const categories = require ("../routes/categories/routeCategories")
+const subCategories = require ("../routes/subCategories/routeSubCategories")
 const router = Router();
-const { getAllProductsHandler } = require("../handlers/getAllProductsHandler");
-const { getDetailHandler } = require("../handlers/getProductDetailHandler");
-const getDbProducts = require("../controllers/getDbProducts");
-const postCreateProduct = require("../controllers/postCreateProduct");
 
+//ruta para acceder a los productos
+router.use("/products", products)
 
-//Ruta para mostrar los productos
-router.use("/productos", getAllProductsHandler);
+//Ruta para acceder a las categorias
+router.use("/categories", categories)
 
-//Ruta para mostrar el detalle de los productos
-router.use("/productos/:id", getDetailHandler);
+//Ruta para acceder a las subcategorias
+router.use('/subcategoria',subCategories)
 
-//Ruta para llenar la base de datos con los productos se utiliza una sola vez
-router.use("/dbproducts", getDbProducts);
-
-//Ruta para almacenar un nuevo producto al db
-router.use("/productos", postCreateProduct);
-
+//este guarda los productos en la base de datos : !!se usa una sola vez para llenar la base de datos!!
+router.use("/db", getDbProducts)
 
 module.exports = router;
-

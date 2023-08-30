@@ -64,7 +64,7 @@ function CarouselMarcas() {
           </div>
           <div className="slideLogo">
             <img
-              src="https://i.ibb.co/hfg6vzX/asus-logo.png"
+              src="https://i.ibb.co/cyq8m1t/Cooler-Master-Logo.png"
               height="50"
               width="200"
               alt=""
@@ -72,7 +72,7 @@ function CarouselMarcas() {
           </div>
           <div className="slideLogo">
             <img
-              src="https://i.ibb.co/gJtSpB1/hiperx-logo.jpg"
+              src="https://i.ibb.co/f1TSvm3/redragon-logo.jpg"
               height="50"
               width="200"
               alt=""
@@ -80,15 +80,7 @@ function CarouselMarcas() {
           </div>
           <div className="slideLogo">
             <img
-              src="https://i.ibb.co/mSb1gMD/xbox-logo.png"
-              height="50"
-              width="200"
-              alt=""
-            />
-          </div>
-          <div className="slideLogo">
-            <img
-              src="https://i.ibb.co/2FbJ4qt/samsung-logo.jpg"
+              src="https://i.ibb.co/FmNGB6g/playstation-logo.png"
               height="50"
               width="200"
               alt=""
@@ -104,7 +96,7 @@ function CarouselMarcas() {
           </div>
           <div className="slideLogo">
             <img
-              src="https://i.ibb.co/WWd7cJL/Logitech-Logo.jpg"
+              src="https://i.ibb.co/S337r9h/intel-logo.png"
               height="50"
               width="200"
               alt=""
@@ -112,7 +104,15 @@ function CarouselMarcas() {
           </div>
           <div className="slideLogo">
             <img
-              src="https://i.ibb.co/YTT7pLx/techview-logo.png"
+              src="https://i.ibb.co/G7WysB1/lg-logo.png"
+              height="50"
+              width="200"
+              alt=""
+            />
+          </div>
+          <div className="slideLogo">
+            <img
+              src="https://i.ibb.co/vXbb8gk/epson-logo.png"
               height="50"
               width="200"
               alt=""
