@@ -4,10 +4,10 @@ const Category = (sequelize) => {
     sequelize.define("category", {
         
         id : {
-            type : DataTypes.INTEGER,
-            autoIncrement : true,
-            primaryKey : true,
-            allowNull : false,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+            allowNull: false
         },
 
         name : {
