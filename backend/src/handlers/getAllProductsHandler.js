@@ -1,4 +1,5 @@
 const {
+<<<<<<< HEAD
   getAllProducts,
   getProductByName,
 } = require("../controllers/getAllProducts");
@@ -13,6 +14,18 @@ const getAllProductsHandler = async (req, res) => {
     if (name) {
       const product = await getProductByName(name);
       console.log(product);
+=======
+    getAllProducts,
+    getProductByName,
+  } = require("../controllers/products/getAllProducts");
+  
+  //Handler que muestra el producto cuando se lo busca por nombre y si no devuelve todos los productos
+  const getAllProductsHandler = async (req, res) => {
+    const { name } = req.query;
+  
+    try {
+      // si llega un name muestra el producto
+>>>>>>> 51ffac2285cccea75b914f6b0838b123041c5366
       
       if (product.length !== 0) {
         return res.status(200).json(product);

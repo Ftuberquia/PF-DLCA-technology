@@ -21,4 +21,8 @@ const getPaginate = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 module.exports = { getPaginate };
+=======
+module.exports = { getPaginate };
+>>>>>>> 51ffac2285cccea75b914f6b0838b123041c5366

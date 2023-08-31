@@ -20,4 +20,8 @@ const AllSubCategories = async(categoryId) => {
   }
 }
 
+<<<<<<< HEAD
 module.exports = AllSubCategories
+=======
+module.exports = AllSubCategories
+>>>>>>> 51ffac2285cccea75b914f6b0838b123041c5366
