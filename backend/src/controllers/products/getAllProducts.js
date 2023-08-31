@@ -1,8 +1,8 @@
-const Products = require('../models/products')
+const {Products} = require('../../db')
 const { Op } = require('sequelize');
 
 const getAllProducts = async () => {
-  const products = await Products.findAll()
+  const products = await Products.findAll();
   return products;
 }
 
