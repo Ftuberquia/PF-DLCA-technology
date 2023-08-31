@@ -1,28 +1,34 @@
-import React from 'react';  
-import { Link } from 'react-router-dom';
-import Logo from '../../img/logo-dlca.png';
-import './NavBar.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart, faHeart } from "@fortawesome/free-solid-svg-icons";
+import styles from "./NavBar.module.css";
 
-
-const NavBar = () => {
-  
+const Navbar = () => {
   return (
-
-  <nav className="navbar">
-    <Link to="/">
-        <img src={Logo} alt="logo" />
+    <nav className={styles.navbar}>
+      <Link to="/" className={styles.link}>
+        Home
       </Link>
-    <ul className="nav-links">
-      <li>
-        <Link to="/">Home</Link>      
-      </li>
-      <li>
-        <Link to="/about">About</Link>      
-      </li>
-    </ul>
-  </nav>
-)
+      <Link to="/productos" className={styles.link}>
+        Productos
+      </Link>
+      <Link to="/about" className={styles.link}>
+        About
+      </Link>
+      <div className={styles.icons}>
+        <Link to="/carrito" className={styles.iconLink}>
+          <FontAwesomeIcon icon={faShoppingCart} className={styles.icon} />
+        </Link>
+        <Link to="/favoritos" className={styles.iconLink}>
+          <FontAwesomeIcon icon={faHeart} className={styles.icon} />
+        </Link>
+        <Link to="/login" className={styles.link}>
+          Login
+        </Link>
+      </div>
+    </nav>
+  );
 };
 
-
-export default NavBar; 
+export default Navbar;

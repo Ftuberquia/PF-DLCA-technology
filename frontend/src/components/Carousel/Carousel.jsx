@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import style from './Carousel.module.css';
+import styles from './Carousel.module.css';
 
 
 function Carousel() {
@@ -29,16 +29,16 @@ function Carousel() {
 
   return (
     <div>
-      <div className={style.slideshowContainer}>
+      <div className={styles.slideshowContainer}>
 
-        <img key={img} src={images[img]} className={`${style.img} ${style.fade}`} />
+        <img key={img} src={images[img]} className={`${styles.img} ${styles.fade}`} />
 
-        <a className={style.prev} onClick={back}>&#10094;</a>
-        <a className={style.next} onClick={next}>&#10095;</a>
-        <div className={style.dotContainer}>
+        <a className={styles.prev} onClick={back}>&#10094;</a>
+        <a className={styles.next} onClick={next}>&#10095;</a>
+        <div className={styles.dotContainer}>
           {images.length ?
             images.map((e, k) =>
-              <span key={k + 1} className={img !== k ? style.dot : style.activeDot} onClick={() => setImg(k)}></span>
+              <span key={k + 1} className={img !== k ? styles.dot : styles.activeDot} onClick={() => setImg(k)}></span>
             )
             :
             <p>Image not found</p>

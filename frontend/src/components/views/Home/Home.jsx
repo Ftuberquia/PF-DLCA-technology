@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import ScrollToTop from "react-scroll-to-top";
 
 
+
 function Home(props) {
   const dispatch = useDispatch();
 
@@ -17,19 +18,19 @@ function Home(props) {
   // dispatch(getDbProducts());
   // }, [dispatch]); 
 
-  if(!Products.length){
-    return (
-      <div className={styles.contenedorLoading}>
-        <div className={styles.loading}>
-          <img className={styles.imgload} alt="loading" src='https://i.ibb.co/ngZVjf8/loading.gif' />
-        </div>
-      </div>
-    )
-  }
-  else{
+  // if(!Products.length){
+  //   return (
+  //     <div className={styles.contenedorLoading}>
+  //       <div className={styles.loading}>
+  //         <img className={styles.imgload} alt="loading" src='https://i.ibb.co/ngZVjf8/loading.gif' />
+  //       </div>
+  //     </div>
+  //   )
+  // }
+  // else{
   return (
     <div className={styles.homeContainer}>
-      
+    
       <div className={styles.cardsContainer}>
         {" "}
         <Cards
@@ -49,6 +50,6 @@ function Home(props) {
       /> */}
     </div>
   )};
-}
+// }
 
 export default Home;

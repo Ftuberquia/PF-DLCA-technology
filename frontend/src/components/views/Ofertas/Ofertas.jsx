@@ -2,20 +2,25 @@ import React from "react";
 // import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 // import getdbProducts from "../../../redux/actions/index";
-import "./Promos.css";
+import "./Ofertas.css";
+// import { useNavigate } from 'react-router-dom';
 
-export default function Promos() {
+function Ofertas() {
   // const { AllProducts } = useSelector((state) => state);
 
   // const dispatch = useDispatch();
 
-
+      // const navigate = useNavigate()
+      // const click = ()=>{
+      //     navigate('/Ofertas')
+      // }
   return (
+          
     <div className="contAccesorios">
       <div className="containerAcc mt-100">
         <div className="titleAcce">
           <h2>
-            <span className="spanTitleAcc">💚</span> ¡PROMOS
+            <span className="spanTitleAcc">💚</span> ¡OFERTAS
             <span className="spanTitleAcc"> GAMER</span>!
           </h2>
         </div>
@@ -153,4 +158,6 @@ export default function Promos() {
       </div>
     </div>
   );
-}
+};
+
+export default Ofertas;

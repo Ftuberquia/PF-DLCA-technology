@@ -1,36 +1,25 @@
-import React, { useState, useEffect } from "react";
-import Card from "../Card/Card";
-import axios from "axios";
+import Card from '../Card/Card'
 
 const Cards = ({ products }) => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setIsLoading(true);
-    // Carga los productos desde la Bd
-    axios("/db")
-      .then((response) => response.json())
-      .then((data) => {
-        // setProducts(data);
-        setIsLoading(false);
-      });
-  }, []);
-
-  if (isLoading) {
     return (
-      <div>
-        <h1>Cargando productos...</h1>
-      </div>
+        <div className="d-flex justify-content-center flex-wrap gap-4 p-4">
+            {products?.map(({ id, name, images, price, rating, stock, disabled }) => {
+                if (!disabled) {
+                    return (
+                        <Card 
+                        key={id} 
+                        id={id} 
+                        name={name} 
+                        imageSrc={images} 
+                        price={price} 
+                        rating={rating} 
+                        stock={stock} />
+                    );
+                }
+                return null;
+            })}
+        </div>
     );
-  }
-
-  return (
-      <div className="cards">
-        {products.map((product) => (
-          <Card key={product.id} title={product.title} image={product.image} price={product.price} description={product.description} />
-        ))}
-      </div>
-    );
-  };
+};
 
 export default Cards;

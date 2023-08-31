@@ -3,25 +3,27 @@ import Card from '../Card/Card';
 import "./Landing.css";
 import CarouselMarcas from "./CarouselMarcas/CarouselMarcas";
 import Carousel from "../Carousel/Carousel";
-import Promos from "./Promos/Promos";
+import Ofertas from "../views/Ofertas/Ofertas";
 import { Link } from "react-router-dom";
 import Logo from "../../img/logo-dlca.png";
 import Cards from "../Cards/Cards";
-// import NavBar from "../NavBar/NavBar";
+import NavBar from "../NavBar/NavBar";
+import SearchBar from "../SearchBar/SearchBar";
 
 function Landing() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    // axios data from bd and setProducts with the response
+    // datos de axios de bd y setProducts con la respuesta
   }, []);
 
   return (
     <div className="containerLanding">
-      {/* <NavBar /> */}
+      <NavBar />
+      <SearchBar />
       <Carousel />
       <div className="contImgCompra">
         <div className="imgCompra">
-          <Link to="/home">
+          <Link to="/ofertas">
             <img
               src="https://i.ibb.co/4P9PR6x/laptop-promo-banner.jpg"
               alt=""
@@ -29,7 +31,7 @@ function Landing() {
           </Link>
         </div>
       </div>
-      <Promos />
+      <Ofertas />
       <div className="contPcMarcas">
         <div className="imgArmaPC">
           <Link to="/">
