@@ -1,24 +1,17 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux"; // Importa useSelector desde react-redux para acceder al estado global
+import { getProductDetail } from "../redux/actions";
 
 const ProductDetail = (props) => {
     const { match } = props;
-    const productId = match.params.id; 
+    const productId = match.params.id;
 
-    const [product, setProduct] = useState(null);
+    const product = useSelector(state => state.productDetail);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        const fetchProduct = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3001/products/${productId}`); // Ajusta la URL según tu configuración
-                setProduct(response.data);
-            } catch (error) {
-                console.error('Error fetching product:', error);
-            }
-        };
-
-        fetchProduct();
-    }, [productId]);
+        dispatch(getProductDetail(productId));
+    }, [dispatch, productId])
 
     if (!product) {
         return <div>Cargando...</div>;
@@ -42,4 +35,5 @@ const ProductDetail = (props) => {
 };
 
 export default ProductDetail;
+
 

@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Switch, Route } from "react-router-dom";
 import ProductDetail from "./components/views/ProductDetail";
 import ProductForm from "./views/Form/FormProduct";
 
