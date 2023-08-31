@@ -9,7 +9,7 @@ import Product from "./components/Product/Product";
 import Ofertas from "./components/views/Ofertas/Ofertas";
 
 const App = () => {
- 
+
 
   return (
     <Routes>
@@ -18,7 +18,7 @@ const App = () => {
           <Route path="/" component={NavBar}>
           <Route path="/home" component={Home} />
           <Route path="/product" component={<Product />} />
-          <Route path='/ofertas' component={<Ofertas/>}/>
+          <Route path='/products/ofertas' component={<Ofertas/>}/>
           <Route path="/product/:productId" component={ProductDetail} />
         </Route>
       </Route>
