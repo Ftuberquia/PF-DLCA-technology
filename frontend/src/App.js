@@ -1,15 +1,18 @@
-import './App.css';
+import "./App.css";
 import React from "react";
-import { Switch, Route } from "react-router-dom";
-import ProductDetail from './components/views/ProductDetail';
-
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import ProductDetail from "./components/views/ProductDetail";
+import ProductForm from "./views/Form/FormProduct";
 
 function App() {
   return (
     <div className="App">
-      <Switch>
-        <Route path="/product/:productId" component={ProductDetail}/>
-      </Switch>
+      <Router>
+        <Switch>
+          <Route path="/product/:productId" component={ProductDetail} />
+          <Route path="/form" component={ProductForm} />
+        </Switch>
+      </Router>
     </div>
   );
 }
