@@ -1,11 +1,8 @@
 const { Router } = require("express");
-<<<<<<< HEAD
 const getDbProducts = require ("../controllers/getDbProducts")
 const products = require("../routes/products/routeProducts")
 const categories = require ("../routes/categories/routeCategories")
 const subCategories = require ("../routes/subCategories/routeSubCategories")
-=======
-
 const getDbProductsHandler=require('../handlers/products/getDbProductsHandler')
 const products = require("../routes/products/routeProducts")
 const categories = require ("../routes/categories/routeCategories")
@@ -13,7 +10,6 @@ const subCategories = require ("../routes/subCategories/routeSubCategories");
 const tags = require("./tags/routeTags");
 const brands=require('./brands/routeBrands')
 
->>>>>>> 51ffac2285cccea75b914f6b0838b123041c5366
 const router = Router();
 
 //ruta para acceder a los productos
@@ -25,10 +21,9 @@ router.use("/categories", categories)
 //Ruta para acceder a las subcategorias
 router.use('/subcategoria',subCategories)
 
-<<<<<<< HEAD
 //este guarda los productos en la base de datos : !!se usa una sola vez para llenar la base de datos!!
 router.use("/db", getDbProducts)
-=======
+
 //Ruta para acceder a los tags
 router.use('/tags',tags)
 
@@ -39,6 +34,5 @@ router.use('/brands',brands)
 router.use("/db", getDbProductsHandler)
 
 module.exports = router;
->>>>>>> 51ffac2285cccea75b914f6b0838b123041c5366
 
-module.exports = router;
+
