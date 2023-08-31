@@ -11,13 +11,15 @@ import axios from 'axios';
 // Cambiar para el deploy
 // axios.defaults.baseURL = "https://LINK-PARA-DEPLOY"; 
 axios.defaults.baseURL = "http://localhost:3001";
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+//const root = ReactDOM.createRoot(document.getElementById('root'));
+
+ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
   </Provider>,
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
