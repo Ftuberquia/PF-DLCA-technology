@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux"; // Importa useSelector desde react-redux para acceder al estado global
+import { useSelector, useDispatch } from "react-redux"; 
 import { getProductDetail } from "../redux/actions";
+import { useParams } from "react-router-dom";
 
-const ProductDetail = (props) => {
-    const { match } = props;
-    const productId = match.params.id;
+const ProductDetail = () => {
+    const { id } = useParams(); 
+    console.log(id);
 
     const product = useSelector(state => state.productDetail);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getProductDetail(productId));
-    }, [dispatch, productId])
+        dispatch(getProductDetail(id));
+    }, [dispatch, id])
 
     if (!product) {
         return <div>Cargando...</div>;
