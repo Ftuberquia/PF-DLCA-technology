@@ -65,8 +65,11 @@ Tags.belongsToMany(Products, {through:"tags_products"});
 Category.hasMany(Products,{ foreignKey: 'categoryId', as: 'products'});		
 Products.belongsTo(Category,{ foreignKey: 'categoryId', as: 'productCategory'});
 
-// Subcategory.hasMany(Products, {as:'products-subcategory'});	//el 'as:' crea la columna products-subcategory dentro de la primera tabla 
-// Products.belongsTo(Subcategory);
+Subcategory.hasMany(Products, {foreignKey:'subcategoryId', as: 'subcategory'});	        //el 'as:' crea la columna products-subcategory dentro de la primera tabla 
+Products.belongsTo(Subcategory,{foreignKey: 'subcategoryId', as: 'productSubcategory'});
+
+Category.hasMany(Subcategory, {foreignKey: "catSubId", as: 'subcat'})
+Subcategory.belongsTo(Category, {foreignKey: 'catSubId', as: 'catSub'})
 
 Brand.hasMany(Products, {foreignKey: 'brandsId', as: 'brands'});
 Products.belongsTo(Brand,{foreignKey: 'brandsId', as: 'productBrands'});
