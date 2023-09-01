@@ -1,6 +1,4 @@
-const axios = require ("axios")
 const {Category} = require ("../../db")
-const categoriesData = require ("../../utils/category")
 
 const Allcategories = async() => {
         const AllCategories = await Category.findAll()
