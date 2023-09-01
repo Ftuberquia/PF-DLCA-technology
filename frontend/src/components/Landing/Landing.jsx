@@ -3,7 +3,7 @@ import Card from '../Card/Card';
 import "./Landing.css";
 import CarouselMarcas from "./CarouselMarcas/CarouselMarcas";
 import Carousel from "../Carousel/Carousel";
-import Ofertas from "../views/Ofertas/Ofertas";
+import Ofertas from "../../views/Ofertas/Ofertas";
 import { Link } from "react-router-dom";
 import Logo from "../../img/logo-dlca.png";
 import Cards from "../Cards/Cards";
