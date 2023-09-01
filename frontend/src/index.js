@@ -7,19 +7,21 @@ import { store } from './redux/store';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
+import { createRoot } from 'react-dom/client';
 
 // Cambiar para el deploy
 // axios.defaults.baseURL = "https://LINK-PARA-DEPLOY"; 
 axios.defaults.baseURL = "http://localhost:3001";
-//const root = ReactDOM.createRoot(document.getElementById('root'));
 
-ReactDOM.render(
+const root = document.getElementById('root');
+const rootElement = createRoot(root);
+
+rootElement.render(
   <Provider store={store}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </Provider>,
-  document.getElementById('root')
+  </Provider>
 );
 
 reportWebVitals();
