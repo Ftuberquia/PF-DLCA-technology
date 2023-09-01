@@ -10,16 +10,6 @@ const getBrands=async()=>{
         logo:el.logo
     }))
 
-    //Si no hay brands en la DB
-    if(brandsDB.length===0){
-        brandsData.map(b=>{
-            Brand.create({
-                name:b.name,
-                logo:b.logo
-            });
-        });
-    };
-
     return brands;
 }
 
