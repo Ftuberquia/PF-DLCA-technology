@@ -10,17 +10,17 @@ const Navbar = () => {
       <Link to="/" className={styles.link}>
         Home
       </Link>
-      <Link to="/productos" className={styles.link}>
-        Productos
+      <Link to="/products" className={styles.link}>
+        Products
       </Link>
       <Link to="/about" className={styles.link}>
         About
       </Link>
       <div className={styles.icons}>
-        <Link to="/carrito" className={styles.iconLink}>
+        <Link to="/cart" className={styles.iconLink}>
           <FontAwesomeIcon icon={faShoppingCart} className={styles.icon} />
         </Link>
-        <Link to="/favoritos" className={styles.iconLink}>
+        <Link to="/favorites" className={styles.iconLink}>
           <FontAwesomeIcon icon={faHeart} className={styles.icon} />
         </Link>
         <Link to="/login" className={styles.link}>

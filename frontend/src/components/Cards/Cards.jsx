@@ -1,4 +1,4 @@
-import Card from '../Card/Card'
+import ProductCard from '../ProductCard/ProductCard';
 
 const Cards = ({ products }) => {
     return (
@@ -6,7 +6,7 @@ const Cards = ({ products }) => {
             {products?.map(({ id, name, images, price, rating, stock, disabled }) => {
                 if (!disabled) {
                     return (
-                        <Card 
+                        <ProductCard 
                         key={id} 
                         id={id} 
                         name={name} 

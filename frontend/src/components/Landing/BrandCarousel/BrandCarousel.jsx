@@ -1,7 +1,7 @@
 import React from "react";
-import "./CarouselMarcas.css";
+import "./BrandCarousel.css";
 
-function CarouselMarcas() {
+function BrandCarousel() {
   return (
     <div className="containerCarouselMarcas">
       <div className="slider">
@@ -124,4 +124,4 @@ function CarouselMarcas() {
   );
 }
 
-export default CarouselMarcas;
+export default BrandCarousel;

@@ -1,7 +1,7 @@
 .searchbar {
   display: flex;
   align-items: center;
-  border: 1px solid #ccc;
+  border: 3px solid #ccc;
   border-radius: 5px;
   padding: 5px;
 }
@@ -17,7 +17,7 @@
   color: #fff;
   border: none;
   border-radius: 5px;
-  padding: 5px 10px;
+  padding: 10px 10px;
   cursor: pointer;
 }
 

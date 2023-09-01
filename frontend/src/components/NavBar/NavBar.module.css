@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333;
+    background-color: #52203f;
     color: #fff;
     padding: 10px;
   }
@@ -24,7 +24,7 @@
   
   .icon {
     color: #fff;
-    font-size: 20px;
+    font-size: 40px;
   }
   
   /* Estilos para que sea responsive */

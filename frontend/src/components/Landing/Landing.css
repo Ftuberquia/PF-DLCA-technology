@@ -76,8 +76,10 @@
 
 .imgArmaPC {
   width: 100%;
-  display: block;
-  margin: 60px auto;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .imgArmaPC img {
@@ -90,7 +92,7 @@
 }
 
 .logoPartners {
-  background-color: #37373f;
+  /* background-color: #37373f; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -135,7 +137,7 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-  }
+ }
 
   .carousel-inner {
     height: 200px;
@@ -194,6 +196,7 @@
       rgba(255, 255, 255, 1) 76%
     );
   }
+
   .imgArmaPC {
     width: 150%;
     display: block;
@@ -237,8 +240,8 @@
 }
 
 .logoPartners img {
-  max-width: 20%;
-  max-height: 20%;
+  max-width: 30%;
+  max-height: 30%;
   margin-right: 10px;
 }
 
@@ -251,12 +254,12 @@
 .card {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 100px;
   height: 200px;
   border-radius: 5px;
   margin-bottom: 10px;
 
-  img {
+  .img {
     width: 100%;
     height: 100%;
     border-radius: 5px;
@@ -264,13 +267,13 @@
 
   h2 {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 400;
     color: #000;
   }
 
   p {
     font-size: 16px;
-    color: #666;
+    color: #4d03ad;
   }
 }
 
@@ -280,4 +283,15 @@
   border-radius: 4px;
   padding: 10px 15px;
   margin-bottom: 20px;
+}
+
+.container {
+  margin-top: 3rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
 }

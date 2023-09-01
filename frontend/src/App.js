@@ -1,12 +1,13 @@
+import './App.css';
 import React from "react";
 import { BrowserRouter as Routes, Route } from "react-router-dom";
-import ProductDetail from './components/views/ProductDetail';
+import ProductDetail from './views/ProductDetail';
 import Landing from "./components/Landing/Landing";
 import NavBar from "./components/NavBar/NavBar";
-import Home from "./components/views/Home/Home";
+import Home from "./views/Home/Home";
 import Footer from "./components/Footer/Footer";
-import Product from "./components/Product/Product";
-import Ofertas from "./components/views/Ofertas/Ofertas";
+import Products from "./components/Products/Products";
+import Featured from "./views/Featured/Featured";
 
 const App = () => {
 
@@ -17,9 +18,9 @@ const App = () => {
         <Landing />
           <Route path="/" component={NavBar}>
           <Route path="/home" component={Home} />
-          <Route path="/product" component={<Product />} />
-          <Route path='/products/ofertas' component={<Ofertas/>}/>
-          <Route path="/product/:productId" component={ProductDetail} />
+          <Route path="/products" component={Products} />
+          <Route path="/products/featured" component={Featured} />
+          <Route path="/products/:id" component={ProductDetail} />
         </Route>
       </Route>
       <Footer />

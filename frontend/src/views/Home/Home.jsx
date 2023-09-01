@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Cards from "../../Cards/Cards";
+import Cards from "../../components/Cards/Cards";
 import styles from "./Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
-// import { getDbProducts } from "../../../redux/actions/index";
-// import ScrollToTop from "react-scroll-to-top";
-
+import { getAllProducts } from "../../redux/actions/index";
+import ScrollToTop from "react-scroll-to-top";
 
 
 function Home(props) {
@@ -14,32 +13,31 @@ function Home(props) {
 
   const { Products } = useSelector((state) => state);
 
-  // useEffect(() => {
-  // dispatch(getDbProducts());
-  // }, [dispatch]); 
+  useEffect(() => {
+  dispatch(getAllProducts());
+  }, [dispatch]); 
 
-  // if(!Products.length){
-  //   return (
-  //     <div className={styles.contenedorLoading}>
-  //       <div className={styles.loading}>
-  //         <img className={styles.imgload} alt="loading" src='https://i.ibb.co/ngZVjf8/loading.gif' />
-  //       </div>
-  //     </div>
-  //   )
-  // }
-  // else{
+  if(!Products.length){
+    return (
+      <div className={styles.contenedorLoading}>
+        <div className={styles.loading}>
+          <img className={styles.imgload} alt="loading" src='https://i.ibb.co/ngZVjf8/loading.gif' />
+        </div>
+      </div>
+    )
+  }
+  else{
   return (
     <div className={styles.homeContainer}>
-    
       <div className={styles.cardsContainer}>
         {" "}
         <Cards
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-          // filter={{}}
+          filter={{}}
         />{" "}
       </div>
-      {/* <ScrollToTop
+      <ScrollToTop
         smooth={true}
         color="white"
         className={styles.scrolltotop1}
@@ -47,9 +45,9 @@ function Home(props) {
           backgroundColor: "#91C612",
           marginBottom: "30px",
         }}
-      /> */}
+      />
     </div>
   )};
-// }
+};
 
 export default Home;

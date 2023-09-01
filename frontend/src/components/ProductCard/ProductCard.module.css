@@ -1,0 +1,24 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.cardMedia {
+  height: 0;
+  padding-top: 56.25%; /* 16:9 */
+}
+
+.cardContent {
+  flex-grow: 1;
+}
+
+.cardActions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
