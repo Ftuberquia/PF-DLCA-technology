@@ -46,46 +46,42 @@ const { Users, Products, Orders, Favorites, Cart, Brand, Category, Tags, Subcate
 // Aca vendrian las relaciones
 
 // Relación de Users:
-Users.hasMany(Orders, {as:'users'});
+Users.hasMany(Orders, {as:'users'});	//hasMany 1 A con muchos B, el as se usa en solicitudes a la DB
+Orders.belongsTo(Users);
 
-Users.hasOne(Cart, { foreignKey: 'userId' });
-Cart.hasOne(Users, { foreignKey: 'userId' });
+Users.hasOne(Cart, { foreignKey: 'userId' });	//hasOne relacion de 1A a 1B donde B tiene la clave foranea
+Cart.belongsTo(Users);
 
-Users.hasMany(Favorites,{foreignKey: 'userId'});
-Favorites.belongsTo(Users, {foreignKey: 'userId'});
+Users.hasMany(Favorites);
+Favorites.belongsTo(Users, {foreignKey: 'userFavId'});		//belongsTo es relacion 1 a 1 entre A y B y la foreignkey se crea en A
 
-Users.hasMany(Orders, {foreignKey: 'userId'});
-Orders.belongsTo(Users, {foreignKey: 'userId'});
+Users.hasMany(Review);
+Review.belongsTo(Users, { foreignKey: 'userRevId' });
 
 // Relación de Products:
-Products.belongsToMany(Orders, {through:"orders_products"});
-Orders.belongsToMany(Products, {through:"orders_products"});
-
-Products.belongsToMany(Cart, {through:"cart_products"});
-Cart.belongsToMany(Products, {through:"cart_products"});
-
 Products.belongsToMany(Tags, {through:"tags_products"});
 Tags.belongsToMany(Products, {through:"tags_products"});
+
+Category.hasMany(Products,{ foreignKey: 'categoryId', as: 'products'});		
+Products.belongsTo(Category,{ foreignKey: 'categoryId', as: 'productCategory'});
+
+// Subcategory.hasMany(Products, {as:'products-subcategory'});	//el 'as:' crea la columna products-subcategory dentro de la primera tabla 
+// Products.belongsTo(Subcategory);
+
+Brand.hasMany(Products, {foreignKey: 'brandsId', as: 'brands'});
+Products.belongsTo(Brand,{foreignKey: 'brandsId', as: 'productBrands'});
 
 Products.belongsToMany(Favorites, {through:"favorites_products"});
 Favorites.belongsToMany(Products, {through:"favorites_products"});
 
-Products.hasMany(Review, { foreignKey: 'productId' });
-Review.belongsTo(Products, { foreignKey: 'productId' });
+Products.hasMany(Review);
+Review.belongsTo(Products);
 
-Users.hasMany(Review, { foreignKey: 'userId' });
-Review.belongsTo(Users, { foreignKey: 'userId' });
+Products.belongsToMany(Orders, {through:"orders_products"});	//belongsToMany muchos a muchos, crea una tabla intermedia en donde se juntan las claves foraneas de A y B
+Orders.belongsToMany(Products, {through:"orders_products"});
 
-
-//Products.belongsTo(Category);
-Category.hasMany(Products, {as:'products-category'});
-
-//Products.belongsTo(Subcategory);
-Subcategory.hasMany(Products, {as:'products-subcategory'});
-
-//Products.belongsTo(Brand);
-Brand.hasMany(Products, {as:'products-brand'});
-
+Products.belongsToMany(Cart, {through:"cart_products"});
+Cart.belongsToMany(Products, {through:"cart_products"});
 
 module.exports = {
 ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
