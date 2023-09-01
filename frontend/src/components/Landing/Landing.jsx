@@ -40,9 +40,6 @@ function Landing() {
             />
           </Link>
         </div>
-        <div>
-          <Cards />
-        </div>
         <div className="card">
           {products.map((product) => (
             <Card
