@@ -9,7 +9,8 @@ const Products = (sequelize) => {
         },
         href: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue:'#',
         },
         imageSrc: {
             type: DataTypes.STRING,
@@ -40,7 +41,9 @@ const Products = (sequelize) => {
             allowNull: false
         },
         rating: {
-			type: DataTypes.FLOAT,
+			type: DataTypes.REAL,
+            allowNull: false,
+            defaultValue: 0,
 		},
         description: {
             type: DataTypes.TEXT,
