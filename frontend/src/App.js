@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import ProductDetail from './views/ProductDetail';
+import ProductDetail from './views/Detail/ProductDetail';
 import Landing from "./components/Landing/Landing";
 import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
