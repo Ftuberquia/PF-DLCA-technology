@@ -3,18 +3,16 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ProductDetail from './views/ProductDetail';
 import Landing from "./components/Landing/Landing";
 import NavBar from "./components/NavBar/NavBar";
-import Home from "./views/Home/Home";
 import Footer from "./components/Footer/Footer";
-// import Product from "./components/Product/Product";
 import Ofertas from "./views/Ofertas/Ofertas";
+import Productos from "./views/Productos/Productos";
 
 const App = () => {
   return (
     <Router>
       <NavBar /> 
       <Switch>
-        <Route path="/home" component={Home} />
-        {/* <Route path="/product" component={Product} /> COMPONENTE PRODUCT ELIMINADO*/} 
+        <Route path="/productos" component={Productos} />
         <Route path="/products/ofertas" component={Ofertas} />
         <Route path="/product/:id" component={ProductDetail} />
         <Route exact path="/" component={Landing} /> 

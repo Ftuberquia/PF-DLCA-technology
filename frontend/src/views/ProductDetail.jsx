@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 
 const ProductDetail = () => {
     const { id } = useParams(); 
-    console.log(id);
 
     const product = useSelector(state => state.productDetail);
     const dispatch = useDispatch();
