@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Cards from "../../Cards/Cards";
+import Cards from "../../components/Cards/Cards";
 import styles from "./Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
 // import { getDbProducts } from "../../../redux/actions/index";
