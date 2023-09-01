@@ -1,17 +1,18 @@
+
 import React from "react";
 import { BrowserRouter as Routes, Route } from "react-router-dom";
-import ProductDetail from './components/views/ProductDetail';
+import ProductDetail from './views/ProductDetail';
 import Landing from "./components/Landing/Landing";
 import NavBar from "./components/NavBar/NavBar";
-import Home from "./components/views/Home/Home";
+import Home from "./views/Home/Home";
 import Footer from "./components/Footer/Footer";
 import Product from "./components/Product/Product";
-import Ofertas from "./components/views/Ofertas/Ofertas";
+import Ofertas from "./views/Ofertas/Ofertas";
 
 const App = () => {
 
-
   return (
+
     <Routes>
       <Route path="/">
         <Landing />
