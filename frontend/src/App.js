@@ -1,20 +1,31 @@
-import "./App.css";
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import ProductDetail from "./components/views/ProductDetail";
-import ProductForm from "./views/Form/FormProduct";
 
-function App() {
+import React from "react";
+import { BrowserRouter as Routes, Route } from "react-router-dom";
+import ProductDetail from './components/views/ProductDetail';
+import Landing from "./components/Landing/Landing";
+import NavBar from "./components/NavBar/NavBar";
+import Home from "./components/views/Home/Home";
+import Footer from "./components/Footer/Footer";
+import Product from "./components/Product/Product";
+import Ofertas from "./components/views/Ofertas/Ofertas";
+
+const App = () => {
+
   return (
-    <div className="App">
-      <Router>
-        <Switch>
+
+    <Routes>
+      <Route path="/">
+        <Landing />
+          <Route path="/" component={NavBar}>
+          <Route path="/home" component={Home} />
+          <Route path="/product" component={<Product />} />
+          <Route path='/products/ofertas' component={<Ofertas/>}/>
           <Route path="/product/:productId" component={ProductDetail} />
-          <Route path="/form" component={ProductForm} />
-        </Switch>
-      </Router>
-    </div>
+        </Route>
+      </Route>
+      <Footer />
+    </Routes>
   );
-}
+};
 
 export default App;
