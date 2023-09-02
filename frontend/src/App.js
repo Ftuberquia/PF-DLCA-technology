@@ -6,6 +6,7 @@ import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
 import Ofertas from "./views/Ofertas/Ofertas";
 import Productos from "./views/Productos/Productos";
+import Form from "./components/Form/Form";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/productos" component={Productos} />
         <Route path="/products/ofertas" component={Ofertas} />
         <Route path="/product/:id" component={ProductDetail} />
+        <Route path="/form" component={Form} />
         <Route exact path="/" component={Landing} /> 
       </Switch>
       <Footer />
