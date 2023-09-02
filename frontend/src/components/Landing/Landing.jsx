@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Card from '../Card/Card';
 import "./Landing.css";
-import CarouselMarcas from "./CarouselMarcas/CarouselMarcas";
+import BrandCarousel from "./BrandCarousel/BrandCarousel";
 import Carousel from "../Carousel/Carousel";
-import Ofertas from "../../views/Ofertas/Ofertas";
+import Featured from "../../views/Featured/Featured";
+// import Ofertas from "../../views/Ofertas/Ofertas";
 import { Link } from "react-router-dom";
 import Logo from "../../img/logo-dlca.png";
 import Cards from "../Cards/Cards";
+import NavBar from "../NavBar/NavBar";
 import SearchBar from "../SearchBar/SearchBar";
+import AssociatedBrands from '../AssociatedBrands/AssociatedBrands';
 
 function Landing() {
   const [products, setProducts] = useState([]);
@@ -18,11 +21,15 @@ function Landing() {
 
   return (
     <div className="containerLanding">
+      <NavBar />
       <SearchBar />
       <Carousel />
+      <div className="card1">
+      <AssociatedBrands />
+      </div>
       <div className="contImgCompra">
         <div className="imgCompra">
-          <Link to="/ofertas">
+          <Link to="/products">
             <img
               src="https://i.ibb.co/4P9PR6x/laptop-promo-banner.jpg"
               alt=""
@@ -30,10 +37,10 @@ function Landing() {
           </Link>
         </div>
       </div>
-      <Ofertas />
+      <Featured />
       <div className="contPcMarcas">
         <div className="imgArmaPC">
-          <Link to="/">
+        <Link to="/products">
             <img
               src="https://i.ibb.co/8BWqRFY/carousel-img3.jpg"
               alt=""
@@ -57,7 +64,7 @@ function Landing() {
             <span className="spanTitle">DLCA TECHNOLOGY!</span>
           </h2>
         </div>
-        <CarouselMarcas />
+        <BrandCarousel />
         <br />
         <br />
       </div>
