@@ -38,7 +38,7 @@ const rootReducer = (state = initialState, action) => {
             case GET_PRODUCTS_BYNAME:
             return {
                 ...state,
-                products: state.products.filter((product) => product.name === action.payload.name),
+                products: action.payload,
                 loader: true
             };
             case GET_PRODUCT_DETAIL:

@@ -1,12 +1,13 @@
 import Card from '../Card/Card'
 import { useSelector } from 'react-redux';
 
+import style from './Cards.module.css'
 const Cards = () => {
 
     const productsData = useSelector(state => state.products)
 
     return (
-        <div className="d-flex justify-content-center flex-wrap gap-4 p-4">
+        <div className={style.contenedorCards}>
             {productsData?.map(({ id, name, imageSrc, price, rating, stock, disabled }) => {
                 if (!disabled) {
                     return (

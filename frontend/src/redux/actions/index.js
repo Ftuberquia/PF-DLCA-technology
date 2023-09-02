@@ -24,17 +24,30 @@ export const getAllProducts = () => async dispatch => {
     }
 };
 
-export const getProductsByName = (name) => async dispatch => {
-    try {
-        const getProductsByName = await axios.get(`/products?name${name}`);
+export function getProductByName (name){
+    let alertTimeOut = null
+    return async function (dispatch){
+        try{
+            clearTimeout(alertTimeOut)
+            let {data} = await axios.get(`/products?name=${name}`)
+            let product = Array.isArray(data)? data : [data]
+            if(product.length === 0){
+                setTimeout(()=>{
+                    alertTimeOut = alert("No se encontro ningun producto con ese nombre.")
+                },0)
+                return;
+            }
             return dispatch({
                 type: GET_PRODUCTS_BYNAME,
-                payload: getProductsByName.data
-            });      
-    } catch (error) { 
-        console.error('Error Name:', error);
+                payload: data
+            })
+        }catch(error){
+            setTimeout(() =>{
+                alertTimeOut = alert("No se encontro ningun producto con ese nombre")
+            },0);
+        }
     }
-};
+}
 
 export const getProductDetail = (id) => async dispatch => {
     try {
