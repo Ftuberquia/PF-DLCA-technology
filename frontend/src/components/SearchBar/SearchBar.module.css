@@ -1,6 +1,8 @@
 .searchbar {
   display: flex;
-  align-items: center;
+  gap: 8px;
+  background: rgb(97, 96, 96);
+  position:relative;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 5px;
@@ -13,14 +15,38 @@
 }
 
 .button {
-  background-color: #a7136eb7;
+  background-color: rgb(91, 91, 231);
+  border: 0;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  margin: auto;
   color: #fff;
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+.button:hover{
+  background-color: #8e17c5;
+  box-shadow: rgba(0,0,0,0.5) 0 10px 20px;
+  transform: translateY(-1px);
+}
+.button:active{
+  box-shadow: none;
+  transform: translateY(0);
 }
 
-.button i {
-  margin-right: 5px;
+.input{
+  border: none;
+  background: none;
+  outline: none;
+  color: white;
+  font-size: 15px;
+  
 }
+/* .button i {
+  margin-right: 3px;
+} */
