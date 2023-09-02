@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux"; 
 import { getProductDetail } from "../../redux/actions";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import style from './ProductDetail.module.css'
 
 const ProductDetail = () => {
     const { id } = useParams(); 
@@ -26,21 +29,38 @@ const ProductDetail = () => {
       };
 
     return (
-        <div>
-            <h2>Detalles del producto</h2>
-            <p>ID: {product.id}</p>
-            <p>Nombre: {product.name}</p>
-            <p>Precio: {product.price}</p>
-            <p>Href: {product.href}</p>
-            <p>Imagen: <img src={product.imageSrc} alt={product.imageAlt} /></p>
-            <p>Stock: {product.stock}</p>
-            <p>Marca: {product.brand}</p>
-            <p>Categoría: {product.category}</p>
-            <p>Subcategoría: {product.subcategory}</p>
-            <p>Descripción: {product.description}</p>
-
-            <button onClick={handleAddToCart}>Agregar al carrito</button>
-            <button onClick={handleBuyNow}>Comprar ahora</button>
+        <div className={style.conteiner}>
+            <div className={style.contNavCat}>
+                <Link to={'/productos'} className={style.volver}>← Volver al listado</Link>
+                <p>{product.category}</p>
+                <p>{'>'}</p>
+                <p>{product.subcategory}</p>
+            </div>
+            <hr/>
+            <div className={style.contProducto}>
+                <div className={style.detalles1}>
+                 <h1>{product.name}</h1>
+                 <h3>Marca: {product.brand}</h3>
+                 <h5>ID: {product.id}</h5>
+                 <img src={product.imageSrc} alt={product.imageAlt}/>
+                 <hr/>
+                 <div className={style.detalles2}>
+                    <h2>Descripción</h2>
+                    <p>{product.description}</p>
+                 </div>
+                </div>
+                <div className={style.infoCompra}>
+                 <h2>$ {product.price}</h2>
+                 <div className={style.cantidad}>
+                     <button>-</button>
+                     <p>1</p>
+                     <button>+</button>
+                 </div>
+                 <button className={style.agregarCarrito} onClick={handleAddToCart}>Agregar al carrito</button>
+                 <button className={style.comprar} onClick={handleBuyNow}>Comprar ahora</button>
+                </div>
+            </div>
+            
 
             {/* <form>
                 <label htmlFor="comment">Comentario:</label>
