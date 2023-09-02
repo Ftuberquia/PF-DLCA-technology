@@ -1,18 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
+import style from './Card.module.css'
 
 const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
 
     return (
-        <div>
-            <img src={imageSrc} alt="" />
-            <Link to={`/product/${id}`}>
-            <h2>Ver más</h2>
-            </Link>
-            <p>{name}</p>
-            <p>Precio: {price}</p>
-            <p>Rating: {rating}</p>
-            <p>Stock: {stock}</p>
+        <div className={style.card}>
+         <NavLink to={`/product/${id}`} style={{textDecoration:'none'}}>
+            <img className={style.image} src={imageSrc} alt="" />
+            <div className={style.detailCard}>
+                <p>{name}</p>
+                <p>${price}</p>
+                <p>Rating: {rating}</p>
+            {/* <p>Stock: {stock}</p> */}
+            </div>
+         </NavLink>
         </div>
     )
 };
