@@ -17,7 +17,7 @@
   display: flex;
   justify-content: center;
   margin-top: 0;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+  font-family: "Consolas", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   font-size: 40px;
 }
@@ -35,12 +35,24 @@
   filter: brightness(1.2);
 }
 
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
 .card {
   border-radius: 7px !important;
   border-color: #adaeaf;
-  width: 250px;
-  height: 350px;
+  align-items: center;
+  width: 20rem;
+  height: 15rem;
   overflow: hidden;
+  padding: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, filter 0.3s ease;
+  margin-bottom: 1rem;
+  margin-right: 1%;
 }
 
 .card:hover {
@@ -56,12 +68,6 @@
   margin-top: 30px !important;
 }
 
-.contAcc2 {
-  display: flex;
-  justify-content: space-around;
-}
-
-
 @media screen and (max-width: 1400px) and (min-width: 500px) {
   .contAccesorios {
     display: none;
@@ -74,37 +80,26 @@
   }
 }
 
-.card {
-  width: 100%;
-  height: 300px;
-  overflow: hidden;
-  text-align: center;
-  padding: 1rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  transition: transform 0.3s ease, filter 0.3s ease;
-}
-
 .card img {
-  width: 400px;
-  height: 300px;
+  width: 16rem;
+  height: 15rem;
   object-fit: cover;
   object-position: center;
 }
 
-.card-title {
+/* .card-title {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
-  font-family: "Montserrat", sans-serif;
-}
+  font-family: "Consolas", sans-serif;
+} */
 
-.card-text {
+/* .card-text {
   font-size: 1.6rem;
   margin-bottom: 1rem;
-  font-family: "Open Sans", sans-serif;
-}
+  font-family: "Consolas", sans-serif;
+} */
 
-.card-button {
+/* .card-button {
   display: inline-block;
   padding: 0.5rem 1rem;
   background-color: #007bff;
@@ -119,4 +114,4 @@
 
 .card-button:hover {
   filter: brightness(1.2);
-}
+} */

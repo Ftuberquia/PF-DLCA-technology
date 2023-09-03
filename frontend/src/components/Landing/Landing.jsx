@@ -8,7 +8,6 @@ import Featured from "../../views/Featured/Featured";
 import { Link } from "react-router-dom";
 import Logo from "../../img/logo-dlca.png";
 import Cards from "../Cards/Cards";
-import NavBar from "../NavBar/NavBar";
 import SearchBar from "../SearchBar/SearchBar";
 import AssociatedBrands from '../AssociatedBrands/AssociatedBrands';
 
@@ -21,7 +20,6 @@ function Landing() {
 
   return (
     <div className="containerLanding">
-      <NavBar />
       <SearchBar />
       <Carousel />
       <div className="card1">
@@ -47,7 +45,7 @@ function Landing() {
             />
           </Link>
         </div>
-        <div className="card">
+        {/* <div className="card">
           {products.map((product) => (
             <Card
               key={product.id}
@@ -57,7 +55,7 @@ function Landing() {
               price={product.price}
             />
           ))}
-        </div>
+        </div> */}
         <div>
           <h2 className="titleMarcas">
             ¡Las mejores marcas las encuentras en

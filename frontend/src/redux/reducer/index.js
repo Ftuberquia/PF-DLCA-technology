@@ -10,6 +10,8 @@ import { FILTER_BY_CREATED } from "../actions/index.js";
 import { ORDER_BY_NAME } from "../actions/index.js";
 import { FILTER_BY_CATEGORY } from "../actions/index.js";
 import { GET_CATEGORIES } from "../actions/index.js";
+import { OPEN_MODAL } from "../actions/index.js";
+import { LOGOUT } from "../actions/index.js";
 
 
   const initialState = {
@@ -22,6 +24,8 @@ import { GET_CATEGORIES } from "../actions/index.js";
     tags: [],
     loader: false,
     error: {},
+    modal: '',
+    reviewsFromUser: [],
     productsCopy: [], // copia Estado para emergencias 
     //para regresar al estado original cuando nesesite
 }
@@ -133,6 +137,20 @@ const rootReducer = (state = initialState, action) => {
                     ...state,
                     products: sortedProducts,
                 };
+
+            case OPEN_MODAL:
+                return {
+                    ...state,
+                    modal: action.payload,
+            };
+    
+            case LOGOUT:
+                return {
+                    ...state,
+                    user: {},
+                    reviewsFromUser: [],
+            };
+    
                    
             default:
             return {...state};
