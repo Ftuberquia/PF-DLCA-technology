@@ -28,7 +28,7 @@ import { LOGOUT } from "../actions/index.js";
     reviewsFromUser: [],
     productsCopy: [], // copia Estado para emergencias 
     //para regresar al estado original cuando nesesite
-}
+};
 
 const rootReducer = (state = initialState, action) => {
     switch(action.type) {
@@ -68,6 +68,11 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 types: action.payload
             };
+            case GET_CATEGORIES:
+                return {
+                    ...state,
+                    categories: action.payload
+                };
             case CREATE_PRODUCT:
                 if (action.payload.status === 200) { 
                     return {

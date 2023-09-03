@@ -79,6 +79,7 @@ export const getCategories = () => async dispatch => {
 export const getBrands = () => async dispatch => {
     try { 
         const getBrand = await axios.get('/brands');
+        console.log('Brands:', getBrand);
         return dispatch({
             type: GET_BRANDS,
             payload: getBrand.data
