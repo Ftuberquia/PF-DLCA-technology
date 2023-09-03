@@ -12,6 +12,8 @@ export const  FILTER_BY_CREATED = 'FILTER_BY_CREATED';
 export const  ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const  FILTER_BY_CATEGORY = 'FILTER_BY_CATEGORY';
 export const  GET_CATEGORIES = 'GET_CATEGORIES';
+export const  OPEN_MODAL = 'OPEN_MODAL';
+export const  LOGOUT = 'LOGOUT';
 
 
 export const getAllProducts = () => async dispatch => {
@@ -153,4 +155,17 @@ export const orderByName = (payload) => dispatch => {
         type: ORDER_BY_NAME,
         payload
     })
+};
+
+export function openModal(payload) {
+	return { 
+        type: OPEN_MODAL, 
+        payload, 
+    };
+};
+
+export function logout() {
+	return {
+		type: LOGOUT,
+	};
 };
