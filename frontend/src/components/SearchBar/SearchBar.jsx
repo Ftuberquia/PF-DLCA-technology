@@ -1,10 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import {useDispatch} from "react-redux"
+import {useHistory} from "react-router-dom"
 import { getProductByName } from "../../redux/actions"; 
 import styles from "./SearchBar.module.css";
 const SearchBar = () => {
-    
+  const navigate = useHistory()
   const dispatch = useDispatch()
   const [name, setName] = useState("")
   function inputHandleChange (e){
@@ -15,6 +16,7 @@ const SearchBar = () => {
   function handleSubmit (e){
     e.preventDefault()
     dispatch(getProductByName(name))
+    navigate.push("/productos")
     setName("")
   }
   function handleKeyDown(e){
