@@ -3,24 +3,29 @@ import { GET_PRODUCTS_BYNAME } from "../actions/index.js";
 import { GET_PRODUCT_DETAIL } from "../actions/index.js";
 import { GET_TAGS } from "../actions/index.js";
 import { GET_BRANDS } from "../actions/index.js";
-import { GET_CATEGORIES } from "../actions/index.js";
 import { CREATE_PRODUCT } from "../actions/index.js";
 import { DELETE_PRODUCT } from "../actions/index.js";
 import { FILTER_BY_BRANDS } from "../actions/index.js";
 import { FILTER_BY_CREATED } from "../actions/index.js";
 import { ORDER_BY_NAME } from "../actions/index.js";
+import { FILTER_BY_CATEGORY } from "../actions/index.js";
+import { GET_CATEGORIES } from "../actions/index.js";
+import { OPEN_MODAL } from "../actions/index.js";
+import { LOGOUT } from "../actions/index.js";
+
 
   const initialState = {
     products: [],
     filtered: [],
     brands: [],
     categories: [],
-    subcategories: [],
+    subcategories: [], //pendiente
     productDetail: {},
     tags: [],
     loader: false,
     error: {},
-    types: [],
+    modal: '',
+    reviewsFromUser: [],
     productsCopy: [], // copia Estado para emergencias 
     //para regresar al estado original cuando nesesite
 };
@@ -39,13 +44,19 @@ const rootReducer = (state = initialState, action) => {
             case GET_PRODUCTS_BYNAME:
             return {
                 ...state,
-                products: action.payload,
+                products: action.payload, // cambio uwu
                 loader: true
             };
             case GET_PRODUCT_DETAIL:
             return {
                 ...state,
                 productDetail: action.payload
+            };
+            case GET_CATEGORIES:
+                console.log(state.categories)
+            return {
+                ...state,
+                categories: action.payload
             };
             case GET_BRANDS:
             return {
@@ -77,15 +88,38 @@ const rootReducer = (state = initialState, action) => {
                     return {
                         ...state,
                         productDetail: {},
-                    }    
-            case FILTER_BY_BRANDS:                
-                let filtered = state.filtered;
-                let byBrand = filtered?.filter((product) => product.brands.includes(action.payload))
-                if (action.payload === 'All') byBrand = filtered;
+                    }   
+            case FILTER_BY_CATEGORY:
+                const categoryToFilter = action.payload; 
+                const allProducts = [...state.products]; 
+                let filteredProducts = [];
+                if (categoryToFilter === 'All') {
+                    filteredProducts = allProducts;
+                } else {
+                    filteredProducts = state.productsCopy.filter((product) =>
+                    product.category=== categoryToFilter
+                    );
+                }
+                return {
+                    ...state,
+                    products: filteredProducts,
+                };
+                case FILTER_BY_BRANDS:
+                    let filtered = [...state.products]; // Asegura que state.filtered sea un arreglo
+                    let byBrand = [];
+                
+                    if (action.payload === 'All') {
+                        byBrand = filtered; // Clona el arreglo si se selecciona 'All'
+                    } else {
+                        byBrand = state.productsCopy.filter((product) =>
+                            product.brand === action.payload
+                        );
+                    }
+                    console.log(byBrand);
                     return {
                         ...state,
-                        products: byBrand
-                    };  
+                        products: byBrand,
+                    };
             case FILTER_BY_CREATED:
                 let filtered2 = state.filtered;
                 let byCreated = action.payload === 'created' ? filtered2.filter(product =>product.custom === true) : filtered2.filter(product => !product.custom);
@@ -96,19 +130,32 @@ const rootReducer = (state = initialState, action) => {
             };           
             
             case ORDER_BY_NAME:
-            const byName = action.payload === 'A-Z' ? state.products.sort((a,b) => {
-                if(a.name > b.name) return 1
-                if(a.name < b.name) return -1
-                return 0
-            }) : state.products.sort((a,b) => {
-                if(a.name < b.name) return 1
-                if(a.name > b.name) return -1
-                return 0
-            });
-            return {
-                ...state,
-                products: byName
+                const sortedProducts = [...state.products]; // Clonamos la lista de productos para no mutarla directamente
+
+                if (action.payload === 'A-Z') {
+                    sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+                } else if (action.payload === 'Z-A') {
+                    sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+                }
+
+                return {
+                    ...state,
+                    products: sortedProducts,
+                };
+
+            case OPEN_MODAL:
+                return {
+                    ...state,
+                    modal: action.payload,
             };
+    
+            case LOGOUT:
+                return {
+                    ...state,
+                    user: {},
+                    reviewsFromUser: [],
+            };
+    
                    
             default:
             return {...state};

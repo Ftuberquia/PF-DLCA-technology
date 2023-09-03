@@ -3,14 +3,17 @@ export const  GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 export const  GET_PRODUCTS_BYNAME = 'GET_PRODUCTS_BYNAME';
 export const  GET_PRODUCT_DETAIL = 'GET_PRODUCT_DETAIL';
 export const  GET_BRANDS = 'GET_BRANDS';
-export const  GET_CATEGORIES = 'GET_CATEGORIES';
 export const  GET_TAGS = 'GET_TAGS';
 export const  CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const  DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const  FILTER_BY_TAG = 'FILTER_BY_TAG';
-export const  FILTER_BY_BRANDS = 'FILTER_BY_TAG';
-export const  FILTER_BY_CREATED = 'FILTER_BY_TAG';
-export const  ORDER_BY_NAME = 'FILTER_BY_TAG';
+export const  FILTER_BY_BRANDS = 'FILTER_BY_BRANDS';
+export const  FILTER_BY_CREATED = 'FILTER_BY_CREATED';
+export const  ORDER_BY_NAME = 'ORDER_BY_NAME';
+export const  FILTER_BY_CATEGORY = 'FILTER_BY_CATEGORY';
+export const  GET_CATEGORIES = 'GET_CATEGORIES';
+export const  OPEN_MODAL = 'OPEN_MODAL';
+export const  LOGOUT = 'LOGOUT';
 
 
 export const getAllProducts = () => async dispatch => {
@@ -62,6 +65,17 @@ export const getProductDetail = (id) => async dispatch => {
     }
 };
 
+export const getCategories = () => async dispatch => {
+    try { 
+        const getCateory = await axios.get('/categories');
+        return dispatch({
+            type: GET_CATEGORIES,
+            payload: getCateory.data
+        });
+    } catch (error) {
+        console.error('Error Brands:', error);
+    }
+};
 export const getBrands = () => async dispatch => {
     try { 
         const getBrand = await axios.get('/brands');
@@ -72,18 +86,6 @@ export const getBrands = () => async dispatch => {
         });
     } catch (error) {
         console.error('Error Brands:', error);
-    }
-};
-
-export const getCategories = () => async dispatch => {
-    try { 
-        const getCategories = await axios.get('/categories');
-        return dispatch({
-            type: GET_CATEGORIES,
-            payload: getCategories.data
-        });
-    } catch (error) {
-        console.error('Error Categories:', error);
     }
 };
 
@@ -128,6 +130,13 @@ export const createProduct = (form) => async (dispatch) => {
     }
 };
 
+export const filterByCategory = (payload) => dispatch => {
+    return dispatch({
+        type: FILTER_BY_CATEGORY,
+        payload
+    })
+};
+
 export const filterByBrand = (payload) => dispatch => {
     return dispatch({
         type: FILTER_BY_BRANDS,
@@ -147,4 +156,17 @@ export const orderByName = (payload) => dispatch => {
         type: ORDER_BY_NAME,
         payload
     })
+};
+
+export function openModal(payload) {
+	return { 
+        type: OPEN_MODAL, 
+        payload, 
+    };
+};
+
+export function logout() {
+	return {
+		type: LOGOUT,
+	};
 };

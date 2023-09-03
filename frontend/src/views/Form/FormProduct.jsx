@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../redux/actions/index";
-import { getBrands,getCate } from '../../redux/actions';
+import { getBrands, getCategories } from '../../redux/actions';
 import style from "../../views/Form/Form.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -14,6 +14,7 @@ const FormProduct = () => {
 
   useEffect(() => {
     dispatch(getBrands());
+    dispatch(getCategories());
 }, [dispatch]);
 
   const [form, setForm] = useState({
@@ -26,6 +27,9 @@ const FormProduct = () => {
     min: 0, //agregado
     stock: 0,
     category: "",
+    subcategory: "Mouse",
+    tags: "Mouse",
+    rating:5,
     description: "",
   });
 
@@ -39,6 +43,9 @@ const FormProduct = () => {
     min: "¡Se requiere el min!",
     stock: "¡Se requiere el stock!",
     category: "¡Por favor ingresa una category!",
+    subcategory: "¡Por favor ingresa una subcategory!",
+    tags:"¡Por favor ingresa una tags!",
+    rating:"¡Por favor ingresa una rating!",
     description: "¡Por favor ingresa una description!",
   });
   function validate(form) {
@@ -68,8 +75,17 @@ const FormProduct = () => {
     if (isNaN(form.stock) === true || form.stock < 1) {
       error.stock = "¡Debe ser un numero mayor a 0!";
     }
+    if (isNaN(form.rating) === true || form.rating < 1) {
+      error.rating = "¡Debe ser un numero mayor a 0!";
+    }
     if (form.category === "" || form.brand === null) {
       error.category = "¡Por favor ingresa una category!";
+    }
+    if (form.subcategory === "" || form.subcategory === null) {
+      error.subcategory = "¡Por favor ingresa una subcategory!";
+    }
+    if (form.tags === "" || form.tags === null) {
+      error.tags = "¡Por favor ingresa una tags!";
     }
     if (form.description.length < 10) {
       error.description = "¡La descripcion debe ser mas larga!";
@@ -82,7 +98,7 @@ const FormProduct = () => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("image", file);
-    formData.append("key", "ccc0eb65a71efd80b4352eda77e05470"); // Replace with your ImgBB API key
+    formData.append("key", "1492e57d06d94a35b2f3124b4c2b79a2"); // Replace with your ImgBB API key
 
     try {
       const response = await axios.post(
