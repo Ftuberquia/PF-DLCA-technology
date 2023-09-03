@@ -10,7 +10,7 @@ const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
          <NavLink to={`/product/${id}`} style={{textDecoration:'none'}}>
             <img className={style.image} src={imageSrc} alt="" />
             <div className={style.detailCard}>
-                <p>{name}</p>
+                <p key={id}>{name}</p>
                 <p>${price}</p>
                 <p>Rating: {rating}</p>
             {/* <p>Stock: {stock}</p> */}
