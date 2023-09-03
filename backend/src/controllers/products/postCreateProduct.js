@@ -1,5 +1,4 @@
 const {Products, Tags, Brand, Category, Subcategory} = require('../../db');
-const brands = require('../../utils/brands');
 
 const postCreateProduct = async(name, href, category, imageSrc, imageAlt, price, stock, brand, subcategory, rating, description, isActive, tags)=> {
     if (!name && !href && !category && !imageSrc && !imageAlt && !price && !stock && !brand && !subcategory && !rating && !description && !isActive && !tags){
@@ -8,7 +7,7 @@ const postCreateProduct = async(name, href, category, imageSrc, imageAlt, price,
 
     //busco los brands que coincidan con los ingresados
     const categoryDB=await Category.findAll({where:{name:category}})
-    //aca va lo de subcategory
+    const subcategoryDb = await Subcategory.findAll({where:{name:subcategory}})
     const brandsDB=await Brand.findAll({where:{name:brand}})
 
     let newProduct = await Products.create({
@@ -25,7 +24,7 @@ const postCreateProduct = async(name, href, category, imageSrc, imageAlt, price,
         description, 
         isActive,
         categoryId:categoryDB[0].id,
-        //aca va lo de subcategory
+        subcategoryId:subcategoryDb[0].id,
         brandsId:brandsDB[0].id,
         tags,
     });
