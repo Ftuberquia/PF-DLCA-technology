@@ -14,7 +14,7 @@ const App = () => {
       <NavBar /> 
       <Switch>
         <Route path="/productos" component={Productos} />
-        <Route path="/products/ofertas" component={Ofertas} />
+        {/* <Route path="/products/ofertas" component={Ofertas} /> */}
         <Route path="/product/:id" component={ProductDetail} />
         <Route path="/form" component={Form} />
         

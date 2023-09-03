@@ -1201,10 +1201,11 @@ module.exports = productsData = [
       ],
       description: "Logitech POP Keys - Teclado mecánico inalámbrico con teclas Emoji personalizables, diseño compacto duradero, conectividad Bluetooth o USB"
     },
+    // correccion error hhttp
     {
       name: "Teclado Logitech POP Keys Black/Yellow Inalámbrico",
       href: "#",
-      imageSrc: "hhttps://i.ibb.co/VHfdWfK/img205.jpg",
+      imageSrc: "https://i.ibb.co/VHfdWfK/img205.jpg",
       imageAlt: "Teclado Logitech POP Keys Black/Yellow Inalámbrico",
       price: 108.99,
       stock: 7,
