@@ -3,6 +3,7 @@ export const  GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 export const  GET_PRODUCTS_BYNAME = 'GET_PRODUCTS_BYNAME';
 export const  GET_PRODUCT_DETAIL = 'GET_PRODUCT_DETAIL';
 export const  GET_BRANDS = 'GET_BRANDS';
+export const  GET_CATEGORIES = 'GET_CATEGORIES';
 export const  GET_TAGS = 'GET_TAGS';
 export const  CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const  DELETE_PRODUCT = 'DELETE_PRODUCT';
@@ -64,12 +65,25 @@ export const getProductDetail = (id) => async dispatch => {
 export const getBrands = () => async dispatch => {
     try { 
         const getBrand = await axios.get('/brands');
+        console.log('Brands:', getBrand);
         return dispatch({
             type: GET_BRANDS,
             payload: getBrand.data
         });
     } catch (error) {
         console.error('Error Brands:', error);
+    }
+};
+
+export const getCategories = () => async dispatch => {
+    try { 
+        const getCategories = await axios.get('/categories');
+        return dispatch({
+            type: GET_CATEGORIES,
+            payload: getCategories.data
+        });
+    } catch (error) {
+        console.error('Error Categories:', error);
     }
 };
 

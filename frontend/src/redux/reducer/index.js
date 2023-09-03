@@ -3,6 +3,7 @@ import { GET_PRODUCTS_BYNAME } from "../actions/index.js";
 import { GET_PRODUCT_DETAIL } from "../actions/index.js";
 import { GET_TAGS } from "../actions/index.js";
 import { GET_BRANDS } from "../actions/index.js";
+import { GET_CATEGORIES } from "../actions/index.js";
 import { CREATE_PRODUCT } from "../actions/index.js";
 import { DELETE_PRODUCT } from "../actions/index.js";
 import { FILTER_BY_BRANDS } from "../actions/index.js";
@@ -22,7 +23,7 @@ import { ORDER_BY_NAME } from "../actions/index.js";
     types: [],
     productsCopy: [], // copia Estado para emergencias 
     //para regresar al estado original cuando nesesite
-}
+};
 
 const rootReducer = (state = initialState, action) => {
     switch(action.type) {
@@ -56,6 +57,11 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 types: action.payload
             };
+            case GET_CATEGORIES:
+                return {
+                    ...state,
+                    categories: action.payload
+                };
             case CREATE_PRODUCT:
                 if (action.payload.status === 200) { 
                     return {
