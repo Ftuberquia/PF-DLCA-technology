@@ -8,9 +8,6 @@ import { DELETE_PRODUCT } from "../actions/index.js";
 import { FILTER_BY_BRANDS } from "../actions/index.js";
 import { FILTER_BY_CREATED } from "../actions/index.js";
 import { ORDER_BY_NAME } from "../actions/index.js";
-import { GET_CATEGORIES } from "../actions/index.js";
-import { GET_SUBCATEGORIES } from "../actions/index.js";
-import { CLEAN_CATEGORIES } from "../actions/index.js";
 import { OPEN_MODAL } from "../actions/index.js";
 import { LOGOUT } from "../actions/index.js";
 
@@ -110,25 +107,6 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 products: byName
             };
-
-            case GET_CATEGORIES: // acción que recupera la lista de categorías del servidor y actualiza el estado.
-                return {
-                ...state,
-                categories: {
-                [action.payload.id]: action.payload.name,
-                },
-            };
-
-            case GET_SUBCATEGORIES: // acción que ecupera la lista de subcategorías para una categoría determinada y actualiza el estado.
-                return {
-                ...state,
-                subcategories: {
-                [action.payload.id]: action.payload.name,
-                },
-            };
-            
-            case CLEAN_CATEGORIES: //  acción que elimina todas las categorías y subcategorías del estado.
-                return { ...state, categories: {}, subcategories: {} };
 
             case OPEN_MODAL:
                 return {

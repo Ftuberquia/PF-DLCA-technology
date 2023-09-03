@@ -94,7 +94,8 @@ function Navbar() {
               </li>
 				<li>
 				<NavLink className='nav_links' to='/favorites'>
-					<FontAwesomeIcon icon={faHeart} style={{cursor:'pointer'}} size='lg'  color='red' onClick={ () => handleLike()}/> 
+					<FontAwesomeIcon icon={faHeart} style={{cursor:'pointer'}} size='lg'  color='red' ></FontAwesomeIcon>
+          {/* onClick={ () => handleLike()}/>  */}
 				</NavLink >
 
 				</li>
