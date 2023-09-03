@@ -71,7 +71,7 @@ function Navbar() {
           }
 		  
 		  	<li>
-				<NavLink className='nav_links' to='/Home'>Home</NavLink >
+				<NavLink className='nav_links' to='/product'>Home</NavLink >
 			</li>
             <li>
 				<NavLink className='nav_links' to='/productos'>Products</NavLink >
