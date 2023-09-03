@@ -14,7 +14,7 @@ function Featured() {
         </div>
         <div className="card-container">
           <div className="card mb-30">
-            <NavLink to="/products">
+            <NavLink to="/productos">
               <img
                 src="https://i.ibb.co/zxp1fjm/img23.png"
                 alt="Notebooks y Laptops"
@@ -22,7 +22,7 @@ function Featured() {
             </NavLink>
           </div>
           <div className="card mb-30">
-            <NavLink to="/products">
+            <NavLink to="/productos">
               <img
                 src="https://i.ibb.co/DtxVgrx/img299.png"
                 alt="Periféricos"
@@ -30,7 +30,7 @@ function Featured() {
             </NavLink>
           </div>
           <div className="card mb-30">
-            <NavLink to="/products">
+            <NavLink to="/productos">
               <img
                 src="https://i.ibb.co/djrfxBd/img69.png"
                 alt="Componentes PC"
@@ -38,7 +38,7 @@ function Featured() {
             </NavLink>
           </div>
           <div className="card mb-30">
-            <NavLink to="/products">
+            <NavLink to="/productos">
               <img
                 src="https://i.ibb.co/hRSLRDX/img273.jpg"
                 alt="Accesorios"
