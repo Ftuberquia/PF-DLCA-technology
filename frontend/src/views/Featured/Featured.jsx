@@ -5,16 +5,14 @@ import "./Featured.css";
 function Featured() {
   return (
     <div className="contAccesorios">
-  <div className="containerAcc mt-100">
-    <div className="titleAcce">
-      <h2>
-        <span className="spanTitleAcc">💚</span> ¡DESTACADOS
-        <span className="spanTitleAcc"> GAMER</span>!
-      </h2>
-    </div>
-    <div className="row">
-      <div className="card-container">
-        <div className="col-md-6">
+      <div className="containerAcc mt-100">
+        <div className="titleAcce">
+          <h2>
+            <span className="spanTitleAcc">💚</span> ¡DESTACADOS
+            <span className="spanTitleAcc"> GAMER</span>!
+          </h2>
+        </div>
+        <div className="card-container">
           <div className="card mb-30">
             <NavLink to="/products">
               <img
@@ -23,10 +21,6 @@ function Featured() {
               />
             </NavLink>
           </div>
-        </div>
-      </div>
-      <div className="card-container">
-        <div className="col-md-6">
           <div className="card mb-30">
             <NavLink to="/products">
               <img
@@ -35,10 +29,6 @@ function Featured() {
               />
             </NavLink>
           </div>
-        </div>
-      </div>
-      <div className="card-container">
-        <div className="col-md-6">
           <div className="card mb-30">
             <NavLink to="/products">
               <img
@@ -47,10 +37,6 @@ function Featured() {
               />
             </NavLink>
           </div>
-        </div>
-      </div>
-      <div className="card-container">
-        <div className="col-md-6">
           <div className="card mb-30">
             <NavLink to="/products">
               <img
@@ -62,8 +48,7 @@ function Featured() {
         </div>
       </div>
     </div>
-  </div>
-</div>
-)};
+  );
+}
 
 export default Featured;

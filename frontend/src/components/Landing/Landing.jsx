@@ -45,7 +45,7 @@ function Landing() {
             />
           </Link>
         </div>
-        <div className="card">
+        {/* <div className="card">
           {products.map((product) => (
             <Card
               key={product.id}
@@ -55,7 +55,7 @@ function Landing() {
               price={product.price}
             />
           ))}
-        </div>
+        </div> */}
         <div>
           <h2 className="titleMarcas">
             ¡Las mejores marcas las encuentras en

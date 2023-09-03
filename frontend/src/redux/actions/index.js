@@ -10,7 +10,11 @@ export const  FILTER_BY_TAG = 'FILTER_BY_TAG';
 export const  FILTER_BY_BRANDS = 'FILTER_BY_TAG';
 export const  FILTER_BY_CREATED = 'FILTER_BY_TAG';
 export const  ORDER_BY_NAME = 'FILTER_BY_TAG';
-
+export const  GET_CATEGORIES = 'GET_CATEGORIES';
+export const  GET_SUBCATEGORIES = 'GET_SUBCATEGORIES';
+export const  CLEAN_CATEGORIES = 'CLEAN_CATEGORIES';
+export const  OPEN_MODAL = 'OPEN_MODAL';
+export const  LOGOUT = 'LOGOUT';
 
 export const getAllProducts = () => async dispatch => {
     try {
@@ -133,4 +137,52 @@ export const orderByName = (payload) => dispatch => {
         type: ORDER_BY_NAME,
         payload
     })
+};
+
+export function getCategories() {
+    return async function (dispatch) {
+      try {
+        const response = await axios.get('/categories');
+        return dispatch({ 
+            type: GET_CATEGORIES, 
+            payload: response.data 
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+};
+  
+export function getSubCategories(subcategoria) {
+    return async function (dispatch) {
+      try {
+        const response = await axios.get(`/subcategoria/${subcategoria}`);
+        const data = response.data;
+        return dispatch({ 
+            type: GET_SUBCATEGORIES, 
+            payload: data 
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+};
+  
+export const cleanCategories = () => {
+    return { 
+        type: CLEAN_CATEGORIES, 
+    };
+};
+  
+export function openModal(payload) {
+	return { 
+        type: OPEN_MODAL, 
+        payload, 
+    };
+};
+
+export function logout() {
+	return {
+		type: LOGOUT,
+	};
 };
