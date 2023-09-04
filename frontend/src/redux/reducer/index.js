@@ -13,6 +13,7 @@ import { GET_CATEGORIES } from "../actions/index.js";
 import { OPEN_MODAL } from "../actions/index.js";
 import { LOGOUT } from "../actions/index.js";
 import { GET_SUBCATEGORIES } from "../actions/index.js";
+import { CLEAN_DETAIL } from "../actions/index.js";
 
 
   const initialState = {
@@ -29,6 +30,7 @@ import { GET_SUBCATEGORIES } from "../actions/index.js";
     reviewsFromUser: [],
     productsCopy: [], // copia Estado para emergencias 
     //para regresar al estado original cuando nesesite
+
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -157,8 +159,11 @@ const rootReducer = (state = initialState, action) => {
                     user: {},
                     reviewsFromUser: [],
             };
-    
-                   
+            case CLEAN_DETAIL:
+                return{
+                    ...state,
+                    productDetail: {}
+                }
             default:
             return {...state};
         }

@@ -15,6 +15,7 @@ export const  GET_CATEGORIES = 'GET_CATEGORIES';
 export const  OPEN_MODAL = 'OPEN_MODAL';
 export const  LOGOUT = 'LOGOUT';
 export const  GET_SUBCATEGORIES = 'GET_SUBCATEGORIES';
+export const  CLEAN_DETAIL = "CLEAN_DETAIL"
 
 
 export const getAllProducts = () => async dispatch => {
@@ -184,3 +185,9 @@ export function logout() {
 		type: LOGOUT,
 	};
 };
+
+export function cleanDetail() {
+    return {
+        type: CLEAN_DETAIL,
+    };
+}
