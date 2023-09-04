@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../redux/actions/index";
-import { getBrands, getCategories } from '../../redux/actions';
+import {
+  getBrands,
+  getCategories,
+  getSubCategories,
+} from "../../redux/actions";
 import style from "../../views/Form/Form.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const FormProduct = () => {
   const dispatch = useDispatch();
@@ -15,7 +20,8 @@ const FormProduct = () => {
   useEffect(() => {
     dispatch(getBrands());
     dispatch(getCategories());
-}, [dispatch]);
+    dispatch(getSubCategories());
+  }, [dispatch]);
 
   const [form, setForm] = useState({
     name: "",
@@ -27,9 +33,9 @@ const FormProduct = () => {
     min: 0, //agregado
     stock: 0,
     category: "",
-    subcategory: "Mouse",
-    tags: "Mouse",
-    rating:5,
+    subcategory: "",
+    tags: "",
+    rating: 0,
     description: "",
   });
 
@@ -44,8 +50,8 @@ const FormProduct = () => {
     stock: "¡Se requiere el stock!",
     category: "¡Por favor ingresa una category!",
     subcategory: "¡Por favor ingresa una subcategory!",
-    tags:"¡Por favor ingresa una tags!",
-    rating:"¡Por favor ingresa una rating!",
+    tags: "¡Por favor ingresa una tags!",
+    rating: "¡Por favor ingresa una rating!",
     description: "¡Por favor ingresa una description!",
   });
   function validate(form) {
@@ -152,6 +158,20 @@ const FormProduct = () => {
     );
   };
 
+  // funcion select Subcategory
+  const handleSelectSubCategory = (event) => {
+    setForm({
+      ...form,
+      subcategory: event.target.value,
+    });
+    setError(
+      validate({
+        ...form,
+        subcategory: event.target.value,
+      })
+    );
+  };
+
   const changeHandler = (event) => {
     setForm({
       ...form,
@@ -204,9 +224,11 @@ const FormProduct = () => {
 
   const brands = useSelector((state) => state.brands);
   const categories = useSelector((state) => state.categories);
+  const subcategories = useSelector((state) => state.subcategories);
 
   const [newbrand, setNewbrand] = useState(false);
   const [newcategory, setNewCategory] = useState(false);
+  const [newsubcategory, setNewSubcategory] = useState(false);
 
   const handleInputBrand = () => {
     setNewbrand(true);
@@ -220,8 +242,16 @@ const FormProduct = () => {
     setNewCategory(true);
   };
 
+  const handleInputSubCategory = () => {
+    setNewSubcategory(true);
+  };
+
   const handleInputCategory2 = () => {
     setNewCategory(false);
+  };
+
+  const handleInputSubCategory2 = () => {
+    setNewSubcategory(false);
   };
   return (
     <div className={style.form__C}>
@@ -245,19 +275,6 @@ const FormProduct = () => {
             <strong className={style.card__content}>{error.name}</strong>
           )}
 
-          {/* <div className={style.card__form}>
-            <label className={style.label__form}>Image of product: </label>
-            <input
-              type="text"
-              value={form.imageSrc}
-              onChange={(e) => changeHandler(e)}
-              name="imageSrc"
-              placeholder="Ingresa la URL de la imagen..."
-            />
-            {imageSrc && (
-              <strong className={style.card__content}>{imageSrc}</strong>
-            )}
-          </div> */}
           <div className={style.imgCont}>
             <label className={style.label__form}>Imagen del producto: </label>
 
@@ -267,14 +284,14 @@ const FormProduct = () => {
               name="imageSrc"
               accept="image/*" // Restringe la selección de archivos a imágenes solamente
             />
-            {form.imageSrc && (
-              <img
-                src={form.imageSrc}
-                alt="Producto"
-                className={style.uploadedImage}
-              />
-            )}
           </div>
+          {form.imageSrc && (
+            <img
+              src={form.imageSrc}
+              alt="Producto"
+              className={style.uploadedImage}
+            />
+          )}
           {error.imageSrc && (
             <strong className={style.card__content}>{error.imageSrc}</strong>
           )}
@@ -307,20 +324,6 @@ const FormProduct = () => {
             <strong className={style.card__content}>{error.stock}</strong>
           )}
 
-          {/* <div className={style.card__form}>
-            <label className={style.label__form}>Brand: </label>
-            <input
-              type="text"
-              value={form.value}
-              onChange={(e) => changeHandler(e)}
-              name="brand"
-              placeholder="Escribe la marca del producto..."
-            />
-            {error.brand && (
-              <strong className={style.card__content}>{error.brand}</strong>
-            )}
-          </div> */}
-
           <div className={style.card__form}>
             <label className={style.label__form}>Brand: </label>
             {newbrand === false ? (
@@ -329,9 +332,12 @@ const FormProduct = () => {
                 onChange={handleSelectBrand}
               >
                 <option value="">Selecciona una marca</option>
-                {brands.length > 0 && brands.map((brand) => (
-                    <option key={brand.id} value={brand.name}>{brand.name}</option>
-                ))}
+                {brands.length > 0 &&
+                  brands.map((brand) => (
+                    <option key={brand.id} value={brand.name}>
+                      {brand.name}
+                    </option>
+                  ))}
               </select>
             ) : null}
             {newbrand === true ? (
@@ -356,20 +362,6 @@ const FormProduct = () => {
           {error.brand && (
             <strong className={style.card__content}>{error.brand}</strong>
           )}
-
-          {/* <div className={style.card__form}>
-            <label className={style.label__form}>Category: </label>
-            <input
-              type="text"
-              value={form.value}
-              onChange={(e) => changeHandler(e)}
-              name="category"
-              placeholder="Escribe la categoría del producto..."
-            />
-            {error.category && (
-              <strong className={style.card__content}>{error.category}</strong>
-            )}
-          </div> */}
 
           <div className={style.card__form}>
             <label className={style.label__form}>Category: </label>
@@ -412,6 +404,70 @@ const FormProduct = () => {
           )}
           {error.category && (
             <strong className={style.card__content}>{error.category}</strong>
+          )}
+
+          <div className={style.card__form}>
+            <label className={style.label__form}>SubCategory: </label>
+            {newsubcategory === false ? (
+              <select
+                className={style.selectBrandCategory}
+                onChange={handleSelectSubCategory}
+              >
+                <option value="">SubCategory</option>
+                {subcategories.map((subcategory) => (
+                  <option value={subcategory}>{subcategory}</option>
+                ))}
+              </select>
+            ) : null}
+
+            {newsubcategory === true ? (
+              <input
+                type="text"
+                name="subcategory"
+                value={form.value}
+                onChange={(e) => changeHandler(e)}
+                placeholder="Add new SubCategory..."
+              />
+            ) : null}
+          </div>
+          {!newsubcategory ? (
+            <div
+              className={style.addBrandCategory}
+              onClick={handleInputSubCategory}
+            >
+              -Click Here to add new SubCategory-
+            </div>
+          ) : null}
+          {error.subcategory && (
+            <strong className={style.card__content}>{error.subcategory}</strong>
+          )}
+
+          <div className={style.card__form}>
+            <label className={style.label__form}>Tags: </label>
+            <input
+              type="text"
+              value={form.value}
+              onChange={(e) => changeHandler(e)}
+              name="tags"
+              placeholder="Escribe la tags del producto..."
+            />
+          </div>
+          {error.tags && (
+            <strong className={style.card__content}>{error.tags}</strong>
+          )}
+
+          <div className={style.card__form}>
+            <label className={style.label__form}>Rating: </label>
+            <input
+              type="text"
+              value={form.value}
+              onChange={(e) => changeHandler(e)}
+              name="rating"
+              placeholder="Escribe la rating del producto..."
+            />
+          </div>
+          {error.rating && (
+            <strong className={style.card__content}>{error.rating}</strong>
           )}
 
           <div className={style.card__form}>
@@ -474,37 +530,6 @@ const FormProduct = () => {
           {error.min && (
             <strong className={style.card__content}>{error.min}</strong>
           )}
-
-          {/* {error.imageSrc ||
-          error.name ||
-          error.price ||
-          error.category ||
-          error.brand ||
-          error.description ||
-          error.imageAlt ||
-          error.href ||
-          error.min ? null : ( */}
-
-          {/* )} */}
-          {/* <div calssName={style.btn}>
-
-            <button
-              disabled={
-                nameError ||
-                priceError ||
-                categoryError ||
-                brandError ||
-                descriptionError ||
-                imageAltError ||
-                hrefError ||
-                minError
-              }
-              type="submit"
-              className={style.btn}
-            >
-              Create product
-            </button>
-          </div> */}
         </form>
         <button className={style.btn} type="submit" onClick={submitHandler}>
           Create product
