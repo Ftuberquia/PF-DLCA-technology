@@ -71,8 +71,8 @@ return (
                 <select className='filter-butt' id='order-category' onChange={(event) => handlefilterByCategory(event)}>
                     <option key="order" value="order">Order Category</option>
                     <option key="A-Z" value="A-Z">A - Z</option>
-                    {categories.length > 0 && categories.map((category) => (
-                    <option key={category} value={category}>{category}</option>
+                    {categories.length > 0 && categories.map((category, index) => (
+                    <option key={index} value={category}>{category}</option>
                 ))}
                 </select>
                 {/* <select className='filter-butt' id='attack' onChange={(event) => handleOrderByPrice(event)}>
@@ -85,8 +85,8 @@ return (
             <select className='order-butt' id='brands' onChange={(event) => handleFilterByBrand(event)}>
                 <option key="brand" value="brand">Brand</option>
                 <option key="all" value="All">All</option>
-                {brands.length > 0 && brands.map((brand) => (
-                    <option key={brand.id} value={brand.name}>{brand.name}</option>
+                {brands.length > 0 && brands.map((brand, index) => (
+                    <option key={index} value={brand.name}>{brand.name}</option>
                 ))}
             </select>
                 <select className='order-butt' id='created' onChange={(event) => handleFilterByCreated(event)}>
