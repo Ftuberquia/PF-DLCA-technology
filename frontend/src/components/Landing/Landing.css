@@ -76,8 +76,10 @@
 
 .imgArmaPC {
   width: 100%;
-  display: block;
-  margin: 60px auto;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .imgArmaPC img {
@@ -90,7 +92,7 @@
 }
 
 .logoPartners {
-  background-color: #37373f;
+  /* background-color: #37373f; */
   display: flex;
   justify-content: center;
   align-items: center;

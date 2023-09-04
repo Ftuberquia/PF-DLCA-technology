@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import {useDispatch} from "react-redux"
 import {useHistory} from "react-router-dom"
-import { getProductByName } from "../../redux/actions"; 
+import { getProductByName } from "../../redux/actions/index"; 
 import styles from "./SearchBar.module.css";
 const SearchBar = () => {
   const navigate = useHistory()
