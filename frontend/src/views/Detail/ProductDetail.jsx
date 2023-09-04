@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux"; 
-import { getProductDetail } from "../../redux/actions/index";
+import { getProductDetail, cleanDetail } from "../../redux/actions/index";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -13,7 +13,10 @@ const ProductDetail = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getProductDetail(id));
+        dispatch(getProductDetail(id))
+        return() =>{
+            dispatch(cleanDetail())
+        }
     }, [dispatch, id])
 
     if (!product) {
