@@ -57,13 +57,13 @@ function Navbar() {
             <li>
 			<NavLink className='nav_links' to='/register'
              	onClick={() => dispatch(openModal('signUp'))}>
-				Register
+				Registro
 			 </NavLink >
             </li>
             <li> 
              <NavLink className='nav_links' to='/login'
 			 	onClick={() => dispatch(openModal('signUp'))}>
-				Login
+				Acceso
 		 	</NavLink >
             </li>
             </>
@@ -71,17 +71,17 @@ function Navbar() {
           }
 		  
 		  	<li>
-				<NavLink className='nav_links' to='/product'>Home</NavLink >
+				<NavLink className='nav_links' to='/product'>Inicio</NavLink >
 			</li>
             <li>
-				<NavLink className='nav_links' to='/productos'>Products</NavLink >
+				<NavLink className='nav_links' to='/productos'>Productos</NavLink >
 			</li>
             <li >
               <NavLink
               to='/about'
               className='nav_links'
               >
-                About us
+                Sobre nosotros
               </NavLink>
             </li>
             <li>
