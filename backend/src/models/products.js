@@ -3,19 +3,14 @@ const { DataTypes } = require('sequelize');
 const Products = (sequelize) => {
 	sequelize.define('products', {
 
-        id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
-            primaryKey: true,
-            allowNull: false
-        },
         name: {
             type: DataTypes.STRING,
             allowNull: false
         },
         href: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue:'#',
         },
         imageSrc: {
             type: DataTypes.STRING,
@@ -46,7 +41,9 @@ const Products = (sequelize) => {
             allowNull: false
         },
         rating: {
-			type: DataTypes.FLOAT,
+			type: DataTypes.REAL,
+            allowNull: false,
+            defaultValue: 0,
 		},
         description: {
             type: DataTypes.TEXT,

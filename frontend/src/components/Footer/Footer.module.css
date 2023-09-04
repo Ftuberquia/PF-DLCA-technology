@@ -1,0 +1,60 @@
+footer {
+  margin-top: 15px;
+  padding: 20px 20px 0px 20px;
+  bottom: 0px;
+  width: 100%;
+  background-color: rgb(12, 10, 138);
+  color: white;
+}
+.Footer {
+  width: 100%;
+}
+.container_foot {
+  display: flex;
+  justify-content: space-around;
+}
+
+.colum1 {
+  max-width: 400px;
+}
+.colum1_p {
+  font-size: 22px;
+}
+.colum1_spn {
+  font-size: 14px;
+  color: #c7c7c7;
+  margin-top: 20px;
+}
+
+.container_footer {
+  display: flex;
+  justify-content: space-between;
+
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 3px;
+  /* background-color: rgb(12, 12, 12); */
+}
+.copy a {
+  text-decoration: none;
+  color: white;
+}
+.info a {
+  text-decoration: none;
+  color: white;
+  margin-left: -60%;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.column2 {
+  margin-bottom: 10px;
+}
+

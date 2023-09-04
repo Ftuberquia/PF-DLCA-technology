@@ -1,0 +1,117 @@
+.contAccesorios {
+  background-color: #d1d1db;
+}
+
+.containerAcc {
+  width: 100%;
+  border: 2px solid rgba(0, 0, 0, 0);
+}
+
+.rowAcc {
+  display: flex;
+  margin-left: 40px;
+  margin-right: 20px;
+}
+
+.titleAcce {
+  display: flex;
+  justify-content: center;
+  margin-top: 0;
+  font-family: "Consolas", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 40px;
+}
+
+.titleAcce h2 {
+  color: rgb(162, 162, 172);
+}
+
+.spanTitleAcc {
+  color: #bc56c0;
+  font-weight: bold;
+}
+
+.spanTitleAcc:hover {
+  filter: brightness(1.2);
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  border-radius: 7px !important;
+  border-color: #adaeaf;
+  align-items: center;
+  width: 20rem;
+  height: 15rem;
+  overflow: hidden;
+  padding: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, filter 0.3s ease;
+  margin-bottom: 1rem;
+  margin-right: 1%;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  filter: brightness(1.2);
+}
+
+
+.mb-30 {
+  margin-bottom: 40px !important;
+  margin-top: 30px !important;
+}
+
+@media screen and (max-width: 1400px) and (min-width: 500px) {
+  .contAccesorios {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .contAccesorios {
+    display: none;
+  }
+}
+
+.card img {
+  width: 16rem;
+  height: 15rem;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* .card-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-family: "Consolas", sans-serif;
+} */
+
+/* .card-text {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  font-family: "Consolas", sans-serif;
+} */
+
+/* .card-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  transition: filter 0.3s ease;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+}
+
+.card-button:hover {
+  filter: brightness(1.2);
+} */
