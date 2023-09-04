@@ -14,6 +14,7 @@ export const  FILTER_BY_CATEGORY = 'FILTER_BY_CATEGORY';
 export const  GET_CATEGORIES = 'GET_CATEGORIES';
 export const  OPEN_MODAL = 'OPEN_MODAL';
 export const  LOGOUT = 'LOGOUT';
+export const  GET_SUBCATEGORIES = 'GET_SUBCATEGORIES';
 
 
 export const getAllProducts = () => async dispatch => {
@@ -76,6 +77,19 @@ export const getCategories = () => async dispatch => {
         console.error('Error Brands:', error);
     }
 };
+
+export const getSubCategories = () => async dispatch => {
+    try { 
+        const getSubCategory = await axios.get('/subcategoria');
+        return dispatch({
+            type: GET_SUBCATEGORIES,
+            payload: getSubCategory.data
+        });
+    } catch (error) {
+        console.error('Error Subcategorias:', error);
+    }
+};
+
 export const getBrands = () => async dispatch => {
     try { 
         const getBrand = await axios.get('/brands');

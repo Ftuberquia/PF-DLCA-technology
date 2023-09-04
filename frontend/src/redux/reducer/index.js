@@ -12,6 +12,7 @@ import { FILTER_BY_CATEGORY } from "../actions/index.js";
 import { GET_CATEGORIES } from "../actions/index.js";
 import { OPEN_MODAL } from "../actions/index.js";
 import { LOGOUT } from "../actions/index.js";
+import { GET_SUBCATEGORIES } from "../actions/index.js";
 
 
   const initialState = {
@@ -59,6 +60,7 @@ const rootReducer = (state = initialState, action) => {
                 categories: action.payload
             };
             case GET_BRANDS:
+                console.log(state.brands)
             return {
                 ...state,
                 brands: action.payload
@@ -68,10 +70,10 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 types: action.payload
             };
-            case GET_CATEGORIES:
+            case GET_SUBCATEGORIES:
                 return {
                     ...state,
-                    categories: action.payload
+                    subcategories: action.payload
                 };
             case CREATE_PRODUCT:
                 if (action.payload.status === 200) { 

@@ -33,8 +33,7 @@ module.exports=brandsData=[
     },
     {
       name: "Intel",
-      logo: "https://i.ibb.co/S337r9h/intel-logo.png",
-      "tags": ["Monitor", "Pro", "Keyboard", "Laptops", "Notebook"]
+      logo: "https://i.ibb.co/S337r9h/intel-logo.png"
     },
     {
       name: "Nintendo",
