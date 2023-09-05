@@ -15,7 +15,7 @@ export const  GET_CATEGORIES = 'GET_CATEGORIES';
 export const  OPEN_MODAL = 'OPEN_MODAL';
 export const  LOGOUT = 'LOGOUT';
 export const  GET_SUBCATEGORIES = 'GET_SUBCATEGORIES';
-
+export const  ORDER_BY_PRICE = 'ORDER_BY_PRICE';
 
 export const getAllProducts = () => async dispatch => {
     try {
@@ -158,16 +158,22 @@ export const filterByBrand = (payload) => dispatch => {
     })
 };
 
-export const filterByCreated = (payload) => dispatch => {
+export const orderByName = (payload) => dispatch => {
     return dispatch({
-        type: FILTER_BY_CREATED,
+        type: ORDER_BY_NAME,
+        payload
+    })
+};
+export const orderByPrice = (payload) => dispatch => {
+    return dispatch({
+        type: ORDER_BY_PRICE,
         payload
     })
 };
 
-export const orderByName = (payload) => dispatch => {
+export const filterByCreated = (payload) => dispatch => {
     return dispatch({
-        type: ORDER_BY_NAME,
+        type: FILTER_BY_CREATED,
         payload
     })
 };

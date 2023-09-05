@@ -370,10 +370,10 @@ const FormProduct = () => {
                 className={style.selectBrandCategory}
                 onChange={handleSelectCategory}
               >
-                <option value="">Category</option>
+                {/* <option value="">Category</option>
                 {categories.map((category) => (
                   <option value={category}>{category}</option>
-                ))}
+                ))} */}
               </select>
             ) : null}
 

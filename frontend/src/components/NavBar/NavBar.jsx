@@ -89,7 +89,7 @@ function Navbar() {
               className='nav_links'
 			  to='/cart'
               >
-				<FontAwesomeIcon icon={faCartShopping} badgeContent={cart &&  [].concat(cart).reduce((accumulator, currentValue) => accumulator + currentValue.cuantity,0)} color='secondary' /> 
+				{/* <FontAwesomeIcon icon={faCartShopping} badgeContent={cart &&  [].concat(cart).reduce((accumulator, currentValue) => accumulator + currentValue.cuantity,0)} color='secondary' />  */}
 				</NavLink>
               </li>
 				<li>
