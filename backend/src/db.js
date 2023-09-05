@@ -44,21 +44,26 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 
 //DESTRUCTURING DE MODEL Y CREACION DE RELACIONES:
-const { Users, Products, Orders, Favorites, Cart, Brand, Category, Tags, Subcategory, Review } = sequelize.models;
+const { Users, Products, Orders, Cart, Brand, Category, Tags, Subcategory, Review } = sequelize.models;
 // Aca vendrian las relaciones
 
 // Relación de Users:
-Users.hasMany(Orders, {as:'users'});	//hasMany 1 A con muchos B, el as se usa en solicitudes a la DB
-Orders.belongsTo(Users);
+Users.hasMany(Orders, {foreignKey:'userOrderId', as: 'user'});	//hasMany 1 A con muchos B, el as se usa en solicitudes a la DB
+Orders.belongsTo(Users, {foreignKey:'userOrderId', as: 'orders'});
 
-Users.hasOne(Cart, { foreignKey: 'userId' });	//hasOne relacion de 1A a 1B donde B tiene la clave foranea
+Users.hasOne(Cart);	//hasOne relacion de 1A a 1B donde B tiene la clave foranea
 Cart.belongsTo(Users);
 
-Users.hasMany(Favorites);
-Favorites.belongsTo(Users, {foreignKey: 'userFavId'});		//belongsTo es relacion 1 a 1 entre A y B y la foreignkey se crea en A
+//es realmente necesario el modelo favorites?
+// Users.hasMany(Favorites,{foreignKey: 'userFavId', as:'favorites'});
+// Favorites.belongsTo(Users, {foreignKey: 'userFavId', as:'favoritesUsers'});		//belongsTo es relacion 1 a 1 entre A y B y la foreignkey se crea en A
 
-Users.hasMany(Review);
-Review.belongsTo(Users, { foreignKey: 'userRevId' });
+//creo una tabla intermedia para hacer los favoritos
+Products.belongsToMany(Users, { through: 'favorites', as: 'users', foreignKey: 'productId' });
+Users.belongsToMany(Products, { through: 'favorites', as: 'products', foreignKey: 'userId' });
+
+Users.hasMany(Review, { foreignKey: 'userId', as: 'reviews' });
+Review.belongsTo(Users, { foreignKey: 'userId' });
 
 // Relación de Products:
 Products.belongsToMany(Tags, {through:"tags_products"});
@@ -76,19 +81,24 @@ Subcategory.belongsTo(Category, {foreignKey: 'catSubId', as: 'catSub'})
 Brand.hasMany(Products, {foreignKey: 'brandsId', as: 'brands'});
 Products.belongsTo(Brand,{foreignKey: 'brandsId', as: 'productBrands'});
 
-Products.belongsToMany(Favorites, {through:"favorites_products"});
-Favorites.belongsToMany(Products, {through:"favorites_products"});
+Products.hasMany(Review, { foreignKey: 'productId', as: 'reviews' });
+Review.belongsTo(Products, { foreignKey: 'productId' });
 
-Products.hasMany(Review);
-Review.belongsTo(Products);
+//es realmente necesario?
+// Products.belongsToMany(Favorites, {through:"favorites_products"});
+// Favorites.belongsToMany(Products, {through:"favorites_products"});
 
-Products.belongsToMany(Orders, {through:"orders_products"});	//belongsToMany muchos a muchos, crea una tabla intermedia en donde se juntan las claves foraneas de A y B
-Orders.belongsToMany(Products, {through:"orders_products"});
+//Averiguar bien como seria esta relacion
+// Products.belongsToMany(Orders, {through:"orders_products"});	//belongsToMany muchos a muchos, crea una tabla intermedia en donde se juntan las claves foraneas de A y B
+// Orders.belongsToMany(Products, {through:"orders_products"});
 
-Products.belongsToMany(Cart, {through:"cart_products"});
-Cart.belongsToMany(Products, {through:"cart_products"});
+// Products.belongsToMany(Cart, {through:"cart_products"});
+// Cart.belongsToMany(Products, {through:"cart_products"});
 
 module.exports = {
 ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
 conn: sequelize, // para importar la conexión { conn } = require('./db.js');
 };
+
+
+//Preguntar como establecer la restricción de que un usuario solo pueda hacer un review a un producto, como agregar una restricción UNIQUE en la tabla intermedia entre "users" y "products" en la columna "userId" y "productId"
