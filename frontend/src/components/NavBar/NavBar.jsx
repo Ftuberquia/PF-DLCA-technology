@@ -71,7 +71,7 @@ function Navbar() {
           }
 		  
 		  	<li>
-				<NavLink className='nav_links' to='/product'>Inicio</NavLink >
+				<NavLink className='nav_links' to='/'>Inicio</NavLink >
 			</li>
             <li>
 				<NavLink className='nav_links' to='/productos'>Productos</NavLink >
@@ -82,6 +82,14 @@ function Navbar() {
               className='nav_links'
               >
                 Sobre nosotros
+              </NavLink>
+            </li>
+            <li >
+              <NavLink
+              to='/contacto'
+              className='nav_links'
+              >
+                Contáctenos
               </NavLink>
             </li>
             <li>
