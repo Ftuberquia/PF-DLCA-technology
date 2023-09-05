@@ -13,7 +13,13 @@ import { GET_CATEGORIES } from "../actions/index.js";
 import { OPEN_MODAL } from "../actions/index.js";
 import { LOGOUT } from "../actions/index.js";
 import { GET_SUBCATEGORIES } from "../actions/index.js";
+<<<<<<< HEAD
 import {ORDER_BY_PRICE} from "../actions/index.js";
+=======
+import { CLEAN_DETAIL } from "../actions/index.js";
+
+
+>>>>>>> 8846b399355b30f186a8e3b95325a91803ab6757
   const initialState = {
     products: [],
     order: [],
@@ -28,6 +34,7 @@ import {ORDER_BY_PRICE} from "../actions/index.js";
     reviewsFromUser: [],
     productsCopy: [], // copia Estado para emergencias 
     //para regresar al estado original cuando nesesite
+
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -171,8 +178,11 @@ const rootReducer = (state = initialState, action) => {
                     user: {},
                     reviewsFromUser: [],
             };
-    
-                   
+            case CLEAN_DETAIL:
+                return{
+                    ...state,
+                    productDetail: {}
+                }
             default:
             return {...state};
         }

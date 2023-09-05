@@ -15,7 +15,12 @@ export const  GET_CATEGORIES = 'GET_CATEGORIES';
 export const  OPEN_MODAL = 'OPEN_MODAL';
 export const  LOGOUT = 'LOGOUT';
 export const  GET_SUBCATEGORIES = 'GET_SUBCATEGORIES';
+<<<<<<< HEAD
 export const  ORDER_BY_PRICE = 'ORDER_BY_PRICE';
+=======
+export const  CLEAN_DETAIL = "CLEAN_DETAIL"
+
+>>>>>>> 8846b399355b30f186a8e3b95325a91803ab6757
 
 export const getAllProducts = () => async dispatch => {
     try {
@@ -190,3 +195,9 @@ export function logout() {
 		type: LOGOUT,
 	};
 };
+
+export function cleanDetail() {
+    return {
+        type: CLEAN_DETAIL,
+    };
+}
