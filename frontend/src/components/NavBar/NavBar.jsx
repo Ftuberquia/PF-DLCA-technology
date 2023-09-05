@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping, faHeart } from '@fortawesome/free-solid-svg-icons'
 
 
+
 function Navbar() {
     const cart = useSelector(state => state.cart)
     const history = useHistory()
@@ -61,10 +62,7 @@ function Navbar() {
 			 </NavLink >
             </li>
             <li> 
-             <NavLink className='nav_links' to='/login'
-			 	onClick={() => dispatch(openModal('signUp'))}>
-				Acceso
-		 	</NavLink >
+             <NavLink className='nav_links' to='/login'>Acceso</NavLink >
             </li>
             </>
 			
