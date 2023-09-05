@@ -7,6 +7,7 @@ const subCategories = require ("../routes/subCategories/routeSubCategories");
 const tags = require("./tags/routeTags");
 const brands=require('./brands/routeBrands');
 const contactHandler = require("../handlers/contact/contactHandler");
+const favorites = require("./favorites/routeFav");
 
 const router = Router();
 
@@ -27,6 +28,9 @@ router.use('/brands',brands)
 
 //este guarda los productos en la base de datos : !!se usa una sola vez para llenar la base de datos!!
 router.use("/db", getDbProductsHandler)
+
+//Ruta para los favorites
+router.use("/favorites", favorites)
 
 // router.use("/contact", contactHandler)
 
