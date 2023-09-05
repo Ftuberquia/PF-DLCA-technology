@@ -28,7 +28,7 @@ router.use('/brands',brands)
 //este guarda los productos en la base de datos : !!se usa una sola vez para llenar la base de datos!!
 router.use("/db", getDbProductsHandler)
 
-router.use("/contact", contactHandler)
+// router.use("/contact", contactHandler)
 
 module.exports = router;
 
