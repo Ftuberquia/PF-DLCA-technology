@@ -15,7 +15,11 @@ export const  GET_CATEGORIES = 'GET_CATEGORIES';
 export const  OPEN_MODAL = 'OPEN_MODAL';
 export const  LOGOUT = 'LOGOUT';
 export const  GET_SUBCATEGORIES = 'GET_SUBCATEGORIES';
-export const  CLEAN_DETAIL = "CLEAN_DETAIL"
+export const  CLEAN_DETAIL = "CLEAN_DETAIL";
+export const PUT_USER = 'PUT_USER';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+export const CLEAN_CART = 'CLEAR_CART';
 
 
 export const getAllProducts = () => async dispatch => {
@@ -145,6 +149,18 @@ export const createProduct = (form) => async (dispatch) => {
     }
 };
 
+//modifica los datos del usuario en la db
+export function putUser(email, user) { 
+    return async function (dispatch) {
+        const json = await axios.put(`/modifyUser/${email}`, user);
+        const data = json.data;
+        dispatch({
+            type: PUT_USER,
+            payload: data
+        })
+    }
+}
+
 export const filterByCategory = (payload) => dispatch => {
     return dispatch({
         type: FILTER_BY_CATEGORY,
@@ -191,3 +207,24 @@ export function cleanDetail() {
         type: CLEAN_DETAIL,
     };
 }
+
+//Cart
+export function addToCart(product) {
+    return {
+        type: ADD_TO_CART,
+        payload: product
+    }
+};
+    
+export function removeFromCart(product) {
+    return {
+        type: REMOVE_FROM_CART,
+        payload: product
+    }
+};
+    
+export function clearCart() {
+    return {
+        type: CLEAN_CART
+    }
+};
