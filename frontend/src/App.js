@@ -9,6 +9,7 @@ import Form from "./views/Form/FormProduct";
 import Productos from "./views/Productos/Productos";
 import { ContactUs } from "./views/ContactUs/ContactUs";
 import Favorites from "./views/Favorites/FavoritesProducts";
+import Stripe from "./views/Stripe/Stripe";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/form" component={Form} />
         <Route path="/contacto" component={ContactUs} />
         <Route exact path="/" component={Landing} />
+        <Route path="/compra" component={Stripe} />
         <Route path="/favorites" component={Favorites} />
       </Switch>
       <Footer />

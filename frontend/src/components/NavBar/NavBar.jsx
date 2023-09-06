@@ -37,6 +37,14 @@ const NavBar = () => {
                 Contáctenos
               </NavLink>
             </li>
+            <li >
+              <NavLink
+              to={'/compra'}
+              className={styles.links}
+              >
+                Comprar
+              </NavLink>
+            </li>
       <div className={styles.buttons}>
         <NavLink to={"/login"}>
           <img src={personIcon} alt="Login" />
