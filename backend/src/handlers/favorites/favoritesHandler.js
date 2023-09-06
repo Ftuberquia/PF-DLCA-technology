@@ -1,6 +1,6 @@
 const {saveFavoriteProduct}=require('../../controllers/favorites/postProductFav')
 const {removeFavoriteProduct}=require('../../controllers/favorites/deleteProductFav');
-const { getFavoriteProducts } = require('../../controllers/favorites/getFavs');
+const getFavoriteProducts = require('../../controllers/favorites/getFavs');
 
 
 const saveFavorite=async(req,res)=>{

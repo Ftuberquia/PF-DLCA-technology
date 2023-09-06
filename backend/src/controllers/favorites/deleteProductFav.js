@@ -1,4 +1,4 @@
-const { Users, Products, Favorites } = require('../../db');
+const { Users, Products } = require('../../db');
 
 const removeFavoriteProduct = async (req, res) => {
     try {
@@ -13,9 +13,7 @@ const removeFavoriteProduct = async (req, res) => {
       }
   
       // Elimina la entrada de la tabla intermedia "favorites"
-      await Favorites.destroy({
-        where: { userId, productId },
-      });
+      await user.removeProduct(productId)
   
       return res.status(200).json({ message: 'Producto eliminado de favoritos' });
     
