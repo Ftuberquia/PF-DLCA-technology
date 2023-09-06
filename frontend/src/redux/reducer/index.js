@@ -13,7 +13,9 @@ import { GET_CATEGORIES } from "../actions/index.js";
 import { OPEN_MODAL } from "../actions/index.js";
 import { LOGOUT } from "../actions/index.js";
 import { GET_SUBCATEGORIES } from "../actions/index.js";
-
+import { ADD_TO_CART } from "../actions/index.js";
+import { REMOVE_FROM_CART } from "../actions/index.js";
+import { CLEAN_CART } from "../actions/index.js";
 import { CLEAN_DETAIL, ORDER_BY_PRICE } from "../actions/index.js";
 
 
@@ -29,6 +31,7 @@ import { CLEAN_DETAIL, ORDER_BY_PRICE } from "../actions/index.js";
     error: {},
     modal: '',
     reviewsFromUser: [],
+    cart: [],
     productsCopy: [], // copia Estado para emergencias 
     //para regresar al estado original cuando nesesite
 
@@ -179,7 +182,22 @@ const rootReducer = (state = initialState, action) => {
                 return{
                     ...state,
                     productDetail: {}
-                }
+            };
+            case ADD_TO_CART:
+                return {
+                  ...state,
+                  cart: [...state.cart, action.payload], 
+            };
+            case REMOVE_FROM_CART:
+                return {
+                  ...state,
+                  cart: state.cart.filter((item) => item.id !== action.payload.id), 
+            };
+            case CLEAN_CART:
+                return {
+                  ...state,
+                  cart: [], 
+                };
             default:
             return {...state};
         }
