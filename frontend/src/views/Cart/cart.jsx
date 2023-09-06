@@ -1,12 +1,12 @@
 import "./cart.css";
-//import { ClearCartIcon, CartIcon } from "./icons";
+import { CleanCartIcon, CartIcon } from "./icons";
 import { useSelector, useDispatch } from "react-redux";
-// import {
-//   addToCart,
-//   cleanCart,
-//   removeFromCart,
-//   cleanDetail,
-// } from "../../redux/actions";
+import {
+  addToCart,
+  cleanCart,
+  removeFromCart,
+  cleanDetail,
+} from "../../redux/actions/index";
 import { NavLink } from "react-router-dom";
 
 export default function Cart() {
@@ -19,16 +19,16 @@ export default function Cart() {
     dispatch(addToCart(product));
   };
 
-  const clearCartHandler = () => {
-    dispatch(clearCart(items));
+  const cleanCartHandler = () => {
+    dispatch(cleanCart(items));
   };
 
   const removeFromCartHandler = (product) => {
     dispatch(removeFromCart(product));
   };
 
-  const clearDetailHandler = () => {
-    dispatch(clearDetail());
+  const cleanDetailHandler = () => {
+    dispatch(cleanDetail());
   };
 
   function CartItem({ id, imageSrc, imageAlt, price, name, quantity }) {
@@ -100,13 +100,13 @@ export default function Cart() {
           to={`/pay`}
           style={{ textDecoration: "none", color: "inherit" }}
         >
-          <button onClick={clearDetailHandler} className="BUY">
+          <button onClick={cleanDetailHandler} className="BUY">
             Buy
           </button>
         </NavLink>
-        <button className="CLEAR" onClick={clearCartHandler}>
+        <button className="CLEAR" onClick={cleanCartHandler}>
           {" "}
-          <ClearCartIcon />{" "}
+          <CleanCartIcon />{" "}
         </button>
       </aside>
     </>

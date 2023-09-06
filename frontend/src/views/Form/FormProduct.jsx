@@ -8,11 +8,11 @@ import {
   getBrands,
   getCategories,
   getSubCategories,
-} from "../../redux/actions";
+} from "../../redux/actions/index";
 import style from "../../views/Form/Form.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
 const FormProduct = () => {
   const dispatch = useDispatch();
