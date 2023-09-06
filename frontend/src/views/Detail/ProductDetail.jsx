@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux"; 
-import { getProductDetail, cleanDetail } from "../../redux/actions/index";
+import { getProductDetail, cleanDetail, addToCart } from "../../redux/actions/index";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -24,7 +24,8 @@ const ProductDetail = () => {
     }
 
     const handleAddToCart = () => {
-        // Agregar el producto al carrito
+        dispatch(addToCart(product));
+        alert(`${product.name} ha sido agregado al carrito.`);
       };
     
     const handleBuyNow = () => {

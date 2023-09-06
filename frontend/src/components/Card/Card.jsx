@@ -3,7 +3,21 @@ import { NavLink } from "react-router-dom";
 
 import style from './Card.module.css'
 
-const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
+const Card = ({ id, name, imageSrc, price, rating, stock, disabled, addToCart }) => {
+
+    const handleAddToCart = () => {
+        if (!disabled) {
+            addToCart({
+                id,
+                name,
+                imageSrc,
+                price,
+                rating,
+                stock
+            });
+            alert(`${name} ha sido agregado al carrito.`)
+        }
+    };
 
     return (
         <div className={style.card}>
@@ -16,6 +30,7 @@ const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
             {/* <p>Stock: {stock}</p> */}
             </div>
          </NavLink>
+         <button onClick={handleAddToCart}>Agregar al carrito</button>
         </div>
     )
 };
