@@ -8,6 +8,7 @@ const tags = require("./tags/routeTags");
 const brands=require('./brands/routeBrands');
 const contactHandler = require("../handlers/contact/contactHandler");
 const favorites = require("./favorites/routeFav");
+const filters = require ("./filters/filters")
 
 const router = Router();
 
@@ -33,6 +34,9 @@ router.use("/db", getDbProductsHandler)
 router.use("/favorites", favorites)
 
 // router.use("/contact", contactHandler)
+
+//Ruta para los filtros
+router.use("/filter", filters)
 
 module.exports = router;
 
