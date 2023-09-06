@@ -12,10 +12,10 @@ const Footer = () => {
       <div className={style.topFooter}>
         <div>
           <div className={style.socialIcons}>
-            <a href="#">
+            <a href="https://www.instagram.com/dlcatecnology/">
               <img src={instagramIcon} alt="Instagram" />
             </a>
-            <a href="#">
+            <a href="https://www.twitter.com/">
               <img src={twitterIcon} alt="Twitter" />
             </a>
           </div>
@@ -30,7 +30,7 @@ const Footer = () => {
               <Link to={"/faq"}>FAQ</Link>
             </li>
             <li>
-              <Link to={"/aboutUs"}>Sobre Nosotros</Link>
+              <Link to={"/aboutUs"}>Team</Link>
             </li>
           </ul>
         </div>
@@ -38,13 +38,13 @@ const Footer = () => {
           <h3>DLCA</h3>
           <ul>
             <li>
-              <Link to={"#"}>Información de la empresa</Link>
+              <Link to={"/about"}>Información de la empresa</Link>
             </li>
             <li>
-              <Link to={"#"}>Términos y Condiciones</Link>
+              <Link to={"/terms"}>Términos y Condiciones</Link>
             </li>
             <li>
-              <Link to={"#"}>Política de Privacidad</Link>
+              <Link to={"/privacity"}>Política de Privacidad</Link>
             </li>
           </ul>
         </div>
