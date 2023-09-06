@@ -4,7 +4,7 @@ const { getFavorite, saveFavorite, deleteFavorite } = require("../../handlers/fa
 const favorites = Router()
 
 //Para mostrar los fav de un usuario
-favorites.get("/", getFavorite);
+favorites.get("/:userId", getFavorite);
 
 //Para agregar favs
 favorites.post('/', saveFavorite);
