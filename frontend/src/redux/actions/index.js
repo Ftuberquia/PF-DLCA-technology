@@ -17,6 +17,10 @@ export const  LOGOUT = 'LOGOUT';
 export const  GET_SUBCATEGORIES = 'GET_SUBCATEGORIES';
 export const CLEAN_DETAIL='CLEAN_DETAIL'
 export const ORDER_BY_PRICE='ORDER_BY_PRICE'
+export const PUT_USER = 'PUT_USER';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+export const CLEAN_CART = 'CLEAN_CART';
 
 
 
