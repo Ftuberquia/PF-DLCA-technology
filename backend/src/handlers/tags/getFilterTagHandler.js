@@ -1,4 +1,4 @@
-const filterByTag=require('../../controllers/tags/filterTags')
+const filterByTag=require('../../controllers/filters/filterTags')
 
 const getFilterByTag=async(req,res)=>{
     const {tags, order}=req.query;
