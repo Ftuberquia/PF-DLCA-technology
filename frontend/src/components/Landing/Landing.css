@@ -2,7 +2,7 @@
 .carousel-item {
   height: 65vh;
   min-height: 600px;
-  background: no-repeat center center scroll;
+  /* background: no-repeat center center scroll; */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -19,7 +19,7 @@
 
 .d-block {
   width: 100%;
-  height: 500px !important;
+  height: 300px !important;
 }
 
 .carousel-control-prev {
@@ -48,7 +48,7 @@
 
 .spanTitle {
   margin-left: 10px;
-  color: #2d0e5f;
+  color: #6e0b0b;
   font-weight: bold;
 }
 .spanTitle:hover {
@@ -56,8 +56,8 @@
 }
 
 .contImgCompra {
-  border: 2px solid #2d2d33;
-  background-color: #2d2d33;
+  border: 2px solid #fdfdfd;
+  background-color: #f8f8fd;
 }
 
 .imgCompra {
@@ -119,10 +119,10 @@
 }
 
 .contPcMarcas {
-  border: 1px solid #66096e;
+  /* border: 1px solid #070707; */
   background: linear-gradient(
     184deg,
-    rgb(109, 4, 100) 0%,
+    rgb(250, 249, 249) 0%,
     rgba(255, 255, 255, 1) 76%
   );
 }
@@ -189,13 +189,13 @@
     filter: brightness(1.2);
   }
 
-  .contPcMarcas {
+  /* .contPcMarcas {
     background: linear-gradient(
       184deg,
-      rgb(132, 13, 148) 0%,
+      rgb(12, 12, 12) 0%,
       rgba(255, 255, 255, 1) 76%
     );
-  }
+  } */
   .imgArmaPC {
     width: 150%;
     display: block;
@@ -267,19 +267,145 @@
   h2 {
     font-size: 20px;
     font-weight: 600;
-    color: #000;
+    color: #faf6f6;
   }
 
   p {
     font-size: 16px;
-    color: #666;
+    color: #f8f5f5;
   }
 }
 
-.navbar {
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 10px 15px;
-  margin-bottom: 20px;
+/* .navbar {
+  background-color: #ffffff; */
+  /* border: 1px solid #ddd; */
+  /* border-radius: 4px;
+  padding: 5px 5px;
+  margin-bottom: 30px;
+} */
+
+/* Inicio de los estilos para la sección del Banner */
+
+.banners{
+  background-color: rgb(209, 5, 5);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.title2 {
+  color: white;
+  font-size: 50px;
+}
+
+.bannerOne{
+  max-width: 1000px;
+  margin: 5rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.bannerOne div {
+  width: 500px;
+  height: 500px;
+  /* margin: 5rem; */
+  transition: 0.5s;
+}
+
+.bannerOne div:hover{
+  transform: translateY(-5px);
+}
+
+.a{
+  color: white;
+  
+}
+
+.b{
+  color: white;
+}
+
+.c{
+  color: white;
+}
+
+.bannerTwo{
+  max-width: 1000px;
+  margin: 5rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.bannerTwo div {
+  width: 500px;
+  height: 200px;
+  /* margin: 5rem; */
+  transition: 0.5s;
+}
+
+.bannerTwo div:hover{
+  transform: translateY(-5px);
+}
+
+.banner {
+  max-width: 45%;
+  -webkit-transform: translateY(50%);
+          transform: translateY(50%);
+}
+
+.imgBanner {
+  display: none;
+}
+
+.banner:hover {
+  -webkit-transform: translateY(50%) scale(1.1);
+          transform: translateY(50%) scale(1.1);
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  -webkit-filter: brightness(1.2) saturate(1.2);
+          filter: brightness(1.2) saturate(1.2);
+}
+
+@media only screen and (max-width: 800px) {
+  .banner {
+    max-width: 100%;
+    margin-top: 100px;
+    -webkit-transform: translateY(100px);
+            transform: translateY(100px);
+  }
+  .typing-animation {
+    display: none;
+  }
+  .landing {
+    background-image: 100vh;
+  }
+  .imgBanner {
+    width: 50%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin: 10px;
+    -webkit-transform: translateY(200px) translateX(85px);
+            transform: translateY(200px) translateX(85px);
+  }
+}
+
+.pcgamer {
+  width: 100%;
+  max-height: 100%;
+  /* display: nowrap; */
+  position: relative;
+  top: -40rem;
+  background-color: black;
+  margin-top: 0;
+  padding-bottom: -90rem;
 }

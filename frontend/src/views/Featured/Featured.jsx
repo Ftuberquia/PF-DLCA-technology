@@ -6,9 +6,9 @@ function Featured() {
   return (
     <div className="contAccesorios">
       <div className="containerAcc mt-100">
-        <div className="titleAcce">
+        <div className="titulo">
           <h2>
-            <span className="spanTitleAcc">💚</span> ¡DESTACADOS
+            <span className="spanTitleAcc1">💚</span> ¡DESTACADOS
             <span className="spanTitleAcc"> GAMER</span>!
           </h2>
         </div>
