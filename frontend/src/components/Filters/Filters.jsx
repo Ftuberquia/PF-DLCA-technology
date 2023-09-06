@@ -1,7 +1,7 @@
 import './Filters.css';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'; //conecta react-redux
-import { filterByCreated, filterByBrand, getAllProducts, getBrands, filterByCategory, orderByName, getCategories } from '../../redux/actions';
+import { filterByCreated, filterByBrand, getAllProducts, getBrands, filterByCategory, orderByName, getCategories, orderByPrice } from '../../redux/actions';
 // import { filterByBrand } from ;
 // import Loader from '../Loader/Loader.jsx';
 
@@ -44,6 +44,10 @@ const handlefilterByCategory = (event) => {
     dispatch(filterByCategory(event.target.value));
     console.log(event.target.value);
 }
+const handleOrderByPrice = (event) => {
+    dispatch(orderByPrice(event.target.value));
+    setOrder(event.target.value);
+}
 
 // reset: 
 
@@ -69,24 +73,24 @@ return (
                     <option key="Z-A" value="Z-A">Z - A</option>
                 </select>
                 <select className='filter-butt' id='order-category' onChange={(event) => handlefilterByCategory(event)}>
-                    <option key="order" value="order">Order Category</option>
+                    <option key="order" value="order">Filter Category</option>
                     <option key="A-Z" value="A-Z">A - Z</option>
-                    {categories.length > 0 && categories.map((category) => (
-                    <option key={category} value={category}>{category}</option>
+                    {categories.length > 0 && categories.map((category, index) => (
+                    <option key={index} value={category}>{category}</option>
                 ))}
                 </select>
-                {/* <select className='filter-butt' id='attack' onChange={(event) => handleOrderByPrice(event)}>
-                    <option value="attack">Price</option>
-                    <option value="min">Min</option>
-                    <option value="max">Max</option>
-                </select> */}
+                <select className='filter-butt' id='price' onChange={(event) => handleOrderByPrice(event)}>
+                    <option value="price">Price</option>
+                    <option value="min">Menor a mayor</option>
+                    <option value="max">Mayor a menor</option>
+                </select>
             </div>
             <div className='order'>
             <select className='order-butt' id='brands' onChange={(event) => handleFilterByBrand(event)}>
                 <option key="brand" value="brand">Brand</option>
                 <option key="all" value="All">All</option>
-                {brands.length > 0 && brands.map((brand) => (
-                    <option key={brand.id} value={brand.name}>{brand.name}</option>
+                {brands.length > 0 && brands.map((brand, index) => (
+                    <option key={index} value={brand.name}>{brand.name}</option>
                 ))}
             </select>
                 <select className='order-butt' id='created' onChange={(event) => handleFilterByCreated(event)}>

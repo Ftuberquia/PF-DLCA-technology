@@ -1,7 +1,8 @@
 const {Router} = require ("express")
 const { getAllProductsHandler } = require("../../handlers/getAllProductsHandler");
 const { getDetailHandler } = require("../../handlers/products/getProductDetailHandler");
-const postProduct = require ("../../handlers/products/createProductHandler") 
+const postProduct = require ("../../handlers/products/createProductHandler"); 
+const updateProductHandler = require("../../handlers/products/updateProductHandler");
 
 const products = Router()
 
@@ -11,5 +12,7 @@ products.get("/", getAllProductsHandler)
 products.get("/:id", getDetailHandler)
 
 products.post("/", postProduct)
+
+products.put("/:id", updateProductHandler)
 
 module.exports = products

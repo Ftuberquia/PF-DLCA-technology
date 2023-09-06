@@ -7,6 +7,8 @@ import Footer from "./components/Footer/Footer";
 import Ofertas from "./views/Ofertas/Ofertas";
 import Form from "./views/Form/FormProduct";
 import Productos from "./views/Productos/Productos";
+import { ContactUs } from "./views/ContactUs/ContactUs";
+import Favorites from "./views/Favorites/FavoritesProducts";
 
 const App = () => {
   return (
@@ -16,7 +18,9 @@ const App = () => {
         <Route path="/productos" component={Productos} />
         <Route path="/product/:id" component={ProductDetail} />
         <Route path="/form" component={Form} />
+        <Route path="/contacto" component={ContactUs} />
         <Route exact path="/" component={Landing} />
+        <Route path="/favorites" component={Favorites} />
       </Switch>
       <Footer />
     </Router>

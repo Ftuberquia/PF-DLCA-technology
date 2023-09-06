@@ -1,4 +1,4 @@
-const filterByBrand=require('../../controllers/brand/filterBrands')
+const filterByBrand=require('../../controllers/filters/filterBrands')
 
 const getFilterByBrand=async(req,res)=>{
     const {brand, order}=req.query;

@@ -1,17 +1,14 @@
-// import React from "react";
-// // import './Loader.css';
-// import loader from "../../img/loading";
+import styles from "./loader.module.css";
 
+const Loader = () => {
+  return (
+    <div className={styles.container}>
+      <div className={styles.circle}></div>
+      <div className={styles.circle}></div>
+      <div className={styles.circle}></div>
+      <div className={styles.circle}></div>
+    </div>
+  );
+};
 
-// const Loader = () => {
-    
-//     return (
-//         <div className="loader-cont">
-//             <div className="loader">
-//             <img src={loader} alt="loading..."/>
-//             </div>
-//         </div>
-//         )
-// };
-
-// export default Loader;
+export default Loader;
