@@ -1,4 +1,4 @@
-const filterCategories = require ("../../controllers/categories/filterCategories")
+const filterCategories = require ("../../controllers/filters/filterCategories")
 
 const handlerFilterCat = async(req, res) =>{
     const {category, order} = req.query
