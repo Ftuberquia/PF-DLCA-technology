@@ -1,4 +1,4 @@
-navbar {
+.navbar {
 	padding: 16px 16px 16px;
 	margin-bottom: 25px;
 	display: flex;
@@ -8,22 +8,15 @@ navbar {
 	align-items: center;
 	border-bottom: 5px solid var(--success-500);
   }
-  /* navbar .logo {
-	height: 50px;
-  } */
-
- 
-  .navbar .left-items {
-	display: flex;
-	gap: 10px;
-  }
   
-  .navbar .right-items {
-	display: flex;
-	gap: 10px;
+  .navbar span {
+	font-size: 22px;
+	color: rgb(65, 60, 60);
+	display: inline-block;
+	margin: 10px;
   }
 
-navbar.name {
+  navbar.name {
 	height: 350px;
 	font-size: 30px;
 	box-shadow: 5px;
@@ -31,28 +24,26 @@ navbar.name {
 	font-weight: 15px;
 	border-color: azure;
   }
-
-  navbar li {
-	font-size: 22px;
-	color:rgb(65, 60, 60);
-  }
-
-  navbar .buttons {
+  
+  .navbar .buttons {
 	margin-left: auto;
 	display: flex;
 	gap: 8px;
 	height: 18px;
 	border-radius: 10px;
   }
-  navbar .buttons a img {
+  
+  .navbar .buttons a img {
 	height: 100%;
 	color:rgb(66, 61, 61);
   }
-  navbar .buttons .cart {
+  
+  .navbar .buttons .cart {
 	position: relative;
 	color:rgb(34, 33, 33);
   }
-  navbar .buttons .cart span {
+  
+  .navbar .buttons .cart span {
 	position: absolute;
 	top: 18px;
 	right: -6px;
@@ -62,26 +53,29 @@ navbar.name {
 	padding: 3px 5px;
 	border-radius: 50%;
   }
+  
   @media screen and (min-width: 768px) {
-	navbar {
+	.navbar {
 	  justify-content: space-between;
 	  padding: 20px 5% 0;
 	}
-	navbar .buttons {
+  
+	.navbar .buttons {
 	  margin-left: unset;
 	  order: 3;
 	  gap: 24px;
 	  height: 16px;
 	  color:rgb(24, 23, 23);
 	}
-	navbar .buttons .cart {
+  
+	.navbar .buttons .cart {
 	  display: flex;
 	  align-items: center;
 	  gap: 6px;
 	}
-	navbar .buttons .cart span {
+  
+	.navbar .buttons .cart span {
 	  position: unset;
 	  font-size: 22px;
 	}
   }
-  
