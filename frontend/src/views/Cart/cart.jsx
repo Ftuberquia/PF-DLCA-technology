@@ -74,11 +74,11 @@ export default function Cart() {
           ))}
         </ul>
         <NavLink
-          to={`/pay`}
+          to={`/compra`}
           style={{ textDecoration: "none", color: "inherit" }}
         >
           <button onClick={cleanDetailHandler} className="BUY">
-            Buy
+            COMPRAR
           </button>
         </NavLink>
         <button className="CLEAR" onClick={cleanCartHandler}>
