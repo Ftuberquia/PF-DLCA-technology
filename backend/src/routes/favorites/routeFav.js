@@ -10,6 +10,6 @@ favorites.get("/:userId", getFavorite);
 favorites.post('/', saveFavorite);
 
 //Para eliminar de fav un producto
-favorites.delete('/', deleteFavorite);
+favorites.delete('/:userId/:productId', deleteFavorite);
 
 module.exports = favorites
