@@ -3,8 +3,6 @@ const { Users, Products } = require('../../db');
 const getFavoriteProducts=async(req, res)=>{
     try {
       const { userId } = req.params;
-
-      console.log(req.params.userId)
   
       // Verifica si el usuario existe
       const user = await Users.findByPk(userId);
