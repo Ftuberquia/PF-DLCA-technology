@@ -1,11 +1,11 @@
 import React from 'react';
-import './Terms.css';
+import style from './Terms.module.css';
 
 
 const Terms = () => {
 	return (
 		<>
-		<div className='terms-container'>
+		<div className={style.termscontainer}>
 			<section>
 				<h3>Introducción</h3>
 				<p>Bienvenido a DLCA Technology. Estos términos y condiciones describen las reglas y regulaciones para el uso del sitio web DLCA Technology.</p>
@@ -45,3 +45,4 @@ const Terms = () => {
 }
 
 export default Terms;
+
