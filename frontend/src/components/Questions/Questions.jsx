@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "./Questions.module.css";
+import style from "./Questions.module.css";
 import { useSelector } from "react-redux";
 
 const Questions = () => {
@@ -45,23 +45,23 @@ const Questions = () => {
   };
 
   return (
-    <div className={styles.questions}>
-      <div className={styles.imageContainer}>
+    <div className={style.questions}>
+      <div className={style.imageContainer}>
         <img src="https://i.ibb.co/xFbXS4C/banner-faq.jpg" alt="" />
       </div>
-      <div className={styles.questionsContainer}>
+      <div className={style.questionsContainer}>
         {questionsAndAnswers.map((item, index) => (
           <div
             key={index}
-            className={`${styles.question} ${
-              expandedQuestion === index ? styles.expanded : ""
+            className={`${style.question} ${
+              expandedQuestion === index ? style.expanded : ""
             }`}
             onClick={() => toggleQuestion(index)}
           >
             <p>
               <strong>{item.question}</strong>
             </p>
-            <div className={styles.answer}>{item.answer}</div>
+            <div className={style.answer}>{item.answer}</div>
           </div>
         ))}
       </div>
