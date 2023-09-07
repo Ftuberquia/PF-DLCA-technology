@@ -2,15 +2,18 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { putUser } from "../../redux/actions";
-import style from "./userProfile.module.css";
+import style from "./UserProfile.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
+import axios from "axios";
 
 const UserProfile = () => {
   const { user } = useAuth0();
 
   const dispatch = useDispatch();
   const dataUser = useSelector((state) => state.user);
+  const darkMode = useSelector((state) => state.darkMode); // Agrega esta línea
+  // className={darkMode ? style.darkmode : style.lightMode}
 
   useEffect(() => {
     if (dataUser) {
@@ -25,10 +28,10 @@ const UserProfile = () => {
   };
 
   const [data, setData] = useState({
+    picture: dataUser?.picture ? dataUser.picture : user.picture,
     name: dataUser?.name ? dataUser.name : user.name,
     direction: dataUser?.direction ? dataUser.direction : "",
     telefone: dataUser?.telefone ? dataUser.telefone : "",
-    //picture: dataUser.picture ? dataUser.picture : ''
   });
 
   const [error, setError] = useState({
@@ -48,6 +51,9 @@ const UserProfile = () => {
     if (isNaN(data.telefone) === true || data.telefone < 1) {
       error.telefone = "¡Se requiere telefono valido!";
     }
+    if (!data.picture) {
+      error.picture = "¡Inserte imagen!";
+    }
     return error;
   }
 
@@ -62,6 +68,36 @@ const UserProfile = () => {
     );
   };
 
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("key", "ccc0eb65a71efd80b4352eda77e05470"); // Replace with your ImgBB API key
+
+    try {
+      const response = await axios.post(
+        "https://api.imgbb.com/1/upload",
+        formData
+      );
+      const imageUrl = response.data.data.url;
+      console.log(imageUrl);
+      setData({
+        ...data,
+        picture: imageUrl,
+      });
+      setError(
+        validate({
+          ...data,
+          picture: imageUrl,
+        })
+      );
+      //setImageSrcError(""); // Clear the imageSrc error if any
+    } catch (error) {
+      // console.error("Error uploading image:", error);
+      //setImageSrcError("Failed to upload image. Please try again.");
+    }
+  };
+
   const [showForm, setshowForm] = useState(false);
 
   const handleFormModify = () => {
@@ -71,14 +107,36 @@ const UserProfile = () => {
 
   return (
     <div className={style.form__C}>
-      <div className={style.card}>
-        <div className={style.img}>
-          <img
-            className={style.img}
-            src={dataUser?.picture ? dataUser?.picture : user.picture}
-            alt=""
-          />
-        </div>
+      <div className={darkMode ? style.carddarkmode : style.card}>
+        {showForm === true ? (
+          <div className={style.formImg}>
+            {data.picture && (
+              <img
+                src={data.picture}
+                alt="Producto"
+                className={style.imgModify}
+              />
+            )}
+            <label className={style.label}>Eliga nueva imagen: </label>
+            <input
+              type="file" // Cambia el tipo de entrada a "file" para permitir la selección de imágenes
+              onChange={(e) => handleImageUpload(e)} // Llama a la función handleImageUpload cuando cambie la imagen
+              name="picture"
+              accept="image/*" // Restringe la selección de archivos a imágenes solamente
+            />
+          </div>
+        ) : null}
+        {error.picture && <strong>{error.picture}</strong>}
+
+        {showForm === false ? (
+          <div className={style.img}>
+            <img
+              className={style.img}
+              src={dataUser?.picture ? dataUser?.picture : user.picture}
+              alt=""
+            />
+          </div>
+        ) : null}
         <div>
           <h1>Mis Datos</h1>
           <div>
@@ -95,12 +153,12 @@ const UserProfile = () => {
             )}
           </div>
           <div>
-            <p className={style.label}>
+            {/* <p className={style.label}>
               Email: demostracionNoVerificado@gmail.com ❌
             </p>
             <p className={style.noVerificado}>
               ¡Verifique su email en su casilla de entrada!
-            </p>
+            </p> */}
           </div>
 
           {showForm === false ? (
@@ -179,6 +237,7 @@ const UserProfile = () => {
                   </button>
                 )}
               </form>
+
             </div>
           ) : null}
 
@@ -187,6 +246,9 @@ const UserProfile = () => {
             {showForm === false ? "Editar Datos" : "Cancelar"}
           </button>
         </div>
+        <Link to="/userPurchases">
+          <button className={style.btnForm}>Mis Compras</button>
+        </Link>
       </div>
       <div>
         <Link to="/products">
@@ -196,5 +258,6 @@ const UserProfile = () => {
     </div>
   );
 };
+
 
 export default UserProfile;
