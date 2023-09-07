@@ -11,7 +11,8 @@ import Cards from "../Cards/Cards";
 import SearchBar from "../SearchBar/SearchBar";
 import AssociatedBrands from "../AssociatedBrands/AssociatedBrands";
 import Services from "../Services/Services";
-import Faq from "../Faq/Faq";
+import Questions from "../Questions/Questions";
+
 
 function Landing() {
   const [products, setProducts] = useState([]);
@@ -50,13 +51,19 @@ function Landing() {
         </div> */}
         <div className="pcgamer">
           <Link to="/products">
-            <img
-              src="https://i.ibb.co/Xprs2Rs/pc-gamer2.jpg"
-              alt=""
-            />
+            <img src="https://i.ibb.co/Xprs2Rs/pc-gamer2.jpg" alt="" />
           </Link>
         </div>
-        <Faq />
+        <div className="rews">
+          <Link to="/reviews">
+            {/* <img
+              src="https://i.ibb.co/Xprs2Rs/pc-gamer2.jpg"
+              alt=""
+            /> */}
+          </Link>
+
+        </div>
+        <Questions />
         <section className="banners">
           <div className="bannerOne">
             <Link to="productos/categories">
