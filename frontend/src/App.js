@@ -11,8 +11,8 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import Productos from "./views/Productos/Productos";
 import { ContactUs } from "./views/ContactUs/ContactUs";
 import Favorites from "./views/Favorites/FavoritesProducts";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+// import { useSelector } from "react-redux";
+// import { useLocation } from "react-router-dom";
 
 const App = () => {
   const { pathname } = useLocation();
