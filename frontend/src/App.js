@@ -11,8 +11,18 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import Productos from "./views/Productos/Productos";
 import { ContactUs } from "./views/ContactUs/ContactUs";
 import Favorites from "./views/Favorites/FavoritesProducts";
+<<<<<<< HEAD
 // import { useSelector } from "react-redux";
 // import { useLocation } from "react-router-dom";
+=======
+import Stripe from "./views/Stripe/Stripe";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import FAQ from "./views/FAQ/FAQ";
+import Terms from "./views/Terms/Terms";
+import Privacy from "./views/Privacy/Privacy";
+import About from "./views/About/About";
+>>>>>>> 29deca97e361de6916efe6eff05b8d9a6b2a24ef
 
 const App = () => {
   const { pathname } = useLocation();
@@ -34,6 +44,10 @@ const App = () => {
         <Route exact path="/" component={Landing} />
         <Route path="/compra" component={Stripe} />
         <Route path="/favorites" component={Favorites} />
+        <Route path="/faq" component={FAQ} />
+        <Route path="/terms" component={Terms} />
+        <Route path="/privacy" component={Privacy} />
+        <Route path="/about" component={About} />
       </Switch>
       <Footer />
     </Router>
