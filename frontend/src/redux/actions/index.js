@@ -6,22 +6,19 @@ export const GET_BRANDS = 'GET_BRANDS';
 export const GET_TAGS = 'GET_TAGS';
 export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
-export const FILTER_BY_TAG = 'FILTER_BY_TAG';
-export const FILTER_BY_BRANDS = 'FILTER_BY_BRANDS';
-export const FILTER_BY_CREATED = 'FILTER_BY_CREATED';
-export const ORDER_BY_NAME = 'ORDER_BY_NAME';
-export const FILTER_BY_CATEGORY = 'FILTER_BY_CATEGORY';
+// esto debe ser para ver si el producto esta activo o no(cambiar)
+// export const FILTER_BY_CREATED = 'FILTER_BY_CREATED'; 
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const LOGOUT = 'LOGOUT';
 export const GET_SUBCATEGORIES = 'GET_SUBCATEGORIES';
 export const CLEAN_DETAIL = 'CLEAN_DETAIL'
-export const ORDER_BY_PRICE = 'ORDER_BY_PRICE'
 export const PUT_USER = 'PUT_USER';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const CLEAN_CART = 'CLEAN_CART';
-
+export const FILTER_COMPLEX="FILTER_COMPLEX"
+export const FILTER_FRONT = "FILTER_FRONT"
 
 
 export const getAllProducts = () => async dispatch => {
@@ -162,40 +159,13 @@ export function putUser(email, user) {
         })
     }
 }
-
-export const filterByCategory = (payload) => dispatch => {
-    return dispatch({
-        type: FILTER_BY_CATEGORY,
-        payload
-    })
-};
-
-export const filterByBrand = (payload) => dispatch => {
-    return dispatch({
-        type: FILTER_BY_BRANDS,
-        payload
-    })
-};
-
-export const orderByName = (payload) => dispatch => {
-    return dispatch({
-        type: ORDER_BY_NAME,
-        payload
-    })
-};
-export const orderByPrice = (payload) => dispatch => {
-    return dispatch({
-        type: ORDER_BY_PRICE,
-        payload
-    })
-};
-
-export const filterByCreated = (payload) => dispatch => {
-    return dispatch({
-        type: FILTER_BY_CREATED,
-        payload
-    })
-};
+//esto debe ser para ver si el producto esta activo o no (cambiar)
+// export const filterByCreated = (payload) => dispatch => {
+//     return dispatch({
+//         type: FILTER_BY_CREATED,
+//         payload
+//     })
+// };
 
 export function openModal(payload) {
 	return { 
@@ -236,3 +206,55 @@ export function clearCart() {
         type: CLEAN_CART
     }
 };
+export function filterFront(payload){
+    return {
+        type: FILTER_FRONT,
+        payload
+    }   
+}
+// este es el filtro del back, toquelo si se anima uwu
+// export function filterComplex(brand, category, subcategory) {
+//     return async function (dispatch) {
+//       try {
+//         let queryParams = {};
+  
+//         if (category) {
+//           queryParams.category = category;
+//         }
+  
+//         if (brand) {
+//           queryParams.brand = brand;
+//         }
+  
+//         if (subcategory) {
+//           queryParams.subcategory = subcategory;
+//         }
+  
+//         let url = '/filter';
+  
+//         if (Object.keys(queryParams).length > 0) {
+//           url += '?' + Object.entries(queryParams)
+//             .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+//             .join('&');
+//         }
+  
+//         const { data } = await axios.get(url);
+//         console.log(url);
+//         console.log(data);
+  
+//         if ((category || brand || subcategory) && data.length === 0) {
+//           return dispatch({
+//             type: FILTER_COMPLEX,
+//             payload: [], // No hay productos disponibles para la combinación de filtros
+//           });
+//         }
+  
+//         return dispatch({
+//           type: FILTER_COMPLEX,
+//           payload: data,
+//         });
+//       } catch (error) {
+//         console.error('Error Products:', error);
+//       }
+//     };
+// }
