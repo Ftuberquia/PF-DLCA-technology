@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import styles from './FAQ.module.css';
+import style from './FAQ.module.css';
 
 const FAQsData = [
   {
@@ -37,33 +37,33 @@ const FAQ = () => {
   };
 
   return (
-    <div className={styles.faq}>
-      <div className={styles.questionsContainer}>
+    <div className={style.faq}>
+      <div className={style.questionsContainer}>
         {FAQsData.map((item, index) => (
           <div
             key={index}
-            className={`${styles.question} ${
-              showFullAnswer === index ? styles.expanded : ""
+            className={`${style.question} ${
+              showFullAnswer === index ? style.expanded : ""
             }`}
             onClick={() => toggleAnswer(index)}
           >
             <p>
               <strong>{item.pregunta}</strong>
             </p>
-            <div className={styles.answer}>{item.respuesta}</div>
+            <div className={style.answer}>{item.respuesta}</div>
           </div>
         ))}
       </div>
       
-      <div className={styles.imageContainer}>
+      <div className={style.imageContainer}>
         <img src="https://i.ibb.co/2h9QvfM/faqsection-jpg.jpg" alt="" />
       </div>
-      <div className={styles.contactContainerWrapper}>
-        <div className={styles.contactContainer}>
+      <div className={style.contactContainerWrapper}>
+        <div className={style.contactContainer}>
         <p>¿Aún tienes dudas sin resolver?</p>
         <p>¡Contáctanos!</p>
         <Link to={"/contacto"} >
-        <button className={styles.button}>Submit</button>
+        <button className={style.button}>Submit</button>
         </Link>
       </div>
       </div>
