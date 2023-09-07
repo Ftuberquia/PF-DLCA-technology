@@ -1,101 +1,78 @@
-import "./cart.css";
-import { CleanCartIcon, CartIcon } from "./icons";
+// import "./cart.css";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  addToCart,
-  cleanCart,
-  removeFromCart,
-  cleanDetail,
-} from "../../redux/actions/index";
 import { NavLink } from "react-router-dom";
 
 export default function Cart() {
   const items = useSelector((state) => state.items);
   const totalPrice = useSelector((state) => state.totalPrice);
-
   const dispatch = useDispatch();
 
+  const sampleProducts = [
+    {
+      id: 1,
+      name: 'Producto 1',
+      price: 29.99,
+      imageSrc: 'imagen1.jpg',
+      imageAlt: 'Producto 1',
+      quantity: 2,
+    },
+    {
+      id: 2,
+      name: 'Producto 2',
+      price: 19.99,
+      imageSrc: 'imagen2.jpg',
+      imageAlt: 'Producto 2',
+      quantity: 1,
+    },
+    {
+      id: 3,
+      name: 'Producto 3',
+      price: 39.99,
+      imageSrc: 'imagen3.jpg',
+      imageAlt: 'Producto 3',
+      quantity: 3,
+    },
+  ];
+
   const addToCartHandler = (product) => {
-    dispatch(addToCart(product));
+    // Implementa la lógica para agregar un producto al carrito
   };
 
   const cleanCartHandler = () => {
-    dispatch(cleanCart(items));
+    // Implementa la lógica para limpiar el carrito
   };
 
   const removeFromCartHandler = (product) => {
-    dispatch(removeFromCart(product));
+    // Implementa la lógica para eliminar un producto del carrito
   };
 
   const cleanDetailHandler = () => {
-    dispatch(cleanDetail());
+    // Implementa la lógica para limpiar los detalles del carrito
   };
-
-  function CartItem({ id, imageSrc, imageAlt, price, name, quantity }) {
-    return (
-      <li>
-        <img src={imageSrc} alt={imageAlt} />
-        <div className="name">
-          <strong>{name}</strong> - $
-          {price.toLocaleString("es-ES", { minimumFractionDigits: 2 })}
-        </div>
-        <footer>
-          <button
-            className="rest"
-            onClick={() =>
-              removeFromCartHandler({
-                id,
-                imageSrc,
-                imageAlt,
-                price,
-                name,
-                quantity,
-              })
-            }
-          >
-            -
-          </button>
-          <small className="small">Cant. {quantity}</small>
-          <button
-            className="add"
-            onClick={() =>
-              addToCartHandler({
-                id,
-                imageSrc,
-                imageAlt,
-                price,
-                name,
-                quantity,
-              })
-            }
-          >
-            +
-          </button>
-        </footer>
-      </li>
-    );
-  }
 
   return (
     <>
-      <label className="cart-button" htmlFor="carritoDeCompras">
-        <CartIcon />
-      </label>
+      <label className="cart-button" htmlFor="carritoDeCompras"></label>
       <input id="carritoDeCompras" type="checkbox" hidden />
       <aside className="cart">
-        <ul>
-          {items.map((product) => (
+        <div className="TOTAL">
+          Total: ${totalPrice} {/* Muestra el precio total del carrito */}
+        </div>
+        <ul className="cart-items">
+          {sampleProducts.map((product) => (
             <CartItem
               key={product.id}
-              value={() => addToCart(product)}
-              {...product}
+              id={product.id}
+              imageSrc={product.imageSrc}
+              imageAlt={product.imageAlt}
+              price={product.price}
+              name={product.name}
+              quantity={product.quantity}
+              removeFromCartHandler={removeFromCartHandler}
+              addToCartHandler={addToCartHandler}
             />
           ))}
         </ul>
-        <div className="TOTAL">
-          Total: $
-          {totalPrice.toLocaleString("es-ES", { minimumFractionDigits: 2 })}
-        </div>
         <NavLink
           to={`/pay`}
           style={{ textDecoration: "none", color: "inherit" }}
@@ -106,9 +83,24 @@ export default function Cart() {
         </NavLink>
         <button className="CLEAR" onClick={cleanCartHandler}>
           {" "}
-          <CleanCartIcon />{" "}
         </button>
       </aside>
     </>
+  );
+}
+
+function CartItem({ id, imageSrc, imageAlt, price, name, quantity, removeFromCartHandler, addToCartHandler }) {
+  return (
+    <li>
+      <img src={imageSrc} alt={imageAlt} />
+      <div className="name">
+        <strong>{name}</strong> - ${price}
+      </div>
+      <footer>
+        <button className="rest" onClick={() => removeFromCartHandler({ id })}>-</button>
+        <small className="small">Cant. {quantity}</small>
+        <button className="add" onClick={() => addToCartHandler({ id })}>+</button>
+      </footer>
+    </li>
   );
 }

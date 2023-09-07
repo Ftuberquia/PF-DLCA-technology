@@ -124,7 +124,7 @@
     cursor: pointer;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     -webkit-text-stroke: 0.3px;
-    -webkit-text-stroke-color: rgb(2, 185, 12);
+    -webkit-text-stroke-color: rgb(0, 0, 0);
   }
   
   .selectBrandCategory {

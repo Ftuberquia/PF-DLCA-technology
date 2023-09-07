@@ -9,6 +9,7 @@ const brands=require('./brands/routeBrands');
 const contactHandler = require("../handlers/contact/contactHandler");
 const favorites = require("./favorites/routeFav");
 const filters = require ("./filters/filters")
+const carts = require ("./carts/routeCarts")
 
 const router = Router();
 
@@ -37,6 +38,9 @@ router.use("/favorites", favorites)
 
 //Ruta para los filtros
 router.use("/filter", filters)
+
+//Ruta para los carritos
+router.use("/carts",carts)
 
 module.exports = router;
 
