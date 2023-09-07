@@ -292,6 +292,7 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  bottom: 40rem;
 }
 
 .title2 {
@@ -404,8 +405,117 @@
   max-height: 100%;
   /* display: nowrap; */
   position: relative;
-  top: -40rem;
+  top: -17rem;
   background-color: black;
   margin-top: 0;
   padding-bottom: -90rem;
+}
+
+.globo {
+  width: 100%;
+  background-color:rgba(0, 0, 0, 0.1);
+  height: 200px;
+  position: relative;
+  max-width: 530px;
+  display: flex;
+  bottom: 600px;
+  justify-content: center;
+  align-items: center;
+  height: 200%;
+  margin: 0 auto;
+}
+
+.texto {
+  position: absolute;
+  background-color: rgba(236, 105, 82, 0.959); /* Fondo transparente */
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 250%; /* Ajusta según el diseño deseado */
+  right: -350px;
+  left: 100px;
+  top: 10rem;
+  margin: 250px;
+  font-size: 25px;
+  align-items: center;
+  line-height: 1.8;
+}
+.textodarkMode {
+  position: absolute;
+  background-color: rgba(35, 35, 35, 0.331); /* Fondo transparente */
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 35%; /* Ajusta según el diseño deseado */
+  right: 120px;
+  top: 120px;
+  margin: 20px;
+  font-size: 18px;
+  line-height: 1.4;
+}
+.imgPres {
+  width: 250%;
+  color:rgba(0, 0, 0, 0.1);
+  height: 100%;
+  max-width: 830px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0px 12px 10px rgba(0, 0, 0, 0.1);
+}
+
+imgPres.container {
+  perspective: 1000px;
+}
+
+imgPres.wrapper {
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+}
+
+imgPres.wrapper:hover img {
+  transform: translateZ(-50px);
+}
+
+imgPres.wrapper img {
+  width: 1200px;
+  max-width: 830px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0px 12px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s, box-shadow 0.5s;
+}
+
+.globo {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  margin-bottom: -2px;
+  margin-left: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  height: 490px;
+  max-width: calc(100% - 300px); /* Ajusta según el diseño deseado */
+  font-size: 38px;
+  line-height: 1.6;
+
+  /* Agrega estas propiedades para centrar el texto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.globopdarkMode {
+  background-color: rgba(35, 35, 35, 0.331);
+  padding: 20px;
+  margin-bottom: -2px;
+  margin-left: 10px;
+  border-radius: 10px;
+  /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
+  height: 490px;
+  max-width: calc(100% - 400px); /* Ajusta según el diseño deseado */
+  font-size: 38px;
+  line-height: 1.6;
+
+  /* Agrega estas propiedades para centrar el texto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
