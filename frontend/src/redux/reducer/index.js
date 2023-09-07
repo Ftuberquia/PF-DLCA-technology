@@ -152,17 +152,21 @@ const rootReducer = (state = initialState, action) => {
                   cart: [], 
                 };
                 case FILTER_FRONT:
-                    const {brand, category, order, price } = action.payload
+                    const {brand, category, subcategory, order, price } = action.payload
                     let productosConFiltros = state.productsCopy.filter((el) =>{
                         let matchesBrand = true
                         let matchesCategory = true
+                        let matchesSubcategory = true
                         if(brand !== "All"){
                             matchesBrand = el.brand === brand
                         } console.log('esta es la amrca',brand)
                         if(category !== "All"){
                             matchesCategory = el.category === category
-                        } 
-                        return matchesBrand && matchesCategory
+                        }
+                        if(subcategory !== "All"){
+                            matchesSubcategory = el.subcategory === subcategory
+                        }
+                        return matchesBrand && matchesCategory && matchesSubcategory
                     })
                     if(price === "min"){
                         productosConFiltros.sort((a, b) => a.price - b.price);
@@ -173,7 +177,6 @@ const rootReducer = (state = initialState, action) => {
                     } else if(order === "Z-A"){
                         productosConFiltros.sort((a, b) => b.name.localeCompare(a.name));
                     }
-                    console.log('estos son los productos filtrados',productosConFiltros)
                     return{
                     ...state,
                     products: productosConFiltros
