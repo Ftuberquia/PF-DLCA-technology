@@ -20,6 +20,7 @@ import Privacy from "./views/Privacy/Privacy";
 import About from "./views/About/About";
 import Cart from "./views/Cart/cart";
 
+
 const App = () => {
   const { pathname } = useLocation();
   const { isAuthenticated } = useAuth0();
