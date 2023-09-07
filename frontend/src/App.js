@@ -32,6 +32,7 @@ const App = () => {
         <Route path="/contacto" component={ContactUs} />
         <Route path="/userProfile" component={UserProfile} />
         <Route exact path="/" component={Landing} />
+        <Route path="/compra" component={Stripe} />
         <Route path="/favorites" component={Favorites} />
       </Switch>
       <Footer />

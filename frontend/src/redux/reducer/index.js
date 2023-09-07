@@ -184,10 +184,25 @@ const rootReducer = (state = initialState, action) => {
                     productDetail: {}
             };
             case ADD_TO_CART:
-                return {
-                  ...state,
-                  cart: [...state.cart, action.payload], 
-            };
+                const productToAdd = action.payload;
+                const existingProductIndex = state.cart.findIndex(
+                    (item) => item.id === productToAdd.id
+                );
+    
+                if (existingProductIndex !== -1) {
+                    const updatedCart = [...state.cart];
+                    updatedCart[existingProductIndex].quantity += 1;
+    
+                    return {
+                        ...state,
+                        cart: updatedCart,
+                    };
+                } else {
+                    return {
+                        ...state,
+                        cart: [...state.cart, { ...productToAdd, quantity: 1 }],
+                    };
+                }
             case REMOVE_FROM_CART:
                 return {
                   ...state,
