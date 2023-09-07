@@ -10,21 +10,15 @@ function Productos() {
   const productsData = useSelector((state) => state.products);
   const cart = useSelector((state) => state.cart);
 
-
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch]);
-
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-  };
 
   return (
     <div>
       <h1>Estos son los productos:</h1>
       <Filters />
       <Cards products={productsData} 
-          addToCart={handleAddToCart}
           />
     </div>
   );
