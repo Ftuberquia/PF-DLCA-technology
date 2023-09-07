@@ -1,14 +1,11 @@
-import { GET_ALL_PRODUCTS, filterByBrand } from "../actions/index.js";
+import { GET_ALL_PRODUCTS } from "../actions/index.js";
 import { GET_PRODUCTS_BYNAME } from "../actions/index.js";
 import { GET_PRODUCT_DETAIL } from "../actions/index.js";
 import { GET_TAGS } from "../actions/index.js";
 import { GET_BRANDS } from "../actions/index.js";
 import { CREATE_PRODUCT } from "../actions/index.js";
 import { DELETE_PRODUCT } from "../actions/index.js";
-import { FILTER_BY_BRANDS } from "../actions/index.js";
-import { FILTER_BY_CREATED } from "../actions/index.js";
-import { ORDER_BY_NAME } from "../actions/index.js";
-import { FILTER_BY_CATEGORY } from "../actions/index.js";
+// import { FILTER_BY_CREATED } from "../actions/index.js";
 import { GET_CATEGORIES } from "../actions/index.js";
 import { OPEN_MODAL } from "../actions/index.js";
 import { LOGOUT } from "../actions/index.js";
@@ -16,8 +13,8 @@ import { GET_SUBCATEGORIES } from "../actions/index.js";
 import { ADD_TO_CART } from "../actions/index.js";
 import { REMOVE_FROM_CART } from "../actions/index.js";
 import { CLEAN_CART } from "../actions/index.js";
-import { CLEAN_DETAIL, ORDER_BY_PRICE } from "../actions/index.js";
-
+import { CLEAN_DETAIL} from "../actions/index.js";
+import { FILTER_FRONT } from "../actions/index.js";
 
   const initialState = {
     products: [],
@@ -97,74 +94,15 @@ const rootReducer = (state = initialState, action) => {
                         ...state,
                         productDetail: {},
                     }   
-            case FILTER_BY_CATEGORY:
-                let categoryToFilter = action.payload;
-                let filteredByCategory = [...state.productsCopy]; // Copia de productos originales
-
-                if (categoryToFilter !== 'All') {
-                    filteredByCategory = filteredByCategory.filter(
-                    (product) => product.category === categoryToFilter
-                    );
-                if (filteredByCategory.length === 0) {
-                        // Muestra una alerta si no se encuentran productos con la categoría seleccionada
-                        alert(`No hay productos en la categoría "${categoryToFilter}" con la combinación de filtros.`);
-                    }    
-                }
-                return {
-                    ...state,
-                    products: filteredByCategory,
-                };
-            case FILTER_BY_BRANDS:
-                let brandToFilter = action.payload;
-                let filteredByBrand = [...state.productsCopy]; // Copia de productos originales
-
-                if (brandToFilter !== 'All') {
-                    filteredByBrand = filteredByBrand.filter(
-                    (product) => product.brand === brandToFilter
-                    );
-                }
-                if (filteredByBrand.length === 0) {
-                    // Muestra una alerta si no se encuentran productos con la marca seleccionada
-                    alert(`No hay productos de la marca "${brandToFilter}" con la combinación de filtros.`);
-                }
-                return {
-                    ...state,
-                    products: filteredByBrand,
-                };
-            case ORDER_BY_NAME:
-                let sortedProducts = [...state.products]; // Clonar la lista de productos
-
-                if (action.payload === 'A-Z') {
-                    sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
-                } else if (action.payload === 'Z-A') {
-                    sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
-                }
-                return {
-                    ...state,
-                    products: sortedProducts,
-                };
-            case ORDER_BY_PRICE:
-                const sortedProductsByPrice = [...state.productsCopy]; // Clonamos la lista de productos originales
-
-                if (action.payload === 'min') {
-                    sortedProductsByPrice.sort((a, b) => a.price - b.price);
-                } else if (action.payload === 'max') {
-                    sortedProductsByPrice.sort((a, b) => b.price - a.price);
-                }
-
-                return {
-                    ...state,
-                    products: sortedProductsByPrice,
-                };
-
-            case FILTER_BY_CREATED:
-                let filtered2 = state.filtered;
-                let byCreated = action.payload === 'created' ? filtered2.filter(product =>product.custom === true) : filtered2.filter(product => !product.custom);
-                    if (action.payload === 'All') byCreated = filtered2;
-                    return {
-                        ...state,
-                        products: byCreated
-                        };           
+            // este debe ser filtro para ver si el producto esta activo o no (cambiar)
+            // case FILTER_BY_CREATED:
+            //     let filtered2 = state.filtered;
+            //     let byCreated = action.payload === 'created' ? filtered2.filter(product =>product.custom === true) : filtered2.filter(product => !product.custom);
+            //         if (action.payload === 'All') byCreated = filtered2;
+            //         return {
+            //             ...state,
+            //             products: byCreated
+            //             };           
 
             case OPEN_MODAL:
                 return {
@@ -213,6 +151,33 @@ const rootReducer = (state = initialState, action) => {
                   ...state,
                   cart: [], 
                 };
+                case FILTER_FRONT:
+                    const {brand, category, order, price } = action.payload
+                    let productosConFiltros = state.productsCopy.filter((el) =>{
+                        let matchesBrand = true
+                        let matchesCategory = true
+                        if(brand !== "All"){
+                            matchesBrand = el.brand === brand
+                        } console.log('esta es la amrca',brand)
+                        if(category !== "All"){
+                            matchesCategory = el.category === category
+                        } 
+                        return matchesBrand && matchesCategory
+                    })
+                    if(price === "min"){
+                        productosConFiltros.sort((a, b) => a.price - b.price);
+                    } else if(price === "max"){
+                        productosConFiltros.sort((a, b) => b.price - a.price);
+                    }else if(order === "A-Z"){
+                        productosConFiltros.sort((a, b) => a.name.localeCompare(b.name));
+                    } else if(order === "Z-A"){
+                        productosConFiltros.sort((a, b) => b.name.localeCompare(a.name));
+                    }
+                    console.log('estos son los productos filtrados',productosConFiltros)
+                    return{
+                    ...state,
+                    products: productosConFiltros
+                    }
             default:
             return {...state};
         }
