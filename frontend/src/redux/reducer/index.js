@@ -1,4 +1,4 @@
-import { GET_ALL_PRODUCTS } from "../actions/index.js";
+import { GET_ALL_PRODUCTS, filterByBrand } from "../actions/index.js";
 import { GET_PRODUCTS_BYNAME } from "../actions/index.js";
 import { GET_PRODUCT_DETAIL } from "../actions/index.js";
 import { GET_TAGS } from "../actions/index.js";
@@ -13,12 +13,15 @@ import { GET_CATEGORIES } from "../actions/index.js";
 import { OPEN_MODAL } from "../actions/index.js";
 import { LOGOUT } from "../actions/index.js";
 import { GET_SUBCATEGORIES } from "../actions/index.js";
-import { CLEAN_DETAIL } from "../actions/index.js";
+import { ADD_TO_CART } from "../actions/index.js";
+import { REMOVE_FROM_CART } from "../actions/index.js";
+import { CLEAN_CART } from "../actions/index.js";
+import { CLEAN_DETAIL, ORDER_BY_PRICE } from "../actions/index.js";
 
 
   const initialState = {
     products: [],
-    filtered: [],
+    order: [],
     brands: [],
     categories: [],
     subcategories: [], //pendiente
@@ -28,6 +31,7 @@ import { CLEAN_DETAIL } from "../actions/index.js";
     error: {},
     modal: '',
     reviewsFromUser: [],
+    cart: [],
     productsCopy: [], // copia Estado para emergencias 
     //para regresar al estado original cuando nesesite
 
@@ -94,58 +98,73 @@ const rootReducer = (state = initialState, action) => {
                         productDetail: {},
                     }   
             case FILTER_BY_CATEGORY:
-                const categoryToFilter = action.payload; 
-                const allProducts = [...state.products]; 
-                let filteredProducts = [];
-                if (categoryToFilter === 'All') {
-                    filteredProducts = allProducts;
-                } else {
-                    filteredProducts = state.productsCopy.filter((product) =>
-                    product.category=== categoryToFilter
+                let categoryToFilter = action.payload;
+                let filteredByCategory = [...state.productsCopy]; // Copia de productos originales
+
+                if (categoryToFilter !== 'All') {
+                    filteredByCategory = filteredByCategory.filter(
+                    (product) => product.category === categoryToFilter
                     );
+                if (filteredByCategory.length === 0) {
+                        // Muestra una alerta si no se encuentran productos con la categoría seleccionada
+                        alert(`No hay productos en la categoría "${categoryToFilter}" con la combinación de filtros.`);
+                    }    
                 }
                 return {
                     ...state,
-                    products: filteredProducts,
+                    products: filteredByCategory,
                 };
-                case FILTER_BY_BRANDS:
-                    let filtered = [...state.products]; // Asegura que state.filtered sea un arreglo
-                    let byBrand = [];
-                
-                    if (action.payload === 'All') {
-                        byBrand = filtered; // Clona el arreglo si se selecciona 'All'
-                    } else {
-                        byBrand = state.productsCopy.filter((product) =>
-                            product.brand === action.payload
-                        );
-                    }
-                    console.log(byBrand);
-                    return {
-                        ...state,
-                        products: byBrand,
-                    };
-            case FILTER_BY_CREATED:
-                let filtered2 = state.filtered;
-                let byCreated = action.payload === 'created' ? filtered2.filter(product =>product.custom === true) : filtered2.filter(product => !product.custom);
-                if (action.payload === 'All') byCreated = filtered2;
-                    return {
+            case FILTER_BY_BRANDS:
+                let brandToFilter = action.payload;
+                let filteredByBrand = [...state.productsCopy]; // Copia de productos originales
+
+                if (brandToFilter !== 'All') {
+                    filteredByBrand = filteredByBrand.filter(
+                    (product) => product.brand === brandToFilter
+                    );
+                }
+                if (filteredByBrand.length === 0) {
+                    // Muestra una alerta si no se encuentran productos con la marca seleccionada
+                    alert(`No hay productos de la marca "${brandToFilter}" con la combinación de filtros.`);
+                }
+                return {
                     ...state,
-                    products: byCreated
-            };           
-            
+                    products: filteredByBrand,
+                };
             case ORDER_BY_NAME:
-                const sortedProducts = [...state.products]; // Clonamos la lista de productos para no mutarla directamente
+                let sortedProducts = [...state.products]; // Clonar la lista de productos
 
                 if (action.payload === 'A-Z') {
                     sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
                 } else if (action.payload === 'Z-A') {
                     sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
                 }
-
                 return {
                     ...state,
                     products: sortedProducts,
                 };
+            case ORDER_BY_PRICE:
+                const sortedProductsByPrice = [...state.productsCopy]; // Clonamos la lista de productos originales
+
+                if (action.payload === 'min') {
+                    sortedProductsByPrice.sort((a, b) => a.price - b.price);
+                } else if (action.payload === 'max') {
+                    sortedProductsByPrice.sort((a, b) => b.price - a.price);
+                }
+
+                return {
+                    ...state,
+                    products: sortedProductsByPrice,
+                };
+
+            case FILTER_BY_CREATED:
+                let filtered2 = state.filtered;
+                let byCreated = action.payload === 'created' ? filtered2.filter(product =>product.custom === true) : filtered2.filter(product => !product.custom);
+                    if (action.payload === 'All') byCreated = filtered2;
+                    return {
+                        ...state,
+                        products: byCreated
+                        };           
 
             case OPEN_MODAL:
                 return {
@@ -163,11 +182,43 @@ const rootReducer = (state = initialState, action) => {
                 return{
                     ...state,
                     productDetail: {}
+            };
+            case ADD_TO_CART:
+                const productToAdd = action.payload;
+                const existingProductIndex = state.cart.findIndex(
+                    (item) => item.id === productToAdd.id
+                );
+    
+                if (existingProductIndex !== -1) {
+                    const updatedCart = [...state.cart];
+                    updatedCart[existingProductIndex].quantity += 1;
+    
+                    return {
+                        ...state,
+                        cart: updatedCart,
+                    };
+                } else {
+                    return {
+                        ...state,
+                        cart: [...state.cart, { ...productToAdd, quantity: 1 }],
+                    };
                 }
+            case REMOVE_FROM_CART:
+                return {
+                  ...state,
+                  cart: state.cart.filter((item) => item.id !== action.payload.id), 
+            };
+            case CLEAN_CART:
+                return {
+                  ...state,
+                  cart: [], 
+                };
             default:
             return {...state};
         }
-    }        
+    }    
+    
+    
 
 export { rootReducer};
 

@@ -5,11 +5,13 @@ import styles from './Carousel.module.css';
 function Carousel() {
 
   const images = [
-    "https://i.ibb.co/0nXN3vc/carousel-img1.jpg",
+    "https://i.ibb.co/cwG0h2g/banner-setup.jpg",
     "https://i.ibb.co/3Rk3C5t/carousel-img2.jpg",
-    "https://i.ibb.co/1bN0FH6/confianza.jpg",
-    "https://i.ibb.co/YtDPhp2/banner-gaming-1img.jpg",
+    "https://i.ibb.co/6R6ywZP/banner-setup4.jpg",
+    // "https://i.ibb.co/YtDPhp2/banner-gaming-1img.jpg",
+    "https://i.ibb.co/mR957KD/banner-setup3.jpg",
   ]
+  
   const [img, setImg] = useState(0)
 
   function next() {

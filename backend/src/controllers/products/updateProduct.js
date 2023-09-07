@@ -1,61 +1,57 @@
 // controllers/updateProduct.js
-const Products = require("../../models/products");
+const {Products, Tags, Brand, Category, Subcategory} = require("../../db");
 
 
-const updateProduct = async (req, res) => {
-  const productId = req.params.id;
-  const { name, href, imageSrc, imageAlt, price, stock, brand, category, subCategory, rating, description, isActive } = req.body;
+const updateProduct = async (name, imageSrc, price, stock, brand, category, subcategory, description, isActive, tags, id) => {
 
-  try {
-    const product = await Products.findByPk(productId);
-
-    if (!product) {
-      return res.status(404).json({ error: "Producto no encontrado" });
-    }
-
-    // Actualiza los atributos del producto: 
+  const [brands] = await Brand.findOrCreate({ where: { name: brand } });
+  const [categories] = await Category.findOrCreate({where: {name: category}})
+  const [subcategories] = await Subcategory.findOrCreate({where: {name: subcategory}})  
   
-    if(name !== '') {
-      product.name = name;
+    const product = await Products.findOne({where:{ id: id}})
+    // Actualiza los atributos del producto: 
+    let updates = {}
+    if(name !== undefined || name === "") {
+      updates.name = name;
     }
-    if(href !== '') {
-      product.href = href;
+    if(imageSrc !== undefined || imageSrc === "") {
+      updates.imageSrc = imageSrc;
     }
-    if(imageSrc !== '') {
-      product.imageSrc = imageSrc;
+    if(price !== undefined && price !== null) {
+      updates.price = price;
     }
-    if(imageAlt !== '') {
-      product.imageAlt = imageAlt;
+    if(stock !== undefined) {
+      updates.stock = stock;
     }
-    if(price !== 0) {
-      product.price = price;
+    if(brand !== undefined || brand === "") {
+      updates.brandsId = brands.id;
+      updates.brand=brands.name;
     }
-    if(stock !== 0) {
-      product.stock = stock;
+    if(category !== undefined || category === "") {
+      updates.categoriesId = categories.id;
+      updates.category=categories.name;
     }
-    if(brand !== '') {
-      product.brand = brand;
+    if(subcategory !== undefined || subcategory === "") {
+      updates.subcategoriesId = subcategories.id
+      updates.subcategory= subcategories.name
     }
-    if(category !== '') {
-      product.category = category;
+    if(description !== undefined || description === "") {
+      updates.description = description;
     }
-    if(subCategory !== '') {
-      product.subCategory = subCategory;
-    }
-    if(rating !== '') {
-      product.rating = rating;
-    }
-    if(description !== '') {
-      product.description = description;
-    }
-    product.isActive = isActive; // Agregar el valor de isActive
+    if (isActive !== undefined) {
+      updates.isActive = isActive;
+    }// Agregar el valor de isActive
+    console.log(updates)
+    
+    await product.update(updates);
 
-    await product.save();
-    const prod = await Products.findAll();
-    return res.status(200).json(prod);
-  } catch (error) {
-    return res.status(400).json({ error: error.message });
+    if(tags){
+      await product.setTags([])
+      let postTags = await Tags.findAll({where :{name:tags}})
+      await product.addTags(postTags)
+    }
+    return product
   }
-};
+;
 
 module.exports = updateProduct;

@@ -1,21 +1,27 @@
 import axios from 'axios';
-export const  GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
-export const  GET_PRODUCTS_BYNAME = 'GET_PRODUCTS_BYNAME';
-export const  GET_PRODUCT_DETAIL = 'GET_PRODUCT_DETAIL';
-export const  GET_BRANDS = 'GET_BRANDS';
-export const  GET_TAGS = 'GET_TAGS';
-export const  CREATE_PRODUCT = 'CREATE_PRODUCT';
-export const  DELETE_PRODUCT = 'DELETE_PRODUCT';
-export const  FILTER_BY_TAG = 'FILTER_BY_TAG';
-export const  FILTER_BY_BRANDS = 'FILTER_BY_BRANDS';
-export const  FILTER_BY_CREATED = 'FILTER_BY_CREATED';
-export const  ORDER_BY_NAME = 'ORDER_BY_NAME';
-export const  FILTER_BY_CATEGORY = 'FILTER_BY_CATEGORY';
-export const  GET_CATEGORIES = 'GET_CATEGORIES';
-export const  OPEN_MODAL = 'OPEN_MODAL';
-export const  LOGOUT = 'LOGOUT';
-export const  GET_SUBCATEGORIES = 'GET_SUBCATEGORIES';
-export const  CLEAN_DETAIL = "CLEAN_DETAIL"
+export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
+export const GET_PRODUCTS_BYNAME = 'GET_PRODUCTS_BYNAME';
+export const GET_PRODUCT_DETAIL = 'GET_PRODUCT_DETAIL';
+export const GET_BRANDS = 'GET_BRANDS';
+export const GET_TAGS = 'GET_TAGS';
+export const CREATE_PRODUCT = 'CREATE_PRODUCT';
+export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+export const FILTER_BY_TAG = 'FILTER_BY_TAG';
+export const FILTER_BY_BRANDS = 'FILTER_BY_BRANDS';
+export const FILTER_BY_CREATED = 'FILTER_BY_CREATED';
+export const ORDER_BY_NAME = 'ORDER_BY_NAME';
+export const FILTER_BY_CATEGORY = 'FILTER_BY_CATEGORY';
+export const GET_CATEGORIES = 'GET_CATEGORIES';
+export const OPEN_MODAL = 'OPEN_MODAL';
+export const LOGOUT = 'LOGOUT';
+export const GET_SUBCATEGORIES = 'GET_SUBCATEGORIES';
+export const CLEAN_DETAIL = 'CLEAN_DETAIL'
+export const ORDER_BY_PRICE = 'ORDER_BY_PRICE'
+export const PUT_USER = 'PUT_USER';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+export const CLEAN_CART = 'CLEAN_CART';
+
 
 
 export const getAllProducts = () => async dispatch => {
@@ -145,6 +151,18 @@ export const createProduct = (form) => async (dispatch) => {
     }
 };
 
+//modifica los datos del usuario en la db
+export function putUser(email, user) { 
+    return async function (dispatch) {
+        const json = await axios.put(`/modifyUser/${email}`, user);
+        const data = json.data;
+        dispatch({
+            type: PUT_USER,
+            payload: data
+        })
+    }
+}
+
 export const filterByCategory = (payload) => dispatch => {
     return dispatch({
         type: FILTER_BY_CATEGORY,
@@ -159,16 +177,22 @@ export const filterByBrand = (payload) => dispatch => {
     })
 };
 
-export const filterByCreated = (payload) => dispatch => {
+export const orderByName = (payload) => dispatch => {
     return dispatch({
-        type: FILTER_BY_CREATED,
+        type: ORDER_BY_NAME,
+        payload
+    })
+};
+export const orderByPrice = (payload) => dispatch => {
+    return dispatch({
+        type: ORDER_BY_PRICE,
         payload
     })
 };
 
-export const orderByName = (payload) => dispatch => {
+export const filterByCreated = (payload) => dispatch => {
     return dispatch({
-        type: ORDER_BY_NAME,
+        type: FILTER_BY_CREATED,
         payload
     })
 };
@@ -191,3 +215,24 @@ export function cleanDetail() {
         type: CLEAN_DETAIL,
     };
 }
+
+//Cart
+export function addToCart(product) {
+    return {
+        type: ADD_TO_CART,
+        payload: product
+    }
+};
+    
+export function removeFromCart(product) {
+    return {
+        type: REMOVE_FROM_CART,
+        payload: product
+    }
+};
+    
+export function clearCart() {
+    return {
+        type: CLEAN_CART
+    }
+};
