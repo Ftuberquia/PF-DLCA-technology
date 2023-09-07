@@ -1,11 +1,12 @@
 import './Filters.css';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect,useRef } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux'; //conecta react-redux
 import {
     getAllProducts, 
     getBrands, 
     getCategories,
+    getSubCategories,
     filterFront
      } from '../../redux/actions';
 // import Loader from '../Loader/Loader.jsx';
@@ -18,9 +19,11 @@ export default function Filters () {
     const dispatch = useDispatch();
     const brands = useSelector(state => state.brands);
     const categories = useSelector(state => state.categories);
+    const subcategories = useSelector(state => state.subcategories)
 
     const filterBrand = useRef(null)
     const filterCategory = useRef(null)
+    const filterSubcategories = useRef(null)
     const orderPrice = useRef(null)
     const orderName = useRef(null)
 
@@ -29,12 +32,14 @@ export default function Filters () {
 useEffect(() => {
     dispatch(getBrands());
     dispatch(getCategories());
+    dispatch(getSubCategories());
 }, [dispatch]);
 
 const handlerFilterOrderCombined = (e) =>{
     e.preventDefault()
     const brand =  filterBrand.current.value
     const category = filterCategory.current.value
+    const subcategory = filterSubcategories.current.value
     let order = orderName.current.value
     let price = orderPrice.current.value
     if(order !== "order" ){
@@ -49,7 +54,8 @@ const handlerFilterOrderCombined = (e) =>{
         brand,
         category,
         order,
-        price
+        price,
+        subcategory
     }
 
     dispatch(filterFront(params))
@@ -64,6 +70,7 @@ const handleReset = (event) => {
     orderPrice.current.value = "price"
     filterBrand.current.value = 'All'
     filterCategory.current.value = 'All'
+    filterSubcategories.current.value = 'All'
     alert('Loading...');
 
 }
@@ -84,6 +91,12 @@ return (
                     {categories.length > 0 && categories.map((category, index) => (
                     <option key={index} value={category}>{category}</option>
                 ))}
+                </select>
+                <select className="filter-butt" ref={filterSubcategories} onChange={(e)=>handlerFilterOrderCombined(e)} defaultValue="All">
+                    <option value="All">Subcategorias</option>
+                    {subcategories.length > 0 && subcategories.map((subcategory, index)=> (
+                        <option key={index} value={subcategory}>{subcategory}</option>
+                    ))}
                 </select>
                 <select className='filter-butt' ref={orderPrice} onChange={(e) => handlerFilterOrderCombined(e)} defaultValue="price">
                     <option value="price" disabled>Orden por precio</option>
