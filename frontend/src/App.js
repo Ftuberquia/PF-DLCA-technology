@@ -11,6 +11,7 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import Productos from "./views/Productos/Productos";
 import { ContactUs } from "./views/ContactUs/ContactUs";
 import Favorites from "./views/Favorites/FavoritesProducts";
+import Stripe from "./views/Stripe/Stripe";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/contacto" component={ContactUs} />
         <Route path="/userProfile" component={UserProfile} />
         <Route exact path="/" component={Landing} />
+        <Route path="/compra" component={Stripe} />
         <Route path="/favorites" component={Favorites} />
       </Switch>
       <Footer />

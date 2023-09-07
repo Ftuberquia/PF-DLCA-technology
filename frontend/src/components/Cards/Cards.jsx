@@ -3,12 +3,13 @@ import Card from '../Card/Card'
 import style from './Cards.module.css'
 const Cards = (props) => {
 
-    const {products}=props
-    const productsData=products
+    const { products, addToCart } = props;
+    const productsData = products;
     
     return (
         <div className={style.contenedorCards}>
             {productsData?.map(({ id, name, imageSrc, price, rating, stock, disabled }) => {
+                
                 if (!disabled) {
                     return (
                         <Card 
@@ -18,7 +19,8 @@ const Cards = (props) => {
                         imageSrc={imageSrc} 
                         price={price} 
                         rating={rating} 
-                        stock={stock} />
+                        stock={stock}
+                        addToCart={addToCart} />
                     );
                 }
                 return null;
