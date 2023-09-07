@@ -151,17 +151,21 @@ const rootReducer = (state = initialState, action) => {
                   cart: [], 
                 };
             case FILTER_FRONT:
-                const {brand, category, order, price } = action.payload
+                const {brand, category, order, price, subcategory } = action.payload
                 let productosConFiltros = state.productsCopy.filter((el) =>{
                     let matchesBrand = true
                     let matchesCategory = true
+                    let matchesSubcategory = true
                     if(brand !== "All"){
                         matchesBrand = el.brand === brand
                     } 
                     if(category !== "All"){
                         matchesCategory = el.category === category
-                    } 
-                    return matchesBrand && matchesCategory
+                    }
+                    if(subcategory !== "All"){
+                        matchesSubcategory = el.subcategory === subcategory
+                    }
+                    return matchesBrand && matchesCategory && matchesSubcategory
                 })
                 if(price === "min"){
                     productosConFiltros.sort((a, b) => a.price - b.price);
@@ -183,8 +187,6 @@ const rootReducer = (state = initialState, action) => {
                     ...state,
                     favs: action.payload
                 }
-            
-            
             default:
             return {...state};
         }
