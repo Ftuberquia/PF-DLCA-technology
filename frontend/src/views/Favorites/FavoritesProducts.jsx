@@ -1,32 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+
 import Cards from "../../components/Cards/Cards";
-import axios from "axios";
+import { getFavoriteProducts } from "../../redux/actions";
 
 export default function Favorites() {
+    const dispatch = useDispatch();
+    const favoriteProducts = useSelector(state => state.favs);
+    const { user } = useAuth0(); // Obtener la información del usuario actual desde Auth0
 
-    const [favoriteProducts, setFavoriteProducts] = useState([]);
-
-    const userId=1
+    const history=useHistory()
 
     useEffect(() => {
-      axios.get(`/favorites/${userId}`)
-        .then(response => {
-            console.log('esta es la data de la DB',response.data)
-            const products = response.data.rows[0].products;
-          setFavoriteProducts(products);
-          console.log('esta es la data de solo los productos',products)
-        })
-        .catch(error => {
-          console.error('Error al obtener los productos favoritos:', error);
-        });
-    }, [userId]);
-
-    
+        if (user) {
+            dispatch(getFavoriteProducts(user.sub)); // Pasar el ID de usuario a la acción getFavoriteProducts
+            localStorage.setItem("userId", user.sub); // Guardar el userId en el localStorage
+        } else{
+            alert('Ingresa o registrate para ver tus favoritos!')
+            history.goBack()
+        }
+        // eslint-disable-next-line
+    }, [user,history , dispatch]);
 
     return (
         <div>
-            <h1>Favorites</h1>
+            <h1>Favoritos</h1>
             <Cards products={favoriteProducts}/>
         </div>
-    )
+    );
 }

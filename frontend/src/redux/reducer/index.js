@@ -1,4 +1,4 @@
-import { GET_ALL_PRODUCTS } from "../actions/index.js";
+import { GET_ALL_PRODUCTS, GET_FAVS } from "../actions/index.js";
 import { GET_PRODUCTS_BYNAME } from "../actions/index.js";
 import { GET_PRODUCT_DETAIL } from "../actions/index.js";
 import { GET_TAGS } from "../actions/index.js";
@@ -29,6 +29,7 @@ import { FILTER_FRONT } from "../actions/index.js";
     modal: '',
     reviewsFromUser: [],
     cart: [],
+    favs: [],
     productsCopy: [], // copia Estado para emergencias 
     //para regresar al estado original cuando nesesite
 
@@ -57,13 +58,11 @@ const rootReducer = (state = initialState, action) => {
                 productDetail: action.payload
             };
             case GET_CATEGORIES:
-                console.log(state.categories)
             return {
                 ...state,
                 categories: action.payload
             };
             case GET_BRANDS:
-                console.log(state.brands)
             return {
                 ...state,
                 brands: action.payload
@@ -151,33 +150,41 @@ const rootReducer = (state = initialState, action) => {
                   ...state,
                   cart: [], 
                 };
-                case FILTER_FRONT:
-                    const {brand, category, order, price } = action.payload
-                    let productosConFiltros = state.productsCopy.filter((el) =>{
-                        let matchesBrand = true
-                        let matchesCategory = true
-                        if(brand !== "All"){
-                            matchesBrand = el.brand === brand
-                        } console.log('esta es la amrca',brand)
-                        if(category !== "All"){
-                            matchesCategory = el.category === category
-                        } 
-                        return matchesBrand && matchesCategory
-                    })
-                    if(price === "min"){
-                        productosConFiltros.sort((a, b) => a.price - b.price);
-                    } else if(price === "max"){
-                        productosConFiltros.sort((a, b) => b.price - a.price);
-                    }else if(order === "A-Z"){
-                        productosConFiltros.sort((a, b) => a.name.localeCompare(b.name));
-                    } else if(order === "Z-A"){
-                        productosConFiltros.sort((a, b) => b.name.localeCompare(a.name));
-                    }
-                    console.log('estos son los productos filtrados',productosConFiltros)
-                    return{
+            case FILTER_FRONT:
+                const {brand, category, order, price } = action.payload
+                let productosConFiltros = state.productsCopy.filter((el) =>{
+                    let matchesBrand = true
+                    let matchesCategory = true
+                    if(brand !== "All"){
+                        matchesBrand = el.brand === brand
+                    } 
+                    if(category !== "All"){
+                        matchesCategory = el.category === category
+                    } 
+                    return matchesBrand && matchesCategory
+                })
+                if(price === "min"){
+                    productosConFiltros.sort((a, b) => a.price - b.price);
+                } else if(price === "max"){
+                    productosConFiltros.sort((a, b) => b.price - a.price);
+                }else if(order === "A-Z"){
+                    productosConFiltros.sort((a, b) => a.name.localeCompare(b.name));
+                } else if(order === "Z-A"){
+                    productosConFiltros.sort((a, b) => b.name.localeCompare(a.name));
+                }
+                
+                return{
+                ...state,
+                products: productosConFiltros
+                }
+
+            case GET_FAVS:
+                return{
                     ...state,
-                    products: productosConFiltros
-                    }
+                    favs: action.payload
+                }
+            
+            
             default:
             return {...state};
         }
