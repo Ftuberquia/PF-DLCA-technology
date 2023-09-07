@@ -30,6 +30,9 @@
     color: aqua;
     background-color: gainsboro;
   }
+  .precio{
+    font-weight: bold;
+  }
 
   .button{
     border: none;
