@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import styles from "./Faq.module.css";
+import styles from "./Questions.module.css";
 import { useSelector } from "react-redux";
 
-const Faq = () => {
+const Questions = () => {
   const [expandedQuestion, setExpandedQuestion] = useState(null);
   // const darkMode = useSelector((state) => state.darkMode);
 
@@ -36,13 +36,18 @@ const Faq = () => {
     },
   ];
 
+  const toggleQuestion = (index) => {
+    if (expandedQuestion === index) {
+      setExpandedQuestion(null);
+    } else {
+      setExpandedQuestion(index);
+    }
+  };
+
   return (
-    <div className={styles.faq}>
+    <div className={styles.questions}>
       <div className={styles.imageContainer}>
-        <img
-          src="https://i.ibb.co/xFbXS4C/banner-faq.jpg"
-          alt=""
-        />
+        <img src="https://i.ibb.co/xFbXS4C/banner-faq.jpg" alt="" />
       </div>
       <div className={styles.questionsContainer}>
         {questionsAndAnswers.map((item, index) => (
@@ -51,7 +56,7 @@ const Faq = () => {
             className={`${styles.question} ${
               expandedQuestion === index ? styles.expanded : ""
             }`}
-            onClick={() => setExpandedQuestion(index)}
+            onClick={() => toggleQuestion(index)}
           >
             <p>
               <strong>{item.question}</strong>
@@ -64,4 +69,4 @@ const Faq = () => {
   );
 };
 
-export default Faq;
+export default Questions;

@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux"; 
-import { getProductDetail, cleanDetail, addToCart } from "../../redux/actions/index";
+import { getProductDetail, cleanDetail, addToCart, addFavorite, deleteFavorite } from "../../redux/actions/index";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 import style from './ProductDetail.module.css'
 
@@ -10,14 +11,48 @@ const ProductDetail = () => {
     const { id } = useParams(); 
 
     const product = useSelector(state => state.productDetail);
-    const dispatch = useDispatch();
+    const favoriteProducts=useSelector(state=>state.favs)
+    const [isFavorite, setIsFavorite] = useState(false)
+    const [userId, setUserId] = useState(null);
 
+    const dispatch = useDispatch();
+   
     useEffect(() => {
         dispatch(getProductDetail(id))
         return() =>{
             dispatch(cleanDetail())
         }
     }, [dispatch, id])
+    
+    //Para obtener el userId desde el localStorage
+    useEffect(() => {
+        const storedUserId = localStorage.getItem("userId");
+        setUserId(storedUserId);
+    }, []);
+
+    //verificar si el producto esta en favoritos
+    if(favoriteProducts){
+        favoriteProducts.forEach(el => {
+            if(el.id === id){
+                setIsFavorite(true)
+            }
+        })
+    }
+
+    const addToFavorites = async () => {
+        const body = { productId: id, userId: userId }
+        if(userId===null){
+            alert('Debes iniciar sesión para agregar a favoritos')
+        }else{
+            addFavorite(body)
+            setIsFavorite(true);
+        }
+    };
+
+    const removeFromFavorites = async () => {
+        deleteFavorite(id,userId)
+        setIsFavorite(false);
+    };
 
     if (!product) {
         return <div>Cargando...</div>;
@@ -45,7 +80,7 @@ const ProductDetail = () => {
                 <div className={style.detalles1}>
                  <h1>{product.name}</h1>
                  <h3>Marca: {product.brand}</h3>
-                 <h5>ID: {product.id}</h5>
+                 {isFavorite ? <button className={style.fav} onClick={removeFromFavorites}>❤️</button> : <button className={style.fav} onClick={addToFavorites}>🤍</button>}
                  <img src={product.imageSrc} alt={product.imageAlt}/>
                  <hr/>
                  <div className={style.detalles2}>

@@ -11,7 +11,8 @@ import Cards from "../Cards/Cards";
 import SearchBar from "../SearchBar/SearchBar";
 import AssociatedBrands from "../AssociatedBrands/AssociatedBrands";
 import Services from "../Services/Services";
-import Faq from "../Faq/Faq";
+import Questions from "../Questions/Questions";
+
 
 function Landing() {
   const [products, setProducts] = useState([]);
@@ -48,15 +49,31 @@ function Landing() {
             />
           ))}
         </div> */}
+        <div>
+        <div className='globo'>
+          <img
+            className='imgPres'
+            src="https://i.ibb.co/GHM1qNZ/clientes-felices.jpg"
+            alt=""
+          />
+          <p className='texto'>
+            Somos una empresa comprometida con la calidad y excelencia en la
+            industria de la tecnología. Ofrecemos una amplia gama de productos
+            de alta calidad y a los mejores precios. Contamos con un equipo de 
+            profesionales capacitados en brindar un servicio excepcional de 
+            atención a nuestros clientes y proveedores. En DLCA Technology, nos
+            esforzamos por ser líderes en la industria y proporcionar soluciones
+            confiables y eficientes para todos nuestros clientes.
+          </p>
+        </div>
+        </div>
         <div className="pcgamer">
           <Link to="/products">
-            <img
-              src="https://i.ibb.co/Xprs2Rs/pc-gamer2.jpg"
-              alt=""
-            />
+            <img src="https://i.ibb.co/Xprs2Rs/pc-gamer2.jpg" alt="" />
           </Link>
         </div>
-        <Faq />
+        
+        <Questions />
         <section className="banners">
           <div className="bannerOne">
             <Link to="productos/categories">

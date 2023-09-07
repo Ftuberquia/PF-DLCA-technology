@@ -1,0 +1,185 @@
+.container {
+    position: fixed;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 9999;
+    background: white;
+  }
+  
+  .container .circle {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 50%;
+    background: rgba(138, 43, 226, 0.02);
+  }
+  
+  .container .circle:nth-of-type(1) {
+    width: 200px;
+    height: 180px;
+    animation: rt 6s infinite linear;
+    box-shadow: 0 0 1px 0 var(--main-default),
+      inset 0 0 10px 0 var(--main-default);
+  }
+  
+  .container .circle:nth-of-type(2) {
+    width: 180px;
+    height: 200px;
+    animation: rt 10s infinite linear;
+    box-shadow: 0 0 1px 0 var(--main-default),
+      inset 0 0 10px 0 var(--main-default);
+  }
+  
+  .container .circle:nth-of-type(3) {
+    width: 210px;
+    height: 190px;
+    animation: rt 5s infinite linear;
+    box-shadow: 0 0 1px 0 var(--main-default),
+      inset 0 0 10px 0 var(--main-default);
+  }
+  
+  .container .circle:nth-of-type(4) {
+    width: 190px;
+    height: 210px;
+    animation: rt 15s infinite linear;
+    box-shadow: 0 0 1px 0 var(--main-default),
+      inset 0 0 10px 0 var(--main-default);
+  }
+  
+  @media screen and (max-width: 768px) {
+    .container .circle:nth-of-type(1) {
+      width: 150px;
+      height: 130px;
+    }
+  
+    .container .circle:nth-of-type(2) {
+      width: 130px;
+      height: 150px;
+    }
+  
+    .container .circle:nth-of-type(3) {
+      width: 160px;
+      height: 140px;
+    }
+  
+    .container .circle:nth-of-type(4) {
+      width: 140px;
+      height: 160px;
+    }
+    
+    .container .circle {
+      background: rgba(138, 43, 226, 0.05);
+    }
+    
+    .container .circle:nth-of-type(1) {
+      animation: rt 8s infinite linear;
+    }
+  
+    .container .circle:nth-of-type(2) {
+      animation: rt 12s infinite linear;
+    }
+  
+    .container .circle:nth-of-type(3) {
+      animation: rt 7s infinite linear;
+    }
+  
+    .container .circle:nth-of-type(4) {
+      animation: rt 17s infinite linear;
+    }
+    
+    .container {
+      padding: 20px;
+    }
+    
+    .container .circle:nth-of-type(1) {
+      box-shadow: 0 0 1px 0 var(--main-default),
+        inset 0 0 5px 0 var(--main-default);
+    }
+  
+    .container .circle:nth-of-type(2) {
+      box-shadow: 0 0 1px 0 var(--main-default),
+        inset 0 0 5px 0 var(--main-default);
+    }
+  
+    .container .circle:nth-of-type(3) {
+      box-shadow: 0 0 1px 0 var(--main-default),
+        inset 0 0 5px 0 var(--main-default);
+    }
+  
+    .container .circle:nth-of-type(4) {
+      box-shadow: 0 0 1px 0 var(--main-default),
+        inset 0 0 5px 0 var(--main-default);
+    }
+  }
+  
+  @media screen and (max-width: 576px) {
+    .container .circle:nth-of-type(1) {
+      width: 100px;
+      height: 90px;
+    }
+  
+    .container .circle:nth-of-type(2) {
+      width: 90px;
+      height: 100px;
+    }
+  
+    .container .circle:nth-of-type(3) {
+      width: 110px;
+      height: 100px;
+    }
+  
+    .container .circle:nth-of-type(4) {
+      width: 100px;
+      height: 110px;
+    }
+    
+    .container .circle {
+      background: rgba(138, 43, 226, 0.1);
+    }
+    
+    .container .circle:nth-of-type(1) {
+      animation: rt 10s infinite linear;
+    }
+  
+    .container .circle:nth-of-type(2) {
+      animation: rt 15s infinite linear;
+    }
+  
+    .container .circle:nth-of-type(3) {
+      animation: rt 8s infinite linear;
+    }
+  
+    .container .circle:nth-of-type(4) {
+      animation: rt 20s infinite linear;
+    }
+    
+    .container {
+      padding: 10px;
+    }
+    
+    .container .circle:nth-of-type(1) {
+      box-shadow: 0 0 1px 0 var(--main-default),
+        inset 0 0 3px 0 var(--main-default);
+    }
+  
+    .container .circle:nth-of-type(2) {
+      box-shadow: 0 0 1px 0 var(--main-default),
+        inset 0 0 3px 0 var(--main-default);
+    }
+  
+    .container .circle:nth-of-type(3) {
+      box-shadow: 0 0 1px 0 var(--main-default),
+        inset 0 0 3px 0 var(--main-default);
+    }
+  
+    .container .circle:nth-of-type(4) {
+      box-shadow: 0 0 1px 0 var(--main-default),
+        inset 0 0 3px 0 var(--main-default);
+    }
+  }

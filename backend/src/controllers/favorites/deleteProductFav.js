@@ -2,12 +2,12 @@ const { Users, Products } = require('../../db');
 
 const removeFavoriteProduct = async (req, res) => {
     try {
-      const { userId, productId } = req.body;
+      const { productId, userId } = req.params;
   
       // Verifica si el usuario y el producto existen
       const user = await Users.findByPk(userId);
       const product = await Products.findByPk(productId);
-  
+
       if (!user || !product) {
         return res.status(404).json({ message: 'Usuario o producto no encontrado' });
       }
