@@ -5,6 +5,8 @@ import { getAllProducts } from "../../redux/actions/index";
 import Filters from "../../components/Filters/Filters";
 import { addToCart } from "../../redux/actions/index";
 
+import style from './Productos.module.css'
+
 function Productos() {
   const dispatch = useDispatch();
   const productsData = useSelector((state) => state.products);
@@ -15,11 +17,11 @@ function Productos() {
   }, [dispatch]);
 
   return (
-    <div>
-      <h1>Estos son los productos:</h1>
+    <div className={style.homeContainer}>
       <Filters />
-      <Cards products={productsData} 
-          />
+      <div>
+        <Cards products={productsData} />
+      </div>
     </div>
   );
 }

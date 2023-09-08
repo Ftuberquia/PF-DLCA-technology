@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 // import logo from "../../img/logo-dlca.png";
 import personIcon from "../../img/person.svg";
 import heartIcon from "../../img/heart.svg";
@@ -42,11 +42,11 @@ const NavBar = () => {
         </Link>
       </span>
        <li>
-         <NavLink to={'/compra'} className={styles.links}>
+         <NavLink to={'/compra'} className={style.links}>
               Comprar
          </NavLink>
        </li>
-      <div className={styles.buttons}>
+      <div className={style.buttons}>
         <NavLink to={"login"} >
           <img src={personIcon} alt="Login" onClick={() => loginWithPopup()} />
         </NavLink>
