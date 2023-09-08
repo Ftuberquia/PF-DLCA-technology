@@ -1,4 +1,4 @@
-import { GET_ALL_PRODUCTS, GET_FAVS } from "../actions/index.js";
+import { GET_ALL_PRODUCTS} from "../actions/index.js";
 import { GET_PRODUCTS_BYNAME } from "../actions/index.js";
 import { GET_PRODUCT_DETAIL } from "../actions/index.js";
 import { GET_TAGS } from "../actions/index.js";
