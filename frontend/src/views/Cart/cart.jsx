@@ -1,106 +1,192 @@
-// import "./cart.css";
-import { useSelector, useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+// import "./Cart.css";
+// import { ClearCartIcon, CartIcon } from "./Icons";
+// import { useState, useEffect } from "react"; // Importa useState y useEffect en lugar de useSelector y useDispatch
+// import { NavLink } from "react-router-dom";
+// import Swal from "sweetalert2";
+// import { useAuth0 } from "@auth0/auth0-react";
 
-export default function Cart() {
-  const items = useSelector((state) => state.items);
-  const totalPrice = useSelector((state) => state.totalPrice);
-  const dispatch = useDispatch();
+// export default function Cart() {
+//   const [items, setItems] = useState([]); // Utiliza useState para gestionar el estado de los items del carrito
+//   const [totalPrice, setTotalPrice] = useState(0); // Utiliza useState para gestionar el estado del precio total
+//   const { isAuthenticated, loginWithRedirect } = useAuth0();
 
-  const sampleProducts = [
-    {
-      id: 1,
-      name: 'Producto 1',
-      price: 29.99,
-      imageSrc: 'imagen1.jpg',
-      imageAlt: 'Producto 1',
-      quantity: 2,
-    },
-    {
-      id: 2,
-      name: 'Producto 2',
-      price: 19.99,
-      imageSrc: 'imagen2.jpg',
-      imageAlt: 'Producto 2',
-      quantity: 1,
-    },
-    {
-      id: 3,
-      name: 'Producto 3',
-      price: 39.99,
-      imageSrc: 'imagen3.jpg',
-      imageAlt: 'Producto 3',
-      quantity: 3,
-    },
-  ];
+//   useEffect(() => {
+//     // Cargar datos del carrito desde el localStorage al cargar el componente
+//     const storedItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+//     const storedTotalPrice = parseFloat(localStorage.getItem("cartTotalPrice")) || 0;
+//     setItems(storedItems);
+//     setTotalPrice(storedTotalPrice);
+//   }, []);
 
-  const addToCartHandler = (product) => {
-    // Implementa la lógica para agregar un producto al carrito
-  };
+//   useEffect(() => {
+//     // Actualizar el localStorage cuando cambian los items o el precio total
+//     localStorage.setItem("cartItems", JSON.stringify(items));
+//     localStorage.setItem("cartTotalPrice", totalPrice);
+//   }, [items, totalPrice]);
 
-  const cleanCartHandler = () => {
-    // Implementa la lógica para limpiar el carrito
-  };
+//   const addToCartHandler = (product) => {
+//     const updatedItems = [...items];
+//     const existingItemIndex = updatedItems.findIndex((item) => item.id === product.id);
 
-  const removeFromCartHandler = (product) => {
-    // Implementa la lógica para eliminar un producto del carrito
-  };
+//     if (existingItemIndex !== -1) {
+//       // Si el producto ya está en el carrito, actualiza la cantidad
+//       updatedItems[existingItemIndex].quantity += 1;
+//     } else {
+//       // Si el producto no está en el carrito, agrégalo
+//       updatedItems.push({ ...product, quantity: 1 });
+//     }
 
-  const cleanDetailHandler = () => {
-    // Implementa la lógica para limpiar los detalles del carrito
-  };
+//     setItems(updatedItems);
+//     calculateTotalPrice(updatedItems);
+//   };
 
-  return (
-    <>
-      <label className="cart-button" htmlFor="carritoDeCompras"></label>
-      <input id="carritoDeCompras" type="checkbox" hidden />
-      <aside className="cart">
-        <div className="TOTAL">
-          Total: ${totalPrice} {/* Muestra el precio total del carrito */}
-        </div>
-        <ul className="cart-items">
-          {sampleProducts.map((product) => (
-            <CartItem
-              key={product.id}
-              id={product.id}
-              imageSrc={product.imageSrc}
-              imageAlt={product.imageAlt}
-              price={product.price}
-              name={product.name}
-              quantity={product.quantity}
-              removeFromCartHandler={removeFromCartHandler}
-              addToCartHandler={addToCartHandler}
-            />
-          ))}
-        </ul>
-        <NavLink
-          to={`/pay`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <button onClick={cleanDetailHandler} className="BUY">
-            Buy
-          </button>
-        </NavLink>
-        <button className="CLEAR" onClick={cleanCartHandler}>
-          {" "}
-        </button>
-      </aside>
-    </>
-  );
-}
+//   const clearCartHandler = () => {
+//     if (items.length > 0) {
+//       Swal.fire({
+//         title: "Esta Seguro",
+//         text: "¡Se eliminaran todos los productos de su carrito!",
+//         icon: "warning",
+//         showCancelButton: true,
+//         confirmButtonText: "Si, estoy seguro",
+//         cancelButtonText: "Cancelar",
+//         confirmButtonColor: "#28a745",
+//       }).then((result) => {
+//         if (result.isConfirmed) {
+//           setItems([]); // Limpia el carrito
+//           setTotalPrice(0); // Reinicia el precio total
+//         }
+//       });
+//     }
+//   };
 
-function CartItem({ id, imageSrc, imageAlt, price, name, quantity, removeFromCartHandler, addToCartHandler }) {
-  return (
-    <li>
-      <img src={imageSrc} alt={imageAlt} />
-      <div className="name">
-        <strong>{name}</strong> - ${price}
-      </div>
-      <footer>
-        <button className="rest" onClick={() => removeFromCartHandler({ id })}>-</button>
-        <small className="small">Cant. {quantity}</small>
-        <button className="add" onClick={() => addToCartHandler({ id })}>+</button>
-      </footer>
-    </li>
-  );
-}
+//   const removeFromCartHandler = (product) => {
+//     const updatedItems = [...items];
+//     const existingItemIndex = updatedItems.findIndex((item) => item.id === product.id);
+
+//     if (existingItemIndex !== -1) {
+//       const updatedItem = { ...updatedItems[existingItemIndex] };
+
+//       if (updatedItem.quantity === 1) {
+//         // Si la cantidad es 1, elimina el producto
+//         updatedItems.splice(existingItemIndex, 1);
+//       } else {
+//         // Si la cantidad es mayor a 1, disminuye la cantidad
+//         updatedItem.quantity -= 1;
+//         updatedItems[existingItemIndex] = updatedItem;
+//       }
+
+//       setItems(updatedItems);
+//       calculateTotalPrice(updatedItems);
+//     }
+//   };
+
+//   const clearDetailHandler = () => {
+//     if (isAuthenticated) {
+//       // Realiza la acción deseada cuando el usuario está autenticado
+//     } else {
+//       Swal.fire({
+//         title: "Inicie sesión",
+//         text: "Por favor inicia sesión para comprar.",
+//         icon: "warning",
+//         confirmButtonText: "Iniciar sesión",
+//         confirmButtonColor: "#28a745",
+//       }).then((result) => {
+//         if (result.isConfirmed) {
+//           loginWithRedirect();
+//         }
+//       });
+//     }
+//   };
+
+//   const calculateTotalPrice = (items) => {
+//     const totalPrice = items.reduce((total, item) => total + item.price * item.quantity, 0);
+//     setTotalPrice(totalPrice);
+//   };
+
+//   function CartItem({ id, imageSrc, imageAlt, price, name, quantity }) {
+//     return (
+//       <li className={items.length > 1 ? "list2" : "list"}>
+//         <div className="img-container">
+//           <img src={imageSrc} alt={imageAlt} />
+//         </div>
+//         <div className="name">
+//           <strong>{name}</strong>
+//           <p className="precio">
+//             ${price.toLocaleString("es-ES", { minimumFractionDigits: 2 })}
+//           </p>
+//         </div>
+//         <footer className="footer">
+//           <button
+//             className="rest"
+//             onClick={() => removeFromCartHandler({ id, imageSrc, imageAlt, price, name, quantity })}
+//           >
+//             <span className="minus">-</span>
+//           </button>
+//           <small className="small">Cant. {quantity}</small>
+//           <button
+//             className="add"
+//             onClick={() => addToCartHandler({ id, imageSrc, imageAlt, price, name, quantity })}
+//           >
+//             <span className="plus">+</span>
+//           </button>
+//         </footer>
+//       </li>
+//     );
+//   }
+
+//   return (
+//     <>
+//       <label className="cart-button" htmlFor="carritoDeCompras">
+//         <CartIcon />
+//       </label>
+//       <input id="carritoDeCompras" type="checkbox" hidden />
+//       <aside className="cart">
+//         <ul className="carts">
+//           {items.map((product) => (
+//             <CartItem key={product.id} {...product} />
+//           ))}
+//         </ul>
+//         <div className="result-container">
+//           <div className="TOTAL">
+//             Total: ${totalPrice.toLocaleString("es-ES", { minimumFractionDigits: 2 })}
+//           </div>
+//           {items.length > 0 ? (
+//             isAuthenticated ? (
+//               <NavLink
+//                 to={`/pay`}
+//                 style={{ textDecoration: "none", color: "inherit" }}
+//               >
+//                 <button onClick={clearDetailHandler} className="BUY">
+//                   Buy
+//                 </button>
+//               </NavLink>
+//             ) : (
+//               <button onClick={clearDetailHandler} className="BUY">
+//                 Buy
+//               </button>
+//             )
+//           ) : (
+//             <button
+//               onClick={() =>
+//                 Swal.fire({
+//                   title: "¡El carrito esta vacio!",
+//                   text: "Por favor agregue un producto al carrito",
+//                   icon: "warning",
+//                   confirmButtonText: "Ok",
+//                   confirmButtonColor: "#28a745",
+//                 })
+//               }
+//               className="BUY"
+//             >
+//               Buy
+//             </button>
+//           )}
+//           <button className="CLEAR" onClick={clearCartHandler}>
+//             {" "}
+//             <ClearCartIcon />{" "}
+//           </button>
+//         </div>
+//       </aside>
+//     </>
+//   );
+// }

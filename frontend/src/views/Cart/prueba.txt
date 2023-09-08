@@ -1,0 +1,138 @@
+//import "./cart.css";
+import { useSelector, useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
+import React, { useState } from 'react';
+
+export default function Cart() {
+  //const items = useSelector((state) => state.items);
+  const totalPrice = useSelector((state) => state.totalPrice);
+  const dispatch = useDispatch();
+  const [cart, setCart] = useState([]);
+
+  const sampleProducts = [
+    {
+      id: 1,
+      name: 'Producto 1',
+      price: 29.99,
+      imageSrc: 'imagen1.jpg',
+      imageAlt: 'Producto 1',
+      quantity: 2,
+    },
+    {
+      id: 2,
+      name: 'Producto 2',
+      price: 19.99,
+      imageSrc: 'imagen2.jpg',
+      imageAlt: 'Producto 2',
+      quantity: 1,
+    },
+    {
+      id: 3,
+      name: 'Producto 3',
+      price: 39.99,
+      imageSrc: 'imagen3.jpg',
+      imageAlt: 'Producto 3',
+      quantity: 3,
+    },
+  ];
+
+  const addToCartHandler = (product) => {
+    // Implementa la lógica para agregar un producto al carrito
+      // Copia el carrito actual y agrega el nuevo producto
+      const updatedCart = [...cart, product];
+      // Actualiza el estado del carrito con el nuevo carrito
+      setCart(updatedCart);
+  };
+  return (
+    <div>
+      {products.map((product) => (
+    <div key={product.id}>
+      <h3>{product.name}</h3>
+      <p>price: ${product.price}</p>
+      <button onClick={() => addToCartHandler(product)}>Agregar al carrito</button>
+    </div>
+  ))}
+    </div>
+  );
+}
+
+  const cleanCartHandler = () => {
+    // Implementa la lógica para limpiar el carrito
+    setCart([]);
+  };
+
+  const removeFromCartHandler = (product) => {
+    // Implementa la lógica para eliminar un producto del carrito
+    // Encuentra el índice del producto en el carrito
+  const productIndex = Cart.findIndex((item) => item.id === product.id);
+  if (productIndex !== -1) {
+    // Crea una copia del carrito actual
+    const updatedCart = [...Cart];
+     // Elimina el producto del carrito usando splice
+     updatedCart.splice(productIndex, 1);
+      // Actualiza el estado del carrito con el nuevo carrito sin el producto
+    setCart(updatedCart);
+  }
+  };
+
+  const cleanDetailHandler = () => {
+    // Implementa la lógica para limpiar los detalles del carrito
+     // Reinicia el estado de los detalles del carrito a un objeto vacío o arreglo vacío,
+  // dependiendo de cómo almacenes los detalles.
+  setDetails({}); // O setDetails([])
+  };
+
+  return (
+    <>
+      <label className="cart-button" htmlFor="carritoDeCompras"></label>
+      <input id="carritoDeCompras" type="checkbox" hidden />
+      <aside className="cart">
+        <div className="TOTAL">
+          Total: ${totalPrice.toFixed(2)} {/* Muestra el precio total del carrito */}
+        </div>
+        <ul className="cart-items">
+          {sampleProducts.map((product) => (
+            <CartItem
+              key={product.id}
+              id={product.id}
+              imageSrc={product.imageSrc}
+              imageAlt={product.imageAlt}
+              price={product.price}
+              name={product.name}
+              quantity={product.quantity}
+              removeFromCartHandler={removeFromCartHandler}
+              addToCartHandler={addToCartHandler}
+            />
+          ))}
+        </ul>
+        <NavLink
+          to={`/pay`}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <button onClick={cleanDetailHandler} className="BUY">
+            Buy
+          </button>
+        </NavLink>
+        <button className="CLEAR" onClick={cleanCartHandler}>
+          {" "}
+        </button>
+      </aside>
+    </>
+  );
+
+
+function CartItem({ id, imageSrc, imageAlt, price, name, quantity, removeFromCartHandler, addToCartHandler }) {
+  return (
+    <li>
+      <img src={imageSrc} alt={imageAlt} />
+      <div className="name">
+        <strong>{name}</strong> - ${price}
+      </div>
+      <footer>
+        <button className="rest" onClick={() => removeFromCartHandler({ id })}>-</button>
+        <small className="small">Cant. {quantity}</small>
+        <button className="add" onClick={() => addToCartHandler({ id })}>+</button>
+      </footer>
+    </li>
+  );
+}
