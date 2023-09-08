@@ -6,10 +6,12 @@ import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
+import { useAuth0 } from "@auth0/auth0-react";
 import style from "./NavBar.module.css";
 
 const NavBar = () => {
   const { cart } = useSelector((state) => state?.cart || {});
+  const { loginWithPopup} = useAuth0();
 
   return (
     <nav className={style.navbar}>
@@ -39,10 +41,15 @@ const NavBar = () => {
           Contáctenos
         </Link>
       </span>
-      <div className={style.buttons}>
-        <Link to={"/user"}>
-          <img src={personIcon} alt="Person" />
-        </Link>
+       <li>
+         <NavLink to={'/compra'} className={styles.links}>
+              Comprar
+         </NavLink>
+       </li>
+      <div className={styles.buttons}>
+        <NavLink to={"login"} >
+          <img src={personIcon} alt="Login" onClick={() => loginWithPopup()} />
+        </NavLink>
         <Link to={"/favorites"}>
           <img src={heartIcon} alt="Favorites" />
         </Link>
