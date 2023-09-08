@@ -27,11 +27,10 @@ const App = () => {
   const { pathname } = useLocation();
   const { isAuthenticated } = useAuth0();
 
-  const darkMode = useSelector((state) => state.darkMode); // Agrega esta línea
+  // const darkMode = useSelector((state) => state.darkMode); // Agrega esta línea
+  // <div className={`App ${darkMode ? "AppDark" : ""}`}>
+  {/* {pathname !== "*" && <Nav />}// como  cambiar Nav */}
   return (
-    <div className={`App ${darkMode ? "AppDark" : ""}`}>
-    {/* {pathname !== "*" && <Nav />}// como  cambiar Nav */}
-
     <Router>
       <NavBar />
       <Switch>
@@ -54,7 +53,6 @@ const App = () => {
       </Switch>
       <Footer />
     </Router>
-    </div>
   );
 };
 
