@@ -1,6 +1,6 @@
 const postReviews = require ("../../controllers/reviews/postReview")
 const handlerpostReviews = async(req, res) => {
-    const { productId } = req.params;
+    const productId = parseInt(req.params.productId);
     const { comment, rating, userId } = req.body;
 
 try {
