@@ -1,13 +1,13 @@
 const {Router} = require ("express")
-const  getReviews  = require("../../handlers/reviews/getReviews")
-const postReviews = require("../../handlers/reviews/postReviews")
+const  handlergetReviews  = require("../../handlers/reviews/handlergetReviews")
+const handlerpostReviews = require("../../handlers/reviews/handlerpostReviews")
 
 const reviews = Router()
 
 //Para mostrar las reviews de un producto
-reviews.get("/:productId", getReviews);
+reviews.get("/:productId", handlergetReviews);
 
 // Para postear una review de un producto
-reviews.post("/:productId", postReviews);
+reviews.post("/:productId", handlerpostReviews);
 
 module.exports = reviews;
