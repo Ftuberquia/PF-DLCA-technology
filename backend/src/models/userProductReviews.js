@@ -16,11 +16,11 @@ const UserProductReviews = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    comment: {
-      type: DataTypes.STRING,
-    },
     rating: {
       type: DataTypes.FLOAT,
+    },
+    comment: {
+      type: DataTypes.STRING,
     },
   }, {
     tableName: 'user_product_reviews',

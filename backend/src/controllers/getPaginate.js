@@ -1,9 +1,8 @@
-const Products = require("../models/products");
 const { Products } = require("../db");
 const { Op } = require("sequelize");
 
 const getPaginate = async (req, res) => {
-  const page = parseInt(req, query.page);
+  const page = parseInt(req.query.page);
   const itemsPerPage = 9; //Numero de elementos por pagina
 
   const offset = (page - 1) * itemsPerPage;
