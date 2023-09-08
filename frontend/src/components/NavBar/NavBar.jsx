@@ -1,10 +1,12 @@
-import style from "./NavBar.module.css";
 import { Link } from "react-router-dom";
 // import logo from "../../img/logo-dlca.png";
 import personIcon from "../../img/person.svg";
 import heartIcon from "../../img/heart.svg";
 import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
+import { useState } from "react";
+import SearchBar from "../SearchBar/SearchBar";
+import style from "./NavBar.module.css";
 
 const NavBar = () => {
   const { cart } = useSelector((state) => state?.cart || {});
@@ -18,6 +20,9 @@ const NavBar = () => {
         <Link className={style.name} to={"/"}>
           DLCA TECHNOLOGY
         </Link>
+      </span>
+      <span className={style.searchbar}>
+      <SearchBar />
       </span>
       <span>
         <Link className={style.links} to={"/productos"}>
