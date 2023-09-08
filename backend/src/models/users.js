@@ -32,11 +32,6 @@ const Users = (sequelize)=>{
             unique: true
         },
 
-        password : {
-            type : DataTypes.STRING,
-            allowNull : false
-        },
-
         postal_code : {
             type : DataTypes.INTEGER,
             allowNull : false
