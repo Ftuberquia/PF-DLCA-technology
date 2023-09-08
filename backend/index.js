@@ -24,7 +24,7 @@ const port = process.env.PORT || 3001;
 //
 // antes de la presentacion ponerlo en false 
 //para que no se borre al BD force: false
-conn.sync({ force: true}).then(() => {
+conn.sync({ force: false }).then(() => {
   server.listen(3001, () => {
     console.log('%s listening at 3001'); 
   });

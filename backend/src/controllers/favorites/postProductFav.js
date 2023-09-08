@@ -2,7 +2,7 @@ const { Users, Products } = require('../../db');
 
 const saveFavoriteProduct = async (req, res) => {
   try {
-    const { productId, userId } = req.body;
+    const { userId,  productId } = req.body;
 
     // Verifica si el usuario y el producto existen
     const user = await Users.findByPk(userId);

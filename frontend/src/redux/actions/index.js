@@ -6,23 +6,22 @@ export const GET_BRANDS = 'GET_BRANDS';
 export const GET_TAGS = 'GET_TAGS';
 export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
-export const FILTER_BY_TAG = 'FILTER_BY_TAG';
-export const FILTER_BY_BRANDS = 'FILTER_BY_BRANDS';
-export const FILTER_BY_CREATED = 'FILTER_BY_CREATED';
-export const ORDER_BY_NAME = 'ORDER_BY_NAME';
-export const FILTER_BY_CATEGORY = 'FILTER_BY_CATEGORY';
+// esto debe ser para ver si el producto esta activo o no(cambiar)
+// export const FILTER_BY_CREATED = 'FILTER_BY_CREATED'; 
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const LOGOUT = 'LOGOUT';
 export const GET_SUBCATEGORIES = 'GET_SUBCATEGORIES';
 export const CLEAN_DETAIL = 'CLEAN_DETAIL'
-export const ORDER_BY_PRICE = 'ORDER_BY_PRICE'
 export const PUT_USER = 'PUT_USER';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const CLEAN_CART = 'CLEAN_CART';
-
-
+export const FILTER_COMPLEX="FILTER_COMPLEX"
+export const FILTER_FRONT = "FILTER_FRONT"
+export const GET_FAVS='GET_FAVS';
+export const DELETE_FAV='DELETE_FAV';
+export const ADD_FAV='ADD_FAV'
 
 export const getAllProducts = () => async dispatch => {
     try {
@@ -100,7 +99,7 @@ export const getSubCategories = () => async dispatch => {
 export const getBrands = () => async dispatch => {
     try { 
         const getBrand = await axios.get('/brands');
-        console.log('Brands:', getBrand);
+    
         return dispatch({
             type: GET_BRANDS,
             payload: getBrand.data
@@ -162,40 +161,13 @@ export function putUser(email, user) {
         })
     }
 }
-
-export const filterByCategory = (payload) => dispatch => {
-    return dispatch({
-        type: FILTER_BY_CATEGORY,
-        payload
-    })
-};
-
-export const filterByBrand = (payload) => dispatch => {
-    return dispatch({
-        type: FILTER_BY_BRANDS,
-        payload
-    })
-};
-
-export const orderByName = (payload) => dispatch => {
-    return dispatch({
-        type: ORDER_BY_NAME,
-        payload
-    })
-};
-export const orderByPrice = (payload) => dispatch => {
-    return dispatch({
-        type: ORDER_BY_PRICE,
-        payload
-    })
-};
-
-export const filterByCreated = (payload) => dispatch => {
-    return dispatch({
-        type: FILTER_BY_CREATED,
-        payload
-    })
-};
+//esto debe ser para ver si el producto esta activo o no (cambiar)
+// export const filterByCreated = (payload) => dispatch => {
+//     return dispatch({
+//         type: FILTER_BY_CREATED,
+//         payload
+//     })
+// };
 
 export function openModal(payload) {
 	return { 
@@ -236,3 +208,98 @@ export function clearCart() {
         type: CLEAN_CART
     }
 };
+export function filterFront(payload){
+    return {
+        type: FILTER_FRONT,
+        payload
+    }   
+}
+
+export function getFavoriteProducts(userId){
+    return async function (dispatch){
+        try {
+            const {data} = await axios.get(`/favorites/${userId}`);
+            return dispatch({
+                type: GET_FAVS,
+                payload: data.rows[0].products
+            })
+        } catch (error) {
+            console.error('Error Favorites:', error);
+        }
+    }
+}
+
+export function addFavorite(body){
+    return async function (dispatch){
+        try {
+            const {data} = await axios.post('/favorites',body);
+            console.log(data)
+            return dispatch({
+                type: ADD_FAV,
+                payload: data
+            })
+        } catch (error) {
+            console.error('Error Favorites:', error);
+        }
+    }
+}
+
+export function deleteFavorite(productId,userId){
+    return async function (dispatch){
+        try {
+            const {data} = await axios.delete(`/favorites/${userId}/${productId}`);
+            return dispatch({
+                type: DELETE_FAV,
+                payload: data
+            })
+        } catch (error) {
+            console.error('Error Favorites:', error);
+        }
+    }
+}
+// este es el filtro del back, toquelo si se anima uwu
+// export function filterComplex(brand, category, subcategory) {
+//     return async function (dispatch) {
+//       try {
+//         let queryParams = {};
+  
+//         if (category) {
+//           queryParams.category = category;
+//         }
+  
+//         if (brand) {
+//           queryParams.brand = brand;
+//         }
+  
+//         if (subcategory) {
+//           queryParams.subcategory = subcategory;
+//         }
+  
+//         let url = '/filter';
+  
+//         if (Object.keys(queryParams).length > 0) {
+//           url += '?' + Object.entries(queryParams)
+//             .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+//             .join('&');
+//         }
+  
+//         const { data } = await axios.get(url);
+//         console.log(url);
+//         console.log(data);
+  
+//         if ((category || brand || subcategory) && data.length === 0) {
+//           return dispatch({
+//             type: FILTER_COMPLEX,
+//             payload: [], // No hay productos disponibles para la combinación de filtros
+//           });
+//         }
+  
+//         return dispatch({
+//           type: FILTER_COMPLEX,
+//           payload: data,
+//         });
+//       } catch (error) {
+//         console.error('Error Products:', error);
+//       }
+//     };
+// }

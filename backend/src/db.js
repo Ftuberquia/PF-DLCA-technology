@@ -44,7 +44,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 
 //DESTRUCTURING DE MODEL Y CREACION DE RELACIONES:
-const { Users, Products, Orders, Cart, Brand, Category, Tags, Subcategory, Review } = sequelize.models;
+const { Users, Products, Orders, Cart, Brand, Category, Tags, Subcategory, Review, UserProductReviews } = sequelize.models;
 // Aca vendrian las relaciones
 
 // Relación de Users:
@@ -62,9 +62,6 @@ Cart.belongsTo(Users);
 Products.belongsToMany(Users, { through: 'favorites', as: 'users', foreignKey: 'productId' });
 Users.belongsToMany(Products, { through: 'favorites', as: 'products', foreignKey: 'userId' });
 
-Users.hasMany(Review, { foreignKey: 'userId', as: 'reviews' });
-Review.belongsTo(Users, { foreignKey: 'userId' });
-
 // Relación de Products:
 Products.belongsToMany(Tags, {through:"tags_products"});
 Tags.belongsToMany(Products, {through:"tags_products"});
@@ -81,8 +78,26 @@ Subcategory.belongsTo(Category, {foreignKey: 'catSubId', as: 'catSub'})
 Brand.hasMany(Products, {foreignKey: 'brandsId', as: 'brands'});
 Products.belongsTo(Brand,{foreignKey: 'brandsId', as: 'productBrands'});
 
-Products.hasMany(Review, { foreignKey: 'productId', as: 'reviews' });
-Review.belongsTo(Products, { foreignKey: 'productId' });
+// Relación de UserProductReviews:
+Users.belongsToMany(Products, {
+	through: UserProductReviews, // Usa el modelo UserProductReviews como tabla intermedia
+	foreignKey: 'userId',
+	otherKey: 'productId',
+	as: 'reviewedProducts',
+  });
+  
+  Products.belongsToMany(Users, {
+	through: UserProductReviews, // Usa el modelo UserProductReviews como tabla intermedia
+	foreignKey: 'productId',
+	otherKey: 'userId',
+	as: 'reviewsByUsers',
+  });
+
+// Users.hasMany(Review, { foreignKey: 'userId', as: 'reviews' });
+// Review.belongsTo(Users, { foreignKey: 'userId' });
+
+// Products.hasMany(Review, { foreignKey: 'productId', as: 'reviews' });
+// Review.belongsTo(Products, { foreignKey: 'productId' });
 
 //es realmente necesario?
 // Products.belongsToMany(Favorites, {through:"favorites_products"});
