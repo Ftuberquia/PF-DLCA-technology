@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import styles from "./Faq.module.css";
+import style from "./Questions.module.css";
 import { useSelector } from "react-redux";
 
-const Faq = () => {
+const Questions = () => {
   const [expandedQuestion, setExpandedQuestion] = useState(null);
   // const darkMode = useSelector((state) => state.darkMode);
 
@@ -36,27 +36,32 @@ const Faq = () => {
     },
   ];
 
+  const toggleQuestion = (index) => {
+    if (expandedQuestion === index) {
+      setExpandedQuestion(null);
+    } else {
+      setExpandedQuestion(index);
+    }
+  };
+
   return (
-    <div className={styles.faq}>
-      <div className={styles.imageContainer}>
-        <img
-          src="https://i.ibb.co/xFbXS4C/banner-faq.jpg"
-          alt=""
-        />
+    <div className={style.questions}>
+      <div className={style.imageContainer}>
+        <img src="https://i.ibb.co/xFbXS4C/banner-faq.jpg" alt="" />
       </div>
-      <div className={styles.questionsContainer}>
+      <div className={style.questionsContainer}>
         {questionsAndAnswers.map((item, index) => (
           <div
             key={index}
-            className={`${styles.question} ${
-              expandedQuestion === index ? styles.expanded : ""
+            className={`${style.question} ${
+              expandedQuestion === index ? style.expanded : ""
             }`}
-            onClick={() => setExpandedQuestion(index)}
+            onClick={() => toggleQuestion(index)}
           >
             <p>
               <strong>{item.question}</strong>
             </p>
-            <div className={styles.answer}>{item.answer}</div>
+            <div className={style.answer}>{item.answer}</div>
           </div>
         ))}
       </div>
@@ -64,4 +69,4 @@ const Faq = () => {
   );
 };
 
-export default Faq;
+export default Questions;

@@ -232,22 +232,22 @@
   }
 
   .logoPartners {
-  background-color: #f1f1ff;
-  bottom: 0;
-  margin-bottom: 60px;
-  padding: 8px;
-}
+    background-color: #f1f1ff;
+    bottom: 0;
+    margin-bottom: 60px;
+    padding: 8px;
+  }
 
-.logoPartners img {
-  max-width: 20%;
-  max-height: 20%;
-  margin-right: 10px;
-}
+  .logoPartners img {
+    max-width: 30%;
+    max-height: 30%;
+    margin-right: 10px;
+  }
 
-.titlePartners {
-  color: white;
-  font-size: 17px;
-}
+  .titlePartners {
+    color: rgb(249, 250, 248);
+    font-size: 25px;
+  }
 }
 
 .card {
@@ -278,48 +278,93 @@
 
 /* .navbar {
   background-color: #ffffff; */
-  /* border: 1px solid #ddd; */
-  /* border-radius: 4px;
+/* border: 1px solid #ddd; */
+/* border-radius: 4px;
   padding: 5px 5px;
   margin-bottom: 30px;
 } */
 
 /* Inicio de los estilos para la sección del Banner */
 
-.banners{
+.banners {
   background-color: rgb(209, 5, 5);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  bottom: 40rem;
+  height: 500px;
+  width: 100%;
 }
 
 .title2 {
   color: white;
+  margin-top: 4rem;
   font-size: 50px;
 }
 
-.bannerOne{
-  max-width: 1000px;
+.bannerOne {
+  max-width: 100%;
   margin: 5rem;
+  margin-top: -5rem;
+  bottom: 10rem;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-around;
 }
 
-.bannerOne div {
+/* .bannerOne div {
   width: 500px;
   height: 500px;
   /* margin: 5rem; */
-  transition: 0.5s;
+/* transition: 0.5s;
+/* } */
+
+.bannerOne {
+  width: 100%;
+  height: 30%;
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 5px;
+  overflow: visible;
 }
 
-.bannerOne div:hover{
+.bannerOne .card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 9em;
+  height: 100%;
+  transition: transform 0.4s ease;
+}
+
+.bannerOne:hover {
+  cursor: pointer;
+  transform: scale(0.97);
+}
+
+.bannerOne:hover .card-content {
+  transform: scale(0.96);
+}
+
+.bannerOne:hover .card-image svg {
+  transform: scale(1.05);
+}
+
+.bannerOne:active {
+  transform: scale(0.9);
+}
+
+/* .bannerOne div:hover{
   transform: translateY(-5px);
-}
+} */
 
-.a{
+/* .a{
   color: white;
   
 }
@@ -330,10 +375,10 @@
 
 .c{
   color: white;
-}
+} */
 
-.bannerTwo{
-  max-width: 1000px;
+.bannerTwo {
+  max-width: 100%;
   margin: 5rem;
   display: flex;
   align-items: center;
@@ -341,42 +386,62 @@
   justify-content: space-around;
 }
 
-.bannerTwo div {
-  width: 500px;
-  height: 200px;
-  /* margin: 5rem; */
-  transition: 0.5s;
+.bannerTwo {
+  width: 100%;
+  height: 30%;
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 5px;
+  overflow: visible;
 }
 
-.bannerTwo div:hover{
-  transform: translateY(-5px);
+.bannerTwo .card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 9em;
+  height: 100%;
+  transition: transform 0.4s ease;
 }
 
-.banner {
-  max-width: 45%;
-  -webkit-transform: translateY(50%);
-          transform: translateY(50%);
+.bannerTwo:hover {
+  cursor: pointer;
+  transform: scale(0.97);
+}
+
+.bannerTwo:hover .card-content {
+  transform: scale(0.96);
+}
+
+.bannerTwo:hover .card-image svg {
+  transform: scale(1.05);
+}
+
+.bannerTwo:active {
+  transform: scale(0.9);
 }
 
 .imgBanner {
   display: none;
 }
 
-.banner:hover {
+/* .banner:hover {
   -webkit-transform: translateY(50%) scale(1.1);
           transform: translateY(50%) scale(1.1);
   -webkit-transition: 0.5s;
   transition: 0.5s;
   -webkit-filter: brightness(1.2) saturate(1.2);
           filter: brightness(1.2) saturate(1.2);
-}
+} */
 
 @media only screen and (max-width: 800px) {
   .banner {
     max-width: 100%;
     margin-top: 100px;
     -webkit-transform: translateY(100px);
-            transform: translateY(100px);
+    transform: translateY(100px);
   }
   .typing-animation {
     display: none;
@@ -391,11 +456,11 @@
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
     margin: 10px;
     -webkit-transform: translateY(200px) translateX(85px);
-            transform: translateY(200px) translateX(85px);
+    transform: translateY(200px) translateX(85px);
   }
 }
 
@@ -404,8 +469,202 @@
   max-height: 100%;
   /* display: nowrap; */
   position: relative;
-  top: -40rem;
+  top: -17rem;
   background-color: black;
   margin-top: 0;
   padding-bottom: -90rem;
+}
+
+.globo {
+  width: 100%;
+  /* background-color: rgba(245, 241, 241, 0.938); */
+  height: 200px;
+  position: relative;
+  max-width: 530px;
+  display: flex;
+  bottom: 600px;
+  justify-content: center;
+  align-items: center;
+  height: 200%;
+  margin: 0 auto;
+}
+
+.texto {
+  position: absolute;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 250%; /* Ajusta según el diseño deseado */
+  right: -390px;
+  left: 100px;
+  top: 10rem;
+  margin: 250px;
+  font-size: 25px;
+  align-items: center;
+  line-height: 1.8;
+  background-color: #062a42;
+  z-index: 1;
+  box-shadow: 0 30px 20px 10px rgba(224, 166, 118, 0.904);
+}
+
+.textodarkMode {
+  position: absolute;
+  background-color: rgba(226, 220, 220, 0.331); /* Fondo transparente */
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 35%; /* Ajusta según el diseño deseado */
+  right: 120px;
+  top: 120px;
+  margin: 20px;
+  font-size: 18px;
+  line-height: 1.4;
+}
+.imgPres {
+  width: 380%;
+  /* color: rgba(0, 0, 0, 0.1); */
+  height: 100%;
+  /* max-width: 830px; */
+  display: block;
+  margin: 10 auto;
+  border-radius: 10px;
+  box-shadow: 10px 12px 10px rgba(236, 219, 183, 0.925);
+}
+
+imgPres.container {
+  perspective: 100px;
+}
+
+imgPres.wrapper {
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+}
+
+imgPres.wrapper:hover img {
+  transform: translateZ(-50px);
+}
+
+imgPres.wrapper img {
+  width: 1200px;
+  max-width: 830px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0px 12px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s, box-shadow 0.5s;
+}
+
+.globo {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  margin-bottom: -2px;
+  margin-left: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  height: 490px;
+  max-width: calc(100% - 300px); /* Ajusta según el diseño deseado */
+  font-size: 38px;
+  line-height: 1.6;
+
+  /* Agrega estas propiedades para centrar el texto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.globopdarkMode {
+  background-color: rgba(35, 35, 35, 0.331);
+  padding: 20px;
+  margin-bottom: -2px;
+  margin-left: 10px;
+  border-radius: 10px;
+  /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
+  height: 490px;
+  max-width: calc(100% - 400px); /* Ajusta según el diseño deseado */
+  font-size: 38px;
+  line-height: 1.6;
+
+  /* Agrega estas propiedades para centrar el texto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (max-width: 800px) {
+  .bannerOne {
+    margin: 2rem;
+    min-height: 55vw;
+  }
+
+  .bannerTwo {
+    margin: 2rem;
+    min-height: 55vw;
+  }
+
+  .title2 {
+    font-size: 10px;
+    min-height: 55vw;
+  }
+
+  .imgBanner {
+    display: block;
+    max-height: 55vw;
+    width: 50%;
+    transform: translateY(200px) translateX(85px);
+  }
+
+  .pcgamer {
+    height: 65vh;
+    top: 0rem;
+    padding-bottom: 0;
+  }
+
+  .globo {
+    height: 65vh;
+    bottom: auto;
+    margin-bottom: 0;
+    max-width: 100%;
+  }
+
+  .texto {
+    min-height: 55vw;
+    right: 0;
+    left: 0;
+    top: 2rem;
+    margin: 0;
+    font-size: 18px;
+  }
+
+  .textodarkMode {
+    right: 0;
+    top: 2rem;
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .imgPres {
+    width: 100%;
+    max-width: 100%;
+    max-height: 55vw;
+  }
+
+  .globopdarkMode {
+    max-width: 100%;
+    height: auto;
+    font-size: 18px;
+  }
+
+  .globo {
+    height: 50%; /* ajusta la altura para pantallas más pequeñas */
+  }
+
+  .texto {
+    min-height: 55vw;
+    height: 100%;
+    justify-content: space-between;
+	  padding: 20px 5% 0;
+  }
+
+  .pcgamer {
+    height: 50px;
+    justify-content: space-between;
+	  padding: 20px 5% 0;
+  }
 }
