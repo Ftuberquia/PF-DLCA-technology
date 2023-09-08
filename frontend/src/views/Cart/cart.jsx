@@ -2,6 +2,7 @@
 import { NavLink } from "react-router-dom";
 import CartElement from "./cartElements";
 import CartTotal from "./cartTotal";
+import "./cart.css";
 
 export default function Cart() {
   const initialCartData =
