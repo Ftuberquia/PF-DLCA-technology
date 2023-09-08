@@ -12,7 +12,7 @@ const UserProfile = () => {
 
   const dispatch = useDispatch();
   const dataUser = useSelector((state) => state.user);
-  const darkMode = useSelector((state) => state.darkMode); // Agrega esta línea
+  // const darkMode = useSelector((state) => state.darkMode); // Agrega esta línea
   // className={darkMode ? style.darkmode : style.lightMode}
 
   useEffect(() => {
@@ -107,7 +107,7 @@ const UserProfile = () => {
 
   return (
     <div className={style.form__C}>
-      <div className={darkMode ? style.carddarkmode : style.card}>
+      {/* <div className={darkMode ? style.carddarkmode : style.card}> */}
         {showForm === true ? (
           <div className={style.formImg}>
             {data.picture && (
@@ -249,7 +249,7 @@ const UserProfile = () => {
         <Link to="/userPurchases">
           <button className={style.btnForm}>Mis Compras</button>
         </Link>
-      </div>
+      {/* </div> */}
       <div>
         <Link to="/products">
           <button className={style.btnReturn}>Return</button>

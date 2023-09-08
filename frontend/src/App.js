@@ -11,6 +11,7 @@ import Productos from "./views/Productos/Productos";
 import { ContactUs } from "./views/ContactUs/ContactUs";
 import Favorites from "./views/Favorites/FavoritesProducts";
 import Stripe from "./views/Stripe/Stripe";
+import ConfirmationPage from "./views/Stripe/Confirmacion";
 import Login from "./views/Login/LogoutButton";
 import Profile from "./views/Login/Profile";
 import { useSelector } from "react-redux";
@@ -23,7 +24,11 @@ import Cart from "./views/Cart/cart";
 const App = () => {
   const { pathname } = useLocation();
 
-  const darkMode = useSelector((state) => state.darkMode); // Agrega esta línea
+  // const darkMode = useSelector((state) => state.darkMode); // Agrega esta línea
+  // <div className={`App ${darkMode ? "AppDark" : ""}`}>
+  {
+    /* {pathname !== "*" && <Nav />}// como  cambiar Nav */
+  }
   return (
     <div className={`App ${darkMode ? "AppDark" : ""}`}>
       {/* {pathname !== "*" && <Nav />}// como  cambiar Nav */}

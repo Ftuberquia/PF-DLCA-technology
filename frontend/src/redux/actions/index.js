@@ -19,9 +19,6 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const CLEAN_CART = 'CLEAN_CART';
 export const FILTER_COMPLEX="FILTER_COMPLEX"
 export const FILTER_FRONT = "FILTER_FRONT"
-export const GET_FAVS='GET_FAVS';
-export const DELETE_FAV='DELETE_FAV';
-export const ADD_FAV='ADD_FAV'
 
 export const getAllProducts = () => async dispatch => {
     try {
@@ -215,48 +212,6 @@ export function filterFront(payload){
     }   
 }
 
-export function getFavoriteProducts(userId){
-    return async function (dispatch){
-        try {
-            const {data} = await axios.get(`/favorites/${userId}`);
-            return dispatch({
-                type: GET_FAVS,
-                payload: data.rows[0].products
-            })
-        } catch (error) {
-            console.error('Error Favorites:', error);
-        }
-    }
-}
-
-export function addFavorite(body){
-    return async function (dispatch){
-        try {
-            const {data} = await axios.post('/favorites',body);
-            console.log(data)
-            return dispatch({
-                type: ADD_FAV,
-                payload: data
-            })
-        } catch (error) {
-            console.error('Error Favorites:', error);
-        }
-    }
-}
-
-export function deleteFavorite(productId,userId){
-    return async function (dispatch){
-        try {
-            const {data} = await axios.delete(`/favorites/${userId}/${productId}`);
-            return dispatch({
-                type: DELETE_FAV,
-                payload: data
-            })
-        } catch (error) {
-            console.error('Error Favorites:', error);
-        }
-    }
-}
 // este es el filtro del back, toquelo si se anima uwu
 // export function filterComplex(brand, category, subcategory) {
 //     return async function (dispatch) {

@@ -1,38 +1,62 @@
-import React from "react";
+import React, {useState, useRef} from "react";
 import axios from "axios";
 import style from './Stripe.module.css';
 import { loadStripe } from "@stripe/stripe-js";
 import  { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
-import Productos from "../Productos/Productos";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+// import Productos from "../Productos/Productos";
 
+// Key visible ** la secreta esta en el Server
 const stripePromise = loadStripe("pk_test_51NnMQaEUVHui4qp0KnEfLflyUrkDfZDN9jLhIq7Vzb4RGVvCG0tCfEDmgi9GKV1CYCXc5TYzU7FcS4BXCXmSv8tC00L9f6qNwM")
 
 const CheckoutForm = () => {
 
+    const history = useHistory(); // Inicializa useHistory
     const stripe = useStripe();
     const elements = useElements();
+    const [loading, setLoading] = useState(false)
+    const cardElement = useRef(null);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         const {error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
-            card: elements.getElement(CardElement)
+            card: cardElement.current || elements.getElement(CardElement)
         });
+        setLoading(true)
 
-        if (!error) {
+        if (!error && paymentMethod) {
             try {
+                const { id } = paymentMethod;
                 const { data } = await axios.post('http://localhost:3001/api/checkout', {
-                    id: paymentMethod.id,
-                    amount: 1000000
+                    id: id,
+                    amount: 10000, // precio a cambiar
+                    return_url: 'http://localhost:3000/success'
                 });
                 console.log(data);
+                elements.getElement(CardElement).clear();
+                // Captura el ID del pago de la respuesta de Stripe
+                const paymentIntentId = data.paymentIntent.id;
+
+                // Ahora puedes usar paymentIntentId para redirigir a la página de confirmación
+                history.push({
+                    pathname: "/confirmacion",
+                    state: {
+                    paymentInfo: {
+                        paymentIntentId,
+                    },
+                    },
+                });
+
             } catch (error) {
                 console.error("Error al realizar la solicitud al servidor:", error);
+            } finally {
+                setLoading(false);
             }
         } else {
             console.error("Error al crear el método de pago:", error);
-        }
+        }    setLoading(false)
     }
 
     return (
@@ -42,10 +66,14 @@ const CheckoutForm = () => {
         
         <h3 className={style.precio}>Precio: 100$ </h3>
         <div className={style.cardContainer}>
-            <CardElement className={style.visa}/>
+            <CardElement className={style.visa} />
         </div>
-        <button className={style.button}>
-            Comprar
+        <button className={style.button} disabled={!stripe}>
+            {loading ? (
+                <div>
+                    <span className={style.loader}>Loading</span>
+                </div>
+            ) : ('Comprar') }
         </button>
     </form>)
 }

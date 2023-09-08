@@ -51,12 +51,8 @@ const { Users, Products, Orders, Cart, Brand, Category, Tags, Subcategory, Revie
 Users.hasMany(Orders, {foreignKey:'userOrderId', as: 'user'});	//hasMany 1 A con muchos B, el as se usa en solicitudes a la DB
 Orders.belongsTo(Users, {foreignKey:'userOrderId', as: 'orders'});
 
-Users.hasOne(Cart);	//hasOne relacion de 1A a 1B donde B tiene la clave foranea
-Cart.belongsTo(Users);
-
-//es realmente necesario el modelo favorites?
-// Users.hasMany(Favorites,{foreignKey: 'userFavId', as:'favorites'});
-// Favorites.belongsTo(Users, {foreignKey: 'userFavId', as:'favoritesUsers'});		//belongsTo es relacion 1 a 1 entre A y B y la foreignkey se crea en A
+Users.hasOne(Cart, {foreignKey: "userId"});
+Cart.belongsTo(Users, {foreignKey: "userId"});
 
 //creo una tabla intermedia para hacer los favoritos
 Products.belongsToMany(Users, { through: 'favorites', as: 'users', foreignKey: 'productId' });
@@ -98,10 +94,6 @@ Users.belongsToMany(Products, {
 
 // Products.hasMany(Review, { foreignKey: 'productId', as: 'reviews' });
 // Review.belongsTo(Products, { foreignKey: 'productId' });
-
-//es realmente necesario?
-// Products.belongsToMany(Favorites, {through:"favorites_products"});
-// Favorites.belongsToMany(Products, {through:"favorites_products"});
 
 //Averiguar bien como seria esta relacion
 // Products.belongsToMany(Orders, {through:"orders_products"});	//belongsToMany muchos a muchos, crea una tabla intermedia en donde se juntan las claves foraneas de A y B
