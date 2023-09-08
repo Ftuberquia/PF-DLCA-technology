@@ -26,12 +26,12 @@ const App = () => {
 
   // const darkMode = useSelector((state) => state.darkMode); // Agrega esta línea
   // <div className={`App ${darkMode ? "AppDark" : ""}`}>
-  {
+  
     /* {pathname !== "*" && <Nav />}// como  cambiar Nav */
-  }
-  return (
-    <div className={`App ${darkMode ? "AppDark" : ""}`}>
-      {/* {pathname !== "*" && <Nav />}// como  cambiar Nav */}
+  
+  // return (
+  //   <div className={`App ${darkMode ? "AppDark" : ""}`}>
+  //     {/* {pathname !== "*" && <Nav />}// como  cambiar Nav */}
 
       <Router>
         <NavBar />
@@ -54,8 +54,8 @@ const App = () => {
         </Switch>
         <Footer />
       </Router>
-    </div>
-  );
+  //   // </div>
+  // );
 };
 
 export default App;
