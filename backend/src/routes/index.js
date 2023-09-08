@@ -12,11 +12,15 @@ const filters = require ("./filters/filters")
 const carts = require ("./carts/routeCarts")
 const reviews = require("./reviews/routeReviews")
 const stripe = require ("./compra/routeCompra")
+const users = require("../routes/users/routeUsers")
 
 const router = Router();
 
 //ruta para acceder a los productos
 router.use("/products", products)
+
+//ruta para acceder a users
+router.use("/users",users)
 
 //Ruta para acceder a las categorias
 router.use("/categories", categories)
