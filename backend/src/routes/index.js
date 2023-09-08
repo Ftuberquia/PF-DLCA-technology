@@ -10,6 +10,7 @@ const contactHandler = require("../handlers/contact/contactHandler");
 const favorites = require("./favorites/routeFav");
 const filters = require ("./filters/filters")
 const carts = require ("./carts/routeCarts")
+const reviews = require("./reviews/routeReviews")
 const stripe = require ("./compra/routeCompra")
 
 const router = Router();
@@ -42,6 +43,9 @@ router.use("/filter", filters)
 
 //Ruta para los carritos
 router.use("/carts",carts)
+
+//Ruta para los reviews
+router.use("/reviews", reviews)
 
 ////Ruta para los carritos
 // router.use("/compras",stripe)

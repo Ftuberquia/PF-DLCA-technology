@@ -1,0 +1,155 @@
+.contAccesorios {
+  background-color: #050505;
+  margin-bottom: 40px;
+  top: 20px;
+  padding: 80px;
+}
+
+.containerAcc {
+  width: 150%;
+  display: flex;
+  justify-content: center;
+}
+
+.rowAcc {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.titleAcce {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 30px;
+}
+
+.titleAcce h2 {
+  color: rgb(253, 240, 244);
+  justify-items: center;
+  font-size: 40px;
+}
+
+.spanTitleAcc1 {
+  color: #f4eff5;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+.spanTitleAcc {
+  color: #b2a2b3;
+  font-weight: bold;
+  font-size: 60px;
+}
+
+.titulo {
+  display: flex;
+  color: white;
+  justify-content: center;
+  padding: 25px;
+  margin-top: 5px;
+  font-size: 60px;
+}
+
+.spanTitleAcc:hover {
+  filter: brightness(1.2);
+}
+
+.cardcontainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  margin: 30px;
+  max-width: 800px;
+  height: auto;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 50px rgba(230, 204, 204, 0.932);
+}
+
+.cardmb30 img {
+  margin: 10px;
+  width: 18rem;
+  height: auto;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 50px;
+  box-shadow: 0 0 50px rgba(230, 204, 204, 0.932); 
+ }
+
+/* .cardmb30 {
+  margin: 10px;
+  width: 20rem;
+  height: auto;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 50px;
+  box-shadow: 0 0 50px rgba(230, 204, 204, 0.932); 
+} */
+
+.cardmb30 {
+  width: 190px;
+  height: 254px;
+  /* background: #07182E; */
+  position: relative;
+  display: flex;
+  place-content: center;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.cardmb30 h2 {
+  z-index: 1;
+  color: white;
+  font-size: 2em;
+}
+
+.cardmb30::before {
+  content: '';
+  position: absolute;
+  width: 40px;
+  background-image: linear-gradient(180deg, rgb(0, 183, 255), rgb(255, 48, 255));
+  height: 130%;
+  animation: rotBGimg 3s linear infinite;
+  transition: all 0.2s linear;
+}
+
+@keyframes rotBGimg {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cardmb30::after {
+  content: '';
+  position: absolute;
+  /* background: #07182E; */
+  ;
+  inset: 5px;
+  border-radius: 15px;
+}  
+/* .cardmb30:hover:before {
+  background-image: linear-gradient(180deg, rgb(81, 255, 0), purple);
+  animation: rotBGimg 3.5s linear infinite;
+} */
+@media screen and (min-width: 768px) {
+  .containerAcc {
+    width: 80%;
+  }
+  .titleAcce {
+    margin-top: 40px;
+    font-size: 40px;
+  }
+  .cardcontainer {
+    justify-content: space-between;
+  }
+}
