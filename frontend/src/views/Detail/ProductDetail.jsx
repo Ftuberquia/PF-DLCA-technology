@@ -41,6 +41,7 @@ const ProductDetail = () => {
             const favoriteProducts = await fetchData(userId);
             // Verificar si el producto actual está en la lista de productos favoritos
             const isProductFavorite = favoriteProducts.some((product) => product.id === id);
+            
             if(isProductFavorite)setIsFavorite(true);
           } catch (error) {
             console.error(error);
