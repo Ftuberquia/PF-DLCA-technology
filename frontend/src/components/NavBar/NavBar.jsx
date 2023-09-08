@@ -4,13 +4,9 @@ import personIcon from "../../img/person.svg";
 import heartIcon from "../../img/heart.svg";
 import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
-<<<<<<< HEAD
 import { useAuth0 } from "@auth0/auth0-react";
-=======
->>>>>>> 5abb69e5c4409abe5d128bf766d81764914ca9c4
 import { useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
-import { useAuth0 } from "@auth0/auth0-react";
 import style from "./NavBar.module.css";
 
 const NavBar = () => {
@@ -18,52 +14,6 @@ const NavBar = () => {
   const { loginWithPopup} = useAuth0();
 
   return (
-<<<<<<< HEAD
-    <nav>
-      
-      <NavLink to={"/"}>
-        <div className={styles.logo} />
-      </NavLink>
-      <li>
-				<NavLink className={styles.name} to={'/'}>DLCA TECHNOLOGY</NavLink >
-				</li>
-      <li>
-				<NavLink className={styles.links} to={'/productos'}>Productos</NavLink >
-			</li>
-            <li >
-              <NavLink
-              to={'/about'}
-              className={styles.links}
-              >
-                Sobre nosotros
-              </NavLink>
-            </li>
-            <li >
-              <NavLink
-              to={'/contacto'}
-              className={styles.links}
-              >
-                Contáctenos
-              </NavLink>
-            </li>
-            <li >
-              <NavLink
-              to={'/compra'}
-              className={styles.links}
-              >
-                Comprar
-              </NavLink>
-            </li>
-
-            <span>
-            <div className={styles.buttons}>
-        <NavLink to={"login"} >
-          <img src={personIcon} alt="Login" onClick={() => loginWithPopup()} />
-        </NavLink>
-        </span>
-        <NavLink to={"/favorites"}>
-=======
->>>>>>> 5abb69e5c4409abe5d128bf766d81764914ca9c4
     <nav className={style.navbar}>
       <Link to={"/"}>
         {/* <img src={logo} className={styles.logo} alt="Logo" /> */}
@@ -91,14 +41,6 @@ const NavBar = () => {
           Contáctenos
         </Link>
       </span>
-<<<<<<< HEAD
-
-      <div className={style.buttons}>
-        <Link to={"/user"}>
-          <img src={personIcon} alt="Person" />
-        </Link>
-
-=======
        <li>
          <NavLink to={'/compra'} className={style.links}>
               Comprar
@@ -108,7 +50,6 @@ const NavBar = () => {
         <NavLink to={"login"} >
           <img src={personIcon} alt="Login" onClick={() => loginWithPopup()} />
         </NavLink>
->>>>>>> 5abb69e5c4409abe5d128bf766d81764914ca9c4
         <Link to={"/favorites"}>
           <img src={heartIcon} alt="Favorites" />
         </Link>
