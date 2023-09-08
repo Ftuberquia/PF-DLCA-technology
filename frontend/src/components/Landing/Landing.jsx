@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from "../Card/Card";
-import "./Landing.css";
+import style from "./Landing.module.css";
 import BrandCarousel from "./BrandCarousel/BrandCarousel";
 import Carousel from "../Carousel/Carousel";
 import Featured from "../../views/Featured/Featured";
@@ -22,15 +22,15 @@ function Landing() {
   }, []);
 
   return (
-    <div className="containerLanding">
+    <div className={style.containerLanding}>
       <SearchBar />
       <Carousel />
-      <div className="card1">
+      <div className={style.card1}>
         <AssociatedBrands />
       </div>
       <Featured />
-      <div className="contPcMarcas">
-        <div className="imgArmaPC">
+      <div className={style.contPcMarcas}>
+        <div className={style.imgArmaPC}>
           {/* <Link to="/products">
             <img
               src="https://i.ibb.co/8BWqRFY/carousel-img3.jpg"
@@ -38,7 +38,7 @@ function Landing() {
             />
           </Link> */}
         </div>
-        {/* <div className="card">
+        {/* <div className={style.card}>
           {products.map((product) => (
             <Card
               key={product.id}
@@ -50,13 +50,13 @@ function Landing() {
           ))}
         </div> */}
         <div>
-        <div className='globo'>
+        <div className={style.globo}>
           <img
-            className='imgPres'
+            className={style.imgPres}
             src="https://i.ibb.co/GHM1qNZ/clientes-felices.jpg"
             alt=""
           />
-          <p className='texto'>
+          <p className={style.texto}>
             Somos una empresa comprometida con la calidad y excelencia en la
             industria de la tecnología. Ofrecemos una amplia gama de productos
             de alta calidad y a los mejores precios. Contamos con un equipo de 
@@ -67,15 +67,15 @@ function Landing() {
           </p>
         </div>
         </div>
-        <div className="pcgamer">
+        <div className={style.pcgamer}>
           <Link to="/products">
             <img src="https://i.ibb.co/Xprs2Rs/pc-gamer2.jpg" alt="" />
           </Link>
         </div>
         
         <Questions />
-        <section className="banners">
-          <div className="bannerOne">
+        <section className={style.banners}>
+          <div className={style.bannerOne}>
             <Link to="productos/categories">
               <img src="https://i.ibb.co/0Jq8gFp/silla.png" alt="" />
             </Link>
@@ -87,9 +87,9 @@ function Landing() {
             </Link>
           </div>
           <div>
-            <h2 className="title2">Los mejores productos!!</h2>
+            <h2 className={style.title2}>Los mejores productos!!</h2>
           </div>
-          <div className="bannerTwo">
+          <div className={style.bannerTwo}>
             <Link to="productos/categories">
               <img src="https://i.ibb.co/2382ZKh/impresora.png" alt="" />
             </Link>
@@ -104,18 +104,18 @@ function Landing() {
 
         <Services />
         <div>
-          <h2 className="titleMarcas">
+          <h2 className={style.titleMarcas}>
             ¡Las mejores marcas las encuentras en
-            <span className="spanTitle">DLCA TECHNOLOGY!</span>
+            <span className={style.spanTitle}>DLCA TECHNOLOGY!</span>
           </h2>
         </div>
         <BrandCarousel />
         <br />
         <br />
       </div>
-      <div className="logoPartners">
+      <div className={style.logoPartners}>
         <img src={Logo} alt="" />
-        <h3 className="titlePartners">
+        <h3 className={style.titlePartners}>
           Somos distribuidores certificados de las principales marcas de
           tecnología del país.
         </h3>
