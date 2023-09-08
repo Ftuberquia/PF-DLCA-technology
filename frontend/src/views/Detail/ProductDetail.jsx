@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux"; 
-import { getProductDetail, cleanDetail, addToCart, addFavorite, deleteFavorite } from "../../redux/actions/index";
+import { getProductDetail, cleanDetail, addToCart } from "../../redux/actions/index";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+
+import { addFavorite, deleteFavorite, fetchData } from "../../views/Favorites/funcionesFav";
 
 import style from './ProductDetail.module.css'
 
@@ -11,9 +13,8 @@ const ProductDetail = () => {
     const { id } = useParams(); 
 
     const product = useSelector(state => state.productDetail);
-    const favoriteProducts=useSelector(state=>state.favs)
     const [isFavorite, setIsFavorite] = useState(false)
-    const [userId, setUserId] = useState(null);
+    let [userId, setUserId] = useState(null);
 
     const dispatch = useDispatch();
    
@@ -31,27 +32,47 @@ const ProductDetail = () => {
     }, []);
 
     //verificar si el producto esta en favoritos
-    if(favoriteProducts){
-        favoriteProducts.forEach(el => {
-            if(el.id === id){
-                setIsFavorite(true)
-            }
-        })
-    }
+    useEffect(() => {
+        // eslint-disable-next-line
+        userId=1    //sacar esto cuando termine de funcionar lo del user
+        const checkFavoriteStatus = async () => {
+          try {
+            // Llamar a la función fetchData para obtener los productos favoritos del usuario
+            const favoriteProducts = await fetchData(userId);
+            // Verificar si el producto actual está en la lista de productos favoritos
+            const isProductFavorite = favoriteProducts.some((product) => product.id === id);
+            if(isProductFavorite)setIsFavorite(true);
+          } catch (error) {
+            console.error(error);
+          }
+        };
+        checkFavoriteStatus();
+      }, [userId, id]);
 
     const addToFavorites = async () => {
-        const body = { productId: id, userId: userId }
+        userId=1    //sacar esto cuando termine de funcionar lo del user
         if(userId===null){
             alert('Debes iniciar sesión para agregar a favoritos')
         }else{
+            const body = { productId: id, userId: userId }; // Crea un objeto con productId y userId
             addFavorite(body)
-            setIsFavorite(true);
+                .then(()=>{
+                    setIsFavorite(true);
+                })
+                .catch((error)=>console.log(error))
         }
     };
 
     const removeFromFavorites = async () => {
-        deleteFavorite(id,userId)
-        setIsFavorite(false);
+        userId=1    //sacar esto cuando termine de funcionar lo del user
+        deleteFavorite(id, userId)
+            .then(() => {
+                setIsFavorite(false);
+                alert('Producto eliminado de favoritos!');
+            })
+        .catch((error) => {
+            console.error(error);
+        });
     };
 
     if (!product) {
