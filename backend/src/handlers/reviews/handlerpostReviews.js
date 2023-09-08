@@ -4,7 +4,7 @@ const handlerpostReviews = async(req, res) => {
     const { comment, rating, userId } = req.body;
 
 try {
-        const newReview = await postReviews(comment, rating, productId, userId )
+        const newReview = await postReviews(userId, productId, comment, rating)
     return res.status(200).json({ message: "Reseña creada con éxito", newReview });
     }
     catch(error){
