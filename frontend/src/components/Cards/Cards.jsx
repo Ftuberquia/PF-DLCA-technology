@@ -21,6 +21,7 @@ const Cards = (props) => {
                         stock={stock}/>
                     );
                 }
+                return false
             })}
         </div>
     );
