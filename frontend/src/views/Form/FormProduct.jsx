@@ -27,34 +27,34 @@ const FormProduct = () => {
 
   const [form, setForm] = useState({
     name: "",
-    href: "", //agregado
+    // href: "", //agregado
     imageSrc: "",
-    imageAlt: "", //agregado
+    // imageAlt: "", //agregado
     price: 0,
     brand: "",
     min: 0, //agregado
-    stock: 0,
+    // stock: 0,
     category: "",
     subcategory: "",
-    tags: "",
-    rating: 0,
+    // tags: "",
+    // rating: 0,
     description: "",
   });
 
   const [error, setError] = useState({
     name: "¡Se requiere el nombre!",
-    href: "¡Se requiere #!",
+    // href: "¡Se requiere #!",
     imageSrc: "¡Se requiere la imagen!",
-    imageAlt: "¡Se requiere el imageAlt!",
+    // imageAlt: "¡Se requiere el imageAlt!",
     price: "¡Por favor ingresa un precio válido!",
-    brand: "¡Se requiere el brand!",
+    brand: "¡Se requiere una marca!",
     min: "¡Se requiere el min!",
-    stock: "¡Se requiere el stock!",
-    category: "¡Por favor ingresa una category!",
-    subcategory: "¡Por favor ingresa una subcategory!",
-    tags: "¡Por favor ingresa una tags!",
-    rating: "¡Por favor ingresa una rating!",
-    description: "¡Por favor ingresa una description!",
+    // stock: "¡Se requiere el stock!",
+    category: "¡Por favor ingresa una categoría!",
+    subcategory: "¡Por favor ingresa una subcategoría!",
+    // tags: "¡Por favor ingresa una tags!",
+    // rating: "¡Por favor ingresa una rating!",
+    description: "¡Por favor ingresa una descripción!",
   });
  
 
@@ -157,13 +157,13 @@ const FormProduct = () => {
       dispatch(createProduct(form));
       setForm({
         name: "",
-        href: "",
+        // href: "",
         imageSrc: "",
-        imageAlt: "",
+        // imageAlt: "",
         price: "",
         brand: "",
         min: "",
-        stock: "",
+        // stock: "",
         category: "",
         description: "",
       });
@@ -216,12 +216,12 @@ const FormProduct = () => {
     <div className={style.form__C}>
       <div className={darkMode ? style.carddarkMode : style.card}>
         <span className={style.card__title} id="title">
-          Add your new product
+          Agregar un nuevo Producto
         </span>
 
         <form onSubmit={(e) => submitHandler(e)} className={style.Formulario}>
           <div className={style.card__form}>
-            <label className={style.label__form}>Name: </label>
+            <label className={style.label__form}>Nombre: </label>
             <input
               type="text"
               value={form.value}
@@ -234,6 +234,7 @@ const FormProduct = () => {
             <strong className={style.card__content}>{error.name}</strong>
           )}
 
+        <br></br>
           <div className={style.imgCont}>
             <label className={style.label__form}>Imagen del producto: </label>
 
@@ -255,8 +256,9 @@ const FormProduct = () => {
             <strong className={style.card__content}>{error.imageSrc}</strong>
           )}
 
-          <div className={style.card__form}>
-            <label className={style.label__form}>Price: </label>
+        <br></br>
+          <div className={style.card__form3}>
+            <label className={style.label__form}>Precio: </label>
             <input
               type="text"
               value={form.value}
@@ -269,7 +271,7 @@ const FormProduct = () => {
             <strong className={style.card__content}>{error.price}</strong>
           )}
 
-          <div className={style.card__form}>
+          {/* <div className={style.card__form}>
             <label className={style.label__form}>Stock: </label>
             <input
               type="text"
@@ -281,10 +283,11 @@ const FormProduct = () => {
           </div>
           {error.stock && (
             <strong className={style.card__content}>{error.stock}</strong>
-          )}
+          )} */}
 
+        <br></br>
           <div className={style.card__form}>
-            <label className={style.label__form}>Brand: </label>
+            <label className={style.label__form}>Marca: </label>
             {newbrand === false ? (
               <select
                 className={style.selectBrandCategory}
@@ -305,44 +308,46 @@ const FormProduct = () => {
                 name="brand"
                 value={form.value}
                 onChange={(e) => changeHandler(e)}
-                placeholder="Add new brand..."
+                placeholder="Agregar una nueva marca..."
               />
             ) : null}
           </div>
           {newbrand === false ? (
             <div className={style.addBrandCategory} onClick={handleInputBrand}>
-              -Click Here to new add Brand-
+              -Haga clic aquí para agregar una nueva marca-
             </div>
           ) : (
             <div className={style.addBrandCategory} onClick={handleInputBrand2}>
-              -Back to Select Brand-
+              -Volver a Seleccionar una Marca-
             </div>
           )}
           {error.brand && (
             <strong className={style.card__content}>{error.brand}</strong>
           )}
 
+        <br></br>
           <div className={style.card__form}>
-            <label className={style.label__form}>Category: </label>
+            <label className={style.label__form}>Categoría: </label>
             {newcategory === false ? (
               <select
                 className={style.selectBrandCategory}
                 onChange={handleSelectCategory}
               >
+                <option value="">Selecciona una categoría</option>
                 {/* <option value="">Category</option>
                 {categories.map((category) => (
                   <option value={category}>{category}</option>
                 ))} */}
               </select>
             ) : null}
-
+            
             {newcategory === true ? (
               <input
                 type="text"
                 name="category"
                 value={form.value}
                 onChange={(e) => changeHandler(e)}
-                placeholder="Add new Category..."
+                placeholder="Agregar nueva categoría..."
               />
             ) : null}
           </div>
@@ -351,41 +356,42 @@ const FormProduct = () => {
               className={style.addBrandCategory}
               onClick={handleInputCategory}
             >
-              -Click Here to add new Category-
+              -Haga clic aquí para agregar una nueva categoría-
             </div>
           ) : (
             <div
               className={style.addBrandCategory}
               onClick={handleInputCategory2}
             >
-              -Back to Select Category-
+              -Volver a Seleccionar Categoría-
             </div>
           )}
           {error.category && (
             <strong className={style.card__content}>{error.category}</strong>
           )}
 
+        <br></br>
           <div className={style.card__form}>
-            <label className={style.label__form}>SubCategory: </label>
+            <label className={style.label__form}>SubCategoría: </label>
             {newsubcategory === false ? (
               <select
                 className={style.selectBrandCategory}
                 onChange={handleSelectSubCategory}
               >
-                <option value="">SubCategory</option>
+                <option value="">Seleccione una subcategoría</option>
                 {subcategories.map((subcategory) => (
                   <option value={subcategory}>{subcategory}</option>
                 ))}
               </select>
             ) : null}
-
+    
             {newsubcategory === true ? (
               <input
                 type="text"
                 name="subcategory"
                 value={form.value}
                 onChange={(e) => changeHandler(e)}
-                placeholder="Add new SubCategory..."
+                placeholder="Agregar nueva subcategoría..."
               />
             ) : null}
           </div>
@@ -394,14 +400,14 @@ const FormProduct = () => {
               className={style.addBrandCategory}
               onClick={handleInputSubCategory}
             >
-              -Click Here to add new SubCategory-
+              -Haga clic aquí para agregar una nueva subcategoría-
             </div>
           ) : null}
           {error.subcategory && (
             <strong className={style.card__content}>{error.subcategory}</strong>
           )}
 
-          <div className={style.card__form}>
+          {/* <div className={style.card__form}>
             <label className={style.label__form}>Tags: </label>
             <input
               type="text"
@@ -413,9 +419,9 @@ const FormProduct = () => {
           </div>
           {error.tags && (
             <strong className={style.card__content}>{error.tags}</strong>
-          )}
+          )} */}
 
-          <div className={style.card__form}>
+          {/* <div className={style.card__form}>
             <label className={style.label__form}>Rating: </label>
             <input
               type="text"
@@ -427,10 +433,11 @@ const FormProduct = () => {
           </div>
           {error.rating && (
             <strong className={style.card__content}>{error.rating}</strong>
-          )}
+          )} */}
 
-          <div className={style.card__form}>
-            <label className={style.label__form}>Description: </label>
+        <br></br>
+          <div className={style.card__form2}>
+            <label className={style.label__form}>Descripción: </label>
             <input
               type="text"
               value={form.value}
@@ -446,7 +453,7 @@ const FormProduct = () => {
           {/* ACA VAN LAS 3 PROPIEDADES FALTANTES  */}
 
           {/* HREF */}
-          <div className={style.card__form}>
+          {/* <div className={style.card__form}>
             <label className={style.label__form}>Href: </label>
             <input
               type="text"
@@ -458,10 +465,10 @@ const FormProduct = () => {
           </div>
           {error.href && (
             <strong className={style.card__content}>{error.href}</strong>
-          )}
+          )} */}
 
           {/* imageAlt */}
-          <div className={style.card__form}>
+          {/* <div className={style.card__form}>
             <label className={style.label__form}>ImageAlt: </label>
             <input
               type="text"
@@ -473,10 +480,11 @@ const FormProduct = () => {
           </div>
           {error.imageAlt && (
             <strong className={style.card__content}>{error.imageAlt}</strong>
-          )}
+          )} */}
 
+        <br></br>
           {/* min */}
-          <div className={style.card__form}>
+          <div className={style.card__form1}>
             <label className={style.label__form}>Min: </label>
             <input
               type="text"
@@ -490,8 +498,9 @@ const FormProduct = () => {
             <strong className={style.card__content}>{error.min}</strong>
           )}
         </form>
+        <br></br>
         <button className={style.btn} type="submit" onClick={submitHandler}>
-          Create product
+        Crear producto
         </button>
       </div>
       {/* <div className={style.buttonReturn}>
@@ -499,6 +508,8 @@ const FormProduct = () => {
           <button className={style.btnReturn}>Return To Admin</button>
         </Link>
       </div> */}
+
+      <br></br>
     </div>
   );
 };

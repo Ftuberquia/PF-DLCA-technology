@@ -2,9 +2,10 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { addToCart, removeFromCart } from "../../redux/actions";
+import { addFavorite, deleteFavorite, fetchData } from "../../views/Favorites/funcionesFav";
 
 import style from './Card.module.css'
-import { addFavorite, deleteFavorite, addToCart, removeFromCart } from "../../redux/actions";
 
 const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
     const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
     const [isInCart, setIsInCart] = useState(false);
 
     //Para obtener el userId desde el localStorage
-    const [userId, setUserId] = useState(null);
+    let [userId, setUserId] = useState(null);
     useEffect(() => {
         const storedUserId = localStorage.getItem("userId");
         setUserId(storedUserId);
@@ -85,53 +86,61 @@ const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
       };
 
     //verificar si el producto esta en favoritos
-    const favoriteProducts=useSelector(state=>state.favs)
-    if(favoriteProducts){
-        favoriteProducts.forEach(product => {
-            if(product.id === id){
-                setIsFavorite(true)
-            }
-        })
-    }
+    useEffect(() => {
+        // eslint-disable-next-line
+        userId=1    //sacar esto cuando termine de funcionar lo del user
+        const checkFavoriteStatus = async () => {
+          try {
+            // Llamar a la función fetchData para obtener los productos favoritos del usuario
+            const favoriteProducts = await fetchData(userId);
+            // Verificar si el producto actual está en la lista de productos favoritos
+            const isProductFavorite = favoriteProducts.some((product) => product.id === id);
+            setIsFavorite(isProductFavorite);
+          } catch (error) {
+            console.error(error);
+          }
+        };
+        checkFavoriteStatus();
+      }, [userId, id]);
 
     const addToFavorites = async () => {
+        userId=1    //sacar esto cuando termine de funcionar lo del user
         if(userId===null){
-            //alert('Debes iniciar sesión para agregar a favoritos')
-            
-            //almacenar en el localStorage
-            const productToAdd={
-                id,
-                name,
-                imageSrc,
-                price,
-                rating,
-            }
-            const storedFavProducts = localStorage.getItem("favProducts");
-            // Verificar si hay productos en el carrito en el localStorage
-            const parsedFavProducts = storedFavProducts ? JSON.parse(storedFavProducts) : [];
-            parsedFavProducts.push(productToAdd)
-            localStorage.setItem("favProducts", JSON.stringify(parsedFavProducts));
-            setIsFavorite(true);
+            alert('Debes iniciar sesión para agregar a favoritos')
+            // //almacenar en el localStorage
+            // const productToAdd={
+            //     id,
+            //     name,
+            //     imageSrc,
+            //     price,
+            //     rating,
+            // }
+            // const storedFavProducts = localStorage.getItem("favProducts");
+            // // Verificar si hay productos en el carrito en el localStorage
+            // const parsedFavProducts = storedFavProducts ? JSON.parse(storedFavProducts) : [];
+            // parsedFavProducts.push(productToAdd)
+            // localStorage.setItem("favProducts", JSON.stringify(parsedFavProducts));
+            // setIsFavorite(true);
         }else{
             const body = { productId: id, userId: userId }; // Crea un objeto con productId y userId
             addFavorite(body)
-            setIsFavorite(true);
+                .then(()=>{
+                    setIsFavorite(true);
+                })
+                .catch((error)=>console.log(error))
         }
     };
 
     const removeFromFavorites = async () => {
-        if(userId===null){
-            const storedFavProducts=localStorage.getItem('favProducts')
-            const parsedFavProducts = storedFavProducts ? JSON.parse(storedFavProducts) : []
-            const index = parsedFavProducts.findIndex(product => product.id === id)
-            parsedFavProducts.splice(index, 1)
-            localStorage.setItem('favProducts', JSON.stringify(parsedFavProducts))
-            setIsFavorite(false);
-            alert('Producto eliminado de favoritos!')
-        }else{
-            deleteFavorite(id,userId)
-            setIsFavorite(false);
-        }
+        userId=1    //sacar esto cuando termine de funcionar lo del user
+        deleteFavorite(id, userId)
+            .then(() => {
+                setIsFavorite(false);
+                alert('Producto eliminado de favoritos!');
+            })
+        .catch((error) => {
+            console.error(error);
+        });
     };
 
     return (
@@ -139,13 +148,12 @@ const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
          <NavLink to={`/product/${id}`} style={{textDecoration:'none'}}>
             <img className={style.image} src={imageSrc} alt="" />
             <div className={style.detailCard}>
-                <p key={id}>{name}</p>
-                <p>${price}</p>
-                <p>Rating: {rating}</p>
-            {/* <p>Stock: {stock}</p> */}
+                <h1>${price}</h1>
+                <h3 key={id}>{name}</h3>
+                {/* <p>Rating: {rating}</p> */}
             </div>
          </NavLink>
-         <button onClick={isInCart ? removeFromCartHandler : addToCartHandler}>
+         <button className={style.cartButton} onClick={isInCart ? removeFromCartHandler : addToCartHandler}>
             {isInCart ? "Eliminar del carrito" : "Agregar al carrito"}
         </button>
          {isFavorite ? <button className={style.fav} onClick={removeFromFavorites}>❤️</button> : <button className={style.fav} onClick={addToFavorites}>🤍</button>}

@@ -8,8 +8,7 @@ const Cards = (props) => {
     
     return (
         <div className={style.contenedorCards}>
-            {productsData?.map(({ id, name, imageSrc, price, rating, stock, disabled }) => {
-                
+            {(productsData.length===0)?<h1 className={style.noCards}>No hay productos con esas características</h1>:productsData?.map(({ id, name, imageSrc, price, rating, stock, disabled }) => {
                 if (!disabled) {
                     return (
                         <Card 
@@ -22,7 +21,7 @@ const Cards = (props) => {
                         stock={stock}/>
                     );
                 }
-                return null;
+                return false
             })}
         </div>
     );

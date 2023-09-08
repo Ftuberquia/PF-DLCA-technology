@@ -20,6 +20,8 @@ import Terms from "./views/Terms/Terms";
 import Privacy from "./views/Privacy/Privacy";
 import About from "./views/About/About";
 import Cart from "./views/Cart/cart";
+import Login from "./views/Login/LogoutButton";
+import Profile from "./views/Login/Profile";
 
 const App = () => {
   const { pathname } = useLocation();
@@ -47,6 +49,8 @@ const App = () => {
         <Route path="/privacy" component={Privacy} />
         <Route path="/about" component={About} />
         <Route path="/cart" component={Cart} />
+        <Route path="/login" component={Login} />
+        <Profile />
       </Switch>
       <Footer />
     </Router>
@@ -55,6 +59,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
