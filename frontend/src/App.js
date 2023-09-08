@@ -11,8 +11,11 @@ import Productos from "./views/Productos/Productos";
 import { ContactUs } from "./views/ContactUs/ContactUs";
 import Favorites from "./views/Favorites/FavoritesProducts";
 import Stripe from "./views/Stripe/Stripe";
+<<<<<<< HEAD
 import Login from "./views/Login/LogoutButton";
 import Profile from "./views/Login/Profile";
+=======
+>>>>>>> 5abb69e5c4409abe5d128bf766d81764914ca9c4
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import FAQ from "./views/FAQ/FAQ";
@@ -20,7 +23,12 @@ import Terms from "./views/Terms/Terms";
 import Privacy from "./views/Privacy/Privacy";
 import About from "./views/About/About";
 import Cart from "./views/Cart/cart";
+<<<<<<< HEAD
 import { useAuth0 } from "@auth0/auth0-react";
+=======
+import Login from "./views/Login/LogoutButton";
+import Profile from "./views/Login/Profile";
+>>>>>>> 5abb69e5c4409abe5d128bf766d81764914ca9c4
 
 const App = () => {
   const { pathname } = useLocation();
@@ -31,6 +39,7 @@ const App = () => {
     <div className={`App ${darkMode ? "AppDark" : ""}`}>
       {/* {pathname !== "*" && <Nav />}// como  cambiar Nav */}
 
+<<<<<<< HEAD
       <Router>
         <NavBar />
         <Switch>
@@ -52,6 +61,29 @@ const App = () => {
         </Switch>
         <Footer />
       </Router>
+=======
+    <Router>
+      <NavBar />
+      <Switch>
+        <Route path="/productos" component={Productos} />
+        <Route path="/product/:id" component={ProductDetail} />
+        <Route path="/form" component={Form} />
+        <Route path="/contacto" component={ContactUs} />
+        <Route path="/userProfile" component={UserProfile} />
+        <Route exact path="/" component={Landing} />
+        <Route path="/compra" component={Stripe} />
+        <Route path="/favorites" component={Favorites} />
+        <Route path="/faq" component={FAQ} />
+        <Route path="/terms" component={Terms} />
+        <Route path="/privacy" component={Privacy} />
+        <Route path="/about" component={About} />
+        <Route path="/cart" component={Cart} />
+        <Route path="/login" component={Login} />
+        <Profile />
+      </Switch>
+      <Footer />
+    </Router>
+>>>>>>> 5abb69e5c4409abe5d128bf766d81764914ca9c4
     </div>
   );
 };
