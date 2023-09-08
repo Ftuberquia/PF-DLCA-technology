@@ -10,6 +10,8 @@ import Productos from "./views/Productos/Productos";
 import { ContactUs } from "./views/ContactUs/ContactUs";
 import Favorites from "./views/Favorites/FavoritesProducts";
 import Stripe from "./views/Stripe/Stripe";
+import Login from "./views/Login/LogoutButton";
+import Profile from "./views/Login/Profile";
 
 const App = () => {
   return (
@@ -23,6 +25,8 @@ const App = () => {
         <Route exact path="/" component={Landing} />
         <Route path="/compra" component={Stripe} />
         <Route path="/favorites" component={Favorites} />
+        <Route path="/login" component={Login} />
+        <Profile />
       </Switch>
       <Footer />
     </Router>
@@ -30,6 +34,3 @@ const App = () => {
 };
 
 export default App;
-
-
-

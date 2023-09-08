@@ -5,9 +5,11 @@ import personIcon from "../../img/person.svg";
 import heartIcon from "../../img/heart.svg";
 import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const NavBar = () => {
   const { cart } = useSelector((state) => state?.cart || {});
+  const { loginWithPopup} = useAuth0();
 
   return (
     <nav>
@@ -46,8 +48,8 @@ const NavBar = () => {
               </NavLink>
             </li>
       <div className={styles.buttons}>
-        <NavLink to={"/login"}>
-          <img src={personIcon} alt="Login" />
+        <NavLink to={"login"} >
+          <img src={personIcon} alt="Login" onClick={() => loginWithPopup()} />
         </NavLink>
         <NavLink to={"/favorites"}>
           <img src={heartIcon} alt="Favorites" />
