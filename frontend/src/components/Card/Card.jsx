@@ -131,6 +131,7 @@ const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
         }else{
             deleteFavorite(id,userId)
             setIsFavorite(false);
+            alert('Producto eliminado de favoritos!')
         }
     };
 
@@ -139,13 +140,12 @@ const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
          <NavLink to={`/product/${id}`} style={{textDecoration:'none'}}>
             <img className={style.image} src={imageSrc} alt="" />
             <div className={style.detailCard}>
-                <p key={id}>{name}</p>
-                <p>${price}</p>
-                <p>Rating: {rating}</p>
-            {/* <p>Stock: {stock}</p> */}
+                <h1>${price}</h1>
+                <h3 key={id}>{name}</h3>
+                {/* <p>Rating: {rating}</p> */}
             </div>
          </NavLink>
-         <button onClick={isInCart ? removeFromCartHandler : addToCartHandler}>
+         <button className={style.cartButton} onClick={isInCart ? removeFromCartHandler : addToCartHandler}>
             {isInCart ? "Eliminar del carrito" : "Agregar al carrito"}
         </button>
          {isFavorite ? <button className={style.fav} onClick={removeFromFavorites}>❤️</button> : <button className={style.fav} onClick={addToFavorites}>🤍</button>}
