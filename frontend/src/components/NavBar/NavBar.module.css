@@ -53,7 +53,16 @@
 	padding: 3px 5px;
 	border-radius: 50%;
   }
-  
+  .searchbar{
+	display: flex;
+	width: 15rem;
+  }
+  @media screen and (min-width: 1108px) {
+	.searchbar{
+		display: flex;
+		width: 13rem;
+	}
+  }
   @media screen and (min-width: 768px) {
 	.navbar {
 	  justify-content: space-between;

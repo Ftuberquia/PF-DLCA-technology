@@ -3,13 +3,16 @@ const cookieParser = require('cookie-parser'); //middleware para analizar las co
 const bodyParser = require('body-parser'); //middleware utilizado para analizar los cuerpos de las solicitudes HTTP entrantes.
 const morgan = require('morgan'); //middleware de registro de solicitudes HTTP. Registra detalles sobre cada solicitud que llega al servidor.
 const routes = require('./routes/index.js'); // import definicion de las rutas
+const cors = require('cors'); // solicitudes front
+const stripe = require('stripe'); //info desde el front
 
 
 require('./db.js'); 
 
 const server = express(); // instancia express 
-
-server.name = 'API';
+// Configurar el middleware CORS antes de definir rutas
+server.use(cors());
+// server.name = 'API';
 
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' })); //Establece la opción extended en true para permitir datos anidados en los cuerpos de las solicitudes y establece un límite de tamaño de 50 MB para los cuerpos de las solicitudes.
 server.use(bodyParser.json({ limit: '50mb' })); //También se establece un límite de tamaño de 50 MB para los cuerpos de las solicitudes.
@@ -25,6 +28,11 @@ server.use((req, res, next) => {
 	res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
 	next();
 });
+
+server.post('/api/checkout', (req, res) => {
+	console.log(req.body);
+	res.send('recibida la compra');
+  });
 
 server.use('/', routes); //Configura las rutas de la API importadas desde el archivo index.js
 

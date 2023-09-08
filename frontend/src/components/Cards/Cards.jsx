@@ -3,7 +3,7 @@ import Card from '../Card/Card'
 import style from './Cards.module.css'
 const Cards = (props) => {
 
-    const { products, addToCart } = props;
+    const { products } = props;
     const productsData = products;
     
     return (
@@ -19,8 +19,7 @@ const Cards = (props) => {
                         imageSrc={imageSrc} 
                         price={price} 
                         rating={rating} 
-                        stock={stock}
-                        addToCart={addToCart} />
+                        stock={stock}/>
                     );
                 }
                 return null;
