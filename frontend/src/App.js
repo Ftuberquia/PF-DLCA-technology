@@ -30,7 +30,6 @@ const App = () => {
    return (
   //   <div className={`App ${darkMode ? "AppDark" : ""}`}>
   //     {/* {pathname !== "*" && <Nav />}// como  cambiar Nav */}
-
     <Router>
       <NavBar />
       <Switch>
@@ -48,12 +47,9 @@ const App = () => {
         <Route path="/privacy" component={Privacy} />
         <Route path="/about" component={About} />
         <Route path="/cart" component={Cart} />
-        <Route path="/login" component={Login} />
-        <Profile />
       </Switch>
       <Footer />
     </Router>
-    </div>
   );
 };
 
