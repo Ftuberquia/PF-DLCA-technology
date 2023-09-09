@@ -35,12 +35,12 @@ const Users = (sequelize) => {
 
       address: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       phone: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       avatar_img: {
