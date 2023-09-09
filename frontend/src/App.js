@@ -13,6 +13,7 @@ import { ContactUs } from "./views/ContactUs/ContactUs";
 import Favorites from "./views/Favorites/FavoritesProducts";
 import Stripe from "./views/Stripe/Stripe";
 import ConfirmationPage from "./views/Stripe/Confirmacion";
+import CancelPage from "./views/Stripe/CancelPage";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import FAQ from "./views/FAQ/FAQ";
@@ -41,8 +42,9 @@ const App = () => {
         <Route path="/contacto" component={ContactUs} />
         <Route path="/userProfile" component={UserProfile} />
         <Route exact path="/" component={Landing} />
-        <Route path="/compra" component={Stripe} />
+        <Route path="/api/checkout" component={Stripe} />
         <Route path="/confirmation" component={ConfirmationPage}/>
+        <Route path="/cancel" component={CancelPage}/>
         <Route path="/favorites" component={Favorites} />
         <Route path="/faq" component={FAQ} />
         <Route path="/terms" component={Terms} />
