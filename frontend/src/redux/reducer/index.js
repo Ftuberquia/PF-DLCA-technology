@@ -1,4 +1,4 @@
-import { GET_ALL_PRODUCTS, GET_FAVS } from "../actions/index.js";
+import { GET_ALL_PRODUCTS} from "../actions/index.js";
 import { GET_PRODUCTS_BYNAME } from "../actions/index.js";
 import { GET_PRODUCT_DETAIL } from "../actions/index.js";
 import { GET_TAGS } from "../actions/index.js";
@@ -29,7 +29,6 @@ import { FILTER_FRONT } from "../actions/index.js";
     modal: '',
     reviewsFromUser: [],
     cart: [],
-    favs: [],
     productsCopy: [], // copia Estado para emergencias 
     //para regresar al estado original cuando nesesite
 
@@ -180,12 +179,6 @@ const rootReducer = (state = initialState, action) => {
                 return{
                 ...state,
                 products: productosConFiltros
-                }
-
-            case GET_FAVS:
-                return{
-                    ...state,
-                    favs: action.payload
                 }
             default:
             return {...state};

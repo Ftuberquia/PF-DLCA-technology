@@ -6,8 +6,8 @@
     background-color: rgba(20, 53, 125, 0.781);
     border: 2px solid #c3c6ce;
     border-radius: 1.5rem;
-    width: 400px;
-    height: 200px;
+    width: 350px;
+    height: 300px;
     display: grid;
     text-align: center;
     align-items: center;
@@ -16,13 +16,13 @@
     cursor: pointer;
     overflow: hidden;
   }
-  .container:hover{
+  /* .container:hover{
     transform: scale(1.02);
     box-shadow:
        inset 0 -.5em .5em rgba(54, 54, 54, 0.212),
              0 0  0 2px rgba(0, 0, 0, 0.758),
              0px 0px 10px 10px rgba(0, 0, 0, 0.696);
-  }
+  } */
   .products{
    margin-bottom: 30px;
   }
@@ -33,19 +33,62 @@
   .precio{
     font-weight: bold;
   }
-
   .button{
     border: none;
     width: 100px;
     height: 40px;
     background-color:rgb(51, 148, 75);
-    margin-top: 10px;
+    margin-top: 20px;
     color: whitesmoke;
     font-size: large;
     font-weight: bolder;
     border-radius: 8px;
     cursor: pointer;
-    transition: transform 0.2s; 
+    /* transition: background-color 0.3s; */
+  }
+  .button:hover{
+    transform: scale(1.1);
+    background-color: rgb(30, 197, 44); 
+  }
+  .loader {
+    width: 38px;
+    height: 38px;
+    display: inline-block;
+    position: relative;
+  }
+  .loader::after,
+  .loader::before {
+    content: '';  
+    box-sizing: border-box;
+    width: 38px;
+    height: 38px;
+    border: 3px solid #FFF;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: rotationBreak 3s ease-in-out infinite alternate;
+  }
+  .loader::after {
+    border-color: blue;
+    animation-direction: alternate-reverse;
+  }
+  
+  @keyframes rotationBreak {
+    0% {
+      transform: rotate(0);
+    }
+    25% {
+      transform: rotate(90deg);
+    }
+    50% {
+      transform: rotate(180deg);
+    }
+    75% {
+      transform: rotate(270deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
   
   /* .image{

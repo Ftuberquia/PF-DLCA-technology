@@ -4,9 +4,9 @@ import personIcon from "../../img/person.svg";
 import heartIcon from "../../img/heart.svg";
 import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
-import { useAuth0 } from "@auth0/auth0-react";
 import style from "./NavBar.module.css";
 
 const NavBar = () => {
@@ -62,5 +62,5 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
 
+export default NavBar;

@@ -14,7 +14,12 @@ const Profile = () => {
         <div>
           <img src={user.picture} alt={user.name} />
           <h2>{user.name}</h2>
+          <h3>{user.first_name}</h3>
+          <h4>{user.last_name}</h4>
           <p>{user.email}</p>
+          <p>{user.address}</p>
+          <p>{user.phone}</p>
+        
         </div>
       )
     );
