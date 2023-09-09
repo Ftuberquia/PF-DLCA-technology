@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import CartItemCounter from "./cartItemCounter";
+
 
 const CartElements = () => {
   // Read cart data from local storage on component load
@@ -16,6 +18,7 @@ const CartElements = () => {
       <div className="cartContent" key={producto.id}>
         <img src={producto.imageSrc} alt="product-card" />
         <h3 className="name">{producto.name}</h3>
+        <CartItemCounter quanty={producto.quantity}/>
         <h4 className="price">${producto.price}</h4>
       </div>
     );

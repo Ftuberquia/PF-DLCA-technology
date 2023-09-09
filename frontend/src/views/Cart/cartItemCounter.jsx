@@ -3,8 +3,8 @@ import React from "react";
 const cartItemCounter = () => {
   return (
     <>
-      <p>-</p>
-      <p>+</p>
+      <p className="counter-button">-</p>
+      <p className="counter-button">+</p>
     </>
   );
 };
