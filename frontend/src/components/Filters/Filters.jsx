@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'; //conecta react-redux
 import { getBrands, getCategories, getSubCategories} from '../../redux/actions';
 // import Loader from '../Loader/Loader.jsx';
 
-export default function Filters ({updateFilters}) {
+export default function Filters ({updateFilters, handleResetFilter }) {
     // loader
     // const loader = useSelector(state => state.loader);
 
@@ -45,7 +45,7 @@ const handleReset = (event) => {
     filterBrand.current.value = 'undefined'
     filterCategory.current.value = 'undefined'
     filterSubcategories.current.value = 'undefined'
-    alert('Loading...');
+    handleResetFilter(event)
 }
 
 return (
