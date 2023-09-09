@@ -9,6 +9,7 @@ import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 import { createRoot } from "react-dom/client";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { Auth0Provider } from '@auth0/auth0-react';
 
 // Cambiar para el deploy
 
@@ -21,12 +22,12 @@ const rootElement = createRoot(root);
 const DarkModeApp = () => {
   const darkMode = useSelector((state) => state.darkMode); // Obtiene el estado de darkMode
 
-  return (
-    <div className={darkMode ? "dark-mode" : ""}>
-      <App />
-    </div>
-  );
-};
+//   return (
+//     <div className={darkMode ? "dark-mode" : ""}>
+//       <App />
+//     </div>
+//   );
+// };
 
 rootElement.render(
   //Povedor de Auth0
