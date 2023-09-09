@@ -12,8 +12,6 @@ import { ContactUs } from "./views/ContactUs/ContactUs";
 import Favorites from "./views/Favorites/FavoritesProducts";
 import Stripe from "./views/Stripe/Stripe";
 import ConfirmationPage from "./views/Stripe/Confirmacion";
-import Login from "./views/Login/UserProfileView";
-import Profile from "./views/Login/Profile";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import FAQ from "./views/FAQ/FAQ";
@@ -32,30 +30,27 @@ const App = () => {
    return (
   //   <div className={`App ${darkMode ? "AppDark" : ""}`}>
   //     {/* {pathname !== "*" && <Nav />}// como  cambiar Nav */}
-
-      <Router>
-        <NavBar />
-        <Switch>
-          <Route path="/productos" component={Productos} />
-          <Route path="/product/:id" component={ProductDetail} />
-          <Route path="/form" component={Form} />
-          <Route path="/contacto" component={ContactUs} />
-          <Route path="/userProfile" component={UserProfile} />
-          <Route exact path="/" component={Landing} />
-          <Route path="/compra" component={Stripe} />
-          <Route path="/favorites" component={Favorites} />
-          <Route path="/faq" component={FAQ} />
-          <Route path="/terms" component={Terms} />
-          <Route path="/privacy" component={Privacy} />
-          <Route path="/about" component={About} />
-          <Route path="/cart" component={Cart} />
-          <Route path="/login" component={Login} />
-          <Profile />
-        </Switch>
-        <Footer />
-      </Router>
-  //   // </div>
-   );
+    <Router>
+      <NavBar />
+      <Switch>
+        <Route path="/productos" component={Productos} />
+        <Route path="/product/:id" component={ProductDetail} />
+        <Route path="/form" component={Form} />
+        <Route path="/contacto" component={ContactUs} />
+        <Route path="/userProfile" component={UserProfile} />
+        <Route exact path="/" component={Landing} />
+        <Route path="/compra" component={Stripe} />
+        <Route path="/confirmation" component={ConfirmationPage}/>
+        <Route path="/favorites" component={Favorites} />
+        <Route path="/faq" component={FAQ} />
+        <Route path="/terms" component={Terms} />
+        <Route path="/privacy" component={Privacy} />
+        <Route path="/about" component={About} />
+        <Route path="/cart" component={Cart} />
+      </Switch>
+      <Footer />
+    </Router>
+  );
 };
 
 export default App;

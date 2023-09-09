@@ -20,19 +20,19 @@ const CheckoutForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const {error, paymentMethod } = await stripe.createPaymentMethod({
+        const {error, payment } = await stripe.createPaymentMethod({
             type: 'card',
             card: cardElement.current || elements.getElement(CardElement)
         });
         setLoading(true)
 
-        if (!error && paymentMethod) {
+        if (!error && payment) {
             try {
-                const { id } = paymentMethod;
+                const { id } = payment.payment_method;;
                 const { data } = await axios.post('http://localhost:3001/api/checkout', {
                     id: id,
                     amount: 10000, // precio a cambiar
-                    return_url: 'http://localhost:3000/success'
+                    return_url: 'http://localhost:3000/confirmation'
                 });
                 console.log(data);
                 elements.getElement(CardElement).clear();
@@ -41,7 +41,7 @@ const CheckoutForm = () => {
 
                 // Ahora puedes usar paymentIntentId para redirigir a la página de confirmación
                 history.push({
-                    pathname: "/confirmacion",
+                    pathname: "/confirmation",
                     state: {
                     paymentInfo: {
                         paymentIntentId,
@@ -75,7 +75,8 @@ const CheckoutForm = () => {
                 </div>
             ) : ('Comprar') }
         </button>
-    </form>)
+    </form>
+    )
 }
 
 const Stripe = () => {

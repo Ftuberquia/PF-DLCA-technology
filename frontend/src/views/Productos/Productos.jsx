@@ -123,9 +123,15 @@ function Productos() {
     loadProducts();
   };
 
+  const handleResetFilter= async (e) =>{
+    setFilteredProducts([])
+    setPage(1)
+    loadProducts()
+  }
+
   return (
     <div className={style.homeContainer}>
-      <Filters updateFilters={updateFilters}/>
+      <Filters updateFilters={updateFilters} handleResetFilter={(event)=>handleResetFilter(event)}/>
       <div>
       <Cards products={filteredProducts.length > 0 ? filteredProducts : productsData} page={page} isLastPage={isLastPage} handleNextPage={handleNextPage} handlePrevPage={handlePrevPage}/>
       </div>
