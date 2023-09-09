@@ -13,16 +13,14 @@ export default function Favorites() {
     const history=useHistory();
     const [favoriteProducts, setFavoriteProducts]=useState([]);
 
-    let { user } = useAuth0(); // Obtener la información del usuario actual desde Auth0
-
-    //hardcodeo cambiar despues
-    if(!user) user=1;
+    const { user } = useAuth0(); // Obtener la información del usuario actual desde Auth0
 
     useEffect(() => {
         const fetchFavoriteProducts = async () => {
           if (user) {
+            console.log(user)
             try {
-              const productsPromise = fetchData(user);
+              const productsPromise = fetchData(user.sub);
               const products = await productsPromise;
               setFavoriteProducts(products);
             } catch (error) {
