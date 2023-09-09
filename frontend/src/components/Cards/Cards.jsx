@@ -3,10 +3,10 @@ import Card from '../Card/Card'
 import style from './Cards.module.css'
 const Cards = (props) => {
 
-    const { products, scroll } = props;
-    
+    const { products, handleNextPage, handlePrevPage, isLastPage, page } = props;
+
     return (
-        <div className={style.contenedorCards} style={{ height: "500px", overflow: "auto" }} onScroll={(e)=>scroll(e)}>
+    <div className={style.contenedorCards}>
              {products.length === 0 ? (
         <h1 className={style.noCards}>No hay productos con esas características</h1>
       ) : (
@@ -27,6 +27,10 @@ const Cards = (props) => {
           return false;
         })
       )}
+      <div className={style.contPag}>
+        <button onClick={handlePrevPage} disabled={page === 1}>Anterior</button>
+        <button onClick={handleNextPage} disabled={isLastPage||products.length===0}>Siguiente</button>
+      </div>
     </div>
   );
 };
