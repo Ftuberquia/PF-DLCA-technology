@@ -29,7 +29,7 @@ const App = () => {
   
     /* {pathname !== "*" && <Nav />}// como  cambiar Nav */
   
-  // return (
+   return (
   //   <div className={`App ${darkMode ? "AppDark" : ""}`}>
   //     {/* {pathname !== "*" && <Nav />}// como  cambiar Nav */}
 
@@ -55,7 +55,7 @@ const App = () => {
         <Footer />
       </Router>
   //   // </div>
-  // );
+   );
 };
 
 export default App;
