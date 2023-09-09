@@ -1,12 +1,14 @@
 footer {
   background-color: #303030;
   text-align: center;
+  padding: 15px 0;
+  margin-top: 15px; 
 }
 .topFooter {
   display: grid;
   grid-template-columns: 1fr;
-  padding: 46px 40px 24px;
-  gap: 40px;
+  padding: 20px;
+  gap: 15px;
 }
 .topFooter .logo {
   display: inline-block;
@@ -15,8 +17,8 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 32px;
-  margin-top: 18px;
+  gap: 12px;
+  margin-top: 12px;
 }
 footer .topFooter > div {
   color: white;
@@ -27,23 +29,23 @@ footer .topFooter > div ul {
   flex-direction: column;
   gap: 8px;
   opacity: 0.8;
-  line-height: 24px;
+  line-height: 16px;
 }
 footer .topFooter div h3 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 footer .topFooter > div .contact {
   max-width: fit-content;
   margin: 0 auto;
-  gap: 24px;
+  gap: 12px;
 }
 footer .topFooter > div .contact li {
   text-align: left;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
 }
 footer .topFooter > div .contact li .address {
   color: var(--main-default);
@@ -58,15 +60,15 @@ footer .bottomFooter {
 footer .bottomFooter p {
   order: 2;
   width: 100%;
-  padding: 24px 0;
+  padding: 12px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  line-height: 20px;
+  line-height: 14px;
 }
 footer .bottomFooter .rightPart {
   display: flex;
-  gap: 40px;
-  padding: 24px 0;
-  font-size: 14px;
+  gap: 16px;
+  padding: 14px 0;
+  font-size: 12px;
 }
 @media screen and (min-width: 992px) {
   footer {
@@ -75,11 +77,11 @@ footer .bottomFooter .rightPart {
   }
   .topFooter {
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    padding: 46px 5% 100px;
+    padding: 15px 5% 20px;
   }
   .topFooter .socialIcons {
     justify-content: left;
-    align-items: center;
+    /* align-items: center; */
   }
   footer .bottomFooter {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
