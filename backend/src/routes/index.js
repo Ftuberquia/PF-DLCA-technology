@@ -12,12 +12,15 @@ const filters = require ("./filters/filters")
 const carts = require ("./carts/routeCarts")
 const reviews = require("./reviews/routeReviews")
 const stripe = require ("./compra/routeCompra");
-const paginate = require("./paginate/routePaginate");
+const users = require("../routes/users/routeUsers")
 
 const router = Router();
 
 //ruta para acceder a los productos
 router.use("/products", products)
+
+//ruta para acceder a users
+router.use("/users",users)
 
 //Ruta para acceder a las categorias
 router.use("/categories", categories)
@@ -47,9 +50,6 @@ router.use("/carts",carts)
 
 //Ruta para los reviews
 router.use("/reviews", reviews)
-
-// Ruta paginado
-router.use("/paginate", paginate)
 
 ////Ruta para los carritos
 // router.use("/compras",stripe)
