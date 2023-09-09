@@ -4,11 +4,14 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../../redux/actions";
 import { addFavorite, deleteFavorite, fetchData } from "../../views/Favorites/funcionesFav";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import style from './Card.module.css'
 
-const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
+const Card = ({ id, name, imageSrc, price, rating, stock, quantity, disabled }) => {
     const dispatch = useDispatch();
+
+    const { user } = useAuth0();
 
     //favoritos
     const [isFavorite, setIsFavorite] = useState(false)
@@ -17,11 +20,16 @@ const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
     const [isInCart, setIsInCart] = useState(false);
 
     //Para obtener el userId desde el localStorage
-    let [userId, setUserId] = useState(null);
+    const [userId, setUserId] = useState(null);
+
     useEffect(() => {
-        const storedUserId = localStorage.getItem("userId");
-        setUserId(storedUserId);
-    }, []);
+        if (user) {
+          setUserId(user.sub);
+        } else {
+          const storedUserId = localStorage.getItem("userId");
+          setUserId(storedUserId);
+        }
+      }, [user]);
 
     // Verificar si el producto está en el carrito
     const cartProducts = useSelector(state => state.cart);
@@ -43,6 +51,7 @@ const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
                 price,
                 rating,
                 stock,
+                quantity
             };
             const storedCartProducts = localStorage.getItem("cartProducts");
             const parsedCartProducts = storedCartProducts ? JSON.parse(storedCartProducts) : [];
@@ -87,40 +96,25 @@ const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
 
     //verificar si el producto esta en favoritos
     useEffect(() => {
-        // eslint-disable-next-line
-        userId=1    //sacar esto cuando termine de funcionar lo del user
-        const checkFavoriteStatus = async () => {
-          try {
-            // Llamar a la función fetchData para obtener los productos favoritos del usuario
-            const favoriteProducts = await fetchData(userId);
-            // Verificar si el producto actual está en la lista de productos favoritos
-            const isProductFavorite = favoriteProducts.some((product) => product.id === id);
-            setIsFavorite(isProductFavorite);
-          } catch (error) {
-            console.error(error);
-          }
-        };
-        checkFavoriteStatus();
+        if(user){
+            const checkFavoriteStatus = async () => {
+              try {
+                // Llamar a la función fetchData para obtener los productos favoritos del usuario
+                const favoriteProducts = await fetchData(userId);
+                // Verificar si el producto actual está en la lista de productos favoritos
+                const isProductFavorite = favoriteProducts.some((product) => product.id === id);
+                setIsFavorite(isProductFavorite);
+              } catch (error) {
+                console.error(error);
+              }
+            };
+            checkFavoriteStatus();
+        }
       }, [userId, id]);
 
     const addToFavorites = async () => {
-        userId=1    //sacar esto cuando termine de funcionar lo del user
-        if(userId===null){
+        if(!user){
             alert('Debes iniciar sesión para agregar a favoritos')
-            // //almacenar en el localStorage
-            // const productToAdd={
-            //     id,
-            //     name,
-            //     imageSrc,
-            //     price,
-            //     rating,
-            // }
-            // const storedFavProducts = localStorage.getItem("favProducts");
-            // // Verificar si hay productos en el carrito en el localStorage
-            // const parsedFavProducts = storedFavProducts ? JSON.parse(storedFavProducts) : [];
-            // parsedFavProducts.push(productToAdd)
-            // localStorage.setItem("favProducts", JSON.stringify(parsedFavProducts));
-            // setIsFavorite(true);
         }else{
             const body = { productId: id, userId: userId }; // Crea un objeto con productId y userId
             addFavorite(body)
@@ -132,7 +126,6 @@ const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
     };
 
     const removeFromFavorites = async () => {
-        userId=1    //sacar esto cuando termine de funcionar lo del user
         deleteFavorite(id, userId)
             .then(() => {
                 setIsFavorite(false);
