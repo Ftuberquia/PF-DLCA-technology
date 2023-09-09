@@ -19,8 +19,9 @@ const {
         } else res.status(400).send(error)
       }
       // si no muestra todos los productos
-      else {
-        const allProducts = await getAllProducts();
+      else if(!name) {
+        const page = parseInt(req.query.page) || 1;
+        const allProducts = await getAllProducts(page);
         return res.status(200).json(allProducts);
       }
     } catch (error) {
