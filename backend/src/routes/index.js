@@ -8,7 +8,6 @@ const tags = require("./tags/routeTags");
 const brands=require('./brands/routeBrands');
 const contactHandler = require("../handlers/contact/contactHandler");
 const favorites = require("./favorites/routeFav");
-const filters = require ("./filters/filters")
 const carts = require ("./carts/routeCarts")
 const reviews = require("./reviews/routeReviews")
 const stripe = require ("./compra/routeCompra");
@@ -41,9 +40,6 @@ router.use("/db", getDbProductsHandler)
 router.use("/favorites", favorites)
 
 // router.use("/contact", contactHandler)
-
-//Ruta para los filtros
-router.use("/filter", filters)
 
 //Ruta para los carritos
 router.use("/carts",carts)
