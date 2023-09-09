@@ -69,11 +69,11 @@ const NavBar = () => {
           Contáctenos
         </Link>
       </span>
-       <li>
-         <NavLink to={'/compra'} className={style.links}>
+       <div className={style.buyContainer}>
+         <NavLink to={'/compra'} className={style.buy}>
               Comprar
          </NavLink>
-       </li>
+       </div>
       <div className={style.buttons}>
         <NavLink to={"login"} >
           <img src={personIcon} alt="Login" onClick={() => loginWithPopup()} />

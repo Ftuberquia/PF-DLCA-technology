@@ -17,8 +17,9 @@ export const PUT_USER = 'PUT_USER';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const CLEAN_CART = 'CLEAN_CART';
-export const FILTER_COMPLEX="FILTER_COMPLEX"
-export const FILTER_FRONT = "FILTER_FRONT"
+export const FILTER_COMPLEX= "FILTER_COMPLEX";
+export const FILTER_FRONT = "FILTER_FRONT";
+export const UPDATE_CART_ITEMS = 'UPDATE_CART_ITEMS';
 
 export const getAllProducts = () => async dispatch => {
     try {
@@ -211,6 +212,14 @@ export function filterFront(payload){
         payload
     }   
 }
+
+export const updateCartItems = (cartItems) => ({
+    type: UPDATE_CART_ITEMS,
+    payload: cartItems,
+  });
+
+
+
 
 // este es el filtro del back, toquelo si se anima uwu
 // export function filterComplex(brand, category, subcategory) {
