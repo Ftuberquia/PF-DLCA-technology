@@ -156,7 +156,7 @@
   margin: 0 auto;
   margin-bottom: 1rem;
   width: 100%;
-  max-width: 750px;
+  max-width: 720px;
   padding: 50px;
   height: auto;
   background-color: rgb(187, 228, 245);
@@ -169,8 +169,8 @@
 .card__title {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 27px;
-  font-weight: 900;
-  margin-left: 55px;
+  font-weight: 800;
+  margin-left: 52px;
   color: #0e0a35;
   top: 1rem;
   padding: 10px;
@@ -181,7 +181,7 @@
 .label__form {
   margin-bottom: 2rem;
   bottom: 5rem;
-  padding: -2rem;
+  padding: -1rem;
   padding-bottom: 4rem;
   margin-right: 6px;
   margin-top: 8px;
@@ -200,7 +200,7 @@
 
 .card__form input {
   width: 26rem;
-  height: 27px;
+  height: 26px;
   margin-top: 12px;
   padding-left: 10px;
   outline: 0;
@@ -252,12 +252,12 @@
 
 .input {
   cursor: pointer;
-  height: 35px;
+  height: 33px;
   margin-top: 12px;
   background: rgb(255, 255, 255);
   border-radius: 14px;
   outline: 0;
-  width: 110%;
+  width: 100%;
   border: 2px solid #a0e0f3;
   transition: 0.1s;
 }
@@ -303,7 +303,7 @@
   font-size: 13px;
   color: rgb(18, 25, 66);
   position: center;
-  margin-left: 120px;
+  margin-left: 150px;
   -webkit-text-stroke-color: rgb(0, 0, 0);
 }
 
@@ -314,7 +314,7 @@
   background: rgb(255, 255, 255);
   border-radius: 14px;
   outline: 0;
-  width: 110%;
+  width: 100%;
   border: 2px solid #a0e0f3;
   color: black;
 }
@@ -336,5 +336,14 @@
 @media only screen and (max-width: 600px) {
   .card__title {
     font-size: 20px;
+  }
+  .form__C {
+    font-size: 16px;
+  }
+  .label__form {
+    font-size: 13px;
+  }
+  .card__content {
+    font-size: 10px;
   }
 }

@@ -152,4 +152,13 @@
   .cardcontainer {
     justify-content: space-between;
   }
+  .cardmb30 img {
+    margin: 1vw;
+    /* width: 10vw; */
+    height: auto;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 2vw;
+    box-shadow: 0 0 2vw rgba(230, 204, 204, 0.932); 
+  }
 }
