@@ -12,7 +12,7 @@ import { ContactUs } from "./views/ContactUs/ContactUs";
 import Favorites from "./views/Favorites/FavoritesProducts";
 import Stripe from "./views/Stripe/Stripe";
 import ConfirmationPage from "./views/Stripe/Confirmacion";
-import Login from "./views/Login/LogoutButton";
+import Login from "./views/Login/UserProfileView";
 import Profile from "./views/Login/Profile";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
