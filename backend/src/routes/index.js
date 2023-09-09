@@ -11,7 +11,7 @@ const favorites = require("./favorites/routeFav");
 const filters = require ("./filters/filters")
 const carts = require ("./carts/routeCarts")
 const reviews = require("./reviews/routeReviews")
-const stripe = require ("./compra/routeCompra")
+const stripe = require ("./compra/routeCompra");
 const users = require("../routes/users/routeUsers")
 
 const router = Router();
