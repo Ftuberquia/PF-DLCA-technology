@@ -1,23 +1,47 @@
 const {Products, Tags} = require('../../db')
 const { Op } = require('sequelize');
 
-const getAllProducts = async (page) => {
+const getAllProducts = async (page, order, priceOrder) => {
+
   const limit = 10; //Numero de elementos por pagina
-  //page = page || 1;
 
-    
+  const offset = (page - 1) * limit; // Calcula el desplazamiento
+
+  let products
   
-    const offset = (page - 1) * limit; // Calcula el desplazamiento
-
-    const products = await Products.findAll({
+  if(order){
+    products = await Products.findAll({
+      limit,
+      offset, // esto evita que se vuelvan a enviar los productos de la pagina anterior
+      order: [['name', order]],
+      include:{
+        model:Tags,
+        attributes:['name'],
+        through:{attributes:[]}
+      },
+    });
+  }else if(priceOrder){
+    products = await Products.findAll({
+      limit,
+      offset, // esto evita que se vuelvan a enviar los productos de la pagina anterior
+      order: [['price', priceOrder]],
+      include:{
+        model:Tags,
+        attributes:['name'],
+        through:{attributes:[]}
+      },
+    });
+  }else{
+    products = await Products.findAll({
       limit,
       offset, // esto evita que se vuelvan a enviar los productos de la pagina anterior
       include:{
-          model:Tags,
-          attributes:['name'],
-          through:{attributes:[]}
-      }
-  });
+        model:Tags,
+        attributes:['name'],
+        through:{attributes:[]}
+      },
+    });
+  }
   return products;
 }
 
