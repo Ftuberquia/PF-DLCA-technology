@@ -9,38 +9,40 @@ import Cards from "../../components/Cards/Cards";
 import style from './FavoritesProducts.module.css'
 
 export default function Favorites() {
-  const dispatch = useDispatch();
   const history = useHistory();
   const [favoriteProducts, setFavoriteProducts] = useState([]);
-  const [userId, setUserId] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const { user } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
-  useEffect(() => {
-    if (user) {
-      setUserId(user.sub)
-    } else {
-      alert("Ingresa o registrate para ver tus favoritos!");
-      history.goBack();
-    }
-  }, [user, history, dispatch]);
-
-  useEffect(()=>{
-    const fetchFavoriteProducts = async () => {
-      if (userId !== null) {
-        const productsPromise = fetchData(userId);
-        const response = await productsPromise;
   
-        if (Array.isArray(response)) {
-          setFavoriteProducts(response);
-        } else {
-          setErrorMessage(response.message);
+  useEffect(() => {
+    if (isAuthenticated) {
+      const userId=user.sub
+      const fetchFavoriteProducts = async () => {
+        if (userId !== null) {
+          const productsPromise = fetchData(userId);
+          const response = await productsPromise;
+    
+          if (Array.isArray(response)) {
+            setFavoriteProducts(response);
+          } else {
+            setErrorMessage(response.message);
+          }
+        }else {
+          alert("Ingresa o registrate para ver tus favoritos!");
+          history.goBack();
         }
-      }
-    };
-    fetchFavoriteProducts();
-  },[userId])
+      };
+      fetchFavoriteProducts();
+    }else{
+      setErrorMessage('Necesitas loguearte o registrarte!');
+    } 
+  }, [user, history]);
+
+  if (isLoading) {
+    return <div>Loading ...</div>;
+  }
 
   return (
     <div className={style.favoritesCont}>
