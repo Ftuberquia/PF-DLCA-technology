@@ -1,60 +1,62 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { getCartItems } from "../../redux/actions/index"; // Asegúrate de importar la acción correcta
+import React, { useState, useEffect } from "react";
 import CartItemCounter from "./cartItemCounter";
 
+const CartElements = ({ updateCartData }) => {
+  // Leer los datos del carrito desde el Local Storage en el inicio
+  const initialCartData =
+    JSON.parse(localStorage.getItem("cartProducts")) || [];
 
-const CartElements = ({ cartItems, getCartItems }) => {
-
+  const [cart, setCart] = useState(initialCartData);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    // Llama a la acción para obtener los datos de cartItems
-    getCartItems();
-  }, [getCartItems]);
+    // Sincronizar el estado local con el Local Storage
+    localStorage.setItem("cartProducts", JSON.stringify(cart));
 
-  // Utiliza el estado local para almacenar los datos del carrito (si es necesario)
-  const [cart, setCart] = useState([]);
+    // Calcular el nuevo valor total cuando cambie el carrito
+    const newTotalPrice = cart.reduce((total, item) => {
+      return total + item.price * item.quantity;
+    }, 0);
+    setTotalPrice(newTotalPrice);
+    // Llama a la función de actualización en el componente principal
+    updateCartData(cart);
+  }, [cart, updateCartData]);
 
-  // Elimina un producto del carrito
-  const deleteProduct = (id) => {
-    // Actualiza el estado local del carrito (si es necesario)
-    // const newCart = cart.filter((element) => element.id !== id);
-    // setCart(newCart);
-
-    // Despacha una acción para eliminar el producto del carrito en Redux
-    // Esto debe estar implementado en tu archivo de acciones y en el reducer
-    // Ejemplo de cómo podría verse:
-    // deleteProductFromCart(id);
+  const updateQuantity = (productId, newQuantity) => {
+    // Actualizar la cantidad en el carrito
+    const updatedCart = cart.map((item) =>
+      item.id === productId ? { ...item, quantity: newQuantity } : item
+    );
+    setCart(updatedCart);
   };
 
-  return (
-    <div>
-      {cartItems.length === 0 ? (
-        <p>El carrito está vacío</p>
-      ) : (
-        <div>
-          {cartItems.map((producto) => (
-            <div className="cartContent" key={producto.id}>
-              <img src={producto.imageSrc} alt="product-card" />
-              <h3 className="name">{producto.name}</h3>
-              <CartItemCounter product={producto} />
-              <h4 className="price">${producto.price * producto.quantity}</h4>
-              <h3
-                className="cart-delete-button"
-                onClick={() => deleteProduct(producto.id)}
-              >
-                ❌
-              </h3>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+  const deleteProduct = (id) => {
+    const foundId = cart.find((element) => element.id === id);
+
+    const newCart = cart.filter((element) => {
+      return element !== foundId;
+    });
+
+    setCart(newCart);
+  };
+
+  return cart.map((producto) => {
+    const totalPrice = producto.price * producto.quantity;
+    return (
+      <div className="cartContent" key={producto.id}>
+        <img src={producto.imageSrc} alt="product-card" />
+        <h3 className="name">{producto.name}</h3>
+        <CartItemCounter product={producto} updateQuantity={updateQuantity}/>
+        <h4 className="price">${totalPrice}</h4>
+        <h3
+          className="cart-delete-button"
+          onClick={() => deleteProduct(producto.id)}
+        >
+          ❌
+        </h3>
+      </div>
+    );
+  });
 };
 
-const mapStateToProps = (state) => ({
-  cartItems: state.cartItems, // Mapea cartItems desde el estado de Redux
-});
-
-export default connect(mapStateToProps, { getCartItems })(CartElements);
+export default CartElements;
