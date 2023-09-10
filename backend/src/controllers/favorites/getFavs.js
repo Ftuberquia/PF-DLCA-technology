@@ -27,10 +27,10 @@ const getFavoriteProducts=async(req, res)=>{
 
       //Si no hay productos favoritos en el usuario
       if(favoriteProducts.rows[0].products.length===0){
-        return res.status(404).json({ message: 'No tienes productos favoritos' });
+        return res.status(200).json({ message: 'No tienes productos favoritos' });
       }
   
-      return res.status(200).json(favoriteProducts);
+      return res.status(200).json(favoriteProducts.rows[0].products);
 
     } catch (error) {
       console.log(error)

@@ -18,6 +18,7 @@ const NavBar = () => {
     // Cuando el usuario esté autenticado, envía los datos al servidor
     if (isAuthenticated && user) {
       const userData = {
+        id:user.sub,
         first_name: user.given_name,
         last_name: user.family_name,
         username: user.nickname,
@@ -28,7 +29,7 @@ const NavBar = () => {
       // Realiza la solicitud al servidor para guardar los datos del usuario
       axios.post("http://localhost:3001/users/", userData)
         .then((response) => {
-          if (response.status === 201) {
+          if (response.status === 200) {
             console.log("Usuario creado con éxito en el servidor");
             // Realizar acciones adicionales si es necesario
           } else {
