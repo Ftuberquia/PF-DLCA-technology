@@ -20,6 +20,7 @@ import Terms from "./views/Terms/Terms";
 import Privacy from "./views/Privacy/Privacy";
 import About from "./views/About/About";
 import Cart from "./views/Cart/cart";
+import UserProfileView from "./views/Login/UserProfileView";
 const App = () => {
   const { pathname } = useLocation();
 
@@ -31,7 +32,6 @@ const App = () => {
    return (
   //   <div className={`App ${darkMode ? "AppDark" : ""}`}>
   //     {/* {pathname !== "*" && <Nav />}// como  cambiar Nav */}
-
     <Router>
       <NavBar />
       <Switch>
@@ -39,7 +39,6 @@ const App = () => {
         <Route path="/product/:id" component={ProductDetail} />
         <Route path="/form" component={Form} />
         <Route path="/contacto" component={ContactUs} />
-        <Route path="/userProfile" component={UserProfile} />
         <Route exact path="/" component={Landing} />
         <Route path="/compra" component={Stripe} />
         <Route path="/confirmation" component={ConfirmationPage}/>
@@ -50,8 +49,7 @@ const App = () => {
         <Route path="/privacy" component={Privacy} />
         <Route path="/about" component={About} />
         <Route path="/cart" component={Cart} />
-        {/* <Route path="/login" component={Login} /> */}
-        {/* <Profile /> */}
+        <Route path="/login" component={UserProfileView} />
       </Switch>
       <Footer />
     </Router>

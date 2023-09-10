@@ -6,29 +6,33 @@ import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
-import SearchBar from "../SearchBar/SearchBar";
-import style from "./NavBar.module.css";
 import axios from "axios";
+import { LocalStorageCache } from "@auth0/auth0-react";
+import style from "./NavBar.module.css";
+
+export const cache = new LocalStorageCache()
 
 const NavBar = () => {
   const { cart } = useSelector((state) => state?.cart || {});
   const { loginWithPopup, isAuthenticated, user} = useAuth0();
 
+
   useEffect(() => {
     // Cuando el usuario esté autenticado, envía los datos al servidor
     if (isAuthenticated && user) {
       const userData = {
+        id:user.sub,
         first_name: user.given_name,
         last_name: user.family_name,
         username: user.nickname,
         email: user.email,
         // Otros campos de datos que quieras enviar
       };
-
+      
       // Realiza la solicitud al servidor para guardar los datos del usuario
       axios.post("http://localhost:3001/users/", userData)
         .then((response) => {
-          if (response.status === 200) {
+          if (response.status === 200|| 201) {
             console.log("Usuario creado con éxito en el servidor");
             // Realizar acciones adicionales si es necesario
           } else {
@@ -38,6 +42,7 @@ const NavBar = () => {
         .catch((error) => {
           console.error("Error al realizar la solicitud al servidor:", error);
         });
+        cache.set("userId", user.sub)
     }
   }, [isAuthenticated, user]);
 
@@ -50,9 +55,6 @@ const NavBar = () => {
         <Link className={style.name} to={"/"}>
           DLCA TECHNOLOGY
         </Link>
-      </span>
-      <span className={style.searchbar}>
-      <SearchBar />
       </span>
       <span>
         <Link className={style.links} to={"/productos"}>

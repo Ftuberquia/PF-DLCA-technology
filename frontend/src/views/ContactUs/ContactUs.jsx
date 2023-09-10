@@ -27,6 +27,7 @@ export const ContactUs = () => {
 
     return (
         <div className={styles.container}>
+            <div className={styles.title}>
         <h2>Contáctenos</h2>
         <form ref={refForm} action="" onSubmit={handleSubmit} className={styles.form}>
             <fieldset className={styles.fieldset}>
@@ -44,5 +45,6 @@ export const ContactUs = () => {
             <button className={styles.button}>Enviar</button>
         </form>
         </div>
+    </div>
     )
 };

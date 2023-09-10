@@ -8,7 +8,6 @@ import Featured from "../../views/Featured/Featured";
 import { Link } from "react-router-dom";
 import Logo from "../../img/logo-dlca.png";
 import Cards from "../Cards/Cards";
-import SearchBar from "../SearchBar/SearchBar";
 import AssociatedBrands from "../AssociatedBrands/AssociatedBrands";
 import Services from "../Services/Services";
 import Questions from "../Questions/Questions";
@@ -22,7 +21,6 @@ function Landing() {
 
   return (
     <div className={style.containerLanding}>
-      <SearchBar />
       <Carousel />
       <div className={style.card1}>
         <AssociatedBrands />
@@ -67,21 +65,19 @@ function Landing() {
           </div>
         </div>
         <div className={style.pcgamer}>
-          <Link to="/products">
             <img src="https://i.ibb.co/tXnGdCP/banner-compu.webp" alt="" />
-          </Link>
         </div>
 
         <Questions />
         <section className={style.banners}>
           <div className={style.bannerOne}>
-            <Link to="productos/categories">
+            <Link to="productos">
               <img src="https://i.ibb.co/0Jq8gFp/silla.png" alt="" />
             </Link>
-            <Link to="productos/categories">
+            <Link to="productos">
               <img src="https://i.ibb.co/7Wy35YX/mouse.png" alt="" />
             </Link>
-            <Link to="productos/categories">
+            <Link to="productos">
               <img src="https://i.ibb.co/9vdX4Rc/laptop.png" alt="" />
             </Link>
           </div>
@@ -89,13 +85,13 @@ function Landing() {
             <h2 className={style.title2}>Los mejores productos!!</h2>
           </div>
           <div className={style.bannerTwo}>
-            <Link to="productos/categories">
+            <Link to="productos">
               <img src="https://i.ibb.co/2382ZKh/impresora.png" alt="" />
             </Link>
-            <Link to="productos/categories">
+            <Link to="productos">
               <img src="https://i.ibb.co/BL8s2zv/cooling.png" alt="" />
             </Link>
-            <Link to="productos/categories">
+            <Link to="productos">
               <img src="https://i.ibb.co/dtHLpP3/consola.png" alt="" />
             </Link>
           </div>
