@@ -1,0 +1,55 @@
+Para crear un diagrama UML de entidades y relaciones de una aplicación ecommerce de venta de productos tecnológicos, 
+es necesario identificar las entidades y sus relaciones en los modelos proporcionados. A continuación se presenta el 
+diagrama UML con las entidades y relaciones identificadas:
+Diagrama UML de entidades y relaciones de una aplicación ecommerce de venta de productos tecnológicos
+En este diagrama, se pueden observar las siguientes entidades:
++ Usuario
++ Producto
++ Favorito
++ Calificación
++ Compras de usuarios
+Las relaciones entre estas entidades son las siguientes:
++ Un usuario puede tener muchos favoritos.
++ Un producto puede tener muchos favoritos.
++ Un usuario puede tener muchas calificaciones.
++ Un producto puede tener muchas calificaciones.
++ Un usuario puede tener muchas compras.
++ Una compra puede tener muchos productos.
+
+La entidad Usuario tiene una relación de uno a muchos con la entidad Favorito, ya que un usuario puede tener varios 
+productos favoritos. De manera similar, la entidad Usuario tiene una relación de uno a muchos con la entidad Revisión, 
+ya que un usuario puede escribir varias reseñas. La entidad Producto tiene una relación de uno a muchos con la entidad 
+Favorito, ya que varios usuarios pueden marcar un producto como favorito. La entidad Producto también tiene una relación 
+de uno a muchos con la entidad Revisión, ya que un producto puede tener varias revisiones. Finalmente, la entidad 
+Categoría está relacionada con la entidad Producto en una relación de uno a muchos, ya que una categoría puede tener 
+múltiples productos.
+
++ Relación uno a muchos entre User y Product: Esta relación indica que un User puede tener muchos Products, pero un Product solo 
+puede tener un User. La columna de clave foránea en la tabla Product es userId, que se refiere a la columna id en la tabla User.
++ Relación de muchos a muchos entre User y Favorites: Esta relación indica que un User puede tener muchos Favorites y un Favorite 
+puede ser de muchos Users. La tabla intermedia para esta relación es UserFavorites, que tiene dos columnas de clave foránea: 
+userId y favoriteId.
++ Relación de muchos a muchos entre Product y Favorites: Esta relación indica que un Product puede tener muchos Favorites y un 
+Favorite puede ser de muchos Products. La tabla intermedia para esta relación es ProductFavorites, que tiene dos columnas de clave 
+foránea: productId y favoriteId.
++ Relación uno a muchos entre User y UserPurchases: Esta relación indica que un User puede tener muchos UserPurchases, pero un 
+UserPurchases solo puede tener un User. La columna de clave foránea en la tabla UserPurchases es userId, que se refiere a la columna 
+id en la tabla User.
++ Relación de muchos a muchos entre User y Product: Esta relación indica que un User puede tener muchos Products y un Product puede ser 
+de muchos Users. La tabla intermedia para esta relación es OrderProducts, que tiene dos columnas de clave foránea: userId y productId.
++ Relación uno a muchos entre User y Order: Esta relación indica que un User puede tener muchos Orders, pero un Order solo puede tener un 
+User. La columna de clave foránea en la tabla Order es userId, que se refiere a la columna id en la tabla User.
++ Relación uno a muchos entre Order y Product: Esta relación indica que un Order puede tener muchos Products, pero un Product solo puede 
+tener un Order. La columna de clave foránea en la tabla Product es orderId, que se refiere a la columna id en la tabla Order.
++ Relación uno a muchos entre Category y Product: Esta relación indica que una Category puede tener muchos Products, pero un Product solo 
+puede tener una Category. La columna de clave foránea en la tabla Product es categoryId, que se refiere a la columna id en la tabla Category.
++ Relación uno a muchos entre Promotion y Product: Esta relación indica que una Promotion puede tener muchos Products, pero un Product solo 
+puede tener una Promotion. La columna de clave foránea en la tabla Product es promotionId, que se refiere a la columna id en la tabla Promotion.
++ Relación uno a muchos entre User y Review: Esta relación indica que un User puede tener muchos Reviews, pero un Review solo puede tener 
+un User. La columna de clave foránea en la tabla Review es userId, que se refiere a la columna id en la tabla User.
++ Relación uno a muchos entre Product y Review: Esta relación indica que un Product puede tener muchos Reviews, pero un Review solo puede 
+tener un Product. La columna de clave foránea en la tabla Review es productId, que se refiere a la columna id en la tabla Product.
++ Relación uno a muchos entre User y Ratings: Esta relación indica que un User puede tener muchos Ratings, pero un Rating solo puede tener 
+un User. La columna de clave foránea en la tabla Rating es userId, que se refiere a la columna id en la tabla User.
++ Relación uno a muchos entre Product y Ratings: Esta relación indica que un Product puede tener muchos Ratings, pero un Rating solo puede 
+tener un Product. La columna de clave foránea en la tabla Rating es productId, que se refiere a la columna id en la tabla Product.
