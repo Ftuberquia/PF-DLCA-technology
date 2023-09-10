@@ -1,35 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getProductDetail,
-  cleanDetail,
-  addToCart,
-} from "../../redux/actions/index";
 import { useParams, Link, useHistory } from "react-router-dom";
-
-import {
-  addFavorite,
-  deleteFavorite,
-  fetchData,
-} from "../../views/Favorites/funcionesFav";
-
-import style from "./ProductDetail.module.css";
-import Swal from "sweetalert2";
 import { useAuth0 } from "@auth0/auth0-react"; // Hay que asegurarse de importar useAuth0
+
+import {getProductDetail,cleanDetail,addToCart} from "../../redux/actions/index";
+import {addFavorite,deleteFavorite,fetchData} from "../../views/Favorites/funcionesFav";
+import { cache } from "../../components/NavBar/NavBar";
+
+import Swal from "sweetalert2";
+import style from "./ProductDetail.module.css";
 
 const ProductDetail = () => {
   const { id } = useParams();
 
   const product = useSelector((state) => state.productDetail);
   const [isFavorite, setIsFavorite] = useState(false);
-  let [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const dispatch = useDispatch();
   const history = useHistory();
   const [cartQuantity, setCartQuantity] = useState(1); // Estado para la cantidad en el carrito
 
   // Estado de autenticación
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, getIdTokenClaims } = useAuth0();
 
   useEffect(() => {
     dispatch(getProductDetail(id));
@@ -38,54 +31,74 @@ const ProductDetail = () => {
     };
   }, [dispatch, id]);
 
+  const getUserId = async ()=>{
+    try {
+      const tokenClaims = await getIdTokenClaims();
+      const userIdFromCache = cache.get("userId");
+      if (userIdFromCache) {        
+        setUserId(userIdFromCache);
+        return userIdFromCache;
+      } else if (tokenClaims && tokenClaims.sub) {
+        const userId = tokenClaims.sub;
+        cache.set("userId", userId);
+        setUserId(userId);
+        return userId;
+      }
+    }catch (error) {
+      console.error("Error al obtener los claims del token de identificación:", error);
+    }
+  }
+
   //Para obtener el userId desde el localStorage
   useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
-    setUserId(storedUserId);
+    getUserId()
   }, []);
 
   //verificar si el producto esta en favoritos
-  useEffect(() => {
-    const checkFavoriteStatus = async () => {
+  const checkFavoriteStatus = async () => {
+    if(userId){
       try {
         // Llamar a la función fetchData para obtener los productos favoritos del usuario
         const favoriteProducts = await fetchData(userId);
-        // Verificar si el producto actual está en la lista de productos favoritos
-        const isProductFavorite = favoriteProducts.some(
-          (product) => product.id === id
-        );
-
-        if (isProductFavorite) setIsFavorite(true);
+        if(!favoriteProducts.message){
+          // Verificar si el producto actual está en la lista de productos favoritos
+          const isProductFavorite = favoriteProducts.some((p) => p.id === id);
+          setIsFavorite(isProductFavorite);
+        };
       } catch (error) {
         console.error(error);
       }
-    };
+    }else{
+      setIsFavorite(false)
+    }
+  };
+
+  useEffect(() => {
     checkFavoriteStatus();
   }, [userId, id]);
 
   const addToFavorites = async () => {
-    userId = 1; //sacar esto cuando termine de funcionar lo del user
-    if (userId === null) {
+    if (!userId) {
       alert("Debes iniciar sesión para agregar a favoritos");
     } else {
       const body = { productId: id, userId: userId }; // Crea un objeto con productId y userId
-      addFavorite(body)
-        .then(() => {
-          setIsFavorite(true);
-        })
-        .catch((error) => console.log(error));
+      try {
+        await addFavorite(body);
+        setIsFavorite(true);
+      } catch (error) {
+        console.error('Error al agregar a favoritos:', error);
+      }
     }
   };
 
   const removeFromFavorites = async () => {
-    deleteFavorite(id, userId)
-      .then(() => {
-        setIsFavorite(false);
-        alert("Producto eliminado de favoritos!");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    try {
+      await deleteFavorite(id, userId);
+      setIsFavorite(false);
+      alert('Producto eliminado de favoritos!');
+    } catch (error) {
+      console.error('Error al eliminar de favoritos:', error);
+    }
   };
 
   if (!product) {
@@ -198,7 +211,7 @@ const ProductDetail = () => {
           </div>
         </div>
         <div className={style.infoCompra}>
-          <h2>$ {product.price}</h2>
+          <h2>${product.price}</h2>
           <div className={style.cantidad}>
             <button onClick={decrementCartQuantity}>-</button>
             <p>{cartQuantity}</p>
@@ -211,11 +224,11 @@ const ProductDetail = () => {
 
           {isAuthenticated ? (
             <Link to={`/compra`}>
-              <button className={style.comprar} onClick={handleBuyNow}></button>
+              <button className={style.comprar} onClick={handleBuyNow}>Comprar Ahora</button>
             </Link>
           ) : (
             <button className={style.comprar} onClick={handleCartLogin}>
-              Comprar ahora
+            Comprar ahora
             </button>
           )}
         </div>
