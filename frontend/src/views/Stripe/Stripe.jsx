@@ -4,6 +4,7 @@ import style from './Stripe.module.css';
 import { loadStripe } from "@stripe/stripe-js";
 import  { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import CartTotal from "../Cart/cartTotal";
 // import Productos from "../Productos/Productos";
 
 // Key visible ** la secreta esta en el Server
@@ -20,15 +21,15 @@ const CheckoutForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const {error, payment } = await stripe.createPaymentMethod({
+        const {error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card: cardElement.current || elements.getElement(CardElement)
         });
         setLoading(true)
 
-        if (!error && payment) {
+        if (!error && paymentMethod ) {
             try {
-                const { id } = payment.payment_method;;
+                const { id } = paymentMethod;;
                 const { data } = await axios.post('http://localhost:3001/api/checkout', {
                     id: id,
                     amount: 10000, // precio a cambiar
@@ -36,35 +37,30 @@ const CheckoutForm = () => {
                 });
                 console.log(data);
                 elements.getElement(CardElement).clear();
-                // Captura el ID del pago de la respuesta de Stripe
-                const paymentIntentId = data.paymentIntent.id;
-
                 // Ahora puedes usar paymentIntentId para redirigir a la página de confirmación
                 history.push({
                     pathname: "/confirmation",
                     state: {
-                    paymentInfo: {
-                        paymentIntentId,
+                      paymentInfo: data,
                     },
-                    },
-                });
-
+                  });
+                  
             } catch (error) {
                 console.error("Error al realizar la solicitud al servidor:", error);
+                history.push("/cancel");
             } finally {
                 setLoading(false);
             }
         } else {
             console.error("Error al crear el método de pago:", error);
+            history.push("/cancel");
         }    setLoading(false)
     }
 
     return (
     <form onSubmit={handleSubmit}className="">
-
-        <img className={style.products} src={''} alt="product-cart"/>
         
-        <h3 className={style.precio}>Precio: 100$ </h3>
+        <h3 className={style.precio}>Precio: 100$ {CartTotal} </h3>
         <div className={style.cardContainer}>
             <CardElement className={style.visa} />
         </div>
