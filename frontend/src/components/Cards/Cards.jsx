@@ -6,6 +6,7 @@ const Cards = (props) => {
     const { products, handleNextPage, handlePrevPage, isLastPage, page } = props;
 
     return (
+      <div className={style.contGeneral}>
     <div className={style.contenedorCards}>
              {products.length === 0 ? (
         <h1 className={style.noCards}>No hay productos con esas características</h1>
@@ -28,11 +29,12 @@ const Cards = (props) => {
           return false;
         })
       )}
-      <div className={style.contPag}>
-        <button onClick={handlePrevPage} disabled={page === 1}>Anterior</button>
-        <button onClick={handleNextPage} disabled={isLastPage||products.length===0}>Siguiente</button>
-      </div>
     </div>
+    <div className={style.contPag}>
+      <button className={style.button1} onClick={handlePrevPage} disabled={page === 1}>Anterior</button>
+      <button className={style.button2} onClick={handleNextPage} disabled={isLastPage||products.length===0}>Siguiente</button>
+    </div>
+      </div>
   );
 };
 
