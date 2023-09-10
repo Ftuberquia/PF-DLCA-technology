@@ -7,7 +7,7 @@ const getUserHandler = async (req, res) => {
     const existingUser = await checkUserExists(email);
 
     if (existingUser) {
-      return res.status(200).json({ message: "El usuario ya existe en la base de datos" });
+      return res.status(200).json(existingUser);
     }
 
     return res.status(404).json({ message: "El usuario no existe en la base de datos" });

@@ -9,37 +9,49 @@ import Cards from "../../components/Cards/Cards";
 import style from './FavoritesProducts.module.css'
 
 export default function Favorites() {
-    const dispatch = useDispatch();
-    const history=useHistory();
-    const [favoriteProducts, setFavoriteProducts]=useState([]);
+  const history = useHistory();
+  const [favoriteProducts, setFavoriteProducts] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
-    const { user } = useAuth0(); // Obtener la información del usuario actual desde Auth0
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
-    useEffect(() => {
-        const fetchFavoriteProducts = async () => {
-          if (user) {
-            console.log(user)
-            try {
-              const productsPromise = fetchData(user.sub);
-              const products = await productsPromise;
-              setFavoriteProducts(products);
-            } catch (error) {
-              // Manejar el error en caso de que la solicitud falle
-              console.error(error);
-            }
+  
+  useEffect(() => {
+    if (isAuthenticated) {
+      const userId=user.sub
+      const fetchFavoriteProducts = async () => {
+        if (userId !== null) {
+          const productsPromise = fetchData(userId);
+          const response = await productsPromise;
+    
+          if (Array.isArray(response)) {
+            setFavoriteProducts(response);
           } else {
-            alert("Ingresa o registrate para ver tus favoritos!");
-            history.goBack();
+            setErrorMessage(response.message);
           }
-        };
-        fetchFavoriteProducts();
-        // eslint-disable-next-line
-      }, [user, history, dispatch]);
+        }else {
+          alert("Ingresa o registrate para ver tus favoritos!");
+          history.goBack();
+        }
+      };
+      fetchFavoriteProducts();
+    }else{
+      setErrorMessage('Necesitas loguearte o registrarte!');
+    } 
+  }, [user, history]);
 
-    return (
-        <div className={style.favoritesCont}>
-            <h1>Favoritos</h1>
-            <Cards products={favoriteProducts}/>
-        </div>
-    );
+  if (isLoading) {
+    return <div>Loading ...</div>;
+  }
+
+  return (
+    <div className={style.favoritesCont}>
+      <h1>Favoritos</h1>
+      {errorMessage ? (
+        <p>{errorMessage}</p>
+      ) : (
+        <Cards products={favoriteProducts} />
+      )}
+    </div>
+  );
 }
