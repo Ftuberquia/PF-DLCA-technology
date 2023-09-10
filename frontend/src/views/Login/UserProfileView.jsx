@@ -1,13 +1,15 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
+import {cache} from "../../components/NavBar/NavBar"
 import style from "./UserProfileView.module.css";
-
 const UserProfileView = () => {
   const { logout, user, isAuthenticated, isLoading } = useAuth0();
-
   if (isLoading) {
     return <div>Loading ...</div>;
+  }
+  const handleLogOut = () =>{
+    cache.clear()
+    logout({ logoutParams: {returnTo: window.location.origin }})
   }
 
   return (
@@ -49,7 +51,7 @@ const UserProfileView = () => {
             <button className={style.userboton1} type="registro">Login</button>
           </form>
           <div>
-          <button className={style.userboton2} onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+          <button className={style.userboton2} onClick={handleLogOut}>
             Log Out
           </button>
           </div>
