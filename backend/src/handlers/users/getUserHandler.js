@@ -2,9 +2,9 @@ const checkUserExists = require("../../controllers/Users/getUser");
 
 const getUserHandler = async (req, res) => {
   try {
-    const { email } = req.query;
+    const { id } = req.params;
 
-    const existingUser = await checkUserExists(email);
+    const existingUser = await checkUserExists(id);
 
     if (existingUser) {
       return res.status(200).json(existingUser);
