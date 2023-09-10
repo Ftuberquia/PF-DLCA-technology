@@ -5,8 +5,7 @@ const Users = (sequelize) => {
     "users",
     {
       id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
+        type: DataTypes.STRING,
         primaryKey: true,
         allowNull: false,
       },
@@ -35,12 +34,12 @@ const Users = (sequelize) => {
 
       address: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       phone: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       avatar_img: {

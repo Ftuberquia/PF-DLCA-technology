@@ -2,13 +2,21 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
+
 import { addToCart, removeFromCart } from "../../redux/actions";
 import { addFavorite, deleteFavorite, fetchData } from "../../views/Favorites/funcionesFav";
+import {cache} from '../../components/NavBar/NavBar'
 
 import style from './Card.module.css'
 
-const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
+const Card = ({ id, name, imageSrc, price, rating, stock, quantity, disabled }) => {
     const dispatch = useDispatch();
+
+    const { getIdTokenClaims } = useAuth0();
+
+    //Para guardar el userId
+    const [userId, setUserId] = useState(null);
 
     //favoritos
     const [isFavorite, setIsFavorite] = useState(false)
@@ -16,11 +24,29 @@ const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
     // Carrito
     const [isInCart, setIsInCart] = useState(false);
 
-    //Para obtener el userId desde el localStorage
-    let [userId, setUserId] = useState(null);
+    const getUserId = async () => {
+      try {
+        const tokenClaims = await getIdTokenClaims();
+        const userIdFromCache = cache.get("userId");
+    
+        if (userIdFromCache) {
+          setUserId(userIdFromCache);
+          return userIdFromCache;
+        } else if (tokenClaims && tokenClaims.sub) {
+          const userId = tokenClaims.sub;
+          cache.set("userId", userId);
+          setUserId(userId);
+          return userId;
+        }
+      } catch (error) {
+        console.error("Error al obtener los claims del token de identificación:", error);
+      }
+    
+      return null;
+    };
+
     useEffect(() => {
-        const storedUserId = localStorage.getItem("userId");
-        setUserId(storedUserId);
+      getUserId();
     }, []);
 
     // Verificar si el producto está en el carrito
@@ -43,6 +69,7 @@ const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
                 price,
                 rating,
                 stock,
+                quantity
             };
             const storedCartProducts = localStorage.getItem("cartProducts");
             const parsedCartProducts = storedCartProducts ? JSON.parse(storedCartProducts) : [];
@@ -86,61 +113,51 @@ const Card = ({ id, name, imageSrc, price, rating, stock, disabled }) => {
       };
 
     //verificar si el producto esta en favoritos
-    useEffect(() => {
-        // eslint-disable-next-line
-        userId=1    //sacar esto cuando termine de funcionar lo del user
-        const checkFavoriteStatus = async () => {
-          try {
-            // Llamar a la función fetchData para obtener los productos favoritos del usuario
-            const favoriteProducts = await fetchData(userId);
+    const checkFavoriteStatus = async () => {
+      if(userId){
+        try {
+          // Llamar a la función fetchData para obtener los productos favoritos del usuario
+          const favoriteProducts = await fetchData(userId);
+          if(!favoriteProducts.message){
             // Verificar si el producto actual está en la lista de productos favoritos
-            const isProductFavorite = favoriteProducts.some((product) => product.id === id);
+            const isProductFavorite = favoriteProducts.some((p) => p.id === id);
             setIsFavorite(isProductFavorite);
-          } catch (error) {
-            console.error(error);
-          }
-        };
-        checkFavoriteStatus();
-      }, [userId, id]);
+          };
+        } catch (error) {
+          console.error(error);
+        }
+      }else{
+        setIsFavorite(false)
+      }
+    };
+
+    useEffect(() => {
+      checkFavoriteStatus();
+    }, [userId, id]);
 
     const addToFavorites = async () => {
-        userId=1    //sacar esto cuando termine de funcionar lo del user
-        if(userId===null){
+        if(!userId){
             alert('Debes iniciar sesión para agregar a favoritos')
-            // //almacenar en el localStorage
-            // const productToAdd={
-            //     id,
-            //     name,
-            //     imageSrc,
-            //     price,
-            //     rating,
-            // }
-            // const storedFavProducts = localStorage.getItem("favProducts");
-            // // Verificar si hay productos en el carrito en el localStorage
-            // const parsedFavProducts = storedFavProducts ? JSON.parse(storedFavProducts) : [];
-            // parsedFavProducts.push(productToAdd)
-            // localStorage.setItem("favProducts", JSON.stringify(parsedFavProducts));
-            // setIsFavorite(true);
         }else{
             const body = { productId: id, userId: userId }; // Crea un objeto con productId y userId
-            addFavorite(body)
-                .then(()=>{
-                    setIsFavorite(true);
-                })
-                .catch((error)=>console.log(error))
+            try {
+              await addFavorite(body);
+              setIsFavorite(true);
+            } catch (error) {
+              console.error('Error al agregar a favoritos:', error);
+            }
         }
     };
 
     const removeFromFavorites = async () => {
-        userId=1    //sacar esto cuando termine de funcionar lo del user
-        deleteFavorite(id, userId)
-            .then(() => {
-                setIsFavorite(false);
-                alert('Producto eliminado de favoritos!');
-            })
-        .catch((error) => {
-            console.error(error);
-        });
+      try {
+        await deleteFavorite(id, userId);
+        setIsFavorite(false);
+        alert('Producto eliminado de favoritos!');
+        window.location.reload();
+      } catch (error) {
+        console.error('Error al eliminar de favoritos:', error);
+      }
     };
 
     return (

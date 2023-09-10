@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Cards from "../../components/Cards/Cards";
 import { useDispatch, useSelector } from "react-redux";
-
 import Filters from "../../components/Filters/Filters";
-import { addToCart } from "../../redux/actions/index";
+import { addToCart, resetName } from "../../redux/actions/index";
 import axios from "axios";
 import style from './Productos.module.css'
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 function Productos() {
-  const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
-
+  const products = useSelector((state) => state.productsName)
   const [productsData, setProductsData] = useState([])
+  const [productsDataName, setProductsDataName] =useState([])
   const [filteredProducts,setFilteredProducts]=useState([])
   const [page, setPage] = useState(1)
   const [isLastPage, setIsLastPage] = useState(false);
@@ -33,6 +33,10 @@ function Productos() {
 
   const handleNextPage = async (e)=>{
     let url=`/products?page=${page+1}`
+
+      if(filteredProducts.name){
+        url += `&name=${filteredProducts.name}`
+      }
 
       if (filteredProducts.brand) {
         url += `&brand=${filteredProducts.brand}`;
@@ -73,8 +77,11 @@ function Productos() {
   const loadProducts = async () => {
     try {
       let url=`/products?page=${page}`
-
+      
       if(filteredProducts.length!==0){
+        if(filteredProducts.name){
+          url += `&name=${filteredProducts.name}`
+        }
 
         if (filteredProducts.brand) {
           url += `&brand=${filteredProducts.brand}`;
@@ -123,11 +130,28 @@ function Productos() {
     loadProducts();
   };
 
+  const handleResetFilter= async (e) =>{
+    setFilteredProducts([])
+    setPage(1)
+    loadProducts()
+  }
+
+  const updateSearch = (name) => {
+    setFilteredProducts(() => ({
+      name: name,
+    }));
+    setPage(1)
+    loadProducts();
+  }
+
   return (
     <div className={style.homeContainer}>
-      <Filters updateFilters={updateFilters}/>
+      <Filters updateFilters={updateFilters} handleResetFilter={(event)=>handleResetFilter(event)}/>
+      <div className={style.search}>
+        <SearchBar updateSearch={updateSearch}/>
+      </div>
       <div>
-      <Cards products={filteredProducts.length > 0 ? filteredProducts : productsData} page={page} isLastPage={isLastPage} handleNextPage={handleNextPage} handlePrevPage={handlePrevPage}/>
+      <Cards products={filteredProducts.length > 0 ? filteredProducts:productsData} page={page} isLastPage={isLastPage} handleNextPage={handleNextPage} handlePrevPage={handlePrevPage}/>
       </div>
     </div>
   );

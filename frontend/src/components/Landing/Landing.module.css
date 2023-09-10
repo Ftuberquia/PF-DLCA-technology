@@ -403,11 +403,11 @@
 
 .texto {
   position: absolute;
-  padding: 2vw;
+  padding: 1.5vw;
   border-radius: 10px;
-  max-width: -250%; /* Ajusta según el diseño deseado */
+  max-width: 90%; /* Ajusta según el diseño deseado */
   right: -23vw;
-  left: 20vw;
+  left: 17vw;
   top: 35vh;
   margin: 5vw;
   font-size: 2vw;

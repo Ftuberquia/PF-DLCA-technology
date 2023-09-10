@@ -16,7 +16,7 @@ const getAllProductsHandler = async (req, res) => {
     try {
       // si llega un name muestra el producto
       if (name) {
-        result = await getProductByName(name);
+        result = await getProductByName(name, page);
       }else if (brand || subcategory || category) {
         result = await applyFilters(brand, subcategory, category, page, order, priceOrder);
       } else {

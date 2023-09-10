@@ -49,7 +49,8 @@ server.post('/api/checkout', async (req, res) => {
 
 	} catch (error) {
 		console.log(error);
-		res.json({message: error.raw.message})
+		// res.json({message: error.raw.message})
+		return res.redirect("/cancel");
 	}
   });
 

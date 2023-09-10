@@ -53,16 +53,27 @@
 	padding: 3px 5px;
 	border-radius: 50%;
   }
-  .searchbar{
-	display: flex;
-	width: 15rem;
+  .buyContainer{
+	display: grid;
+	text-align: center;
+	align-items: center;
+    border: none;
+    width: 100px;
+    height: 30px;
+	margin-bottom: 15px;
+    background-color:rgb(68, 250, 114);
+    margin-top: 20px;
+    color: whitesmoke;
+    font-size: large;
+    font-weight: bolder;
+    border-radius: 8px;
+    cursor: pointer;
   }
-  @media screen and (min-width: 1108px) {
-	.searchbar{
-		display: flex;
-		width: 13rem;
-	}
-  }
+  .buyContainer:hover{
+	transform: scale(1.1);
+	background-color: rgb(30, 197, 44); 
+}
+  
   @media screen and (min-width: 768px) {
 	.navbar {
 	  justify-content: space-between;

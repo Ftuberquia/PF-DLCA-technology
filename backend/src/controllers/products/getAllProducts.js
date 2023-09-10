@@ -45,8 +45,15 @@ const getAllProducts = async (page, order, priceOrder) => {
   return products;
 }
 
-const getProductByName = async (name) => {
+const getProductByName = async (name, page) => {
+  
+  const limit = 10; //Numero de elementos por pagina
+
+  const offset = (page - 1) * limit; // Calcula el desplazamiento
+
   let filteredProducts = await Products.findAll({
+    limit,
+    offset,
     where: { name: { [Op.iLike]: `%${name}%` } },
     include:{
       model:Tags,

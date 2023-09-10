@@ -15,6 +15,8 @@ import { REMOVE_FROM_CART } from "../actions/index.js";
 import { CLEAN_CART } from "../actions/index.js";
 import { CLEAN_DETAIL} from "../actions/index.js";
 import { FILTER_FRONT } from "../actions/index.js";
+import { UPDATE_CART_ITEMS } from "../actions/index.js";
+
 
   const initialState = {
     products: [],
@@ -31,7 +33,7 @@ import { FILTER_FRONT } from "../actions/index.js";
     cart: [],
     productsCopy: [], // copia Estado para emergencias 
     //para regresar al estado original cuando nesesite
-
+    cartItems: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -45,6 +47,11 @@ const rootReducer = (state = initialState, action) => {
                 loader: true
             };
 
+            case UPDATE_CART_ITEMS:
+            return {
+                ...state,
+                cartItems: action.payload,
+            };
             case GET_PRODUCTS_BYNAME:
             return {
                 ...state,

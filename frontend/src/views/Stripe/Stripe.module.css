@@ -3,7 +3,7 @@
     justify-content: center;
 }
 .container{
-    background-color: rgba(20, 53, 125, 0.781);
+    background-color: rgba(69, 110, 199, 0.781);
     border: 2px solid #c3c6ce;
     border-radius: 1.5rem;
     width: 350px;
@@ -16,22 +16,27 @@
     cursor: pointer;
     overflow: hidden;
   }
-  /* .container:hover{
-    transform: scale(1.02);
-    box-shadow:
-       inset 0 -.5em .5em rgba(54, 54, 54, 0.212),
-             0 0  0 2px rgba(0, 0, 0, 0.758),
-             0px 0px 10px 10px rgba(0, 0, 0, 0.696);
-  } */
+  .subtituloVisa{
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+  }
+  .subtituloVisa > * + * {
+    margin-left: 120px; /* Agrega un espacio horizontal entre elementos (20px) */
+}
   .products{
    margin-bottom: 30px;
   }
+  .cardContainer{
+    width: 100%;
+  }
   .visa{
-    color: aqua;
     background-color: gainsboro;
   }
   .precio{
     font-weight: bold;
+    margin-bottom: 20px;
+    font-size: larger;
   }
   .button{
     border: none;

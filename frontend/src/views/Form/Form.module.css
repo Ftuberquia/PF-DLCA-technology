@@ -159,7 +159,8 @@
   max-width: 720px;
   padding: 50px;
   height: auto;
-  background-color: rgb(187, 228, 245);
+  background-color: var(--basic-700);
+  color: rgb(28, 27, 29);
   border-radius: 10px;
   box-shadow: 0 15px 15px rgb(88, 112, 119);
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
