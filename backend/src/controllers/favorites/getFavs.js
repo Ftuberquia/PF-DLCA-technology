@@ -10,6 +10,10 @@ const getFavoriteProducts=async(req, res)=>{
       if (!user) {
         return res.status(404).json({ message: 'Usuario no encontrado' });
       }
+
+      if(user===null){
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+      }
   
       // Obtiene los productos favoritos del usuario desde la tabla intermedia
       const favoriteProducts = await Users.findAndCountAll({

@@ -29,7 +29,7 @@ const NavBar = () => {
       // Realiza la solicitud al servidor para guardar los datos del usuario
       axios.post("http://localhost:3001/users/", userData)
         .then((response) => {
-          if (response.status === 200) {
+          if (response.status === 200||201) {
             console.log("Usuario creado con éxito en el servidor");
             // Realizar acciones adicionales si es necesario
           } else {
