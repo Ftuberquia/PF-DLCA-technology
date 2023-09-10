@@ -46,10 +46,13 @@ const NavBar = () => {
               Comprar
          </NavLink>
        </li>
+
       <div className={style.buttons}>
-        <NavLink to={"login"} >
-          <img src={personIcon} alt="Login" onClick={() => loginWithPopup()} />
-        </NavLink>
+        <Link to={"Users"} >
+          <img src={personIcon} alt="Users" onClick={() => loginWithPopup()} />
+        </Link>
+
+
         <Link to={"/favorites"}>
           <img src={heartIcon} alt="Favorites" />
         </Link>
