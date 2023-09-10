@@ -46,8 +46,6 @@ const ProductDetail = () => {
 
   //verificar si el producto esta en favoritos
   useEffect(() => {
-    // eslint-disable-next-line
-    userId = 1; //sacar esto cuando termine de funcionar lo del user
     const checkFavoriteStatus = async () => {
       try {
         // Llamar a la función fetchData para obtener los productos favoritos del usuario
@@ -80,7 +78,6 @@ const ProductDetail = () => {
   };
 
   const removeFromFavorites = async () => {
-    userId = 1; //sacar esto cuando termine de funcionar lo del user
     deleteFavorite(id, userId)
       .then(() => {
         setIsFavorite(false);

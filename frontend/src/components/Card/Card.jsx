@@ -101,15 +101,17 @@ const Card = ({ id, name, imageSrc, price, rating, stock, quantity, disabled }) 
               try {
                 // Llamar a la función fetchData para obtener los productos favoritos del usuario
                 const favoriteProducts = await fetchData(userId);
-                // Verificar si el producto actual está en la lista de productos favoritos
-                const isProductFavorite = favoriteProducts.some((product) => product.id === id);
-                setIsFavorite(isProductFavorite);
+                if(!favoriteProducts.message){
+                  // Verificar si el producto actual está en la lista de productos favoritos
+                  const isProductFavorite = favoriteProducts.some((p) => p.id === id);
+                  setIsFavorite(isProductFavorite);
+                };
               } catch (error) {
                 console.error(error);
               }
             };
             checkFavoriteStatus();
-        }
+        }else setIsFavorite(false) 
       }, [userId, id]);
 
     const addToFavorites = async () => {
