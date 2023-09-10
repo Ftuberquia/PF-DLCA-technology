@@ -5,7 +5,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import  { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import CartTotal from "../Cart/cartTotal";
-// import Productos from "../Productos/Productos";
 
 // Key visible ** la secreta esta en el Server
 const stripePromise = loadStripe("pk_test_51NnMQaEUVHui4qp0KnEfLflyUrkDfZDN9jLhIq7Vzb4RGVvCG0tCfEDmgi9GKV1CYCXc5TYzU7FcS4BXCXmSv8tC00L9f6qNwM")
@@ -60,7 +59,11 @@ const CheckoutForm = () => {
     return (
     <form onSubmit={handleSubmit}className="">
         
-        <h3 className={style.precio}>Precio: 100$ {CartTotal} </h3>
+        <h2 className={style.precio}>Precio: $ 100  </h2>
+        <div className={style.subtituloVisa}>
+            <h2>Numero TC.  </h2>
+            <h2>  Fecha Vencimiento</h2>
+        </div>
         <div className={style.cardContainer}>
             <CardElement className={style.visa} />
         </div>
@@ -80,7 +83,7 @@ const Stripe = () => {
         <main className={style.card}>
             <Elements stripe={stripePromise}>        
             <div className={style.container}>
-                <h1>Pasarela de pagos Stripe</h1>
+                <h1>Pasarela de pagos</h1>
                 <CheckoutForm/>
             </div>
         </Elements>
