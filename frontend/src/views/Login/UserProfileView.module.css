@@ -1,0 +1,143 @@
+.usercontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 80%;
+  max-width: 600px;
+  background-color: var(--basic-700);
+  color: rgb(28, 27, 29);
+  border-radius: 10px;
+  box-shadow: 0 15px 15px rgb(88, 112, 119);
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+.profileimage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.profileimage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+label1 {
+  margin-bottom: 2rem;
+  bottom: 5rem;
+  padding: -1rem;
+  padding-bottom: 4rem;
+  margin-right: 8px;
+  margin-top: 8px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 15px;
+}
+
+input1[type="text"],
+input1[type="email"],
+input1[type="nickname"] {
+  width: 26rem;
+  height: 26px;
+  margin-top: 12px;
+  padding-left: 10px;
+  outline: 0;
+  background: rgb(255, 255, 255);
+  box-shadow: transparent 0px 0px 0px 1px inset;
+  border-radius: 10px;
+  border: 2px solid #275181;
+  color: black;
+}
+
+input1[type="text"]:hover,
+input1[type="email"]:hover,
+input1[type="nickname"]:hover:hover {
+  border: 2px rgb(0, 136, 255) solid;
+  outline: none;
+}
+
+boton1 {
+  width: 25%;
+  padding: 7px 0;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 24px;
+  position: absolute;
+  margin-left: 8rem;
+  background-color: rgb(0, 136, 255);
+  color: white;
+  border: none;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+boton1:hover {
+  background-color: rgb(0, 170, 255);
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+}
+
+.boton1:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+.userinput1 {
+  position: relative;
+}
+
+.userinput1:hover img {
+  opacity: 0.5;
+}
+
+.userinput1 img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: opacity 0.3s ease;
+}
+
+.boton2 {
+  background-color: #18d48c;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.boton2:hover {
+  background-color: rgb(0, 170, 255);
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+}
+
+.boton2:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
