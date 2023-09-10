@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import { getCartItems } from "../../redux/actions/index"; // Asegúrate de importar la acción correcta
 import CartItemCounter from "./cartItemCounter";
 
+
 const CartElements = ({ cartItems, getCartItems }) => {
+
+
   useEffect(() => {
     // Llama a la acción para obtener los datos de cartItems
     getCartItems();
