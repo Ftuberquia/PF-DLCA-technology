@@ -15,6 +15,8 @@ import { CLEAN_CART } from "../actions/index.js";
 import { CLEAN_DETAIL } from "../actions/index.js";
 import { UPDATE_CART_ITEMS } from "../actions/index.js";
 import { GET_CART_ITEMS } from "../actions/index.js";
+import { SAVE_CART_SUCCESS } from "../actions/index.js";
+import { SAVE_CART_ERROR } from "../actions/index.js";
 
 const initialState = {
   products: [],
@@ -145,6 +147,18 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: [],
+      };
+    case "SAVE_DATA_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+      };
+    case "SAVE_DATA_ERROR":
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error,
       };
     default:
       return { ...state };

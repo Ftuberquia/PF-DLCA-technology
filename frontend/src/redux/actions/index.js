@@ -19,6 +19,8 @@ export const FILTER_COMPLEX= "FILTER_COMPLEX";
 export const FILTER_FRONT = "FILTER_FRONT";
 export const UPDATE_CART_ITEMS = 'UPDATE_CART_ITEMS';
 export const GET_CART_ITEMS = 'GET_CART_ITEMS';
+export const SAVE_CART_SUCCESS = 'SAVE_CART_SUCCESS'
+export const SAVE_CART_ERROR = 'SAVE_CART_ERROR'
 
 export const getAllProducts = () => async dispatch => {
     try {
@@ -223,4 +225,20 @@ export const updateCartItems = (cartItems) => ({
       // Manejar errores si hay algún problema al obtener los datos
       console.error("Error al obtener cartItems desde el localStorage:", error);
     }
+  };
+
+  export const saveCartToServer = (cartProducts) => {
+    return async (dispatch) => {
+      try {
+         console.log("en index",cartProducts);
+        // Realiza una solicitud HTTP POST al servidor para guardar el carrito
+        const response = await axios.post('/carts/saveProducts', { cartProducts });
+        console.log(response);
+        // Despacha una acción para manejar la respuesta o realizar otras operaciones necesarias
+        dispatch({ type: 'SAVE_CART_SUCCESS', payload: response.data });
+      } catch (error) {
+        // Maneja los errores, por ejemplo, despachando una acción de error
+        dispatch({ type: 'SAVE_CART_ERROR', payload: error.message });
+      }
+    };
   };
