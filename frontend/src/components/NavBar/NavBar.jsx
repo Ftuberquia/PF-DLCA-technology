@@ -5,19 +5,27 @@ import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState, useEffect } from "react";
+
 import axios from "axios";
+import emailjs from '@emailjs/browser';
 import { LocalStorageCache } from "@auth0/auth0-react";
-import style from "./NavBar.module.css";
+
 import TotalItems from "../../views/Cart/TotalItems";
 import useLocalStorage from "./hooks/useLocalStorage";
 
 export const cache = new LocalStorageCache();
 
+import style from "./NavBar.module.css";
+
 const NavBar = () => {
   const { cart } = useSelector((state) => state?.cart || {});
+  
   const { loginWithPopup, isAuthenticated, user } = useAuth0();
   // Utiliza el hook personalizado para obtener el valor actualizado desde LocalStorage
   const cartItemCount = useLocalStorage("cartProducts");
+  
+  const [welcomeEmailSent, setWelcomeEmailSent] = useState(false);
+
 
   useEffect(() => {
     // Cuando el usuario esté autenticado, envía los datos al servidor
@@ -38,6 +46,35 @@ const NavBar = () => {
           if (response.status === 200 || 201) {
             console.log("Usuario creado con éxito en el servidor");
             // Realizar acciones adicionales si es necesario
+
+          // Verifica si el correo de bienvenida ya se ha enviado
+          if (!welcomeEmailSent) {
+            // Datos de configuración de EmailJS
+            const serviceId = "service_u05znjz"; // Reemplaza con tu ID de servicio
+            const templateId = "template_ech9g6n"; // Reemplaza con tu ID de plantilla
+            const userId = "dl6sI5xgzMzAmHsFV"; // Reemplaza con tu ID de usuario
+
+            // Datos para rellenar la plantilla de correo
+            const emailParams = {
+              from_email: "dlcatech01@gmail.com",
+              to_name: user.given_name,
+              to_email: user.email, // Incluye el correo electrónico del usuario
+              // Agrega otros campos de datos si es necesario
+            };
+
+            // Envía el correo utilizando EmailJS
+            emailjs
+              .send(serviceId, templateId, emailParams, userId)
+              .then((response) => {
+                console.log("Correo de bienvenida enviado con éxito", response);
+                // Marcar el estado para evitar enviar el correo nuevamente
+                setWelcomeEmailSent(true);
+              })
+              .catch((error) => {
+                console.error("Error al enviar el correo de bienvenida", error);
+              });
+          }
+            
           } else {
             console.error("Error al crear el usuario en el servidor");
           }
@@ -47,7 +84,7 @@ const NavBar = () => {
         });
       cache.set("userId", user.sub);
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, welcomeEmailSent]);
 
   return (
     <nav className={style.navbar}>
