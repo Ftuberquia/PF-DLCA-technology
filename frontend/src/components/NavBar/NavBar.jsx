@@ -5,14 +5,17 @@ import heartIcon from "../../img/heart.svg";
 import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import style from "./NavBar.module.css";
 import axios from "axios";
+import emailjs from '@emailjs/browser';
 
 const NavBar = () => {
   const { cart } = useSelector((state) => state?.cart || {});
   const { loginWithPopup, isAuthenticated, user} = useAuth0();
+
+  const [welcomeEmailSent, setWelcomeEmailSent] = useState(false);
 
   useEffect(() => {
     // Cuando el usuario esté autenticado, envía los datos al servidor
@@ -31,6 +34,35 @@ const NavBar = () => {
           if (response.status === 201) {
             console.log("Usuario creado con éxito en el servidor");
             // Realizar acciones adicionales si es necesario
+
+                      // Verifica si el correo de bienvenida ya se ha enviado
+          if (!welcomeEmailSent) {
+            // Datos de configuración de EmailJS
+            const serviceId = "service_u05znjz"; // Reemplaza con tu ID de servicio
+            const templateId = "template_ech9g6n"; // Reemplaza con tu ID de plantilla
+            const userId = "dl6sI5xgzMzAmHsFV"; // Reemplaza con tu ID de usuario
+
+            // Datos para rellenar la plantilla de correo
+            const emailParams = {
+              from_email: "dlcatech01@gmail.com",
+              to_name: user.given_name,
+              to_email: user.email, // Incluye el correo electrónico del usuario
+              // Agrega otros campos de datos si es necesario
+            };
+
+            // Envía el correo utilizando EmailJS
+            emailjs
+              .send(serviceId, templateId, emailParams, userId)
+              .then((response) => {
+                console.log("Correo de bienvenida enviado con éxito", response);
+                // Marcar el estado para evitar enviar el correo nuevamente
+                setWelcomeEmailSent(true);
+              })
+              .catch((error) => {
+                console.error("Error al enviar el correo de bienvenida", error);
+              });
+          }
+            
           } else {
             console.error("Error al crear el usuario en el servidor");
           }
@@ -39,7 +71,7 @@ const NavBar = () => {
           console.error("Error al realizar la solicitud al servidor:", error);
         });
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, welcomeEmailSent]);
 
   return (
     <nav className={style.navbar}>
