@@ -7,56 +7,58 @@ const UserProfileView = () => {
   if (isLoading) {
     return <div>Loading ...</div>;
   }
+
+  //SI MODIFICAN ESTE COMPONENTE, NO QUITEN EL HANDLELOGOUT DEL BOTON LOG OUT!!!!!!!!!!!!
   const handleLogOut = () =>{
-    cache.clear()
+    cache.remove("userId")
     logout({ logoutParams: {returnTo: window.location.origin }})
   }
 
   return (
-//     <>
-//     <h1>ESTE SERIA LA VIEW DE PERFIL DEL USUARIO RECIEN INGRESADO</h1>
+    <>
+    <h1>ESTE SERIA LA VIEW DE PERFIL DEL USUARIO RECIEN INGRESADO</h1>
 
-//       {isAuthenticated && (
-//         <div>
-//           <img src={user.picture} alt={user.name} />
-//           <h2>{user.name}</h2>
-//           <p>{user.email}</p>
-//           <p>{user.nickname}</p>
-//         </div>
-//       )}
-//       <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
-//         Log Out
-//       </button>
-//     </>
-//   );
-// };
-      isAuthenticated && (
-        <div className={style.usercontainer}>
-        <div className={style.profileimage}>
+      {isAuthenticated && (
+        <div>
           <img src={user.picture} alt={user.name} />
+          <h2>{user.name}</h2>
+          <p>{user.email}</p>
+          <p>{user.nickname}</p>
         </div>
-        <form>
-          <div className={style.userlabel1}>
-            <label htmlFor="name">Name:</label>
-            <div className={style.userinput1}>
-              <input type="text" id="name" name="name" />
-            </div>
+      )}
+      <button onClick={() => handleLogOut()}>
+        Log Out
+      </button>
+    </>
+  );
+};
+  //     isAuthenticated && (
+  //       <div className={style.usercontainer}>
+  //       <div className={style.profileimage}>
+  //         <img src={user.picture} alt={user.name} />
+  //       </div>
+  //       <form>
+  //         <div className={style.userlabel1}>
+  //           <label htmlFor="name">Name:</label>
+  //           <div className={style.userinput1}>
+  //             <input type="text" id="name" name="name" />
+  //           </div>
         
-            <label htmlFor="email">Email:</label>
-            <input type="email" id="email" name="email" />
+  //           <label htmlFor="email">Email:</label>
+  //           <input type="email" id="email" name="email" />
         
-            <label htmlFor="nickname">Nickname:</label>
-            <input type="nickname" id="nickname" name="nickname" />
-          </div>
-            <button className={style.userboton1} type="registro">Login</button>
-          </form>
-          <div>
-          <button className={style.userboton2} onClick={handleLogOut}>
-            Log Out
-          </button>
-          </div>
-        </div>
-  ));
-  };
+  //           <label htmlFor="nickname">Nickname:</label>
+  //           <input type="nickname" id="nickname" name="nickname" />
+  //         </div>
+  //           <button className={style.userboton1} type="registro">Login</button>
+  //         </form>
+  //         <div>
+  //         <button className={style.userboton2} onClick={handleLogOut}>
+  //           Log Out
+  //         </button>
+  //         </div>
+  //       </div>
+  // ));
+  //};
   
   export default UserProfileView;
