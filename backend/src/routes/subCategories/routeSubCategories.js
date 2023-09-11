@@ -1,9 +1,9 @@
-const {Router} = require ("express")
-const getSubCategories = require ("../../handlers/subCategories/subCategoriesHandler")
+// const {Router} = require ("express")
+// const getSubCategories = require ("../../handlers/subCategories/subCategoriesHandler")
 
-const subCategories = Router()
+// const subCategories = Router()
 
-subCategories.get("/", getSubCategories)
+// subCategories.get("/", getSubCategories)
 
 
-module.exports = subCategories
+// module.exports = subCategories

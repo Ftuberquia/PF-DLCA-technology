@@ -9,7 +9,7 @@ export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const LOGOUT = 'LOGOUT';
-export const GET_SUBCATEGORIES = 'GET_SUBCATEGORIES';
+// export const GET_SUBCATEGORIES = 'GET_SUBCATEGORIES';
 export const CLEAN_DETAIL = 'CLEAN_DETAIL'
 export const PUT_USER = 'PUT_USER';
 export const ADD_TO_CART = 'ADD_TO_CART';
@@ -83,17 +83,17 @@ export const getCategories = () => async dispatch => {
     }
 };
 
-export const getSubCategories = () => async dispatch => {
-    try { 
-        const getSubCategory = await axios.get('/subcategoria');
-        return dispatch({
-            type: GET_SUBCATEGORIES,
-            payload: getSubCategory.data
-        });
-    } catch (error) {
-        console.error('Error Subcategorias:', error);
-    }
-};
+// export const getSubCategories = () => async dispatch => {
+//     try { 
+//         const getSubCategory = await axios.get('/subcategoria');
+//         return dispatch({
+//             type: GET_SUBCATEGORIES,
+//             payload: getSubCategory.data
+//         });
+//     } catch (error) {
+//         console.error('Error Subcategorias:', error);
+//     }
+// };
 
 export const getBrands = () => async dispatch => {
     try { 

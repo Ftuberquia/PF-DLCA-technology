@@ -3,7 +3,7 @@ const { Router } = require("express");
 const getDbProductsHandler=require('../handlers/products/getDbProductsHandler')
 const products = require("../routes/products/routeProducts")
 const categories = require ("../routes/categories/routeCategories")
-const subCategories = require ("../routes/subCategories/routeSubCategories");
+// const subCategories = require ("../routes/subCategories/routeSubCategories");
 const tags = require("./tags/routeTags");
 const brands=require('./brands/routeBrands');
 const contactHandler = require("../handlers/contact/contactHandler");
@@ -25,7 +25,7 @@ router.use("/users",users)
 router.use("/categories", categories)
 
 //Ruta para acceder a las subcategorias
-router.use('/subcategoria',subCategories)
+// router.use('/subcategoria',subCategories)
 
 //Ruta para acceder a los tags
 router.use('/tags',tags)
