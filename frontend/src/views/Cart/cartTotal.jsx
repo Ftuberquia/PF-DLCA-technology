@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./cart.css";
 
 const CartTotal = () => {
   // Read cart data from local storage on component load
@@ -12,7 +11,7 @@ const CartTotal = () => {
     localStorage.setItem("cartProducts", JSON.stringify(cart));
   }, [cart]);
 
-  const total = initialCartData.reduce((acc, el) => acc + el.price, 0);
+  const total = initialCartData.reduce((acc, el) => acc + el.price * el.quantity, 0);
   return (
     <div className="cartTotal">
       <h3> Total a Pagar: ${total}</h3>
