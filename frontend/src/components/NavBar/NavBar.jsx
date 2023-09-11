@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
+import style from "./NavBar.module.css";
 // import logo from "../../img/logo-dlca.png";
 import personIcon from "../../img/person.svg";
 import heartIcon from "../../img/heart.svg";
@@ -11,11 +12,12 @@ import emailjs from '@emailjs/browser';
 import { LocalStorageCache } from "@auth0/auth0-react";
 export const cache = new LocalStorageCache()
 
-import style from "./NavBar.module.css";
 
 const NavBar = () => {
   const { cart } = useSelector((state) => state?.cart || {});
-  const { loginWithPopup, isAuthenticated, user} = useAuth0();
+  const { loginWithPopup, logout, isAuthenticated, user} = useAuth0();
+  const Menus = ["login", "Settings" , "logout"];
+  const [open, setOpen]= useState(false);
   
   const [welcomeEmailSent, setWelcomeEmailSent] = useState(false);
 
@@ -106,16 +108,32 @@ const NavBar = () => {
          <NavLink to={'/compra'} className={style.buy}>
               Comprar
          </NavLink>
-<<<<<<< HEAD
-       </li>
+         </div>
 
-=======
-       </div>
->>>>>>> a9c5cc2e28a7137c7245dfc4e7da2d870df70a02
-      <div className={style.buttons}>
-        <Link to={"Users"} >
-          <img src={personIcon} alt="Users" onClick={() => loginWithPopup()} />
-        </Link>
+        <div>
+        <div className={style.buttons}>
+          <img src={personIcon} alt="Users" onClick={() => setOpen(!open)} className=" h-20 w-20 object-cover border-4 border-gray-400 rounded-full cursor-pointer" />
+        {
+open &&(
+  <div className="bg-white p-4 w-52 shadow-lg absolute -left-14 top-24">
+  <ul>
+  {
+    
+    <li><a href="#" className={style.buy} onClick={() => loginWithPopup()}>Login </a>
+    <p><a href="#" className={style.buy}>Perfil </a></p>
+    <p><a href="#" className={style.buy} onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Logout </a></p>   
+    </li>
+    
+       
+    }
+  </ul>
+
+
+</div>
+)}
+        
+          </div> 
+      
 
 
         <Link to={"/favorites"}>
