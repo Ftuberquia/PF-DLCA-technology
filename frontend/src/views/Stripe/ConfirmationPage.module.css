@@ -1,0 +1,51 @@
+/* Estilos para el contenedor principal */
+.contenedorConfirm{
+  display: flex;
+  justify-content: center;
+  
+}
+.confirmation-container {
+  text-align: center;
+  padding: 20px;
+  display: grid;
+  align-items: center;
+  border-radius: 20px;
+  width: 400px;
+  height: 250px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  }
+  
+  /* Estilos para el título */
+  .confirmation-title {
+    font-size: 30px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+    color: #04ca35;
+  }
+  
+  /* Estilos para la información del pago */
+  .payment-info {
+    background-color: #2cc753;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    font-size: larger;
+    font-weight: bold;
+  }
+  
+  /* Estilos para el enlace de volver */
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-size: larger;
+    font-weight: bold;
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .back-link:hover {
+    text-decoration: underline;
+  }
+  

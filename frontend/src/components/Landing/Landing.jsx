@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from "../Card/Card";
-import "./Landing.css";
+import style from "./Landing.module.css";
 import BrandCarousel from "./BrandCarousel/BrandCarousel";
 import Carousel from "../Carousel/Carousel";
 import Featured from "../../views/Featured/Featured";
@@ -8,10 +8,9 @@ import Featured from "../../views/Featured/Featured";
 import { Link } from "react-router-dom";
 import Logo from "../../img/logo-dlca.png";
 import Cards from "../Cards/Cards";
-import SearchBar from "../SearchBar/SearchBar";
 import AssociatedBrands from "../AssociatedBrands/AssociatedBrands";
 import Services from "../Services/Services";
-import Faq from "../Faq/Faq";
+import Questions from "../Questions/Questions";
 
 function Landing() {
   const [products, setProducts] = useState([]);
@@ -21,15 +20,14 @@ function Landing() {
   }, []);
 
   return (
-    <div className="containerLanding">
-      <SearchBar />
+    <div className={style.containerLanding}>
       <Carousel />
-      <div className="card1">
+      <div className={style.card1}>
         <AssociatedBrands />
       </div>
       <Featured />
-      <div className="contPcMarcas">
-        <div className="imgArmaPC">
+      <div className={style.contPcMarcas}>
+        <div className={style.imgArmaPC}>
           {/* <Link to="/products">
             <img
               src="https://i.ibb.co/8BWqRFY/carousel-img3.jpg"
@@ -37,7 +35,7 @@ function Landing() {
             />
           </Link> */}
         </div>
-        {/* <div className="card">
+        {/* <div className={style.card}>
           {products.map((product) => (
             <Card
               key={product.id}
@@ -48,38 +46,52 @@ function Landing() {
             />
           ))}
         </div> */}
-        <div className="pcgamer">
-          <Link to="/products">
+        <div>
+          <div className={style.globo}>
             <img
-              src="https://i.ibb.co/Xprs2Rs/pc-gamer2.jpg"
+              className={style.imgPres}
+              src="https://i.ibb.co/GHM1qNZ/clientes-felices.jpg"
               alt=""
             />
-          </Link>
+            <p className={style.texto}>
+              Somos una empresa comprometida con la calidad y excelencia en la
+              industria de la tecnología. Ofrecemos una amplia gama de productos
+              de alta calidad y a los mejores precios. Contamos con un equipo de
+              profesionales capacitados en brindar un servicio excepcional de
+              atención a nuestros clientes y proveedores. En DLCA Technology,
+              nos esforzamos por ser líderes en la industria y proporcionar
+              soluciones confiables y eficientes para todos nuestros clientes.
+            </p>
+          </div>
         </div>
-        <Faq />
-        <section className="banners">
-          <div className="bannerOne">
-            <Link to="productos/categories">
+        <div className={style.pcgamer}>
+            <img src="https://i.ibb.co/tXnGdCP/banner-compu.webp" alt="" />
+        </div>
+
+        <Questions />
+        <section className={style.banners}>
+          <div className={style.bannerOne}>
+            <Link to="productos">
               <img src="https://i.ibb.co/0Jq8gFp/silla.png" alt="" />
             </Link>
-            <Link to="productos/categories">
+            <Link to="productos">
               <img src="https://i.ibb.co/7Wy35YX/mouse.png" alt="" />
             </Link>
-            <Link to="productos/categories">
+            <Link to="productos">
               <img src="https://i.ibb.co/9vdX4Rc/laptop.png" alt="" />
             </Link>
           </div>
           <div>
-            <h2 className="title2">Los mejores productos!!</h2>
+            <h2 className={style.title2}>Los mejores productos!!</h2>
           </div>
-          <div className="bannerTwo">
-            <Link to="productos/categories">
+          <div className={style.bannerTwo}>
+            <Link to="productos">
               <img src="https://i.ibb.co/2382ZKh/impresora.png" alt="" />
             </Link>
-            <Link to="productos/categories">
+            <Link to="productos">
               <img src="https://i.ibb.co/BL8s2zv/cooling.png" alt="" />
             </Link>
-            <Link to="productos/categories">
+            <Link to="productos">
               <img src="https://i.ibb.co/dtHLpP3/consola.png" alt="" />
             </Link>
           </div>
@@ -87,18 +99,18 @@ function Landing() {
 
         <Services />
         <div>
-          <h2 className="titleMarcas">
+          <h2 className={style.titleMarcas}>
             ¡Las mejores marcas las encuentras en
-            <span className="spanTitle">DLCA TECHNOLOGY!</span>
+            <span className={style.spanTitle}>DLCA TECHNOLOGY!</span>
           </h2>
         </div>
         <BrandCarousel />
         <br />
         <br />
       </div>
-      <div className="logoPartners">
+      <div className={style.logoPartners}>
         <img src={Logo} alt="" />
-        <h3 className="titlePartners">
+        <h3 className={style.titlePartners}>
           Somos distribuidores certificados de las principales marcas de
           tecnología del país.
         </h3>

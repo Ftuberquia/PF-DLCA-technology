@@ -1,114 +1,48 @@
+import React, { useState, useEffect } from "react";
+import CartElement from "./cartElements";
+import CartTotal from "./cartTotal";
+import TotalItems from "./TotalItems";
 import "./cart.css";
-import { CleanCartIcon, CartIcon } from "./icons";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  addToCart,
-  cleanCart,
-  removeFromCart,
-  cleanDetail,
-} from "../../redux/actions/index";
-import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { saveCartToServer } from "../../redux/actions/index";
 
-export default function Cart() {
-  const items = useSelector((state) => state.items);
-  const totalPrice = useSelector((state) => state.totalPrice);
-
-  const dispatch = useDispatch();
-
-  const addToCartHandler = (product) => {
-    dispatch(addToCart(product));
+export default function Cart({ cartProducts}) {
+  const handleSaveCart = (cartProducts) => {
+    // Llama a la acción para guardar el carrito en el servidor
+    saveCartToServer(cartProducts);
   };
 
-  const cleanCartHandler = () => {
-    dispatch(cleanCart(items));
+  const [cartData, setCartData] = useState([]);
+
+  useEffect(() => {
+    // Leer los datos del carrito desde el Local Storage en el inicio
+    const initialCartData =
+      JSON.parse(localStorage.getItem("cartProducts")) || [];
+    setCartData(initialCartData);
+  }, []);
+
+  const updateCartData = (newCartData) => {
+    setCartData(newCartData);
   };
 
-  const removeFromCartHandler = (product) => {
-    dispatch(removeFromCart(product));
+  const handleSaveDataToServer = () => {
+    
+    // Obtiene los datos desde el localStorage (supongamos que se encuentran en la clave 'myData')
+    const dataToSave = JSON.parse(localStorage.getItem("cartProducts"));
+    
+    // Llama a la acción para guardar los datos en el servidor
+    handleSaveCart(dataToSave);
   };
 
-  const cleanDetailHandler = () => {
-    dispatch(cleanDetail());
-  };
-
-  function CartItem({ id, imageSrc, imageAlt, price, name, quantity }) {
-    return (
-      <li>
-        <img src={imageSrc} alt={imageAlt} />
-        <div className="name">
-          <strong>{name}</strong> - $
-          {price.toLocaleString("es-ES", { minimumFractionDigits: 2 })}
-        </div>
-        <footer>
-          <button
-            className="rest"
-            onClick={() =>
-              removeFromCartHandler({
-                id,
-                imageSrc,
-                imageAlt,
-                price,
-                name,
-                quantity,
-              })
-            }
-          >
-            -
-          </button>
-          <small className="small">Cant. {quantity}</small>
-          <button
-            className="add"
-            onClick={() =>
-              addToCartHandler({
-                id,
-                imageSrc,
-                imageAlt,
-                price,
-                name,
-                quantity,
-              })
-            }
-          >
-            +
-          </button>
-        </footer>
-      </li>
-    );
-  }
-
-  return (
+  return cartData.length > 0 ? (
     <>
-      <label className="cart-button" htmlFor="carritoDeCompras">
-        <CartIcon />
-      </label>
-      <input id="carritoDeCompras" type="checkbox" hidden />
-      <aside className="cart">
-        <ul>
-          {items.map((product) => (
-            <CartItem
-              key={product.id}
-              value={() => addToCart(product)}
-              {...product}
-            />
-          ))}
-        </ul>
-        <div className="TOTAL">
-          Total: $
-          {totalPrice.toLocaleString("es-ES", { minimumFractionDigits: 2 })}
-        </div>
-        <NavLink
-          to={`/pay`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <button onClick={cleanDetailHandler} className="BUY">
-            Buy
-          </button>
-        </NavLink>
-        <button className="CLEAR" onClick={cleanCartHandler}>
-          {" "}
-          <CleanCartIcon />{" "}
-        </button>
-      </aside>
+      <CartElement updateCartData={updateCartData} />
+      <CartTotal cartData={cartData} />
+      <button onClick={handleSaveDataToServer}>
+        Guardar en la base de datos
+      </button>
     </>
+  ) : (
+    <h2 className="cart-message-center">Tu Carrito Esta Vacio</h2>
   );
 }

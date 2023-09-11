@@ -1,65 +1,51 @@
 import './Filters.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect,useRef } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux'; //conecta react-redux
-import { filterByCreated, filterByBrand, getAllProducts, getBrands, filterByCategory, orderByName, getCategories, orderByPrice } from '../../redux/actions';
-// import { filterByBrand } from ;
+import { getBrands, getCategories, getSubCategories} from '../../redux/actions';
 // import Loader from '../Loader/Loader.jsx';
 
-
-export default function Filters () {
+export default function Filters ({updateFilters, handleResetFilter }) {
     // loader
     // const loader = useSelector(state => state.loader);
 
     const dispatch = useDispatch();
     const brands = useSelector(state => state.brands);
     const categories = useSelector(state => state.categories);
-    // const currentProducts = useSelector((state) => state.products);
-    // const products = useSelector((state) => state.products);
-    const [order, setOrder] = useState('');
-    // console.log(order);
+    const subcategories = useSelector(state => state.subcategories)
 
-useEffect(() => {
-    dispatch(getAllProducts());
-    dispatch(getBrands());
-    dispatch(getCategories());
-}, [dispatch]);
+    const filterBrand = useRef(null)
+    const filterCategory = useRef(null)
+    const filterSubcategories = useRef(null)
+    const orderPrice = useRef(null)
+    const orderName = useRef(null)
 
-const handleFilterByBrand = (event) => {
-    console.log(event.target.value);
-    dispatch(filterByBrand(event.target.value))
-    setOrder(event.target.value);   
+    useEffect(() => {
+        dispatch(getBrands());
+        dispatch(getCategories());
+        dispatch(getSubCategories());
+    }, [dispatch]);
 
-}
-
-const handleFilterByCreated = (event) => {
-    dispatch(filterByCreated(event.target.value))
-}
-
-const handleOrderByName = (event) => {
-    dispatch(orderByName(event.target.value));
-    setOrder(event.target.value);   
-}
-
-const handlefilterByCategory = (event) => {
-    dispatch(filterByCategory(event.target.value));
-    console.log(event.target.value);
-}
-const handleOrderByPrice = (event) => {
-    dispatch(orderByPrice(event.target.value));
-    setOrder(event.target.value);
-}
-
+    const handleFilterChange = (fieldName, selectedValue) => {
+        updateFilters(fieldName, selectedValue);
+        if(fieldName==='order'&&selectedValue!=='undefined'){
+            orderPrice.current.value = "undefined"
+        }
+        if(fieldName==='price'&&selectedValue!=='undefined'){
+            orderName.current.value = "undefined"
+        }
+      };
+    
 // reset: 
-
 const handleReset = (event) => {
     event.preventDefault();
-    dispatch(getBrands());
-    dispatch(getAllProducts());
-    document.getElementById('order').value = 'order';
-    // document.getElementById('price').value = 'price'; // **Precio
-    document.getElementById('created').value = 'all';
-    document.getElementById('brands').value = 'brand';
-    alert('Loading...');
+    //forma de hacer que se reseteen los filtros
+    orderName.current.value = 'undefined'
+    orderPrice.current.value = "undefined"
+    filterBrand.current.value = 'undefined'
+    filterCategory.current.value = 'undefined'
+    filterSubcategories.current.value = 'undefined'
+    handleResetFilter(event)
 }
 
 return (
@@ -67,37 +53,36 @@ return (
     
         <div className='filt-order-cont'>
             <div className='filters'>
-                <select className='filter-butt' id='order' onChange={(event) => handleOrderByName(event)}>
-                    <option key="order" value="order">Order Name</option>
-                    <option key="A-Z" value="A-Z">A - Z</option>
-                    <option key="Z-A" value="Z-A">Z - A</option>
+                <select className='filter-butt' ref={orderName} onChange={(e) => handleFilterChange('order', e.target.value)} defaultValue="undefined">
+                    <option value="undefined" disabled>Orden alfabetico</option>
+                    <option value="ASC">A - Z</option>
+                    <option value="DESC">Z - A</option>
                 </select>
-                <select className='filter-butt' id='order-category' onChange={(event) => handlefilterByCategory(event)}>
-                    <option key="order" value="order">Filter Category</option>
-                    <option key="A-Z" value="A-Z">A - Z</option>
+                <select className='filter-butt' ref={filterCategory} onChange={(e) => handleFilterChange('category', e.target.value)}defaultValue="undefined">
+                    <option value="undefined" >Categorias</option>
                     {categories.length > 0 && categories.map((category, index) => (
                     <option key={index} value={category}>{category}</option>
                 ))}
                 </select>
-                <select className='filter-butt' id='price' onChange={(event) => handleOrderByPrice(event)}>
-                    <option value="price">Price</option>
-                    <option value="min">Menor a mayor</option>
-                    <option value="max">Mayor a menor</option>
+                <select className="filter-butt" ref={filterSubcategories} onChange={(e) => handleFilterChange('subcategory', e.target.value)} defaultValue="All">
+                    <option value="undefined">Subcategorias</option>
+                    {subcategories.length > 0 && subcategories.map((subcategory, index)=> (
+                        <option key={index} value={subcategory}>{subcategory}</option>
+                    ))}
+                </select>
+                <select className='filter-butt' ref={orderPrice} onChange={(e) => handleFilterChange('priceOrder', e.target.value)} defaultValue="undefined">
+                    <option value="undefined" disabled>Orden por precio</option>
+                    <option value="ASC">Menor a mayor</option>
+                    <option value="DESC">Mayor a menor</option>
                 </select>
             </div>
             <div className='order'>
-            <select className='order-butt' id='brands' onChange={(event) => handleFilterByBrand(event)}>
-                <option key="brand" value="brand">Brand</option>
-                <option key="all" value="All">All</option>
+            <select className='order-butt' ref={filterBrand} onChange={(e) => handleFilterChange('brand', e.target.value)} defaultValue="undefined">
+                <option value="undefined">Marcas</option>
                 {brands.length > 0 && brands.map((brand, index) => (
                     <option key={index} value={brand.name}>{brand.name}</option>
                 ))}
             </select>
-                <select className='order-butt' id='created' onChange={(event) => handleFilterByCreated(event)}>
-                    <option key="create" value="All">All Products</option>
-                    <option key="create2" value="created">Customized</option>
-                    <option key="create3" value="not-created">Not Customized</option>
-                </select>
             </div>
             <div className='reset'>
                 <button type='submit' className='reset-button' onClick={(event) => handleReset(event)}>Reset</button>
@@ -107,20 +92,3 @@ return (
     </section>
 );
 };
-
-//  {/* <div className='products-grid'>
-//                 {
-//                     !loader ? <Loader/> : currentProducts.map((product) => {
-//                         return (
-//                             <Card
-//                             id={product.id}
-//                             name={product.name}
-//                             price={product.price}
-//                             img={product.imgUrl}
-//                             key={pokemon.id}
-//                             brands={product.brand}
-//                             // Stock= {product.stock}
-//                             />)
-//                         })
-//                     }
-//         </div> */}

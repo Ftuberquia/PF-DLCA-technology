@@ -44,26 +44,39 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 
 //DESTRUCTURING DE MODEL Y CREACION DE RELACIONES:
-const { Users, Products, Orders, Cart, Brand, Category, Tags, Subcategory, Review } = sequelize.models;
+const { Users, Products, Orders, Cart, Brand, Category, Tags, Subcategory, UserProductReviews, CartProduct } = sequelize.models;
 // Aca vendrian las relaciones
 
 // Relación de Users:
 Users.hasMany(Orders, {foreignKey:'userOrderId', as: 'user'});	//hasMany 1 A con muchos B, el as se usa en solicitudes a la DB
 Orders.belongsTo(Users, {foreignKey:'userOrderId', as: 'orders'});
 
-Users.hasOne(Cart);	//hasOne relacion de 1A a 1B donde B tiene la clave foranea
-Cart.belongsTo(Users);
+//Relacion usuario con carrito
+Users.hasOne(Cart, {foreignKey: "userId"});
+Cart.belongsTo(Users, {foreignKey: "userId"});
 
-//es realmente necesario el modelo favorites?
-// Users.hasMany(Favorites,{foreignKey: 'userFavId', as:'favorites'});
-// Favorites.belongsTo(Users, {foreignKey: 'userFavId', as:'favoritesUsers'});		//belongsTo es relacion 1 a 1 entre A y B y la foreignkey se crea en A
+//Relacion carrito con productos mediante tabla intermedia
+Cart.belongsToMany(Products, {
+	through: CartProduct, // Usa el modelo CartProduct como tabla intermedia
+	foreignKey: 'cartId',
+	otherKey: 'productId',
+	as: 'cartProducts',
+  });
+  
+  Products.belongsToMany(Cart, {
+	through: CartProduct, // Usa el modelo CartProduct como tabla intermedia
+	foreignKey: 'cartId',
+	otherKey: 'userId',
+	as: 'productsinCart',
+  });
+
+//tabla intermedia para hacer Un usuario puede tener muchas compras, y cada compra pertenece a un usuario.
+Users.hasMany(Orders, { foreignKey: "userId", as: "orders" });
+Orders.belongsTo(Users, { foreignKey: "userId", as: "user" });
 
 //creo una tabla intermedia para hacer los favoritos
 Products.belongsToMany(Users, { through: 'favorites', as: 'users', foreignKey: 'productId' });
 Users.belongsToMany(Products, { through: 'favorites', as: 'products', foreignKey: 'userId' });
-
-Users.hasMany(Review, { foreignKey: 'userId', as: 'reviews' });
-Review.belongsTo(Users, { foreignKey: 'userId' });
 
 // Relación de Products:
 Products.belongsToMany(Tags, {through:"tags_products"});
@@ -81,12 +94,26 @@ Subcategory.belongsTo(Category, {foreignKey: 'catSubId', as: 'catSub'})
 Brand.hasMany(Products, {foreignKey: 'brandsId', as: 'brands'});
 Products.belongsTo(Brand,{foreignKey: 'brandsId', as: 'productBrands'});
 
-Products.hasMany(Review, { foreignKey: 'productId', as: 'reviews' });
-Review.belongsTo(Products, { foreignKey: 'productId' });
+// Relación de UserProductReviews:
+Users.belongsToMany(Products, {
+	through: UserProductReviews, // Usa el modelo UserProductReviews como tabla intermedia
+	foreignKey: 'userId',
+	otherKey: 'productId',
+	as: 'reviewedProducts',
+  });
+  
+  Products.belongsToMany(Users, {
+	through: UserProductReviews, // Usa el modelo UserProductReviews como tabla intermedia
+	foreignKey: 'productId',
+	otherKey: 'userId',
+	as: 'reviewsByUsers',
+  });
 
-//es realmente necesario?
-// Products.belongsToMany(Favorites, {through:"favorites_products"});
-// Favorites.belongsToMany(Products, {through:"favorites_products"});
+// Users.hasMany(Review, { foreignKey: 'userId', as: 'reviews' });
+// Review.belongsTo(Users, { foreignKey: 'userId' });
+
+// Products.hasMany(Review, { foreignKey: 'productId', as: 'reviews' });
+// Review.belongsTo(Products, { foreignKey: 'productId' });
 
 //Averiguar bien como seria esta relacion
 // Products.belongsToMany(Orders, {through:"orders_products"});	//belongsToMany muchos a muchos, crea una tabla intermedia en donde se juntan las claves foraneas de A y B

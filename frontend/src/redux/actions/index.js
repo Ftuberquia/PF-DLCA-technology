@@ -6,23 +6,21 @@ export const GET_BRANDS = 'GET_BRANDS';
 export const GET_TAGS = 'GET_TAGS';
 export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
-export const FILTER_BY_TAG = 'FILTER_BY_TAG';
-export const FILTER_BY_BRANDS = 'FILTER_BY_BRANDS';
-export const FILTER_BY_CREATED = 'FILTER_BY_CREATED';
-export const ORDER_BY_NAME = 'ORDER_BY_NAME';
-export const FILTER_BY_CATEGORY = 'FILTER_BY_CATEGORY';
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const LOGOUT = 'LOGOUT';
 export const GET_SUBCATEGORIES = 'GET_SUBCATEGORIES';
 export const CLEAN_DETAIL = 'CLEAN_DETAIL'
-export const ORDER_BY_PRICE = 'ORDER_BY_PRICE'
 export const PUT_USER = 'PUT_USER';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const CLEAN_CART = 'CLEAN_CART';
-
-
+export const FILTER_COMPLEX= "FILTER_COMPLEX";
+export const FILTER_FRONT = "FILTER_FRONT";
+export const UPDATE_CART_ITEMS = 'UPDATE_CART_ITEMS';
+export const GET_CART_ITEMS = 'GET_CART_ITEMS';
+export const SAVE_CART_SUCCESS = 'SAVE_CART_SUCCESS'
+export const SAVE_CART_ERROR = 'SAVE_CART_ERROR'
 
 export const getAllProducts = () => async dispatch => {
     try {
@@ -100,7 +98,7 @@ export const getSubCategories = () => async dispatch => {
 export const getBrands = () => async dispatch => {
     try { 
         const getBrand = await axios.get('/brands');
-        console.log('Brands:', getBrand);
+    
         return dispatch({
             type: GET_BRANDS,
             payload: getBrand.data
@@ -163,47 +161,12 @@ export function putUser(email, user) {
     }
 }
 
-export const filterByCategory = (payload) => dispatch => {
-    return dispatch({
-        type: FILTER_BY_CATEGORY,
-        payload
-    })
-};
-
-export const filterByBrand = (payload) => dispatch => {
-    return dispatch({
-        type: FILTER_BY_BRANDS,
-        payload
-    })
-};
-
-export const orderByName = (payload) => dispatch => {
-    return dispatch({
-        type: ORDER_BY_NAME,
-        payload
-    })
-};
-export const orderByPrice = (payload) => dispatch => {
-    return dispatch({
-        type: ORDER_BY_PRICE,
-        payload
-    })
-};
-
-export const filterByCreated = (payload) => dispatch => {
-    return dispatch({
-        type: FILTER_BY_CREATED,
-        payload
-    })
-};
-
 export function openModal(payload) {
 	return { 
         type: OPEN_MODAL, 
         payload, 
     };
 };
-
 export function logout() {
 	return {
 		type: LOGOUT,
@@ -236,3 +199,46 @@ export function clearCart() {
         type: CLEAN_CART
     }
 };
+export function filterFront(payload){
+    return {
+        type: FILTER_FRONT,
+        payload
+    }   
+}
+
+export const updateCartItems = (cartItems) => ({
+    type: UPDATE_CART_ITEMS,
+    payload: cartItems,
+  });
+
+  export const getCartItems = () => async dispatch => {
+    try {
+      // Obtener los datos de cartItems desde el localStorage
+      const cartItems = JSON.parse(localStorage.getItem("cartProducts")) || [];
+      
+      // Despachar la acción con los datos de cartItems
+      dispatch({
+        type: GET_CART_ITEMS,
+        payload: cartItems,
+      });
+    } catch (error) {
+      // Manejar errores si hay algún problema al obtener los datos
+      console.error("Error al obtener cartItems desde el localStorage:", error);
+    }
+  };
+
+  export const saveCartToServer = (cartProducts) => {
+    return async (dispatch) => {
+      try {
+         console.log("en index",cartProducts);
+        // Realiza una solicitud HTTP POST al servidor para guardar el carrito
+        const response = await axios.post('/carts/saveProducts', { cartProducts });
+        console.log(response);
+        // Despacha una acción para manejar la respuesta o realizar otras operaciones necesarias
+        dispatch({ type: 'SAVE_CART_SUCCESS', payload: response.data });
+      } catch (error) {
+        // Maneja los errores, por ejemplo, despachando una acción de error
+        dispatch({ type: 'SAVE_CART_ERROR', payload: error.message });
+      }
+    };
+  };

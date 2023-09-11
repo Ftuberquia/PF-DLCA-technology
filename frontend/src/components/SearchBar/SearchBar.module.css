@@ -1,7 +1,7 @@
 .searchbar {
   display: flex;
   gap: 8px;
-  background: rgb(97, 96, 96);
+  background: rgb(255, 255, 255);
   position:relative;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -9,13 +9,12 @@
 }
 
 .input {
-  flex: 1;
   border: none;
   outline: none;
 }
 
 .button {
-  background-color: rgb(91, 91, 231);
+  background-color: rgb(255, 255, 255);
   border: 0;
   position: absolute;
   right: 0px;
@@ -30,8 +29,8 @@
   transition: all 0.2s ease;
 }
 .button:hover{
-  background-color: #8e17c5;
-  box-shadow: rgba(0,0,0,0.5) 0 10px 20px;
+  background-color: #ffffff2a;
+  box-shadow: rgba(0,0,0,0.5) 1px 1px 1px 1px;
   transform: translateY(-1px);
 }
 .button:active{
@@ -43,7 +42,7 @@
   border: none;
   background: none;
   outline: none;
-  color: white;
+  color: rgb(0, 0, 0);
   font-size: 15px;
   
 }
