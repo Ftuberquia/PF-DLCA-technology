@@ -31,40 +31,41 @@ const CheckoutForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-        const {error, paymentMethod } = await stripe.createPaymentMethod({
-            type: 'card',
-            card: cardElement.current || elements.getElement(CardElement)
-        });
-        setLoading(true)
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardElement.current || elements.getElement(CardElement),
+    });
+    setLoading(true);
 
-        if (!error && paymentMethod ) {
-            try {
-                const { id } = paymentMethod;;
-                const { data } = await axios.post('http://localhost:3001/api/checkout', {
-                    id: id,
-                    amount: 10000, // precio a cambiar
-                    return_url: 'http://localhost:3000/confirmation'
-                });
-                console.log(data);
-                elements.getElement(CardElement).clear();
-                // Ahora puedes usar paymentIntentId para redirigir a la página de confirmación
-                history.push({
-                    pathname: "/confirmation",
-                    state: {
-                      paymentInfo: data,
-                    },
-                  });
-                  
-            } catch (error) {
-                console.error("Error al realizar la solicitud al servidor:", error);
-                history.push("/cancel");
-            } finally {
-                setLoading(false);
-            }
-        } else {
-            console.error("Error al crear el método de pago:", error);
-            history.push("/cancel");
-        }    setLoading(false)
+    if (!error && paymentMethod) {
+      try {
+        const { id } = paymentMethod;
+        const { data } = await axios.post(
+          "http://localhost:3001/api/checkout",
+          {
+            id: id,
+            amount: 10000, // precio a cambiar
+            return_url: "http://localhost:3000/confirmation",
+          }
+        );
+        console.log(data);
+        elements.getElement(CardElement).clear();
+        // Ahora puedes usar paymentIntentId para redirigir a la página de confirmación
+        history.push({
+          pathname: "/confirmation",
+          state: {
+            paymentInfo: data,
+          },
+        });
+      } catch (error) {
+        console.error("Error al realizar la solicitud al servidor:", error);
+        history.push("/cancel");
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      console.error("Error al crear el método de pago:", error);
+      history.push("/cancel");
     }
     setLoading(false);
   };
@@ -90,7 +91,7 @@ const CheckoutForm = () => {
       </button>
     </form>
   );
-}
+};
 
 const Stripe = () => {
   return (

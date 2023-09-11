@@ -5,7 +5,7 @@ import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState, useEffect } from "react";
-
+import style from "./NavBar.module.css";
 import axios from "axios";
 import emailjs from '@emailjs/browser';
 import { LocalStorageCache } from "@auth0/auth0-react";
