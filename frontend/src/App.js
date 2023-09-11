@@ -21,17 +21,19 @@ import Privacy from "./views/Privacy/Privacy";
 import About from "./views/About/About";
 import Cart from "./views/Cart/cart";
 import UserProfileView from "./views/Login/UserProfileView";
+import Profile from "./views/Login/Profile";
+
 const App = () => {
   const { pathname } = useLocation();
 
   // const darkMode = useSelector((state) => state.darkMode); // Agrega esta línea
   // <div className={`App ${darkMode ? "AppDark" : ""}`}>
-  
-    /* {pathname !== "*" && <Nav />}// como  cambiar Nav */
-  
-   return (
-  //   <div className={`App ${darkMode ? "AppDark" : ""}`}>
-  //     {/* {pathname !== "*" && <Nav />}// como  cambiar Nav */}
+
+  /* {pathname !== "*" && <Nav />}// como  cambiar Nav */
+
+  return (
+    //   <div className={`App ${darkMode ? "AppDark" : ""}`}>
+    //     {/* {pathname !== "*" && <Nav />}// como  cambiar Nav */}
     <Router>
       <NavBar />
       <Switch>
@@ -41,8 +43,8 @@ const App = () => {
         <Route path="/contacto" component={ContactUs} />
         <Route exact path="/" component={Landing} />
         <Route path="/compra" component={Stripe} />
-        <Route path="/confirmation" component={ConfirmationPage}/>
-        <Route path="/cancel" component={CancelPage}/>
+        <Route path="/confirmation" component={ConfirmationPage} />
+        <Route path="/cancel" component={CancelPage} />
         <Route path="/favorites" component={Favorites} />
         <Route path="/faq" component={FAQ} />
         <Route path="/terms" component={Terms} />
@@ -50,9 +52,10 @@ const App = () => {
         <Route path="/about" component={About} />
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={UserProfileView} />
+        <Profile />
       </Switch>
       <Footer />
     </Router>
   );
-}
+};
 export default App;

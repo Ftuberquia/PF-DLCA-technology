@@ -1,9 +1,10 @@
 const { Users, Cart } = require('../../db');
 
 const createUser = async (req, res) => {
-    try {
-      // Obtiene los datos del nuevo usuario desde el cuerpo de la solicitud (req.body)
-      const { id, first_name, last_name, username, email, address, phone } = req.body;
+  try {
+    // Obtiene los datos del nuevo usuario desde el cuerpo de la solicitud (req.body)
+    const { id, first_name, last_name, username, email, address, phone } =
+      req.body;
 
       // Verifica si el usuario ya existe en la base de datos
       const user = await Users.findByPk(id);
@@ -34,7 +35,13 @@ const createUser = async (req, res) => {
       // Si ocurre algún error durante el proceso, maneja el error adecuadamente
       console.error('Error al crear un usuario:', error);
       return res.status(500).json({ message: 'Error al crear un usuario' });
+
     }
-  };
-  
-  module.exports = createUser;
+  } catch (error) {
+    // Si ocurre algún error durante el proceso, maneja el error adecuadamente
+    console.error("Error al crear un usuario:", error);
+    return res.status(500).json({ message: "Error al crear un usuario" });
+  }
+};
+
+module.exports = createUser;
