@@ -1,9 +1,13 @@
 // const {Router} = require ("express")
-// const getAllCompras = require ("../../controllers/compras/getAllCompras.js")
+// const { getCompra, saveCompra } = require("../../handlers")
 
-// const stripe =  Router()
+const Compras = Router()
 
-// stripe.get("/", )
-// stripe.get('/filteredCarts', getFilterByCart)
+//Para mostrar los compra de un usuario
+favorites.get("/:userId", getCompra);
 
-// module.exports = stripe
+//Para agregar compra
+favorites.post('/api/checkout', postCompra);
+
+
+module.exports = Compras

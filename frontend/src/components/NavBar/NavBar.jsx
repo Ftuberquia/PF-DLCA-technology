@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
+import style from "./NavBar.module.css";
 // import logo from "../../img/logo-dlca.png";
 import personIcon from "../../img/person.svg";
 import heartIcon from "../../img/heart.svg";
@@ -11,7 +12,6 @@ import emailjs from '@emailjs/browser';
 import { LocalStorageCache } from "@auth0/auth0-react";
 export const cache = new LocalStorageCache()
 
-import style from "./NavBar.module.css";
 
 const NavBar = () => {
   const { cart } = useSelector((state) => state?.cart || {});

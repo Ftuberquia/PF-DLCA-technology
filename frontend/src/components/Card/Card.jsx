@@ -45,9 +45,9 @@ const Card = ({ id, name, imageSrc, price, rating, stock, quantity, disabled }) 
       return null;
     };
 
-    useEffect(() => {
-      getUserId();
-    }, []);
+    // useEffect(() => {
+    //   getUserId();
+    // }, []);
 
     // Verificar si el producto está en el carrito
     const cartProducts = useSelector(state => state.cart);
