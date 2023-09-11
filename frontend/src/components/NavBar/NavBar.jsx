@@ -1,39 +1,28 @@
 import { Link, NavLink } from "react-router-dom";
-<<<<<<< HEAD
-import style from "./NavBar.module.css";
-// import logo from "../../img/logo-dlca.png";
-=======
->>>>>>> f336c2f79bb06a99bc3cc1cad62d7b4ccb639e4a
 import personIcon from "../../img/person.svg";
 import heartIcon from "../../img/heart.svg";
 import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState, useEffect } from "react";
-
 import axios from "axios";
 import emailjs from '@emailjs/browser';
 import { LocalStorageCache } from "@auth0/auth0-react";
-
 import TotalItems from "../../views/Cart/TotalItems";
 import useLocalStorage from "./hooks/useLocalStorage";
+import style from "./NavBar.module.css";
+
 
 export const cache = new LocalStorageCache();
 
 
 const NavBar = () => {
   const { cart } = useSelector((state) => state?.cart || {});
-<<<<<<< HEAD
   const { loginWithPopup, logout, isAuthenticated, user} = useAuth0();
-  const Menus = ["login", "Settings" , "logout"];
   const [open, setOpen]= useState(false);
-=======
-  
-  const { loginWithPopup, isAuthenticated, user } = useAuth0();
   // Utiliza el hook personalizado para obtener el valor actualizado desde LocalStorage
   const cartItemCount = useLocalStorage("cartProducts");
->>>>>>> f336c2f79bb06a99bc3cc1cad62d7b4ccb639e4a
-  
+
   const [welcomeEmailSent, setWelcomeEmailSent] = useState(false);
 
 
@@ -121,12 +110,12 @@ const NavBar = () => {
           Contáctenos
         </Link>
       </span>
-<<<<<<< HEAD
        <div className={style.buyContainer}>
          <NavLink to={'/compra'} className={style.buy}>
               Comprar
          </NavLink>
          </div>
+
 
         <div>
         <div className={style.buttons}>
@@ -136,35 +125,17 @@ open &&(
   <div className="bg-white p-4 w-52 shadow-lg absolute -left-14 top-24">
   <ul>
   {
-    
-    <li><a href="#" className={style.buy} onClick={() => loginWithPopup()}>Login </a>
-    <p><a href="#" className={style.buy}>Perfil </a></p>
-    <p><a href="#" className={style.buy} onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Logout </a></p>   
-    </li>
-    
-       
+    <li><a href="Login" className={style.buy} onClick={() => loginWithPopup()}>Login </a>
+    <p><a href="Profile" className={style.buy}>Perfil </a></p>
+    <p><a href="Logout" className={style.buy} onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Logout </a></p>   
+    </li>      
     }
   </ul>
-
-
 </div>
 )}
-        
+
           </div> 
-      
-
-
-=======
-      <div className={style.buyContainer}>
-        <NavLink to={"/compra"} className={style.buy}>
-          Comprar
-        </NavLink>
-      </div>
-      <div className={style.buttons}>
-        <NavLink to={"login"}>
-          <img src={personIcon} alt="Login" onClick={() => loginWithPopup()} />
-        </NavLink>
->>>>>>> f336c2f79bb06a99bc3cc1cad62d7b4ccb639e4a
+    
         <Link to={"/favorites"}>
           <img src={heartIcon} alt="Favorites" />
         </Link>

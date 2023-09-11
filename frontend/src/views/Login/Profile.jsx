@@ -21,9 +21,7 @@ const Profile = () => {
           <h5 >Correo: {user.email}</h5>  
         </div>
       )}
-      <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
-        Log Out
-      </button>
+    
       </>
      
     );
