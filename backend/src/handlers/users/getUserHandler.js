@@ -1,4 +1,4 @@
-const checkUserExists = require("../../controllers/Users/getUser");
+const checkUserExists = require("../../controllers/users/getUser");
 
 const getUserHandler = async (req, res) => {
   try {
