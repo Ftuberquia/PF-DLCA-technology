@@ -6,8 +6,6 @@ export const GET_BRANDS = 'GET_BRANDS';
 export const GET_TAGS = 'GET_TAGS';
 export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
-// esto debe ser para ver si el producto esta activo o no(cambiar)
-// export const FILTER_BY_CREATED = 'FILTER_BY_CREATED'; 
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const LOGOUT = 'LOGOUT';
@@ -20,6 +18,9 @@ export const CLEAN_CART = 'CLEAN_CART';
 export const FILTER_COMPLEX= "FILTER_COMPLEX";
 export const FILTER_FRONT = "FILTER_FRONT";
 export const UPDATE_CART_ITEMS = 'UPDATE_CART_ITEMS';
+export const GET_CART_ITEMS = 'GET_CART_ITEMS';
+export const SAVE_CART_SUCCESS = 'SAVE_CART_SUCCESS'
+export const SAVE_CART_ERROR = 'SAVE_CART_ERROR'
 
 export const getAllProducts = () => async dispatch => {
     try {
@@ -159,13 +160,6 @@ export function putUser(email, user) {
         })
     }
 }
-//esto debe ser para ver si el producto esta activo o no (cambiar)
-// export const filterByCreated = (payload) => dispatch => {
-//     return dispatch({
-//         type: FILTER_BY_CREATED,
-//         payload
-//     })
-// };
 
 export function openModal(payload) {
 	return { 
@@ -173,7 +167,6 @@ export function openModal(payload) {
         payload, 
     };
 };
-
 export function logout() {
 	return {
 		type: LOGOUT,
@@ -218,52 +211,34 @@ export const updateCartItems = (cartItems) => ({
     payload: cartItems,
   });
 
+  export const getCartItems = () => async dispatch => {
+    try {
+      // Obtener los datos de cartItems desde el localStorage
+      const cartItems = JSON.parse(localStorage.getItem("cartProducts")) || [];
+      
+      // Despachar la acción con los datos de cartItems
+      dispatch({
+        type: GET_CART_ITEMS,
+        payload: cartItems,
+      });
+    } catch (error) {
+      // Manejar errores si hay algún problema al obtener los datos
+      console.error("Error al obtener cartItems desde el localStorage:", error);
+    }
+  };
 
-
-
-// este es el filtro del back, toquelo si se anima uwu
-// export function filterComplex(brand, category, subcategory) {
-//     return async function (dispatch) {
-//       try {
-//         let queryParams = {};
-  
-//         if (category) {
-//           queryParams.category = category;
-//         }
-  
-//         if (brand) {
-//           queryParams.brand = brand;
-//         }
-  
-//         if (subcategory) {
-//           queryParams.subcategory = subcategory;
-//         }
-  
-//         let url = '/filter';
-  
-//         if (Object.keys(queryParams).length > 0) {
-//           url += '?' + Object.entries(queryParams)
-//             .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-//             .join('&');
-//         }
-  
-//         const { data } = await axios.get(url);
-//         console.log(url);
-//         console.log(data);
-  
-//         if ((category || brand || subcategory) && data.length === 0) {
-//           return dispatch({
-//             type: FILTER_COMPLEX,
-//             payload: [], // No hay productos disponibles para la combinación de filtros
-//           });
-//         }
-  
-//         return dispatch({
-//           type: FILTER_COMPLEX,
-//           payload: data,
-//         });
-//       } catch (error) {
-//         console.error('Error Products:', error);
-//       }
-//     };
-// }
+  export const saveCartToServer = (cartProducts) => {
+    return async (dispatch) => {
+      try {
+         console.log("en index",cartProducts);
+        // Realiza una solicitud HTTP POST al servidor para guardar el carrito
+        const response = await axios.post('/carts/saveProducts', { cartProducts });
+        console.log(response);
+        // Despacha una acción para manejar la respuesta o realizar otras operaciones necesarias
+        dispatch({ type: 'SAVE_CART_SUCCESS', payload: response.data });
+      } catch (error) {
+        // Maneja los errores, por ejemplo, despachando una acción de error
+        dispatch({ type: 'SAVE_CART_ERROR', payload: error.message });
+      }
+    };
+  };

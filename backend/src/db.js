@@ -44,15 +44,31 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 
 //DESTRUCTURING DE MODEL Y CREACION DE RELACIONES:
-const { Users, Products, Orders, Cart, Brand, Category, Tags, Subcategory, Review, UserProductReviews } = sequelize.models;
+const { Users, Products, Orders, Cart, Brand, Category, Tags, Subcategory, UserProductReviews, CartProduct } = sequelize.models;
 // Aca vendrian las relaciones
 
 // Relación de Users:
 Users.hasMany(Orders, {foreignKey:'userOrderId', as: 'user'});	//hasMany 1 A con muchos B, el as se usa en solicitudes a la DB
 Orders.belongsTo(Users, {foreignKey:'userOrderId', as: 'orders'});
 
+//Relacion usuario con carrito
 Users.hasOne(Cart, {foreignKey: "userId"});
 Cart.belongsTo(Users, {foreignKey: "userId"});
+
+//Relacion carrito con productos mediante tabla intermedia
+Cart.belongsToMany(Products, {
+	through: CartProduct, // Usa el modelo CartProduct como tabla intermedia
+	foreignKey: 'cartId',
+	otherKey: 'productId',
+	as: 'cartProducts',
+  });
+  
+  Products.belongsToMany(Cart, {
+	through: CartProduct, // Usa el modelo CartProduct como tabla intermedia
+	foreignKey: 'cartId',
+	otherKey: 'userId',
+	as: 'productsinCart',
+  });
 
 //tabla intermedia para hacer Un usuario puede tener muchas compras, y cada compra pertenece a un usuario.
 Users.hasMany(Orders, { foreignKey: "userId", as: "orders" });

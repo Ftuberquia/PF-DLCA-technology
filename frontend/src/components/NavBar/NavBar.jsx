@@ -1,40 +1,49 @@
 import { Link, NavLink } from "react-router-dom";
-// import logo from "../../img/logo-dlca.png";
 import personIcon from "../../img/person.svg";
 import heartIcon from "../../img/heart.svg";
 import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+
 import axios from "axios";
 import emailjs from '@emailjs/browser';
 import { LocalStorageCache } from "@auth0/auth0-react";
-export const cache = new LocalStorageCache()
+
+import TotalItems from "../../views/Cart/TotalItems";
+import useLocalStorage from "./hooks/useLocalStorage";
+
+export const cache = new LocalStorageCache();
 
 import style from "./NavBar.module.css";
 
 const NavBar = () => {
   const { cart } = useSelector((state) => state?.cart || {});
-  const { loginWithPopup, isAuthenticated, user} = useAuth0();
+  
+  const { loginWithPopup, isAuthenticated, user } = useAuth0();
+  // Utiliza el hook personalizado para obtener el valor actualizado desde LocalStorage
+  const cartItemCount = useLocalStorage("cartProducts");
   
   const [welcomeEmailSent, setWelcomeEmailSent] = useState(false);
+
 
   useEffect(() => {
     // Cuando el usuario esté autenticado, envía los datos al servidor
     if (isAuthenticated && user) {
       const userData = {
-        id:user.sub,
+        id: user.sub,
         first_name: user.given_name,
         last_name: user.family_name,
         username: user.nickname,
         email: user.email,
         // Otros campos de datos que quieras enviar
       };
-      
+
       // Realiza la solicitud al servidor para guardar los datos del usuario
-      axios.post("http://localhost:3001/users/", userData)
+      axios
+        .post("http://localhost:3001/users/", userData)
         .then((response) => {
-          if (response.status === 200|| 201) {
+          if (response.status === 200 || 201) {
             console.log("Usuario creado con éxito en el servidor");
             // Realizar acciones adicionales si es necesario
 
@@ -73,7 +82,7 @@ const NavBar = () => {
         .catch((error) => {
           console.error("Error al realizar la solicitud al servidor:", error);
         });
-        cache.set("userId", user.sub)
+      cache.set("userId", user.sub);
     }
   }, [isAuthenticated, user, welcomeEmailSent]);
 
@@ -102,13 +111,13 @@ const NavBar = () => {
           Contáctenos
         </Link>
       </span>
-       <div className={style.buyContainer}>
-         <NavLink to={'/compra'} className={style.buy}>
-              Comprar
-         </NavLink>
-       </div>
+      <div className={style.buyContainer}>
+        <NavLink to={"/compra"} className={style.buy}>
+          Comprar
+        </NavLink>
+      </div>
       <div className={style.buttons}>
-        <NavLink to={"login"} >
+        <NavLink to={"login"}>
           <img src={personIcon} alt="Login" onClick={() => loginWithPopup()} />
         </NavLink>
         <Link to={"/favorites"}>
@@ -116,12 +125,11 @@ const NavBar = () => {
         </Link>
         <Link to={"/cart"} className={style.cart}>
           <img src={shoppingCartIcon} alt="Shopping Cart" />
-          <span>{cart?.total_items ? cart?.total_items : "0"}</span>
+          <TotalItems />
         </Link>
       </div>
     </nav>
   );
 };
-
 
 export default NavBar;
