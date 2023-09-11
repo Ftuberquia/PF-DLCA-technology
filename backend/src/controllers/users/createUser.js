@@ -1,4 +1,4 @@
-const { Users } = require('../../db');
+const { Users, Cart } = require('../../db');
 
 const createUser = async (req, res) => {
     try {
@@ -22,6 +22,11 @@ const createUser = async (req, res) => {
           // Puedes establecer otros valores por defecto aquí, como avatar_img, admin, master, isActive, etc.
         });
     
+      // Crea un carrito para el nuevo usuario
+        const newCart = await Cart.create({
+        userId: newUser.id, // Asigna el userId del nuevo usuario al carrito
+      });
+
         // Envía una respuesta de éxito
         return res.status(200).json({ message: 'Usuario creado con éxito', user: newUser });
       }

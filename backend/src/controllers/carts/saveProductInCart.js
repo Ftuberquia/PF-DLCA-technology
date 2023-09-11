@@ -1,5 +1,6 @@
 const { CartProduct, Cart, Products } = require("../../db");
 
+//Agrega un producto a la tabla intermedia
 const postProduct = async (
   cartId,
   productId,
@@ -10,45 +11,30 @@ const postProduct = async (
   }
 
   try {
-  // Buscar el registro en la tabla CartProduct con los valores de cartId y productId
-  const cartProduct = await CartProduct.findOne({
-    where: { CartId: cartId, ProductId: productId },
-  });
-
-    if (!cartProduct) {
-      throw Error("El usuario no existe");
+    const user = await Cart.findByPk(cartId);
+    const product=await Products.findByPk(productId);
+    if(!product){
+      throw Error("El producto no existe");
     }
 
-    // Creamos la revisión asociándola al usuario
-    const newReview = await UserProductReviews.create({
-      userId: user.id,
-      productId,
-      comment,
-      rating,
-    });
+    //verificamos si el usuario tiene un carrito activo y que este aun esta abierto
+    if((user && user.pagado===false)){
+      throw Error("El usuario no tiene un carrito activo");
+    }//revisar esto
 
-    // Obtenemos todos los reviews asociados al producto
-    const allReviews = await UserProductReviews.findAll({
-      where: {
-        productId,
-      },
-    });
+    //crear la nueva entrada de producto en el carrito
+    const newCartProduct = await CartProduct.create({
+      cartId: cartId,
+      productId: productId,
+      quantity_prod
+    })
 
-    // Calculamos el nuevo rating promedio
-    const ratingsSum = allReviews.reduce(
-      (sum, review) => sum + review.rating,
-      0
-    );
-    const newRating = ratingsSum / allReviews.length;
+    return newCartProduct;
 
-    // Actualizamos el rating del producto
-    await product.update({ rating: newRating });
-
-    return newReview;
   } catch (error) {
-    console.error("Error al insertar en la base de datos:", error);
-    throw error; // Manejar errores adecuadamente en tu aplicación
+    console.error("Error al agregar producto en el carrito:", error);
+    throw error
   }
 };
 
-// module.exports = postReviews;
+module.exports = postProduct;

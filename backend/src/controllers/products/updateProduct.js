@@ -41,7 +41,6 @@ const updateProduct = async (name, imageSrc, price, stock, brand, category, subc
     if (isActive !== undefined) {
       updates.isActive = isActive;
     }// Agregar el valor de isActive
-    console.log(updates)
     
     await product.update(updates);
 

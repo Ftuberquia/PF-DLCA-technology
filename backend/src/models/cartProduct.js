@@ -21,7 +21,7 @@ const CartProduct = (sequelize) => {
       quantity_prod: {
         type: DataTypes.INTEGER,
         allowNull: false, // Permitir valores nulos
-        defaultValue: 0, // Valor por defecto
+        defaultValue: 1, // Valor por defecto
       },
     },
     {

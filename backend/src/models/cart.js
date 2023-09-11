@@ -13,6 +13,7 @@ const Cart = (sequelize) => {
       quantity: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        defaultValue:0
       },
       pagado: {
         type: DataTypes.BOOLEAN,
