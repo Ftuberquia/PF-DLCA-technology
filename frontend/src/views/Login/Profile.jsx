@@ -14,15 +14,11 @@ const Profile = () => {
        {isAuthenticated && (
         <div>
           <h1 className="cart-message-center"> MI PERFIL</h1>
-           <p className="cart-message-center">Bienvenid, {user.name}!</p>
+           <p className="cart-message-center">Bienvenido, {user.name}!</p>
            <p></p>
           <img src= {user.picture} alt={user.name}/>
           <h2 >Usuario: {user.name}</h2>
-          <h3 >{user.first_name}</h3>
-          <h4 >{user.last_name}</h4>
-          <h5 >Correo: {user.email}</h5>
-          <h6 >{user.address}</h6>
-          <h7 >{user.phone}</h7>     
+          <h5 >Correo: {user.email}</h5>  
         </div>
       )}
       <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
