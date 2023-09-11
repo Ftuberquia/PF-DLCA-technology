@@ -20,7 +20,7 @@ const Cart = (sequelize) => {
         allowNull: false,
         defaultValue: false,
       },
-      total_price: {
+      total_precio: {
         type: DataTypes.FLOAT,
         allowNull: false, // Permitir valores nulos
         defaultValue: 0, // Valor por defecto

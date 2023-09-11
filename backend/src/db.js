@@ -65,8 +65,8 @@ Cart.belongsToMany(Products, {
   
   Products.belongsToMany(Cart, {
 	through: CartProduct, // Usa el modelo CartProduct como tabla intermedia
-	foreignKey: 'cartId',
-	otherKey: 'userId',
+	foreignKey: 'productId',
+	otherKey: 'cartId',
 	as: 'productsinCart',
   });
 
@@ -126,6 +126,3 @@ module.exports = {
 ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
 conn: sequelize, // para importar la conexión { conn } = require('./db.js');
 };
-
-
-//Preguntar como establecer la restricción de que un usuario solo pueda hacer un review a un producto, como agregar una restricción UNIQUE en la tabla intermedia entre "users" y "products" en la columna "userId" y "productId"
