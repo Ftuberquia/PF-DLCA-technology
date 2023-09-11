@@ -6,36 +6,39 @@ import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
-import SearchBar from "../SearchBar/SearchBar";
-import style from "./NavBar.module.css";
 import axios from "axios";
 import emailjs from '@emailjs/browser';
+import { LocalStorageCache } from "@auth0/auth0-react";
+export const cache = new LocalStorageCache()
+
+import style from "./NavBar.module.css";
 
 const NavBar = () => {
   const { cart } = useSelector((state) => state?.cart || {});
   const { loginWithPopup, isAuthenticated, user} = useAuth0();
-
+  
   const [welcomeEmailSent, setWelcomeEmailSent] = useState(false);
 
   useEffect(() => {
     // Cuando el usuario esté autenticado, envía los datos al servidor
     if (isAuthenticated && user) {
       const userData = {
+        id:user.sub,
         first_name: user.given_name,
         last_name: user.family_name,
         username: user.nickname,
         email: user.email,
         // Otros campos de datos que quieras enviar
       };
-
+      
       // Realiza la solicitud al servidor para guardar los datos del usuario
       axios.post("http://localhost:3001/users/", userData)
         .then((response) => {
-          if (response.status === 201) {
+          if (response.status === 200|| 201) {
             console.log("Usuario creado con éxito en el servidor");
             // Realizar acciones adicionales si es necesario
 
-                      // Verifica si el correo de bienvenida ya se ha enviado
+          // Verifica si el correo de bienvenida ya se ha enviado
           if (!welcomeEmailSent) {
             // Datos de configuración de EmailJS
             const serviceId = "service_u05znjz"; // Reemplaza con tu ID de servicio
@@ -70,6 +73,7 @@ const NavBar = () => {
         .catch((error) => {
           console.error("Error al realizar la solicitud al servidor:", error);
         });
+        cache.set("userId", user.sub)
     }
   }, [isAuthenticated, user, welcomeEmailSent]);
 
@@ -82,9 +86,6 @@ const NavBar = () => {
         <Link className={style.name} to={"/"}>
           DLCA TECHNOLOGY
         </Link>
-      </span>
-      <span className={style.searchbar}>
-      <SearchBar />
       </span>
       <span>
         <Link className={style.links} to={"/productos"}>

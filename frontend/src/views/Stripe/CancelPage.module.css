@@ -1,0 +1,46 @@
+.contenedorCancel{
+  display: flex;
+  justify-content: center;
+  
+}
+.cancel-container {
+  text-align: center;
+  padding: 20px;
+  display: grid;
+  align-items: center;
+  border-radius: 20px;
+  width: 400px;
+  height: 250px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  }
+  
+  /* Estilos para el título */
+  .cancel-title {
+    font-weight: bold;
+    font-size: 30px;
+    color: red;
+  }
+  .cancel-mss{
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    background-color: rgb(250, 75, 75);
+    padding: 10px;
+    border-radius: 10px;
+  }
+  
+  /* Estilos para el enlace de volver */
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-size: larger;
+    font-weight: bold;
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .back-link:hover {
+    text-decoration: underline;
+  }

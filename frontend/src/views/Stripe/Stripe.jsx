@@ -4,7 +4,7 @@ import style from './Stripe.module.css';
 import { loadStripe } from "@stripe/stripe-js";
 import  { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-// import Productos from "../Productos/Productos";
+import CartTotal from "../Cart/cartTotal";
 
 // Key visible ** la secreta esta en el Server
 const stripePromise = loadStripe("pk_test_51NnMQaEUVHui4qp0KnEfLflyUrkDfZDN9jLhIq7Vzb4RGVvCG0tCfEDmgi9GKV1CYCXc5TYzU7FcS4BXCXmSv8tC00L9f6qNwM")
@@ -20,15 +20,15 @@ const CheckoutForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const {error, payment } = await stripe.createPaymentMethod({
+        const {error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card: cardElement.current || elements.getElement(CardElement)
         });
         setLoading(true)
 
-        if (!error && payment) {
+        if (!error && paymentMethod ) {
             try {
-                const { id } = payment.payment_method;;
+                const { id } = paymentMethod;;
                 const { data } = await axios.post('http://localhost:3001/api/checkout', {
                     id: id,
                     amount: 10000, // precio a cambiar
@@ -36,35 +36,34 @@ const CheckoutForm = () => {
                 });
                 console.log(data);
                 elements.getElement(CardElement).clear();
-                // Captura el ID del pago de la respuesta de Stripe
-                const paymentIntentId = data.paymentIntent.id;
-
                 // Ahora puedes usar paymentIntentId para redirigir a la página de confirmación
                 history.push({
                     pathname: "/confirmation",
                     state: {
-                    paymentInfo: {
-                        paymentIntentId,
+                      paymentInfo: data,
                     },
-                    },
-                });
-
+                  });
+                  
             } catch (error) {
                 console.error("Error al realizar la solicitud al servidor:", error);
+                history.push("/cancel");
             } finally {
                 setLoading(false);
             }
         } else {
             console.error("Error al crear el método de pago:", error);
+            history.push("/cancel");
         }    setLoading(false)
     }
 
     return (
     <form onSubmit={handleSubmit}className="">
-
-        <img className={style.products} src={''} alt="product-cart"/>
         
-        <h3 className={style.precio}>Precio: 100$ </h3>
+        <h2 className={style.precio}>Precio: $ 100  </h2>
+        <div className={style.subtituloVisa}>
+            <h2>Numero TC.  </h2>
+            <h2>  Fecha Vencimiento</h2>
+        </div>
         <div className={style.cardContainer}>
             <CardElement className={style.visa} />
         </div>
@@ -84,7 +83,7 @@ const Stripe = () => {
         <main className={style.card}>
             <Elements stripe={stripePromise}>        
             <div className={style.container}>
-                <h1>Pasarela de pagos Stripe</h1>
+                <h1>Pasarela de pagos</h1>
                 <CheckoutForm/>
             </div>
         </Elements>

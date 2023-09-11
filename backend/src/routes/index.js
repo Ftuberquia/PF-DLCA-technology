@@ -10,7 +10,7 @@ const contactHandler = require("../handlers/contact/contactHandler");
 const favorites = require("./favorites/routeFav");
 const carts = require ("./carts/routeCarts")
 const reviews = require("./reviews/routeReviews")
-const stripe = require ("./compra/routeCompra");
+// const stripe = require ("./compra/routeCompra");
 const users = require("../routes/users/routeUsers")
 
 const router = Router();
