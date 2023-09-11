@@ -1,7 +1,6 @@
 const { CartProduct }=require('../../db')
 
 //Modifica la cantidad de un mismo producto, es para los botones + y - 
-
 const updateQuantityProduct=async(quantity_prod, cartId, productId)=>{
     
     const productInCart=await CartProduct.findOne({

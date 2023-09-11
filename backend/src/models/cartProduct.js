@@ -10,11 +10,11 @@ const CartProduct = (sequelize) => {
         primaryKey: true,
         allowNull: false,
       },
-      id_cart: {
+      cartId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      id_product: {
+      productId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -23,6 +23,10 @@ const CartProduct = (sequelize) => {
         allowNull: false, // Permitir valores nulos
         defaultValue: 1, // Valor por defecto
       },
+      total_price_product:{
+        type: DataTypes.FLOAT,
+        allowNull: false
+      }
     },
     {
       tableName: "cartProduct",
