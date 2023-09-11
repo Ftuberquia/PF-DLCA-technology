@@ -54,6 +54,10 @@ Orders.belongsTo(Users, {foreignKey:'userOrderId', as: 'orders'});
 Users.hasOne(Cart, {foreignKey: "userId"});
 Cart.belongsTo(Users, {foreignKey: "userId"});
 
+//tabla intermedia para hacer Un usuario puede tener muchas compras, y cada compra pertenece a un usuario.
+Users.hasMany(Orders, { foreignKey: "userId", as: "orders" });
+Orders.belongsTo(Users, { foreignKey: "userId", as: "user" });
+
 //creo una tabla intermedia para hacer los favoritos
 Products.belongsToMany(Users, { through: 'favorites', as: 'users', foreignKey: 'productId' });
 Users.belongsToMany(Products, { through: 'favorites', as: 'products', foreignKey: 'userId' });
