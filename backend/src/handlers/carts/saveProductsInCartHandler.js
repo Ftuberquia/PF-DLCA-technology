@@ -1,16 +1,10 @@
 const postProduct = require("../../controllers/carts/saveProductInCart");
 const saveProductsInCart = async (req, res) => {
   const { cartId, productId } = req.params;
-  const { quantity, total_precio, pagado } = req.body;
+  const { quantity_prod } = req.body;
 
   try {
-    const newProduct = await postProduct(
-      cartId,
-      productId,
-      quantity,
-      total_precio,
-      pagado
-    );
+    const newProduct = await postProduct(cartId, productId, quantity_prod);
     return res
       .status(200)
       .json({ message: "producto agregado al carrito", newProduct });

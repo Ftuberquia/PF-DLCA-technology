@@ -13,13 +13,14 @@ const Cart = (sequelize) => {
       quantity: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        defaultValue:0
       },
       pagado: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
-      total_price: {
+      total_precio: {
         type: DataTypes.FLOAT,
         allowNull: false, // Permitir valores nulos
         defaultValue: 0, // Valor por defecto
