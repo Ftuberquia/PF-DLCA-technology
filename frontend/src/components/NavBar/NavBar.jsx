@@ -12,7 +12,6 @@ import { LocalStorageCache } from "@auth0/auth0-react";
 
 import TotalItems from "../../views/Cart/TotalItems";
 import useLocalStorage from "./hooks/useLocalStorage";
-import style from "./NavBar.module.css";
 
 export const cache = new LocalStorageCache()
 
