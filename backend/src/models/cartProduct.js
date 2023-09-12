@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 
-const Cart = (sequelize) => {
+const CartProduct = (sequelize) => {
   sequelize.define(
-    "cart",
+    "cartProduct",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -10,28 +10,30 @@ const Cart = (sequelize) => {
         primaryKey: true,
         allowNull: false,
       },
-      quantity: {
+      cartId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue:0
       },
-      pagado: {
-        type: DataTypes.BOOLEAN,
+      productId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: false,
       },
-      total_precio: {
-        type: DataTypes.FLOAT,
+      quantity_prod: {
+        type: DataTypes.INTEGER,
         allowNull: false, // Permitir valores nulos
-        defaultValue: 0, // Valor por defecto
+        defaultValue: 1, // Valor por defecto
       },
+      total_price_product:{
+        type: DataTypes.FLOAT,
+        allowNull: false
+      }
     },
     {
-      tableName: "cart",
+      tableName: "cartProduct",
       timestamps: false,
       freezeTableName: true,
     }
   );
 };
 
-module.exports = Cart;
+module.exports = CartProduct;

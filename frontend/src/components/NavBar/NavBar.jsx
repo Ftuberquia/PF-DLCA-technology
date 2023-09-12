@@ -4,11 +4,15 @@ import heartIcon from "../../img/heart.svg";
 import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import emailjs from '@emailjs/browser';
 import style from "./NavBar.module.css"
 import { LocalStorageCache } from "@auth0/auth0-react";
+
+import TotalItems from "../../views/Cart/TotalItems";
+import useLocalStorage from "./hooks/useLocalStorage";
+import style from "./NavBar.module.css";
 
 export const cache = new LocalStorageCache()
 
@@ -20,12 +24,19 @@ const NavBar = () => {
     logout({ logoutParams: {returnTo: window.location.origin }})
   }
 
+  const [open, setOpen]= useState(false);
+  // Utiliza el hook personalizado para obtener el valor actualizado desde LocalStorage
+  const cartItemCount = useLocalStorage("cartProducts");
+
+  const [welcomeEmailSent, setWelcomeEmailSent] = useState(false);
+
   useEffect(() => {
     if (isAuthenticated && user) {
 
       const userId = user.sub;
 
       const userData = {
+
         id: userId,
         first_name: user.given_name,
         last_name: user.family_name,
@@ -36,6 +47,7 @@ const NavBar = () => {
       axios.post("http://localhost:3001/users/", userData)
         .then((response) => {
           if (response.status === 201) {
+     
             console.log("Usuario creado con éxito en el servidor");
 
             // NO DESCOMENTAR LAS LINEAS ABAJO! ES LA FUNCIONALIDAD DEL CORREO, PARA NO GASTAR LA CUOTA
@@ -98,6 +110,7 @@ const NavBar = () => {
          <NavLink to={'/compra'} className={style.buy}>
               Comprar
          </NavLink>
+
        </div>
       <div className={style.buttons}>
       <NavLink to={"login"} onClick={isAuthenticated ? undefined : () => loginWithPopup()}>
@@ -109,17 +122,17 @@ const NavBar = () => {
           "INGRESAR"
         )}
       </NavLink>
+
         <Link to={"/favorites"}>
           <img src={heartIcon} alt="Favorites" />
         </Link>
         <Link to={"/cart"} className={style.cart}>
           <img src={shoppingCartIcon} alt="Shopping Cart" />
-          <span>{cart?.total_items ? cart?.total_items : "0"}</span>
+          <TotalItems />
         </Link>
       </div>
     </nav>
   );
 };
-
 
 export default NavBar;
