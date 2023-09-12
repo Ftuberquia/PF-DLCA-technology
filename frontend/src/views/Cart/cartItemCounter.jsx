@@ -11,9 +11,13 @@ const CartItemCounter = ({ product, updateQuantity }) => {
     const updatedCart = storedCartProducts.map((item) =>
       item.id === product.id ? { ...item, quantity } : item
     );
-    localStorage.setItem("cartProducts", JSON.stringify(updatedCart));
-    // Llama a la función de actualización en el componente padre (CartElements)
-    updateQuantity(product.id, quantity);
+
+    if (quantity !== product.quantity) {
+      localStorage.setItem("cartProducts", JSON.stringify(updatedCart));
+      // Llama a la función de actualización en el componente padre (CartElements)
+      updateQuantity(product.id, quantity);
+    }
+
   }, [quantity, product, updateQuantity]);
 
   const decrease = () => {
