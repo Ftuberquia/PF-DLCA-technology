@@ -11,83 +11,79 @@ import style from "./NavBar.module.css";
 >>>>>>> 75edfb517535600d789d7355803e570256188087
 import axios from "axios";
 import emailjs from '@emailjs/browser';
+import style from "./NavBar.module.css"
 import { LocalStorageCache } from "@auth0/auth0-react";
+
 import TotalItems from "../../views/Cart/TotalItems";
 import useLocalStorage from "./hooks/useLocalStorage";
 import style from "./NavBar.module.css";
 
-
-export const cache = new LocalStorageCache();
-
+export const cache = new LocalStorageCache()
 
 const NavBar = () => {
   const { cart } = useSelector((state) => state?.cart || {});
   const { loginWithPopup, logout, isAuthenticated, user} = useAuth0();
+
+  const handleLogOut = () =>{
+    logout({ logoutParams: {returnTo: window.location.origin }})
+  }
+
   const [open, setOpen]= useState(false);
   // Utiliza el hook personalizado para obtener el valor actualizado desde LocalStorage
   const cartItemCount = useLocalStorage("cartProducts");
 
   const [welcomeEmailSent, setWelcomeEmailSent] = useState(false);
 
-
   useEffect(() => {
-    // Cuando el usuario esté autenticado, envía los datos al servidor
     if (isAuthenticated && user) {
+
+      const userId = user.sub;
+
       const userData = {
-        id: user.sub,
+
+        id: userId,
         first_name: user.given_name,
         last_name: user.family_name,
         username: user.nickname,
         email: user.email,
-        // Otros campos de datos que quieras enviar
       };
-
-      // Realiza la solicitud al servidor para guardar los datos del usuario
-      axios
-        .post("http://localhost:3001/users/", userData)
+            // Realiza la solicitud al servidor para guardar los datos del usuario
+      axios.post("http://localhost:3001/users/", userData)
         .then((response) => {
-          if (response.status === 200 || 201) {
+          if (response.status === 201) {
+     
             console.log("Usuario creado con éxito en el servidor");
-            // Realizar acciones adicionales si es necesario
 
-          // Verifica si el correo de bienvenida ya se ha enviado
-          if (!welcomeEmailSent) {
-            // Datos de configuración de EmailJS
-            const serviceId = "service_u05znjz"; // Reemplaza con tu ID de servicio
-            const templateId = "template_ech9g6n"; // Reemplaza con tu ID de plantilla
-            const userId = "dl6sI5xgzMzAmHsFV"; // Reemplaza con tu ID de usuario
+            // NO DESCOMENTAR LAS LINEAS ABAJO! ES LA FUNCIONALIDAD DEL CORREO, PARA NO GASTAR LA CUOTA
+            // GRATIS DE CORREO QUE TENEMOS!!!!!!
 
-            // Datos para rellenar la plantilla de correo
-            const emailParams = {
-              from_email: "dlcatech01@gmail.com",
-              to_name: user.given_name,
-              to_email: user.email, // Incluye el correo electrónico del usuario
-              // Agrega otros campos de datos si es necesario
-            };
+          //   // Datos de configuración de EmailJS
+          //   const serviceId = "service_u05znjz"; // Reemplaza con tu ID de servicio
+          //   const templateId = "template_ech9g6n"; // Reemplaza con tu ID de plantilla
+          //   const userId = "dl6sI5xgzMzAmHsFV"; // Reemplaza con tu ID de usuario
 
-            // Envía el correo utilizando EmailJS
-            emailjs
-              .send(serviceId, templateId, emailParams, userId)
-              .then((response) => {
-                console.log("Correo de bienvenida enviado con éxito", response);
-                // Marcar el estado para evitar enviar el correo nuevamente
-                setWelcomeEmailSent(true);
-              })
-              .catch((error) => {
-                console.error("Error al enviar el correo de bienvenida", error);
-              });
-          }
-            
-          } else {
-            console.error("Error al crear el usuario en el servidor");
+          //   // Datos para rellenar la plantilla de correo
+          //   const emailParams = {
+          //     from_email: "dlcatech01@gmail.com",
+          //     to_name: user.given_name,
+          //     to_email: user.email,
+          //     // Agrega otros campos de datos si es necesario
+          //   };
+  
+          //  // Envía el correo utilizando EmailJS
+          //  emailjs
+          //    .send(serviceId, templateId, emailParams, userId)
+          //    .then((response) => {
+          //      console.log("Correo de bienvenida enviado con éxito", response);
+          //    })
+          //    .catch((error) => {
+          //      console.error("Error al enviar el correo de bienvenida", error);
+          //    });
           }
         })
-        .catch((error) => {
-          console.error("Error al realizar la solicitud al servidor:", error);
-        });
-      cache.set("userId", user.sub);
-    }
-  }, [isAuthenticated, user, welcomeEmailSent]);
+      }
+    }, [isAuthenticated, user]);
+  
 
   return (
     <nav className={style.navbar}>
@@ -118,28 +114,19 @@ const NavBar = () => {
          <NavLink to={'/compra'} className={style.buy}>
               Comprar
          </NavLink>
-         </div>
 
+       </div>
+      <div className={style.buttons}>
+      <NavLink to={"login"} onClick={isAuthenticated ? undefined : () => loginWithPopup()}>
+        {isAuthenticated ? (
+          <button className={style.userboton2} onClick={handleLogOut}>
+            SALIR
+          </button>
+        ) : (
+          "INGRESAR"
+        )}
+      </NavLink>
 
-        <div>
-        <div className={style.buttons}>
-          <img src={personIcon} alt="Users" onClick={() => setOpen(!open)} className=" h-20 w-20 object-cover border-4 border-gray-400 rounded-full cursor-pointer" />
-        {
-open &&(
-  <div className="bg-white p-4 w-52 shadow-lg absolute -left-14 top-24">
-  <ul>
-  {
-    <li><a href="Login" className={style.buy} onClick={() => loginWithPopup()}>Login </a>
-    <p><a href="Profile" className={style.buy}>Perfil </a></p>
-    <p><a href="Logout" className={style.buy} onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Logout </a></p>   
-    </li>      
-    }
-  </ul>
-</div>
-)}
-
-          </div> 
-    
         <Link to={"/favorites"}>
           <img src={heartIcon} alt="Favorites" />
         </Link>
