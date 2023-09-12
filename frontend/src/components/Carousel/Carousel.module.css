@@ -3,7 +3,7 @@
   max-width: 100%;
   position: relative;
   margin: auto;
-  background-color: black;
+  background-color: var(--background-color);
   min-height: 35vw;
   margin-bottom: 30px;
 }
@@ -15,8 +15,8 @@
   left: 0;
   right: 0;
   margin: auto;
+  color: var(--text-color);
 }
-
 
 
 .prev,

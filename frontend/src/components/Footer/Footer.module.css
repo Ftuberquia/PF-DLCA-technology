@@ -1,5 +1,5 @@
 footer {
-  background-color: #303030;
+  background-color: var(--background-color);
   text-align: center;
   padding: 15px 0;
   margin-top: 15px; 
@@ -48,7 +48,7 @@ footer .topFooter > div .contact li {
   gap: 10px;
 }
 footer .topFooter > div .contact li .address {
-  color: var(--main-default);
+  color: var(--background-color);
 }
 footer .bottomFooter {
   display: flex;
@@ -73,7 +73,7 @@ footer .bottomFooter .rightPart {
 @media screen and (min-width: 992px) {
   footer {
     text-align: left;
-    background-color: #262626;
+    background-color: var(--background-color);
   }
   .topFooter {
     grid-template-columns: 1fr 1fr 1fr 1fr;

@@ -54,8 +54,9 @@
 
 .spanTitle {
   margin-left: 10px;
-  color: #6e0b0b;
+  color: var(--secondary-color);
   font-weight: bold;
+  font-size: 50px;
 }
 .spanTitle:hover {
   filter: brightness(1.2);
@@ -63,7 +64,7 @@
 
 .contImgCompra {
   border: 2px solid #fdfdfd;
-  background-color: #f8f8fd;
+  background-color: var(--background-color);
 }
 
 .imgCompra {
@@ -110,26 +111,28 @@
 }
 
 .titlePartners {
-  color: white;
+  color: black;
   margin-left: 40px;
   font-size: 25px;
 }
 
 .logoPartners img:hover {
-  filter: brightness(1.2);
+  filter: brightness(1.5);
 }
 
 .titlePartners:hover {
-  color: #1d0b69;
-  filter: brightness(1.2);
+  color: var(--primary-color);
+  filter: brightness(1.9);
+  font-size: 28px;
+  transform: translateY(-20px);
 }
 
 .contPcMarcas {
   /* border: 1px solid #070707; */
   background: linear-gradient(
     184deg,
-    rgb(250, 249, 249) 0%,
-    rgba(255, 255, 255, 1) 76%
+    var(--tertiary-color) 56%,
+    var(--background-color) 10%,
   );
 }
 
@@ -177,7 +180,7 @@
 @media screen and (max-width: 450px) {
   .contImgCompra {
     border: 2px solid #0a0a6d;
-    background-color: #0d0d8a;
+    background-color: var(--secondary-color);
   }
 
   .imgCompra {
@@ -224,13 +227,13 @@
     flex-direction: column;
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
       "Lucida Sans", Arial, sans-serif;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: bold;
   }
 
   .spanTitle {
     /* margin-left: 10px; */
-    color: #3e16ad;
+    color: linear-gradient(--primary-color);
     font-weight: bold;
     margin-top: 15px;
   }
@@ -239,10 +242,11 @@
   }
 
   .logoPartners {
-    background-color: #f1f1ff;
+    background-color: var(--background-color);
     bottom: 0;
     margin-bottom: 60px;
     padding: 8px;
+    size: 10px;
   }
 
   .logoPartners img {
@@ -294,24 +298,25 @@
 /* Inicio de los estilos para la sección del Banner */
 
 .banners {
-  background-color: rgb(209, 5, 5);
+  background-color: var(--primary-color);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   height: 100vh;
   width: 100%;
-  margin-top: -10rem;
+  margin-top: -9rem;
   margin-bottom: 5rem;
   padding: 2rem;
 }
 
 .title2 {
-  color: rgb(172, 163, 163);
+  color: var(--tertiary-color);
   display: flex;
   justify-content: center;
   padding: 20px;
-  margin-top: 48px;
+  margin-bottom: 1rem;
+  margin-top: 40px;
   font-size: 45px;
 }
 
@@ -394,7 +399,7 @@
   position: relative;
   max-width: 530px;
   display: flex;
-  bottom: 600px;
+  bottom: -10rem;
   justify-content: center;
   align-items: center;
   height: 200%;
@@ -408,15 +413,21 @@
   max-width: 90%; /* Ajusta según el diseño deseado */
   right: -23vw;
   left: 17vw;
+  color: black;
   top: 35vh;
   margin: 5vw;
   font-size: 2vw;
   align-items: center;
   line-height: 1.8;
-  background-color: var(--basic-700);
+  background-color: var(--secondary-color);
   z-index: 1;
   max-height: 35vw;
-  box-shadow: 0 3vw 2vw 1vw rgba(224, 166, 118, 0.904);
+  box-shadow: 0 1vw 1vw 0vw var(--tertiary-color);
+}
+
+.texto:hover {
+  transform: translateY(-20px);
+  box-shadow: 0px 0px 30px 1px var(--secondary-color); 
 }
 
 .textodarkMode {
@@ -603,15 +614,15 @@ imgPres.wrapper img {
 
   .globo {
     height: 65vw; /* ajusta la altura para pantallas más pequeñas */
-    top: -35rem;
+    top: 5rem;
   }
 
   .texto {
-    min-height: 85vw;
-    height: 100%;
+    min-height: 75vw;
+    height: 50%;
     justify-content: space-between;
     padding: 20px 5% 0;
-    top: 22rem;
+    top: 15rem;
     font-size: auto;
   }
 
@@ -623,7 +634,7 @@ imgPres.wrapper img {
     height: auto;
     margin-bottom: 15rem;
     height: 50%;
-    top: -50px;
+    top: -20rem;
     justify-content: center;
     /* padding: 20px 5% 0; */
   }
