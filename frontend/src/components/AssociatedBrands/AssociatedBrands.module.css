@@ -8,8 +8,11 @@
   display: flex;
   justify-content: center;
   padding: 25px;
-  margin-top: 5px;
-  font-size: 30px;
+  top: -40rem;
+  bottom: -30rem;
+  margin-top: 5rem;
+  font-size: 50px;
+  color: var(--secondary-color);
 }
 .card1 {
   width: 300px;
@@ -17,16 +20,16 @@
   margin: 50px;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, filter 0.3s ease;
+  box-shadow: 0 0 50px var(--tertiary-color);
+  transition: transform 0.5s ease, filter 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .card1:hover {
-  transform: rotateY(10deg);
-  filter: brightness(1.2);
+  transform: rotateY(15deg);
+  filter: brightness(1.5);
 }
 
 .card1 img {
