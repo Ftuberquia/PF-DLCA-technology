@@ -10,6 +10,9 @@ import {
 } from "@stripe/react-stripe-js";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import CartTotal from "../Cart/cartTotal";
+import { cache } from "../../components/NavBar/NavBar";
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 // Key visible ** la secreta esta en el Server
 const stripePromise = loadStripe(

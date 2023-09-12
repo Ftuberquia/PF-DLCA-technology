@@ -35,7 +35,14 @@ server.use((req, res, next) => {
 
 server.post('/api/checkout', async (req, res) => {
 	try{
-		const { id, amount, return_url } = req.body
+		const { id, amount, return_url, userId, productId, quantity, total_price } = req.body;
+		// const result = await Order.create({
+		// 	userId,
+		// 	productId,
+		// 	quantity,
+		// 	total_price,
+		//   });
+
 		const payment = await stripe.paymentIntents.create({
 			amount,
 			currency: "USD",
