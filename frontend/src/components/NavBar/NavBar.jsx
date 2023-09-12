@@ -5,10 +5,6 @@ import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState, useEffect } from "react";
-<<<<<<< HEAD
-import style from "./NavBar.module.css";
-=======
->>>>>>> 75edfb517535600d789d7355803e570256188087
 import axios from "axios";
 import emailjs from '@emailjs/browser';
 import style from "./NavBar.module.css"
@@ -16,7 +12,6 @@ import { LocalStorageCache } from "@auth0/auth0-react";
 
 import TotalItems from "../../views/Cart/TotalItems";
 import useLocalStorage from "./hooks/useLocalStorage";
-import style from "./NavBar.module.css";
 
 export const cache = new LocalStorageCache()
 
