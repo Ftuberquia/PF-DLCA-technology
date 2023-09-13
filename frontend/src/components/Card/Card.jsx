@@ -34,8 +34,8 @@ const Card = ({id, name, imageSrc, price, rating, stock, quantity, disabled}) =>
       if (userIdFromCache) {
         setUserId(userIdFromCache);
         return userIdFromCache;
-      } else if (user && user.id) {
-        const userId = user.id;
+      } else if (user && user.sub) {
+        const userId = user.sub;
         cache.set("userId", userId);
         setUserId(userId);
         return userId;
@@ -176,7 +176,6 @@ const Card = ({id, name, imageSrc, price, rating, stock, quantity, disabled}) =>
       await deleteFavorite(id, userId);
       setIsFavorite(false);
       alert("Producto eliminado de favoritos!");
-      window.location.reload();
     } catch (error) {
       console.error("Error al eliminar de favoritos:", error);
     }
