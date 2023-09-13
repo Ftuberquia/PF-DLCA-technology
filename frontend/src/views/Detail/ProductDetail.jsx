@@ -27,7 +27,7 @@ const ProductDetail = () => {
  const [isLoading, setIsLoading] = useState(true);
 
   // Estado de autenticación
-  const { isAuthenticated, loginWithRedirect, getIdTokenClaims } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, user } = useAuth0();
 
   useEffect(() => {
     dispatch(getProductDetail(id));
@@ -37,31 +37,29 @@ const ProductDetail = () => {
   }, [dispatch, id]);
 
   const getUserId = async ()=>{
-    try {
-      const tokenClaims = await getIdTokenClaims();
+    if(isAuthenticated){
       const userIdFromCache = cache.get("userId");
-      if (userIdFromCache) {        
+      if (userIdFromCache) {
         setUserId(userIdFromCache);
         return userIdFromCache;
-      } else if (tokenClaims && tokenClaims.sub) {
-        const userId = tokenClaims.sub;
+      } else if (user && user.id) {
+        const userId = user.id;
         cache.set("userId", userId);
         setUserId(userId);
         return userId;
-      }
-    }catch (error) {
-      console.error("Error al obtener los claims del token de identificación:", error);
-    }
+      }}
+    return null;
   }
 
   //Para obtener el userId desde el localStorage
   useEffect(() => {
     getUserId()
+    // eslint-disable-next-line
   }, []);
 
   //verificar si el producto esta en favoritos
   const checkFavoriteStatus = async () => {
-    if(userId){
+    if(userId!==null){
       try {
         // Llamar a la función fetchData para obtener los productos favoritos del usuario
         const favoriteProducts = await fetchData(userId);
@@ -83,15 +81,14 @@ const ProductDetail = () => {
   }, [userId, id]);
 
   const addToFavorites = async () => {
-    if (!userId) {
+    if (userId===null) {
       alert("Debes iniciar sesión para agregar a favoritos");
     } else {
-      const body = { productId: id, userId: userId }; // Crea un objeto con productId y userId
       try {
-        await addFavorite(body);
+        await addFavorite(id,userId);
         setIsFavorite(true);
       } catch (error) {
-        console.error('Error al agregar a favoritos:', error);
+        console.error("Error al agregar a favoritos:", error);
       }
     }
   };
