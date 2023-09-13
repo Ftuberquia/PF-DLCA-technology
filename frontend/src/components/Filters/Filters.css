@@ -36,7 +36,7 @@
 
 body.darker .filter-butt{
     background-color: rgb(45, 45, 45);
-    color: yellow;
+    color: var(--text-color);
 }
 
 body.darker .order-butt {

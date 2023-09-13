@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux';
 import styles from "./ConfirmationPage.module.css"; // Importa los estilos
 import emailjs from '@emailjs/browser';
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Loading from '../../components/Loading/Loading';
 
 const ConfirmationPage = () => {
 
@@ -43,8 +44,23 @@ const ConfirmationPage = () => {
     sendEmail();
   }, []);
 
+  const [isLoadingTimeout, setIsLoadingTimeout] = useState(true);
+
+  useEffect(() => {
+    // Establecer isLoadingTimeout en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoadingTimeout(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
+    <>
+      {isLoadingTimeout ? (
+        <div className="loadingContainer">
+          <Loading />
+        </div>
+      ) : (
     <div className={styles.contenedorConfirm}>
       <div className={styles["confirmation-container"]}>
       <h1 className={styles["confirmation-title"]}>Compra Exitosa</h1>
@@ -68,7 +84,8 @@ const ConfirmationPage = () => {
       </a>
     </div>
     </div>
-    
+    )}
+    </>
   );
 };
 
