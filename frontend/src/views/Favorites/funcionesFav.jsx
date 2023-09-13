@@ -11,9 +11,9 @@ export const fetchData = async (userId) => {
     }
   };
 
-export const addFavorite = async (body) => {
+export const addFavorite = async (productId,userId) => {
     try {
-      const response = await axios.post("/favorites", body);
+      const response = await axios.post(`/favorites/addFav/${userId}/${productId}`);
       return response.data;
     } catch (error) {
       // Manejar el error en caso de que la solicitud falle
@@ -24,7 +24,7 @@ export const addFavorite = async (body) => {
 
 export const deleteFavorite = async (productId,userId) => {
     try {
-      const response = await axios.delete(`/favorites/${userId}/${productId}`);
+      const response = await axios.delete(`/favorites/delFav/${userId}/${productId}`);
       return response.data;
     } catch (error) {
       // Manejar el error en caso de que la solicitud falle
