@@ -6,6 +6,7 @@ import { addToCart, resetName } from "../../redux/actions/index";
 import axios from "axios";
 import style from './Productos.module.css'
 import SearchBar from "../../components/SearchBar/SearchBar";
+import Loading from "../../components/Loading/Loading";
 
 function Productos() {
 
@@ -16,6 +17,7 @@ function Productos() {
   const [filteredProducts,setFilteredProducts]=useState([])
   const [page, setPage] = useState(1)
   const [isLastPage, setIsLastPage] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setProductsData([])
@@ -144,8 +146,22 @@ function Productos() {
     loadProducts();
   }
 
+  useEffect(() => {
+    // Establecer isLoading en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className={style.homeContainer}>
+      {isLoading ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
+      <div>
       <Filters updateFilters={updateFilters} handleResetFilter={(event)=>handleResetFilter(event)}/>
       <div className={style.search}>
         <SearchBar updateSearch={updateSearch}/>
@@ -153,7 +169,9 @@ function Productos() {
       <div>
       <Cards products={filteredProducts.length > 0 ? filteredProducts:productsData} page={page} isLastPage={isLastPage} handleNextPage={handleNextPage} handlePrevPage={handlePrevPage}/>
       </div>
-    </div>
+      </div>
+     )}
+  </div>
   );
 }
 

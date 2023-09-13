@@ -1,6 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import styles from './ContactUs.module.css';
+import { Link } from "react-router-dom";
+import Loading from "../../components/Loading/Loading";
 
 export const ContactUs = () => {
 
@@ -23,9 +25,23 @@ export const ContactUs = () => {
             window.alert('Hubo un error al enviar el correo. Por favor, inténtalo de nuevo.');
         });
     }
+    const [isLoading, setIsLoading] = useState(true);
 
+    useEffect(() => {
+      // Establecer isLoading en falso después de 2 segundos
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }, []);
 
     return (
+        <>
+        {isLoading ? (
+        <div className={styles.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
         <div className={styles.container}>
             <div className={styles.title}>
         <h2>Contáctenos</h2>
@@ -44,7 +60,12 @@ export const ContactUs = () => {
             </fieldset>
             <button className={styles.button}>Enviar</button>
         </form>
+        <Link to="/">
+            <button className={styles.button2}>Volver</button>
+        </Link>
         </div>
-    </div>
-    )
+        </div>
+      )}
+    </>
+  )
 };
