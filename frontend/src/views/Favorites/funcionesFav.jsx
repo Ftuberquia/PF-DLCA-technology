@@ -7,7 +7,6 @@ export const fetchData = async (userId) => {
     } catch (error) {
       // Manejar el error en caso de que la solicitud falle
       console.error(error);
-      throw error;
     }
   };
 
