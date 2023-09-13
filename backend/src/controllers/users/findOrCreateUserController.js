@@ -18,6 +18,9 @@ const findOrCreateUserController = async (userData) => {
         });
     
         if (created) {
+          const newCart = await Cart.create({
+            userId: user.id, // Asigna el userId del nuevo usuario al carrito
+          });
           // El usuario fue creado
           return { status: 201, data: { message: 'Usuario creado con éxito', user } };
         } else {
