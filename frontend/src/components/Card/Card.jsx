@@ -26,22 +26,22 @@ const Card = ({id, name, imageSrc, price, rating, stock, quantity, disabled}) =>
   // Carrito
   const [isInCart, setIsInCart] = useState(false);
 
-  const { user } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
   
-  const getUserId = () => {
-    const userIdFromCache = cache.get("userId");
-    if (userIdFromCache) {
-      setUserId(userIdFromCache);
-      return userIdFromCache;
-    } else if (user && user.id) {
-      const userId = user.id;
-      cache.set("userId", userId);
-      setUserId(userId);
-      return userId;
-    }
-  
+  const getUserId = async ()=>{
+    if(isAuthenticated){
+      const userIdFromCache = cache.get("userId");
+      if (userIdFromCache) {
+        setUserId(userIdFromCache);
+        return userIdFromCache;
+      } else if (user && user.id) {
+        const userId = user.id;
+        cache.set("userId", userId);
+        setUserId(userId);
+        return userId;
+      }}
     return null;
-  };
+  }
 
   useEffect(() => {
     getUserId();
