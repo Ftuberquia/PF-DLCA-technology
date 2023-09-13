@@ -14,19 +14,8 @@ import { cache } from "../../components/NavBar/NavBar";
 
 import style from "./Card.module.css";
 
-const Card = ({
-  id,
-  name,
-  imageSrc,
-  price,
-  rating,
-  stock,
-  quantity,
-  disabled,
-}) => {
+const Card = ({id, name, imageSrc, price, rating, stock, quantity, disabled}) => {
   const dispatch = useDispatch();
-
-  const { getIdTokenClaims } = useAuth0();
 
   //Para guardar el userId
   const [userId, setUserId] = useState(null);
@@ -37,33 +26,27 @@ const Card = ({
   // Carrito
   const [isInCart, setIsInCart] = useState(false);
 
-  const getUserId = async () => {
-    try {
-      const tokenClaims = await getIdTokenClaims();
-      const userIdFromCache = cache.get("userId");
-
-      if (userIdFromCache) {
-        setUserId(userIdFromCache);
-        return userIdFromCache;
-      } else if (tokenClaims && tokenClaims.sub) {
-        const userId = tokenClaims.sub;
-        cache.set("userId", userId);
-        setUserId(userId);
-        return userId;
-      }
-    } catch (error) {
-      console.error(
-        "Error al obtener los claims del token de identificación:",
-        error
-      );
+  const { user } = useAuth0();
+  
+  const getUserId = () => {
+    const userIdFromCache = cache.get("userId");
+    if (userIdFromCache) {
+      setUserId(userIdFromCache);
+      return userIdFromCache;
+    } else if (user && user.id) {
+      const userId = user.id;
+      cache.set("userId", userId);
+      setUserId(userId);
+      return userId;
     }
-
+  
     return null;
   };
 
-  // useEffect(() => {
-  //   getUserId();
-  // }, []);
+  useEffect(() => {
+    getUserId();
+    // eslint-disable-next-line
+  },[])
 
   // Verificar si el producto está en el carrito
   const cartProducts = useSelector((state) => state.cart);
@@ -154,7 +137,7 @@ const Card = ({
 
   //verificar si el producto esta en favoritos
   const checkFavoriteStatus = async () => {
-    if (userId) {
+    if (userId!==null) {
       try {
         // Llamar a la función fetchData para obtener los productos favoritos del usuario
         const favoriteProducts = await fetchData(userId);
@@ -176,12 +159,11 @@ const Card = ({
   }, [userId, id]);
 
   const addToFavorites = async () => {
-    if (!userId) {
+    if (userId===null) {
       alert("Debes iniciar sesión para agregar a favoritos");
     } else {
-      const body = { productId: id, userId: userId }; // Crea un objeto con productId y userId
       try {
-        await addFavorite(body);
+        await addFavorite(id,userId);
         setIsFavorite(true);
       } catch (error) {
         console.error("Error al agregar a favoritos:", error);
