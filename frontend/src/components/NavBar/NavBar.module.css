@@ -1,19 +1,24 @@
 .navbar {
 	padding: 16px 16px 16px;
-	margin-bottom: 25px;
+	margin-bottom: 27px;
 	display: flex;
 	flex-wrap: wrap;
-	background-color: white;
+	background-color: var(--background-color);
 	justify-content: space-between;
 	align-items: center;
-	border-bottom: 5px solid var(--success-500);
+	border-bottom: 3px solid var(--tertiary-color);
   }
   
   .navbar span {
-	font-size: 22px;
-	color: rgb(65, 60, 60);
+	font-size: 27px;
+	color: var(--secondary-color);
 	display: inline-block;
 	margin: 10px;
+  }
+
+.navbar span:hover {
+	/* transform: translateY(-20px); */
+	box-shadow: 0px 0px 10px 1px var(--secondary-color); 
   }
 
   navbar.name {
@@ -22,25 +27,29 @@
 	box-shadow: 5px;
 	color: rgb(221, 26, 26);
 	font-weight: 15px;
-	border-color: azure;
+	border-color: var(--secondary-color);
   }
   
   .navbar .buttons {
 	margin-left: auto;
 	display: flex;
 	gap: 8px;
-	height: 18px;
+	height: 32px;
+	color:var(--secondary-color);
 	border-radius: 10px;
+	box-shadow: var(--secondary-color);
   }
   
   .navbar .buttons a img {
 	height: 100%;
-	color:rgb(66, 61, 61);
+	color:var(--secondary-color);
+	margin-bottom: 10rem;
+	box-shadow: 0 10px 10px var(--tertiary-color);
   }
   
   .navbar .buttons .cart {
 	position: relative;
-	color:rgb(34, 33, 33);
+	color:var(--secondary-color);
   }
   
   .navbar .buttons .cart span {
@@ -48,8 +57,8 @@
 	top: 18px;
 	right: -6px;
 	font-size: 22px;
-	color: rgb(44, 42, 42);
-	background-color: var(--main-default);
+	color: var(--text-color);
+	color: var(--secondary-color);
 	padding: 3px 5px;
 	border-radius: 50%;
   }
@@ -85,7 +94,7 @@
 	  order: 3;
 	  gap: 24px;
 	  height: 16px;
-	  color:rgb(24, 23, 23);
+	  color:var(--text-color);
 	}
   
 	.navbar .buttons .cart {

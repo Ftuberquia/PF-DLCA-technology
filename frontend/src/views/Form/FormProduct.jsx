@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../redux/actions/index";
-import validate from '../../views/Form/Validate'; 
+import validate from '../../views/Form/Validate';
+import Loading from "../../components/Loading/Loading"; 
 
 import {
   getBrands,
@@ -212,7 +213,23 @@ const FormProduct = () => {
   const handleInputSubCategory2 = () => {
     setNewSubcategory(false);
   };
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Establecer isLoading en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
+    <>
+      {isLoading ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
     <div className={style.form__C}>
       <div className={darkMode ? style.carddarkMode : style.card}>
         <span className={style.card__title} id="title">
@@ -511,7 +528,10 @@ const FormProduct = () => {
 
       <br></br>
     </div>
-  );
+  )}
+</>
+)
 };
+
 
 export default FormProduct;

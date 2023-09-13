@@ -9,6 +9,8 @@ import { cache } from "../../components/NavBar/NavBar";
 
 import Swal from "sweetalert2";
 import style from "./ProductDetail.module.css";
+import Loading from "../../components/Loading/Loading";
+
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -20,6 +22,9 @@ const ProductDetail = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [cartQuantity, setCartQuantity] = useState(1); // Estado para la cantidad en el carrito
+
+ // STATE
+ const [isLoading, setIsLoading] = useState(true);
 
   // Estado de autenticación
   const { isAuthenticated, loginWithRedirect, getIdTokenClaims } = useAuth0();
@@ -101,9 +106,13 @@ const ProductDetail = () => {
     }
   };
 
-  if (!product) {
-    return <div>Cargando...</div>;
-  }
+  // if (!product) {
+  //   return (
+  //     <div>
+  //       <Loading />
+  //     </div>
+  //   );
+  // }
 
   function decrementCartQuantity() {
     // disminuye en 1 la cantidad del producto en el carrito, pero solo si la cantidad actual es mayor que 1.
@@ -179,7 +188,22 @@ const ProductDetail = () => {
     event.preventDefault();
   };
 
+  useEffect(() => {
+    // Establecer isLoading en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+
   return (
+    <>
+      {isLoading ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
     <div className={style.conteiner}>
       <div className={style.contNavCat}>
         <Link to={"/productos"} className={style.volver}>
@@ -231,10 +255,11 @@ const ProductDetail = () => {
             Comprar ahora
             </button>
           )}
+         )
+            </div>
+          </div>
         </div>
-      </div>
-
-      {/* <form>
+      /* <form>
                 <label htmlFor="comment">Comentario:</label>
                 <textarea id="comment" name="comment" />
                 <button type="submit">Enviar comentario</button>
@@ -246,9 +271,10 @@ const ProductDetail = () => {
                 <span className="star">&#9734;</span>
                 <span className="star">&#9734;</span>
                 <p>Calificación promedio: 3 estrellas</p>
-            </div> */}
-    </div>
-  );
-};
-
+            </div> */
+          )}
+      </>
+    );
+  };
+                
 export default ProductDetail;

@@ -1,64 +1,103 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import {cache} from "../../components/NavBar/NavBar"
 import style from "./UserProfileView.module.css";
-const UserProfileView = () => {
-  const { logout, user, isAuthenticated, isLoading } = useAuth0();
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
+import axios from "axios";
+import Loading from "../../components/Loading/Loading";
 
-  //SI MODIFICAN ESTE COMPONENTE, NO QUITEN EL HANDLELOGOUT DEL BOTON LOG OUT!!!!!!!!!!!!
-  const handleLogOut = () =>{
-    cache.remove("userId")
-    logout({ logoutParams: {returnTo: window.location.origin }})
-  }
+
+const UserProfileView = () => {
+  const { logout, user, isAuthenticated, isLoading, getIdTokenClaims } = useAuth0();
+  const [newUsername, setNewUsername] = useState("");
+  const [newAvatar, setNewAvatar] = useState("");
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setNewUsername(user?.username || "");
+      setNewAvatar(user?.avatar_img || "");
+    }
+  }, [isAuthenticated, user]);
+
+  // if (isLoading) {
+  //   return <div>Loading ...</div>;
+  // }
+
+  const handleLogOut = () => {
+    logout({ logoutParams: { returnTo: window.location.origin } });
+  };
+
+  const handleUpdateProfile = async () => {
+    setIsUpdating(true);
+
+    try {
+      const tokenClaims = await getIdTokenClaims();
+      const userId = tokenClaims.sub;
+
+      // Enviar la información actualizada al backend
+      await axios.put(`/api/users/${userId}`, {
+        username: newUsername,
+        avatar_img: newAvatar,
+      });
+
+      // Actualizar la información del usuario localmente
+      user.username = newUsername;
+      user.avatar_img = newAvatar;
+      setIsUpdating(false);
+    } catch (error) {
+      console.error("Error al actualizar el perfil:", error);
+      setIsUpdating(false);
+    }
+  };
+
+  const [isLoadingTimeout, setIsLoadingTimeout] = useState(true);
+
+  useEffect(() => {
+    // Establecer isLoadingTimeout en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoadingTimeout(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
-    <h1>ESTE SERIA LA VIEW DE PERFIL DEL USUARIO RECIEN INGRESADO</h1>
+      {isLoadingTimeout ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
+        <>
+      <h1>VISTA DE PERFIL DEL USUARIO</h1>
 
       {isAuthenticated && (
         <div>
-          <img src={user.picture} alt={user.name} />
-          <h2>{user.name}</h2>
-          <p>{user.email}</p>
-          <p>{user.nickname}</p>
+          <img src={newAvatar || user?.avatar_img} alt={user?.name} />
+          <input
+            type="text"
+            value={newUsername}
+            onChange={(e) => setNewUsername(e.target.value)}
+            placeholder="Nuevo nombre de usuario"
+          />
+          {isUpdating && <p>Actualizando perfil...</p>}
+          <h2>{user?.name}</h2>
+          <p>{user?.email}</p>
+          <p>{newUsername || user?.username}</p>
+          <input
+            type="text"
+            value={newAvatar}
+            onChange={(e) => setNewAvatar(e.target.value)}
+            placeholder="Nueva URL de avatar"
+          />
+          <button onClick={handleUpdateProfile} disabled={isUpdating}>
+            Guardar Cambios
+          </button>
         </div>
       )}
-      <button onClick={() => handleLogOut()}>
-        Log Out
-      </button>
+      <button onClick={handleLogOut}>Cerrar Sesión</button>
+      </>
+      )}
     </>
   );
 };
-  //     isAuthenticated && (
-  //       <div className={style.usercontainer}>
-  //       <div className={style.profileimage}>
-  //         <img src={user.picture} alt={user.name} />
-  //       </div>
-  //       <form>
-  //         <div className={style.userlabel1}>
-  //           <label htmlFor="name">Name:</label>
-  //           <div className={style.userinput1}>
-  //             <input type="text" id="name" name="name" />
-  //           </div>
-        
-  //           <label htmlFor="email">Email:</label>
-  //           <input type="email" id="email" name="email" />
-        
-  //           <label htmlFor="nickname">Nickname:</label>
-  //           <input type="nickname" id="nickname" name="nickname" />
-  //         </div>
-  //           <button className={style.userboton1} type="registro">Login</button>
-  //         </form>
-  //         <div>
-  //         <button className={style.userboton2} onClick={handleLogOut}>
-  //           Log Out
-  //         </button>
-  //         </div>
-  //       </div>
-  // ));
-  //};
-  
-  export default UserProfileView;
+
+export default UserProfileView;

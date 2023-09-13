@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import style from './FAQ.module.css';
+import Loading from "../../components/Loading/Loading";
 
 const FAQsData = [
   {
@@ -36,7 +37,23 @@ const FAQ = () => {
     setShowFullAnswer((prevIndex) => (prevIndex === index ? -1 : index));
   };
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Establecer isLoading en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
+    <>
+      {isLoading ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
     <div className={style.faq}>
       <div className={style.questionsContainer}>
         {FAQsData.map((item, index) => (
@@ -68,7 +85,9 @@ const FAQ = () => {
       </div>
       </div>
     </div>
-  );
+    )}
+ </>
+  )
 };
 
 export default FAQ;

@@ -6,26 +6,59 @@ import Carousel from "../Carousel/Carousel";
 import Featured from "../../views/Featured/Featured";
 // import Ofertas from "../../views/Ofertas/Ofertas";
 import { Link } from "react-router-dom";
-import Logo from "../../img/logo-dlca.png";
+import Logo from "../../img/logo-dlca-sfondo.png";
 import Cards from "../Cards/Cards";
 import AssociatedBrands from "../AssociatedBrands/AssociatedBrands";
 import Services from "../Services/Services";
 import Questions from "../Questions/Questions";
+import Loading from "../Loading/Loading";
 
 function Landing() {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // datos de axios de bd y setProducts con la respuesta
   }, []);
 
+  useEffect(() => {
+    // Establecer isLoading en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+  
   return (
     <div className={style.containerLanding}>
+      {isLoading ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
+        <div>
       <Carousel />
       <div className={style.card1}>
         <AssociatedBrands />
       </div>
-      <Featured />
+      <div>
+          <div className={style.globo}>
+            <img
+              className={style.imgPres}
+              src="https://i.ibb.co/GHM1qNZ/clientes-felices.jpg"
+              alt=""
+            />
+            <p className={style.texto}>
+              Somos una empresa comprometida con la calidad y excelencia en la
+              industria de la tecnología. Ofrecemos una amplia gama de productos
+              de alta calidad y a los mejores precios. Contamos con un equipo de
+              profesionales capacitados en brindar un servicio excepcional de
+              atención a nuestros clientes y proveedores. En DLCA Technology,
+              nos esforzamos por ser líderes en la industria y proporcionar
+              soluciones confiables y eficientes para todos nuestros clientes.
+            </p>
+          </div>
+        </div>
       <div className={style.contPcMarcas}>
         <div className={style.imgArmaPC}>
           {/* <Link to="/products">
@@ -46,24 +79,8 @@ function Landing() {
             />
           ))}
         </div> */}
-        <div>
-          <div className={style.globo}>
-            <img
-              className={style.imgPres}
-              src="https://i.ibb.co/GHM1qNZ/clientes-felices.jpg"
-              alt=""
-            />
-            <p className={style.texto}>
-              Somos una empresa comprometida con la calidad y excelencia en la
-              industria de la tecnología. Ofrecemos una amplia gama de productos
-              de alta calidad y a los mejores precios. Contamos con un equipo de
-              profesionales capacitados en brindar un servicio excepcional de
-              atención a nuestros clientes y proveedores. En DLCA Technology,
-              nos esforzamos por ser líderes en la industria y proporcionar
-              soluciones confiables y eficientes para todos nuestros clientes.
-            </p>
-          </div>
-        </div>
+        
+        <Featured />
         <div className={style.pcgamer}>
             <img src="https://i.ibb.co/tXnGdCP/banner-compu.webp" alt="" />
         </div>
@@ -113,8 +130,10 @@ function Landing() {
         <h3 className={style.titlePartners}>
           Somos distribuidores certificados de las principales marcas de
           tecnología del país.
-        </h3>
-      </div>
+          </h3>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
