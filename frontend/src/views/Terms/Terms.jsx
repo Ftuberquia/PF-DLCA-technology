@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import style from './Terms.module.css';
-
+import Loading from "../../components/Loading/Loading";
 
 const Terms = () => {
+	const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Establecer isLoading en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
 	return (
 		<>
+		{isLoading ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
 		<div className={style.termscontainer}>
 			<section>
 				<h3>Introducción</h3>
@@ -39,10 +54,11 @@ const Terms = () => {
 			</footer>
 			<br></br>
 			</div>
+			)}
 			<br></br>
-            </>
-	)
-}
+		  </>
+		)
+	  };
 
 export default Terms;
 

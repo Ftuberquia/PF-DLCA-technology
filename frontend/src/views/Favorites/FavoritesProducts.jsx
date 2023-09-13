@@ -7,6 +7,8 @@ import Cards from "../../components/Cards/Cards";
 import { cache } from "../../components/NavBar/NavBar";
 
 import style from './FavoritesProducts.module.css'
+import Loading from "../../components/Loading/Loading";
+
 
 export default function Favorites() {
   const history = useHistory();
@@ -61,11 +63,23 @@ export default function Favorites() {
     }
   }, [userId, history]);
 
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
+  const [loading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Establecer isLoading en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
+    <>
+      {loading ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
     <div className={style.favoritesCont}>
       <h1>Favoritos</h1>
       {errorMessage ? (
@@ -74,5 +88,7 @@ export default function Favorites() {
         <Cards products={favoriteProducts} />
       )}
     </div>
-  );
-}
+    )}
+   </>
+  )
+};

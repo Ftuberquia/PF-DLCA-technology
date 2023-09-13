@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import Spinner from "../Landing/Landing";
+// import Spinner from "../Landing/Landing";
 import { Link } from "react-router-dom";
 import style from "./UserProfile.module.css";
-
+import Loading from "../Loading/Loading";
 
 const UserProfile = () => {
   const { user } = useAuth0();
@@ -51,12 +51,29 @@ const UserProfile = () => {
   });
 
   // Rest of your component remains the same
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    // Establecer isLoading en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
+    <>
+    {isLoading ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
     <div className={style.form__C}>
       {/* Rest of your component remains the same */}
     </div>
-  );
-};
+   )}
+   </>
+ );
+}
 
 export default UserProfile;
