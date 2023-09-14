@@ -21,6 +21,7 @@ export const UPDATE_CART_ITEMS = 'UPDATE_CART_ITEMS';
 export const GET_CART_ITEMS = 'GET_CART_ITEMS';
 export const SAVE_CART_SUCCESS = 'SAVE_CART_SUCCESS'
 export const SAVE_CART_ERROR = 'SAVE_CART_ERROR'
+export const GET_PURCHASED_PRODUCTS = 'GET_PURCHASED_PRODUCTS';
 
 export const getAllProducts = () => async dispatch => {
     try {
@@ -242,3 +243,17 @@ export const updateCartItems = (cartItems) => ({
       }
     };
   };
+
+  export const getPurchasedProducts = () => async (dispatch) => {
+    try {
+      const response = await axios.get('/purchased-products'); // ENDPOINT!!!!!!
+      
+      dispatch({
+        type: GET_PURCHASED_PRODUCTS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error('Error al obtener los productos comprados:', error);
+    }
+  };
+
