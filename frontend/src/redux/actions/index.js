@@ -264,3 +264,16 @@ export const updateCartItems = (cartItems) => ({
       }
     };
   };
+
+  export const getPurchasedProducts = () => async (dispatch) => {
+    try {
+      const response = await axios.get('/purchased-products'); // ENDPOINT!!!!!!
+      
+      dispatch({
+        type: GET_PURCHASED_PRODUCTS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error('Error al obtener los productos comprados:', error);
+    }
+  };
