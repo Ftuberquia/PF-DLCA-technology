@@ -6,21 +6,37 @@ import Carousel from "../Carousel/Carousel";
 import Featured from "../../views/Featured/Featured";
 // import Ofertas from "../../views/Ofertas/Ofertas";
 import { Link } from "react-router-dom";
-import Logo from "../../img/logo-dlca.png";
+import Logo from "../../img/logo-dlca-sfondo.png";
 import Cards from "../Cards/Cards";
 import AssociatedBrands from "../AssociatedBrands/AssociatedBrands";
 import Services from "../Services/Services";
 import Questions from "../Questions/Questions";
+import Loading from "../Loading/Loading";
 
 function Landing() {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // datos de axios de bd y setProducts con la respuesta
   }, []);
 
+  useEffect(() => {
+    // Establecer isLoading en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+  
   return (
     <div className={style.containerLanding}>
+      {isLoading ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
+        <div>
       <Carousel />
       <div className={style.card1}>
         <AssociatedBrands />
@@ -114,8 +130,10 @@ function Landing() {
         <h3 className={style.titlePartners}>
           Somos distribuidores certificados de las principales marcas de
           tecnología del país.
-        </h3>
-      </div>
+          </h3>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
