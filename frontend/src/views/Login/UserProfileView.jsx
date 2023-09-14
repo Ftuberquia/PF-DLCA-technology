@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import style from "./UserProfileView.module.css";
 import axios from "axios";
+import Loading from "../../components/Loading/Loading";
+
 
 const UserProfileView = () => {
   const { logout, user, isAuthenticated, isLoading, getIdTokenClaims } = useAuth0();
@@ -16,9 +18,9 @@ const UserProfileView = () => {
     }
   }, [isAuthenticated, user]);
 
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading ...</div>;
+  // }
 
   const handleLogOut = () => {
     logout({ logoutParams: { returnTo: window.location.origin } });
@@ -47,8 +49,24 @@ const UserProfileView = () => {
     }
   };
 
+  const [isLoadingTimeout, setIsLoadingTimeout] = useState(true);
+
+  useEffect(() => {
+    // Establecer isLoadingTimeout en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoadingTimeout(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
+      {isLoadingTimeout ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
+        <>
       <h1>VISTA DE PERFIL DEL USUARIO</h1>
 
       {isAuthenticated && (
@@ -76,6 +94,8 @@ const UserProfileView = () => {
         </div>
       )}
       <button onClick={handleLogOut}>Cerrar Sesión</button>
+      </>
+      )}
     </>
   );
 };

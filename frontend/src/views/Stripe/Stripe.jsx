@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import CartTotal from "../Cart/cartTotal";
 import { cache } from "../../components/NavBar/NavBar";
 import { useAuth0 } from "@auth0/auth0-react";
+import Loading from "../../components/Loading/Loading"; 
 
 
 // Key visible ** la secreta esta en el Server
@@ -23,7 +24,7 @@ const CheckoutForm = () => {
   const history = useHistory(); // Inicializa useHistory
   const stripe = useStripe();
   const elements = useElements();
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const cardElement = useRef(null);
 
   
@@ -41,7 +42,7 @@ const CheckoutForm = () => {
       try {
         const { id } = paymentMethod;
         const { data } = await axios.post(
-          "http://localhost:3001/api/checkout",
+          "http://localhost:3001/compras",
           {
             id: id,
             amount: 10000, // precio a cambiar
@@ -81,9 +82,11 @@ const CheckoutForm = () => {
         <CardElement className={style.visa} />
       </div>
       <button className={style.button} disabled={!stripe}>
-        {loading ? (
+        {isLoading ? (
           <div>
-            <span className={style.loader}>Loading</span>
+            <span className={style.loadingContainer}>
+              <Loading />
+            </span>
           </div>
         ) : (
           "Comprar"

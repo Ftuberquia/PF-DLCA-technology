@@ -1,4 +1,4 @@
-const { Users } = require("../../db")
+const { Users, Cart } = require("../../db")
 
 const findOrCreateUserController = async (userData) => {
 
@@ -10,7 +10,7 @@ const findOrCreateUserController = async (userData) => {
           where: { id }, // Busca por el campo 'id'
           defaults: {
             first_name,
-            last_name,
+            last_name, 
             username,
             email,
             // Otros campos de datos que quieras asignar por defecto
@@ -18,7 +18,10 @@ const findOrCreateUserController = async (userData) => {
         });
     
         if (created) {
-          // El usuario fue creado
+          const newCart = await Cart.create({
+            userId: user.id, // Asigna el userId del nuevo usuario al carrito
+          });
+
           return { status: 201, data: { message: 'Usuario creado con éxito', user } };
         } else {
           // El usuario ya existía

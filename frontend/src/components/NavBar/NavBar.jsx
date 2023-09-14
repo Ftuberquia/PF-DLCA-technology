@@ -9,7 +9,6 @@ import axios from "axios";
 import emailjs from '@emailjs/browser';
 import style from "./NavBar.module.css"
 import { LocalStorageCache } from "@auth0/auth0-react";
-
 import TotalItems from "../../views/Cart/TotalItems";
 import useLocalStorage from "./hooks/useLocalStorage";
 
@@ -105,12 +104,7 @@ const NavBar = () => {
           Contáctenos
         </Link>
       </span>
-       <div className={style.buyContainer}>
-         <NavLink to={'/compra'} className={style.buy}>
-              Comprar
-         </NavLink>
-
-       </div>
+      
       <div className={style.buttons}>
       <NavLink to={"login"} onClick={isAuthenticated ? undefined : () => loginWithPopup()}>
         {isAuthenticated ? (

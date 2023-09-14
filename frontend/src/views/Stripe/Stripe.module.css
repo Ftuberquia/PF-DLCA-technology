@@ -60,7 +60,7 @@
     transform: scale(1.1);
     background-color:var(--secondary-color); 
   }
-  .loader {
+  /* .loader {
     width: 38px;
     height: 38px;
     display: inline-block;
@@ -100,7 +100,7 @@
       transform: rotate(360deg);
     }
   }
-  
+   */
   /* .image{
     background-color: white;
     width: 16rem;

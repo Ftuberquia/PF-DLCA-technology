@@ -35,8 +35,10 @@
 }
 
 body.darker .filter-butt{
+
     background-color:var(--secondary-color);
     color:var( --background-color);
+  
 }
 
 body.darker .order-butt {

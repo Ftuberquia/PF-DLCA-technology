@@ -9,8 +9,8 @@
   display: grid;
   align-items: center;
   border-radius: 20px;
-  width: 400px;
-  height: 250px;
+  width: 500px;
+  height: auto;
   padding: 20px;
   background-color: #f0f0f0;
   }
@@ -27,6 +27,13 @@
     margin-bottom: 20px;
     background-color: rgb(250, 75, 75);
     padding: 10px;
+    border-radius: 10px;
+  }
+  .cart-items{
+    background-color: gray;
+    height: auto;
+    color: rgb(250, 75, 75);
+    font-size: x-large;
     border-radius: 10px;
   }
   

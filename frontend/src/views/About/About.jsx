@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import style from './About.module.css';
+import Loading from "../../components/Loading/Loading";
 
 const About = () => {
-	return (
-		<>
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Establecer isLoading en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      {isLoading ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
 		<div className={style.aboutcontainer}>
 			<section>
 				<h3>Nosotros</h3>
@@ -29,11 +45,11 @@ const About = () => {
 
 			
 			<br></br>
-			</div>
-			<br></br>
-		</>
-	)
-}
+        </div>
+      )}
+      <br></br>
+    </>
+  )
+};
 
 export default About;
-
