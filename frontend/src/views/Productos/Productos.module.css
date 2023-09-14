@@ -8,7 +8,9 @@
 }
 .search{
     width: 15rem;
+    margin-top: 2rm;
     justify-content: center;
     align-items: center;
     display: flex;
+
 }

@@ -7,9 +7,9 @@ const favorites = Router()
 favorites.get("/:userId", getFavorite);
 
 //Para agregar favs
-favorites.post('/', saveFavorite);
+favorites.post('/addFav/:userId/:productId', saveFavorite);
 
 //Para eliminar de fav un producto
-favorites.delete('/:userId/:productId', deleteFavorite);
+favorites.delete('/delFav/:userId/:productId', deleteFavorite);
 
 module.exports = favorites
