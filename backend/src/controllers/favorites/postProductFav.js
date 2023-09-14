@@ -2,14 +2,13 @@ const { Users, Products } = require('../../db');
 
 const saveFavoriteProduct = async (req, res) => {
   try {
-    const { userId,  productId } = req.body;
+    const { userId,  productId } = req.params;
 
     // Verifica si el usuario y el producto existen
     const user = await Users.findByPk(userId);
     const product = await Products.findByPk(productId);
     
     if (!user) {
-        //encontrar forma de guardar el producto para que se pueda agregar una vez se loguee el usuario
         return res.status(404).json({ message: 'No estas logueado! Registrate o ingresa para agregar a favoritos' });
     }
     if(!product){

@@ -32,7 +32,7 @@
 .button1{
     color: #ecf0f1;
  font-size: 17px;
- background-color: #000000c5;
+ background-color:var(--secondary-color);
  border: 1px solid #000000;
  border-radius: 5px;
  padding: 10px;
@@ -53,7 +53,7 @@
 .button2{
     color: #ecf0f1;
  font-size: 17px;
- background-color: #000000c5;
+ background-color:var(--secondary-color);
  border: 1px solid #000000;
  border-radius: 5px;
  padding: 10px;

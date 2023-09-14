@@ -9,6 +9,8 @@ import { cache } from "../../components/NavBar/NavBar";
 
 import Swal from "sweetalert2";
 import style from "./ProductDetail.module.css";
+import Loading from "../../components/Loading/Loading";
+
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -21,8 +23,11 @@ const ProductDetail = () => {
   const history = useHistory();
   const [cartQuantity, setCartQuantity] = useState(1); // Estado para la cantidad en el carrito
 
+ // STATE
+ const [isLoading, setIsLoading] = useState(true);
+
   // Estado de autenticación
-  const { isAuthenticated, loginWithRedirect, getIdTokenClaims } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, user } = useAuth0();
 
   useEffect(() => {
     dispatch(getProductDetail(id));
@@ -32,31 +37,29 @@ const ProductDetail = () => {
   }, [dispatch, id]);
 
   const getUserId = async ()=>{
-    try {
-      const tokenClaims = await getIdTokenClaims();
+    if(isAuthenticated){
       const userIdFromCache = cache.get("userId");
-      if (userIdFromCache) {        
+      if (userIdFromCache) {
         setUserId(userIdFromCache);
         return userIdFromCache;
-      } else if (tokenClaims && tokenClaims.sub) {
-        const userId = tokenClaims.sub;
+      } else if (user && user.id) {
+        const userId = user.id;
         cache.set("userId", userId);
         setUserId(userId);
         return userId;
-      }
-    }catch (error) {
-      console.error("Error al obtener los claims del token de identificación:", error);
-    }
+      }}
+    return null;
   }
 
   //Para obtener el userId desde el localStorage
   useEffect(() => {
     getUserId()
+    // eslint-disable-next-line
   }, []);
 
   //verificar si el producto esta en favoritos
   const checkFavoriteStatus = async () => {
-    if(userId){
+    if(userId!==null){
       try {
         // Llamar a la función fetchData para obtener los productos favoritos del usuario
         const favoriteProducts = await fetchData(userId);
@@ -78,15 +81,14 @@ const ProductDetail = () => {
   }, [userId, id]);
 
   const addToFavorites = async () => {
-    if (!userId) {
+    if (userId===null) {
       alert("Debes iniciar sesión para agregar a favoritos");
     } else {
-      const body = { productId: id, userId: userId }; // Crea un objeto con productId y userId
       try {
-        await addFavorite(body);
+        await addFavorite(id,userId);
         setIsFavorite(true);
       } catch (error) {
-        console.error('Error al agregar a favoritos:', error);
+        console.error("Error al agregar a favoritos:", error);
       }
     }
   };
@@ -101,9 +103,13 @@ const ProductDetail = () => {
     }
   };
 
-  if (!product) {
-    return <div>Cargando...</div>;
-  }
+  // if (!product) {
+  //   return (
+  //     <div>
+  //       <Loading />
+  //     </div>
+  //   );
+  // }
 
   function decrementCartQuantity() {
     // disminuye en 1 la cantidad del producto en el carrito, pero solo si la cantidad actual es mayor que 1.
@@ -179,7 +185,22 @@ const ProductDetail = () => {
     event.preventDefault();
   };
 
+  useEffect(() => {
+    // Establecer isLoading en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+
   return (
+    <>
+      {isLoading ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
     <div className={style.conteiner}>
       <div className={style.contNavCat}>
         <Link to={"/productos"} className={style.volver}>
@@ -231,10 +252,11 @@ const ProductDetail = () => {
             Comprar ahora
             </button>
           )}
+         )
+            </div>
+          </div>
         </div>
-      </div>
-
-      {/* <form>
+      /* <form>
                 <label htmlFor="comment">Comentario:</label>
                 <textarea id="comment" name="comment" />
                 <button type="submit">Enviar comentario</button>
@@ -246,9 +268,10 @@ const ProductDetail = () => {
                 <span className="star">&#9734;</span>
                 <span className="star">&#9734;</span>
                 <p>Calificación promedio: 3 estrellas</p>
-            </div> */}
-    </div>
-  );
-};
-
+            </div> */
+          )}
+      </>
+    );
+  };
+                
 export default ProductDetail;

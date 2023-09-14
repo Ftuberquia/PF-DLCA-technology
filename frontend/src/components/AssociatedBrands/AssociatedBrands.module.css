@@ -40,8 +40,9 @@
 
 @media screen and (max-width: 768px) {
   .card1 {
-    width: 100%;
+    width: 55vw;
     height: auto;
     margin: 20px 0;
+    margin-bottom: 15vw;
   }
 }

@@ -8,7 +8,7 @@
 
 .products-grid {
     --gap: 40px;
-    --num--cols: 4;
+    --num--cols: 6;
     --row--height: 700px;
 
     box-sizing: border-box;
@@ -23,9 +23,9 @@
 }
 
 .filter-butt, .order-butt {
-    color: yellow;
+    color: var( --background-color);
     border-radius: 10px;
-    background-color: rgb(0, 162, 255);
+    background-color: var(--secondary-color);
     font-weight: bolder;
     border: none;
     height: 40px;
@@ -35,19 +35,21 @@
 }
 
 body.darker .filter-butt{
-    background-color: rgb(45, 45, 45);
-    color: yellow;
+
+    background-color:var(--secondary-color);
+    color:var( --background-color);
+  
 }
 
 body.darker .order-butt {
-    background-color: rgb(45, 45, 45);
-    color: yellow;
+    background-color:var(--secondary-color);
+    color:var( --background-color);
 }
 
 .filter-butt:hover, .order-butt:hover {
     filter:saturate(150%);
     cursor: pointer;
-    border: 3px solid yellow;
+    border: 3px solid white;
 }
 
 .reset-button:hover{

@@ -1,3 +1,6 @@
+import React, { useEffect, useState } from "react";
+import styles from "./CancelPage.module.css"; // Importa los estilos
+import Loading from '../../components/Loading/Loading';
 import React from "react";
 import styles from "./CancelPage.module.css"; 
 import { useLocation } from "react-router-dom";
@@ -8,6 +11,16 @@ import { useEffect } from "react";
 
 
 const CancelPage = () => {
+
+  const [isLoadingTimeout, setIsLoadingTimeout] = useState(true);
+
+  useEffect(() => {
+    // Establecer isLoadingTimeout en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoadingTimeout(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const location = useLocation();
   const canceledProducts = useSelector((state) => state.cart)
@@ -44,6 +57,12 @@ const CancelPage = () => {
 
 
   return (
+    <>
+      {isLoadingTimeout ? (
+        <div className={styles.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
     <div className={styles.contenedorCancel}>
     <div className={styles["cancel-container"]}>
       <h1 className={styles["cancel-title"]}>Compra Rechazada</h1>
@@ -61,8 +80,10 @@ const CancelPage = () => {
       <a href="/productos" className={styles["back-link"]}>
         Volver a Productos
       </a>
+      </div>
     </div>
-    </div>
+    )}
+   </>
   );
 };
 
