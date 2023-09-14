@@ -43,7 +43,7 @@ const App = () => {
         <Route path="/form" component={Form} />
         <Route path="/contacto" component={ContactUs} />
         <Route exact path="/" component={Landing} />
-        <Route path="/compra" component={Stripe} />
+        <Route path="/compras" component={Stripe} />
         <Route path="/confirmation" component={ConfirmationPage} />
         <Route path="/cancel" component={CancelPage} />
         <Route path="/favorites" component={Favorites} />

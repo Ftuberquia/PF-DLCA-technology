@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "./CancelPage.module.css"; // Importa los estilos
 import Loading from '../../components/Loading/Loading';
-import React from "react";
-import styles from "./CancelPage.module.css"; 
 import { useLocation } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import emailjs from '@emailjs/browser';
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect } from "react";
 
 
 const CancelPage = () => {

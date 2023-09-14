@@ -78,6 +78,7 @@ Cart.belongsToMany(Products, {
 // Users.hasMany(Orders, { foreignKey: 'userId', as: 'orders' }); // Cambiado el alias a 'orders'
 // Orders.belongsTo(Users, { foreignKey: 'userId', as: 'user' });
 
+// //tabla intermedia para hacer Un usuario puede tener muchas compras, y cada compra pertenece a un usuario.
 // Relación de Orders con UserOrder (para almacenar la relación muchos a muchos)
 Orders.belongsToMany(Users, {
 through: UserOrder, // Usa el modelo UserOrder como tabla intermedia

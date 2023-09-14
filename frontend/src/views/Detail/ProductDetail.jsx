@@ -153,7 +153,7 @@ const ProductDetail = () => {
     if (isAuthenticated) {
       if (product.stock > 0) {
         dispatch(addToCart({ ...product, quantity: cartQuantity }));
-        history.push(`/compra`); // agrega el producto al carrito y redirige al usuario a la página de pago.
+        history.push(`/compras`); // agrega el producto al carrito y redirige al usuario a la página de pago.
       } else {
         Swal.fire({
           // De lo contrario, muestra un mensaje de advertencia o solicita al usuario que inicie sesión.
@@ -244,7 +244,7 @@ const ProductDetail = () => {
           </button>
 
           {isAuthenticated ? (
-            <Link to={`/compra`}>
+            <Link to={`/compras`}>
               <button className={style.comprar} onClick={handleBuyNow}>Comprar Ahora</button>
             </Link>
           ) : (

@@ -104,12 +104,7 @@ const NavBar = () => {
           Contáctenos
         </Link>
       </span>
-       <div className={style.buyContainer}>
-         <NavLink to={'/compra'} className={style.buy}>
-              Comprar
-         </NavLink>
-
-       </div>
+      
       <div className={style.buttons}>
       <NavLink to={"login"} onClick={isAuthenticated ? undefined : () => loginWithPopup()}>
         {isAuthenticated ? (
