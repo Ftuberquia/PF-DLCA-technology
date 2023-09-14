@@ -22,6 +22,7 @@ import About from "./views/About/About";
 import Cart from "./views/Cart/cart";
 import UserProfileView from "./views/Login/UserProfileView";
 import Profile from "./views/Login/Profile";
+import ProductReviewView from "./views/ProductReviewView/ProductReviewView";
 import Dashboard from "./views/Admin/Dashboard";
 import UsuariosAdmin from "./views/Admin/UsuariosAdmin";
 import ComprasAdmin from "./views/Admin/ComprasAdmin";
@@ -72,6 +73,7 @@ const App = () => {
         <Route path="/about" component={About} />
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={UserProfileView} />
+        <Route path="/reviews" component={ProductReviewView} />
 
         <Route path="/admin" component={AdminLayout} />
         <Profile />

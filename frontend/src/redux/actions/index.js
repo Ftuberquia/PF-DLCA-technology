@@ -21,6 +21,9 @@ export const UPDATE_CART_ITEMS = 'UPDATE_CART_ITEMS';
 export const GET_CART_ITEMS = 'GET_CART_ITEMS';
 export const SAVE_CART_SUCCESS = 'SAVE_CART_SUCCESS'
 export const SAVE_CART_ERROR = 'SAVE_CART_ERROR'
+export const GET_PURCHASED_PRODUCTS = 'GET_PURCHASED_PRODUCTS'
+export const SAVE_PRODUCT_IN_CART_SERVER = 'SAVE_PRODUCT_IN_CART_SERVER'
+export const SAVE_PRODUCT_IN_CART_ERROR = 'SAVE_PRODUCT_IN_CART_ERROR'
 
 export const getAllProducts = () => async dispatch => {
     try {
@@ -180,12 +183,31 @@ export function cleanDetail() {
 }
 
 //Cart
-export function addToCart(product) {
+// Acción para agregar un producto al carrito en el estado de Redux
+export const addToCart = (product) => {
     return {
-        type: ADD_TO_CART,
-        payload: product
-    }
-};
+      type: ADD_TO_CART,
+      payload: product,
+    };
+  };
+  
+  // Acción para agregar un producto al carrito en el servidor
+  export const addToCartServer = (product) => {
+    return async (dispatch) => {
+      try {
+        // Realiza una solicitud HTTP POST al servidor para guardar el producto
+        const response = await axios.post('/api/cart/add', { product });
+  
+        // Despacha la acción addToCart para agregar el producto al carrito en el estado de Redux
+        dispatch(addToCart(product));
+  
+        // Puedes realizar otras acciones necesarias con la respuesta del servidor
+      } catch (error) {
+        // Maneja los errores, por ejemplo, despachando una acción de error
+        console.error('Error al agregar el producto al carrito en el servidor:', error);
+      }
+    };
+  };
     
 export function removeFromCart(product) {
     return {
@@ -227,12 +249,12 @@ export const updateCartItems = (cartItems) => ({
     }
   };
 
-  export const saveCartToServer = (cartProducts) => {
+  export const saveCartToServer = (cartProducts,productId,cartId) => {
     return async (dispatch) => {
       try {
          console.log("en index",cartProducts);
         // Realiza una solicitud HTTP POST al servidor para guardar el carrito
-        const response = await axios.post('/carts/saveProducts', { cartProducts });
+        const response = await axios.post(`/carts/${cartId}/${productId}`, { cartProducts });
         console.log(response);
         // Despacha una acción para manejar la respuesta o realizar otras operaciones necesarias
         dispatch({ type: 'SAVE_CART_SUCCESS', payload: response.data });
@@ -241,4 +263,17 @@ export const updateCartItems = (cartItems) => ({
         dispatch({ type: 'SAVE_CART_ERROR', payload: error.message });
       }
     };
+  };
+
+  export const getPurchasedProducts = () => async (dispatch) => {
+    try {
+      const response = await axios.get('/purchased-products'); // ENDPOINT!!!!!!
+      
+      dispatch({
+        type: GET_PURCHASED_PRODUCTS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error('Error al obtener los productos comprados:', error);
+    }
   };
