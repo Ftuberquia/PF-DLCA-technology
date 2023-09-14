@@ -13,55 +13,50 @@ import Loading from "../../components/Loading/Loading";
 export default function Favorites() {
   const history = useHistory();
   const [favoriteProducts, setFavoriteProducts] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
 
-  const {isLoading, getIdTokenClaims} = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
   const [userId, setUserId] = useState(null);
 
-  const getUserId = async () =>{
-    try {
-      const tokenClaims = await getIdTokenClaims();
-      const userIdFromCache = cache.get("userId");
+  const userIdFromCache = cache.get("userId");
+  
+  const getUserId = () => {
+    if(isAuthenticated){
       if (userIdFromCache) {
         setUserId(userIdFromCache);
         return userIdFromCache;
-      } else if (tokenClaims && tokenClaims.sub) {
-        const userId = tokenClaims.sub;
+      } else if (user && user.sub) {
+        const userId = user.sub;
         cache.set("userId", userId);
         setUserId(userId);
         return userId;
-      }
-    }   catch (error) {
-      console.error("Error al obtener los claims del token de identificación:", error);
-    }
+      }}
     return null;
-  }
+  };
 
   useEffect(()=>{
     getUserId();
+    // eslint-disable-next-line
   },[])
 
   const fetchFavoriteProducts = async () => {
-    if (userId !==null) {
-      const productsPromise = fetchData(userId);
-      const response = await productsPromise;
+    if (isAuthenticated) {
+      if(userId){
+        const productsPromise = await fetchData(userId);
+        const response = await productsPromise;
 
-      if (Array.isArray(response)) {
-        setFavoriteProducts(response);
-      } else {
-        setErrorMessage(response.message);
+        if (Array.isArray(response)) {  
+          setFavoriteProducts(response);
+        } 
       }
-    }else {
+    }else{
       alert("Ingresa o registrate para ver tus favoritos!");
       history.goBack();
     }
   };
 
   useEffect(() => {
-    if (userId !== null) {
-      fetchFavoriteProducts();
-    }
-  }, [userId, history]);
+    fetchFavoriteProducts();
+  }, [userId,isAuthenticated, history]);
 
   const [loading, setIsLoading] = useState(true);
 
@@ -82,11 +77,9 @@ export default function Favorites() {
       ) : (
     <div className={style.favoritesCont}>
       <h1>Favoritos</h1>
-      {errorMessage ? (
-        <p>{errorMessage}</p>
-      ) : (
+      
         <Cards products={favoriteProducts} />
-      )}
+      
     </div>
     )}
    </>
