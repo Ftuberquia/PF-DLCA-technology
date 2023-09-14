@@ -13,8 +13,8 @@ import { Auth0Provider } from "@auth0/auth0-react"
 // Cambiar para el deploy
 
 
-//axios.defaults.baseURL = "https://pf-dlca-technology-production.up.railway.app"; 
- axios.defaults.baseURL = "http://localhost:3001"; // se cambia para el deploy
+// axios.defaults.baseURL = "https://pf-dlca-technology-production.up.railway.app"; 
+axios.defaults.baseURL = "http://localhost:3001"; // se cambia para el deploy
 
 
 const root = document.getElementById("root");

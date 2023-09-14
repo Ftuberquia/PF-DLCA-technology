@@ -18,30 +18,30 @@ const ConfirmationPage = () => {
    // Imprime los datos en la consola
    console.log("Datos de pago:", paymentInfo);
 
-   const sendEmail = () => {
+  //  const sendEmail = () => {
 
-    const serviceId = "service_u05znjz"; // Reemplaza con tu ID de servicio
-    const templateId = "template_c9zye1k"; // Reemplaza con tu ID de plantilla
-    const userId = "dl6sI5xgzMzAmHsFV"; // Reemplaza con tu ID de usuario
+  //   const serviceId = "service_u05znjz"; // Reemplaza con tu ID de servicio
+  //   const templateId = "template_c9zye1k"; // Reemplaza con tu ID de plantilla
+  //   const userId = "dl6sI5xgzMzAmHsFV"; // Reemplaza con tu ID de usuario
 
-    const emailParams = {
-      from_email: "adlctech01@gmail.com",
-      to_name: user.given_name,
-      to_email: user.email,
-      message: `Productos adquiridos:\n${purchasedProducts.map((product) => product.name).join('\n')}`,
-    };
+  //   const emailParams = {
+  //     from_email: "adlctech01@gmail.com",
+  //     to_name: user.given_name,
+  //     to_email: user.email,
+  //     message: `Productos adquiridos:\n${purchasedProducts.map((product) => product.name).join('\n')}`,
+  //   };
 
-    emailjs.send(serviceId, templateId, emailParams, userId)
-      .then((response) => {
-        console.log('Email enviado con éxito:', response);
-      })
-      .catch((error) => {
-        console.error('Error al enviar el email:', error);
-      });
-  };
+  //   emailjs.send(serviceId, templateId, emailParams, userId)
+  //     .then((response) => {
+  //       console.log('Email enviado con éxito:', response);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error al enviar el email:', error);
+  //     });
+  // };
 
   useEffect(() => {
-    sendEmail();
+    // sendEmail();
   }, []);
 
   const [isLoadingTimeout, setIsLoadingTimeout] = useState(true);
@@ -81,6 +81,9 @@ const ConfirmationPage = () => {
 
       <a href="/productos" className={styles["back-link"]}>
         Volver a Productos
+      </a>
+      <a href="/reviews" className={styles["back-link"]}>
+        Reseña tus compras
       </a>
     </div>
     </div>

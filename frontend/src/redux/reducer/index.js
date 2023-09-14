@@ -19,6 +19,8 @@ import { SAVE_CART_SUCCESS } from "../actions/index.js";
 import { SAVE_CART_ERROR } from "../actions/index.js";
 import { SAVE_PRODUCT_IN_CART_SERVER } from "../actions/index.js";
 import { SAVE_PRODUCT_IN_CART_ERROR } from "../actions/index.js";
+import { GET_PURCHASED_PRODUCTS } from "../actions/index.js";
+
 
 const initialState = {
   products: [],
@@ -35,6 +37,7 @@ const initialState = {
   cart: [],
   productsCopy: [], // copia Estado para emergencias
   cartItems: JSON.parse(localStorage.getItem("cartProducts")) || [],
+  purchasedProducts: [], // Nuevo estado para los productos comprados!!!!!!
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -46,6 +49,11 @@ const rootReducer = (state = initialState, action) => {
         filtered: action.payload,
         productsCopy: action.payload, // copia estado
         loader: true,
+      };
+    case GET_PURCHASED_PRODUCTS:
+      return {
+        ...state,
+        purchasedProducts: action.payload,
       };
     case UPDATE_CART_ITEMS:
       return {
