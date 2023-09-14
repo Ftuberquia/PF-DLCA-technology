@@ -10,8 +10,8 @@ const contactHandler = require("../handlers/contact/contactHandler");
 const favorites = require("./favorites/routeFav");
 const carts = require ("./carts/routeCarts")
 const reviews = require("./reviews/routeReviews")
-// const stripe = require ("./compra/routeCompra");
-const users = require("../routes/users/routeUsers")
+const users = require("../routes/users/routeUsers");
+const compras = require("./compra/routeCompra");
 
 const router = Router();
 
@@ -47,8 +47,8 @@ router.use("/carts",carts)
 //Ruta para los reviews
 router.use("/reviews", reviews)
 
-////Ruta para los carritos
-// router.use("/compras",stripe)
+//Ruta para los carritos
+router.use("/api/checkout",compras)
 
 module.exports = router;
 

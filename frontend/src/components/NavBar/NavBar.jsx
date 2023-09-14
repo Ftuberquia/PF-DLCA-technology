@@ -9,7 +9,6 @@ import axios from "axios";
 import emailjs from '@emailjs/browser';
 import style from "./NavBar.module.css"
 import { LocalStorageCache } from "@auth0/auth0-react";
-
 import TotalItems from "../../views/Cart/TotalItems";
 import useLocalStorage from "./hooks/useLocalStorage";
 
