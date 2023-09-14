@@ -21,6 +21,9 @@ export const UPDATE_CART_ITEMS = 'UPDATE_CART_ITEMS';
 export const GET_CART_ITEMS = 'GET_CART_ITEMS';
 export const SAVE_CART_SUCCESS = 'SAVE_CART_SUCCESS'
 export const SAVE_CART_ERROR = 'SAVE_CART_ERROR'
+export const GET_PURCHASED_PRODUCTS = 'GET_PURCHASED_PRODUCTS'
+export const SAVE_PRODUCT_IN_CART_SERVER = 'SAVE_PRODUCT_IN_CART_SERVER'
+export const SAVE_PRODUCT_IN_CART_ERROR = 'SAVE_PRODUCT_IN_CART_ERROR'
 
 export const getAllProducts = () => async dispatch => {
     try {
