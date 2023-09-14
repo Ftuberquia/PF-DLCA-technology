@@ -3,7 +3,7 @@
     justify-content: center;
 }
 .container{
-    background-color: rgba(69, 110, 199, 0.781);
+    background-color:var(--background-color);
     border: 2px solid #c3c6ce;
     border-radius: 1.5rem;
     width: 350px;
@@ -19,7 +19,7 @@
   }
   .container h1{
     font-size: xx-large;
-    color: rgb(27, 156, 10);
+    color:var(--text-color);
   }
   .subtituloVisa{
     display: flex;
@@ -47,18 +47,18 @@
     border: none;
     width: 100px;
     height: 40px;
-    background-color:var(--button-pago);
+    background-color: #007bff;
     margin-top: 20px;
     color: whitesmoke;
-    font-size: large;
+    font-size: 18px;
     font-weight: bolder;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
     /* transition: background-color 0.3s; */
   }
   .button:hover{
     transform: scale(1.1);
-    background-color: rgb(30, 197, 44); 
+    background-color:var(--secondary-color); 
   }
   .loader {
     width: 38px;
