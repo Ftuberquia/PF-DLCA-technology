@@ -23,6 +23,25 @@ import Cart from "./views/Cart/cart";
 import UserProfileView from "./views/Login/UserProfileView";
 import Profile from "./views/Login/Profile";
 import Dashboard from "./views/Admin/Dashboard";
+import UsuariosAdmin from "./views/Admin/UsuariosAdmin";
+import ComprasAdmin from "./views/Admin/ComprasAdmin";
+import ProductosAdmin from "./views/Admin/ProductosAdmin";
+import NavBarAdmin from "./views/Admin/NavBarAdmin";
+
+const AdminLayout = () => {
+  return (
+    <div>
+      <NavBarAdmin />
+      <div>
+        <Switch>
+          <Route path="/admin/productos" component={ProductosAdmin} />
+          <Route path="/admin/compras" component={ComprasAdmin} />
+          <Route path="/admin/usuarios" component={UsuariosAdmin} />
+        </Switch>
+      </div>
+    </div>
+  );
+};
 
 const App = () => {
   const { pathname } = useLocation();
@@ -53,7 +72,8 @@ const App = () => {
         <Route path="/about" component={About} />
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={UserProfileView} />
-        <Route path="/admin" component={Dashboard} />
+
+        <Route path="/admin" component={AdminLayout} />
         <Profile />
       </Switch>
       <Footer />
