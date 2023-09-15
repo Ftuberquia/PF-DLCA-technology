@@ -5,10 +5,14 @@ const saveProductsInCart = require('../../handlers/carts/saveProductsInCartHandl
 const updateProductsInCart = require('../../handlers/carts/updateProductsInCartHandler')
 const updateQuantityProductHandler = require ('../../handlers/carts/updateQuantityProductHandler')
 const getCartHandler = require('../../handlers/carts/getCartHandler')
+const getIdCartHandler = require('../../handlers/carts/getIdCartHandler')
+const getTotalPriceCartHandler = require('../../handlers/carts/getTotalPriceCartHandler')
 
 const carts = Router()
 
 carts.get("/:userId", getCartHandler)
+carts.get("/totalValor/:cartId", getTotalPriceCartHandler)
+carts.get('/idcarrito/:userId',getIdCartHandler)
 carts.put('/:userId',clearCartHandler)
 carts.delete("/:productId/:cartId", deleteProdCartHandler)
 carts.post("/:cartId/:productId", saveProductsInCart)
