@@ -23,6 +23,7 @@ import Cart from "./views/Cart/cart";
 import UserProfileView from "./views/Login/UserProfileView";
 import Profile from "./views/Login/Profile";
 import ProductReviewView from "./views/ProductReviewView/ProductReviewView";
+import AboutUs from "./views/AboutUs/AboutUs";
 
 const App = () => {
   const { pathname } = useLocation();
@@ -54,6 +55,7 @@ const App = () => {
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={UserProfileView} />
         <Route path="/reviews" component={ProductReviewView} />
+        <Route path="/aboutUs" component={AboutUs} />
         <Profile />
       </Switch>
       <Footer />

@@ -22,7 +22,7 @@ const About = () => {
       ) : (
 		<div className={style.aboutcontainer}>
 			<section>
-				<h3>Nosotros</h3>
+				<h3>Sobre DLCA</h3>
 				<p>Somos una empresa que se dedica a la venta de productos y servicios relacionados con la tecnología y la electrónica a otras empresas, minoristas o clientes en general. Vendemos a precios competitivos y productos de la mejor calidad. Buscamos ofrecer servicios que satisfagan los requermientos de clientes y proveedores.</p>
 			</section>
 

@@ -227,7 +227,7 @@ const ProductDetail = () => {
           <img src={product.imageSrc} alt={product.imageAlt} />
           <hr />
           <div className={style.detalles2}>
-            <h2>Descripción</h2>
+            <h2>Descripción:</h2>
             <p>{product.description}</p>
           </div>
         </div>
@@ -252,7 +252,7 @@ const ProductDetail = () => {
             Comprar ahora
             </button>
           )}
-         )
+         
             </div>
           </div>
         </div>

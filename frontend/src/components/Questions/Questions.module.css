@@ -58,14 +58,15 @@
 }
 
 .answer {
-  background-color: rgb(249, 249, 249);
+  background-color: var(--background-color);
   height: auto;
   width: auto;
+  padding: 2vw;
   font-size: 1.6vw;
   margin-left: 2.5vw;
-  color: black;
-  margin-top: -3vw;
-  padding-bottom: 0.5vw;
+  /* color: black; */
+  margin-top: -1vw;
+  padding-bottom: 0.2vw;
   border-radius: 0vw 0vw 1vw 1vw;
   line-height: 1.6;
   position: absolute;
@@ -75,7 +76,7 @@
   justify-content: center;
   align-items: center;
   z-index: 1;
-  box-shadow: 0 15px 15px white;
+  box-shadow: 0px 0px 30px 1px var(--secondary-color); 
 }
 
 .question.expanded .answer {
