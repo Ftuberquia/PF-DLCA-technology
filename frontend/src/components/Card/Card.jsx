@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
+
 import { addToCart, removeFromCart } from "../../redux/actions";
 import {
   addFavorite,
@@ -12,23 +13,12 @@ import {
 import { cache } from "../../components/NavBar/NavBar";
 
 import style from "./Card.module.css";
-import axios from "axios";
 
-const Card = ({
-  id,
-  name,
-  imageSrc,
-  price,
-  rating,
-  stock,
-  quantity,
-  disabled,
-}) => {
+const Card = ({id, name, imageSrc, price, rating, stock, quantity, disabled}) => {
   const dispatch = useDispatch();
 
   //Para guardar el userId
   const [userId, setUserId] = useState(null);
-  const [cartId, setCartId] = useState(null);
 
   //favoritos
   const [isFavorite, setIsFavorite] = useState(false);
@@ -37,25 +27,26 @@ const Card = ({
   const [isInCart, setIsInCart] = useState(false);
 
   const { user, isAuthenticated } = useAuth0();
-
-  // const getUserId = async () => {
-  //   if (isAuthenticated && user && user.sub) {
-  //     console.log(user.sub);
-  //     const userId = user.sub;
-  //     setUserId(userId); // Actualiza el estado con el ID del usuario
-  //     // Aquí puedes realizar acciones adicionales con el userId si es necesario
-  //     return userId;
-  //   }
-
-  //   return null;
-  // };
+  
+  const getUserId = async ()=>{
+    if(isAuthenticated){
+      const userIdFromCache = cache.get("userId");
+      if (userIdFromCache) {
+        setUserId(userIdFromCache);
+        return userIdFromCache;
+      } else if (user && user.sub) {
+        const userId = user.sub;
+        cache.set("userId", userId);
+        setUserId(userId);
+        return userId;
+      }}
+    return null;
+  }
 
   useEffect(() => {
-    if (isAuthenticated && user) {
-      const userIdLogin = user.sub;
-      setUserId(userIdLogin);
-    }
-  }, [isAuthenticated, user]);
+    getUserId();
+    // eslint-disable-next-line
+  },[])
 
   // Verificar si el producto está en el carrito
   const cartProducts = useSelector((state) => state.cart);
@@ -91,8 +82,7 @@ const Card = ({
 
       if (existingProductIndex !== -1) {
         // Si el producto ya existe en el carrito, suma la cantidad al producto existente
-        parsedCartProducts[existingProductIndex].quantity +=
-          productToAdd.quantity;
+        parsedCartProducts[existingProductIndex].quantity += productToAdd.quantity;
       } else {
         // Si no existe, agrega el producto al carrito
         parsedCartProducts.push(productToAdd);
@@ -101,40 +91,18 @@ const Card = ({
       localStorage.setItem("cartProducts", JSON.stringify(parsedCartProducts));
       setIsInCart(true); // Establece el estado como "en el carrito"
     } else {
-
-      const requestBody = {
-        quantity_prod: 1, // Reemplaza 10 con el valor que desees enviar
-      };
-
-      axios
-      .get(`/carts/idcarrito/${userId}`)
-      .then((response) => {
-        const cartId = response.data; // Obtén el cartId de la respuesta GET
-        console.log("Respuesta de la solicitud GET:", cartId);
-    
-        // Luego, realiza la solicitud POST utilizando el cartId obtenido
-        return axios.post(`/carts/${cartId}/${id}`,requestBody);
-      })
-      .then((response) => {
-        console.log("Respuesta de la solicitud POST:", response.data);
-      })
-      .catch((error) => {
-        // Maneja los errores aquí
-        console.error("Error en la solicitud:", error);
-      });
-
-      // // Usa Redux para agregar el producto al carrito
-      // dispatch(
-      //   addToCart({
-      //     id,
-      //     name,
-      //     imageSrc,
-      //     price,
-      //     rating,
-      //     stock,
-      //   })
-      // );
-      // setIsInCart(true); // Establece el estado como "en el carrito"
+      // Usa Redux para agregar el producto al carrito
+      dispatch(
+        addToCart({
+          id,
+          name,
+          imageSrc,
+          price,
+          rating,
+          stock,
+        })
+      );
+      setIsInCart(true); // Establece el estado como "en el carrito"
     }
   };
 
@@ -169,7 +137,7 @@ const Card = ({
 
   //verificar si el producto esta en favoritos
   const checkFavoriteStatus = async () => {
-    if (userId !== null) {
+    if (userId!==null) {
       try {
         // Llamar a la función fetchData para obtener los productos favoritos del usuario
         const favoriteProducts = await fetchData(userId);
@@ -191,11 +159,11 @@ const Card = ({
   }, [userId, id]);
 
   const addToFavorites = async () => {
-    if (userId === null) {
+    if (userId===null) {
       alert("Debes iniciar sesión para agregar a favoritos");
     } else {
       try {
-        await addFavorite(id, userId);
+        await addFavorite(id,userId);
         setIsFavorite(true);
       } catch (error) {
         console.error("Error al agregar a favoritos:", error);

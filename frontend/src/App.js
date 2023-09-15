@@ -22,6 +22,8 @@ import About from "./views/About/About";
 import Cart from "./views/Cart/cart";
 import UserProfileView from "./views/Login/UserProfileView";
 import Profile from "./views/Login/Profile";
+import ProductReviewView from "./views/ProductReviewView/ProductReviewView";
+import AboutUs from "./views/AboutUs/AboutUs";
 import MisComprasView from "./views/Mis Compras/MisComprasView";
 
 import UsuariosAdmin from "./views/Admin/Usuarios Admin/UsuariosAdmin";
@@ -62,7 +64,7 @@ const App = () => {
         <Route path="/form" component={Form} />
         <Route path="/contacto" component={ContactUs} />
         <Route exact path="/" component={Landing} />
-        <Route path="/compras" component={Stripe} />
+        <Route path="/compra" component={Stripe} />
         <Route path="/confirmation" component={ConfirmationPage} />
         <Route path="/cancel" component={CancelPage} />
         <Route path="/favorites" component={Favorites} />
@@ -72,9 +74,8 @@ const App = () => {
         <Route path="/about" component={About} />
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={UserProfileView} />
-        <Route path="/misCompras" component={MisComprasView} />
-
-        <Route path="/admin" component={AdminLayout} />
+        <Route path="/reviews" component={ProductReviewView} />
+        <Route path="/aboutUs" component={AboutUs} />
         <Profile />
       </Switch>
       <Footer />

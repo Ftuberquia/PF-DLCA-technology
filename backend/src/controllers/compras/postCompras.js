@@ -1,13 +1,8 @@
-const { Users, Orders, UserOrder, Products } = require('../../db');
-const Stripe = require('stripe'); //info desde el front
-
-// KEY secreta de Stripe 
-const stripe = new Stripe("sk_test_51NnMQaEUVHui4qp0BDSWGwhNtmw1gJbJF4tue1zqpRo3l56iE83u0VImKkguK6J1qgqJakEW2NCnVtUffGOoHwQp00qsaUMPZy")
-
+// const { Users, Products, Orders } = require('../../db');
 
 const createOrder = async (req, res) => {
   try {
-    const { userId, productId, quantity, total_price, id, amount, return_url, } = req.body;
+    const { userId, productId, quantity, total_price } = req.body;
 
     // Verifica si el usuario y el producto existen
     const user = await Users.findByPk(userId);
@@ -22,44 +17,24 @@ const createOrder = async (req, res) => {
 
     // Crea una nueva compra en la tabla "orders"
     const newOrder = await Orders.create({
-      userId: user.id,
-      order_date: new Date(),
-      state: 'Pendiente',
-      quantity,
-      total_price,
-      created: true,
+      userId: user.id, 
+      order_date: new Date(), 
+      estate: 'Pendiente', // Estado inicial de la orden 
+      quantity, // Cantidad de productos
+      total_price, 
+      created: true, // Indicador de compra creada
     });
 
-    // Asocia el producto a la compra utilizando UserOrder
-    await UserOrder.create({
-      userId: user.id,
-      orderId: newOrder.id, // Utiliza el ID de la compra recién creada
-      productId: product.id, // Utiliza el ID del producto
-      quantity,
-    });
+    // Asocia el producto a la compra
+    await newOrder.addProducts(product);
 
-    // Realiza el pago a través de Stripe
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: total_price * 100, // Stripe utiliza centavos en lugar de dólares
-      currency: 'USD',
-      description: 'Compra en tu aplicación',
-      paymentMethod: ['card'],
-      confirm: true,
-			return_url,
-    });
-
-    return res.status(201).json({
-      message: 'Compra realizada con éxito',
-      order: newOrder,
-      paymentIntent: paymentIntent.client_secret, // Envía el secreto del cliente de Stripe
-    });
+    return res.status(201).json({ message: 'Compra realizada con éxito', order: newOrder });
   } catch (error) {
     console.error('Error al crear la compra:', error);
-    return res.status(500).json({ message: 'Error al procesar la compra', error: error.message });
+    return res.status(500).json({ message: 'Error al procesar la compra', error });
   }
 };
 
 module.exports = {
   createOrder,
 };
-

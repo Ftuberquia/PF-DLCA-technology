@@ -1,4 +1,4 @@
-const { Users, Orders, UserOrder, Products } = require('../../db');
+// const { Users, Orders, Products } = require('../../db');
 
 const getUserOrders = async (req, res) => {
   try {
@@ -16,14 +16,9 @@ const getUserOrders = async (req, res) => {
       where: { userId },
       include: [
         {
-          model: Products, // Agregado: importa el modelo Products
+          model: Products,
           as: 'products',
           attributes: ['name', 'price', 'quantity'], // Ajusta los atributos que deseas mostrar
-          through: {
-            model: UserOrder, // Asocia la tabla intermedia UserOrder
-            as: 'orderProduct', // Nombre del alias en la relación
-            attributes: ['quantity'], // Ajusta los atributos de la relación
-          },
         },
       ],
     });
@@ -36,7 +31,7 @@ const getUserOrders = async (req, res) => {
 
   } catch (error) {
     console.error(error);
-    return res.status(400).json({ message: 'Error al obtener las compras del usuario', error: error.message });
+    return res.status(400).json({ message: 'Error al obtener las compras del usuario', error });
   }
 };
 

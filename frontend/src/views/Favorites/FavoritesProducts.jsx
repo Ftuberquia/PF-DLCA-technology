@@ -6,8 +6,9 @@ import { fetchData } from "./funcionesFav";
 import Cards from "../../components/Cards/Cards";
 import { cache } from "../../components/NavBar/NavBar";
 
-import style from "./FavoritesProducts.module.css";
+import style from './FavoritesProducts.module.css'
 import Loading from "../../components/Loading/Loading";
+
 
 export default function Favorites() {
   const history = useHistory();
@@ -17,10 +18,9 @@ export default function Favorites() {
   const [userId, setUserId] = useState(null);
 
   const userIdFromCache = cache.get("userId");
-
+  
   const getUserId = () => {
-    
-    if (isAuthenticated) {
+    if(isAuthenticated){
       if (userIdFromCache) {
         setUserId(userIdFromCache);
         return userIdFromCache;
@@ -29,27 +29,26 @@ export default function Favorites() {
         cache.set("userId", userId);
         setUserId(userId);
         return userId;
-      }
-    }
+      }}
     return null;
   };
 
-  useEffect(() => {
+  useEffect(()=>{
     getUserId();
     // eslint-disable-next-line
-  }, []);
+  },[])
 
   const fetchFavoriteProducts = async () => {
     if (isAuthenticated) {
-      if (userId) {
+      if(userId){
         const productsPromise = await fetchData(userId);
         const response = await productsPromise;
 
-        if (Array.isArray(response)) {
+        if (Array.isArray(response)) {  
           setFavoriteProducts(response);
-        }
+        } 
       }
-    } else {
+    }else{
       alert("Ingresa o registrate para ver tus favoritos!");
       history.goBack();
     }
@@ -57,7 +56,7 @@ export default function Favorites() {
 
   useEffect(() => {
     fetchFavoriteProducts();
-  }, [userId, isAuthenticated, history]);
+  }, [userId,isAuthenticated, history]);
 
   const [loading, setIsLoading] = useState(true);
 
@@ -76,12 +75,13 @@ export default function Favorites() {
           <Loading />
         </div>
       ) : (
-        <div className={style.favoritesCont}>
-          <h1>Favoritos</h1>
-
-          <Cards products={favoriteProducts} />
-        </div>
-      )}
-    </>
-  );
-}
+    <div className={style.favoritesCont}>
+      <h1>Favoritos</h1>
+      
+        <Cards products={favoriteProducts} />
+      
+    </div>
+    )}
+   </>
+  )
+};
