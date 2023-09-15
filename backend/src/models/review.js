@@ -14,7 +14,11 @@ const Review = (sequelize) => {
         },
         rating: {
             type: DataTypes.FLOAT,
-        }
+        },
+        userEmail: {
+            type: DataTypes.STRING,  
+            allowNull: false  
+          }
     }, {
         tableName: 'review',
         timestamps: false,

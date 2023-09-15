@@ -22,6 +22,10 @@ const UserProductReviews = (sequelize) => {
     comment: {
       type: DataTypes.STRING,
     },
+    userEmail: {
+      type: DataTypes.STRING,  
+      allowNull: false  
+    }
   }, {
     tableName: 'user_product_reviews',
     timestamps: true, // Activa las marcas de tiempo para la creación y actualización
