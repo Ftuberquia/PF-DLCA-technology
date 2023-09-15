@@ -5,12 +5,12 @@ import TotalItems from "./TotalItems";
 import "./cart.css";
 import axios from "axios";
 import { saveCartToServer } from "../../redux/actions/index";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Cart({ cartProducts}) {
-  const handleSaveCart = (cartProducts) => {
-    // Llama a la acción para guardar el carrito en el servidor
-    saveCartToServer(cartProducts);
-  };
+
+  const { user, isAuthenticated } = useAuth0();
+
 
   const [cartData, setCartData] = useState([]);
 
@@ -30,8 +30,6 @@ export default function Cart({ cartProducts}) {
     // Obtiene los datos desde el localStorage (supongamos que se encuentran en la clave 'myData')
     const dataToSave = JSON.parse(localStorage.getItem("cartProducts"));
     
-    // Llama a la acción para guardar los datos en el servidor
-    handleSaveCart(dataToSave);
   };
 
   return cartData.length > 0 ? (

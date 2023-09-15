@@ -22,8 +22,7 @@ import About from "./views/About/About";
 import Cart from "./views/Cart/cart";
 import UserProfileView from "./views/Login/UserProfileView";
 import Profile from "./views/Login/Profile";
-import ProductReviewView from "./views/ProductReviewView/ProductReviewView";
-import AboutUs from "./views/AboutUs/AboutUs";
+
 import MisComprasView from "./views/Mis Compras/MisComprasView";
 
 import UsuariosAdmin from "./views/Admin/Usuarios Admin/UsuariosAdmin";
@@ -31,6 +30,21 @@ import ComprasAdmin from "./views/Admin/Compras Admin/ComprasAdmin";
 import ProductosAdmin from "./views/Admin/Productos Admin/ProductosAdmin";
 import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
 import Dashboard from "./views/Admin/Dashboard/Dashboard"
+
+const AdminLayout = () => {
+  return (
+    <div>
+      <NavBarAdmin />
+      <div>
+        <Switch>
+          <Route path="/admin/productos" component={ProductosAdmin} />
+          <Route path="/admin/compras" component={ComprasAdmin} />
+          <Route path="/admin/usuarios" component={UsuariosAdmin} />
+        </Switch>
+      </div>
+    </div>
+  );
+};
 
 const App = () => {
   const AdminLayout = () => {
@@ -64,7 +78,7 @@ const App = () => {
         <Route path="/form" component={Form} />
         <Route path="/contacto" component={ContactUs} />
         <Route exact path="/" component={Landing} />
-        <Route path="/compra" component={Stripe} />
+        <Route path="/compras" component={Stripe} />
         <Route path="/confirmation" component={ConfirmationPage} />
         <Route path="/cancel" component={CancelPage} />
         <Route path="/favorites" component={Favorites} />
@@ -74,8 +88,8 @@ const App = () => {
         <Route path="/about" component={About} />
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={UserProfileView} />
-        <Route path="/reviews" component={ProductReviewView} />
-        <Route path="/aboutUs" component={AboutUs} />
+
+        <Route path="/admin" component={AdminLayout} />
         <Route path="/misCompras" component={MisComprasView} />
         <Profile />
       </Switch>
