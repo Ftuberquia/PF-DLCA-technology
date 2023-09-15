@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CartItemCounter from "./cartItemCounter";
+import "./cart.css";
 
 const CartElements = ({ updateCartData }) => {
   // Leer los datos del carrito desde el Local Storage en el inicio
