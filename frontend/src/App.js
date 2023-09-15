@@ -22,12 +22,14 @@ import About from "./views/About/About";
 import Cart from "./views/Cart/cart";
 import UserProfileView from "./views/Login/UserProfileView";
 import Profile from "./views/Login/Profile";
-import Dashboard from "./views/Admin/Dashboard";
-import UsuariosAdmin from "./views/Admin/UsuariosAdmin";
-import ComprasAdmin from "./views/Admin/ComprasAdmin";
-import ProductosAdmin from "./views/Admin/ProductosAdmin";
-import NavBarAdmin from "./views/Admin/NavBarAdmin";
+
 import MisComprasView from "./views/Mis Compras/MisComprasView";
+
+import UsuariosAdmin from "./views/Admin/Usuarios Admin/UsuariosAdmin";
+import ComprasAdmin from "./views/Admin/Compras Admin/ComprasAdmin";
+import ProductosAdmin from "./views/Admin/Productos Admin/ProductosAdmin";
+import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
+import Dashboard from "./views/Admin/Dashboard/Dashboard"
 
 const AdminLayout = () => {
   return (
@@ -45,12 +47,25 @@ const AdminLayout = () => {
 };
 
 const App = () => {
-  const { pathname } = useLocation();
+  const AdminLayout = () => {
+    return (
+      <div className="dashboard" style={{ display: 'flex' }}>      
+        <NavBarAdmin/>
+        <Switch>
+          <Route exact path="/admin" component={Dashboard} />
+          <Route path="/admin/productos" component={ProductosAdmin} />
+          <Route path="/admin/compras" component={ComprasAdmin} />
+          <Route path="/admin/usuarios" component={UsuariosAdmin} />
+        </Switch>        
+      </div>
+    );
+  };
+
 
   // const darkMode = useSelector((state) => state.darkMode); // Agrega esta línea
   // <div className={`App ${darkMode ? "AppDark" : ""}`}>
 
-  /* {pathname !== "*" && <Nav />}// como  cambiar Nav */
+  /* {pathname  !== "*" && <Nav />}// como  cambiar Nav */
 
   return (
     //   <div className={`App ${darkMode ? "AppDark" : ""}`}>
@@ -73,9 +88,9 @@ const App = () => {
         <Route path="/about" component={About} />
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={UserProfileView} />
-        <Route path="/misCompras" component={MisComprasView} />
 
         <Route path="/admin" component={AdminLayout} />
+        <Route path="/misCompras" component={MisComprasView} />
         <Profile />
       </Switch>
       <Footer />
