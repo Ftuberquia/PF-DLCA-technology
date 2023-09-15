@@ -1,23 +1,96 @@
 
 .cartContent {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  flex-direction:column;
+  align-items: center;
   margin: 30px;
 }
 
-.cartContent > img {
+.cartContent > div {
+  display: flex;
+  justify-content: space-between; /* Espaciado entre elementos */
+  align-items: center; /* Centrar los elementos horizontalmente en cada contenedor */
+  width: 100%; /* Ancho completo de cada contenedor */
+  margin-bottom: 10px; /* Espacio entre elementos de la lista */
+  padding: 10px; /* Espacio interno en cada contenedor */
+  border: 1px solid #ddd; /* Agregar bordes para separar los elementos de la lista */
+}
+
+.cartContent > div > img {
   height: 120px;
   width: 100px;
-  text-align: center;
+}
+
+.name {
+  font-size: 18px; /* Tamaño de fuente */
+  font-weight: bold; /* Peso de la fuente */
+  color: #333; /* Color del texto */
+ 
 }
 
 .cartTotal {
-  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  color:var(#ffffff);
+  text-align: center; /* Centra el texto del total del carrito */
+  margin-top: 10px;
 }
 
 .cart-message-center{
   text-align: center;
   margin-top: 40px;
+  
+}
+
+.price {
+  font-size: 16px; /* Tamaño de fuente */
+  font-weight: bold; /* Peso de la fuente */
+  color: #007bff; /* Color del texto (azul, puedes cambiarlo según tu diseño) */
+}
+
+.cartTotal {
+  font-size: 24px; /* Tamaño de fuente */
+  font-weight: bold; /* Peso de la fuente */
+  color: #333; /* Color del texto (puedes personalizarlo según tu diseño) */
+  margin-top: 10px; /* Margen superior */
+}
+
+.cart-items-total {
+  font-size: 18px; /* Tamaño de fuente */
+  font-weight: bold; /* Peso de la fuente (puede ser normal o bold según tu diseño) */
+  color: #777; /* Color del texto (personalízalo según tus preferencias) */
+  margin-top: 5px; /* Margen superior */
+  text-align: center; /* Centra el texto horizontalmente */
+  
+}
+
+.cart-delete-button {
+  background-color: #ff0000; 
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+}
+
+.cart-delete-button:hover {
+  background-color: #cc0000; 
+}
+
+.counter-button {
+  background-color: #007bff;
+  color: #fff;
+  padding:  5px 10px;
+  border: none;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+
+}
+
+.counter-button:hover {
+  background-color: var(--secondary-color);
 }
 
