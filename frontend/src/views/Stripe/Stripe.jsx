@@ -42,7 +42,7 @@ const CheckoutForm = () => {
       try {
         const { id } = paymentMethod;
         const { data } = await axios.post(
-          "http://localhost:3001/compras",
+          "http://localhost:3001/api/checkout",
           {
             id: id,
             amount: 10000, // precio a cambiar

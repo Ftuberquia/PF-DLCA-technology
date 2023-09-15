@@ -40,13 +40,9 @@ const postReviews = async (userId, productId, comment, rating) => {
 
       return newReview;
     } catch (error) {
-      if (error.name === 'SequelizeUniqueConstraintError') {
-        throw Error('Ya hiciste la reseña de este producto!');
-      } else {
         console.error('Error al insertar en la base de datos:', error);
       throw error; // Manejar errores adecuadamente en tu aplicación
-     } 
-  }
+    }
   };
 
 module.exports = postReviews

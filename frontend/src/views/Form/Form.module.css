@@ -154,6 +154,7 @@
   flex-direction: column;
   position: center;
   margin: 0 auto;
+  margin-top: 5rem;
   margin-bottom: 1rem;
   width: 100%;
   max-width: 720px;
