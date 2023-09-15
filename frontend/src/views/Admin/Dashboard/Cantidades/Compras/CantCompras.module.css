@@ -1,0 +1,30 @@
+.compras{
+    display: flex;
+    height: 100%;
+
+    .info{
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: auto;
+        max-width: max-content;
+
+        .title{
+            display: flex;
+            gap:10px;
+        }
+    }
+
+    .grafData{
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .grafico{
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

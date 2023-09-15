@@ -68,11 +68,10 @@ const UserProfileView = () => {
       ) : (
         <>
       <h1>VISTA DE PERFIL DEL USUARIO</h1>
-      
+
       {isAuthenticated && (
         <div>
           <img src={newAvatar || user?.avatar_img} alt={user?.name} />
-          <form className={style.form}>
           <input
             type="text"
             value={newUsername}
@@ -92,11 +91,9 @@ const UserProfileView = () => {
           <button onClick={handleUpdateProfile} disabled={isUpdating}>
             Guardar Cambios
           </button>
-          </form>
         </div>
       )}
       <button onClick={handleLogOut}>Cerrar Sesión</button>
-      
       </>
       )}
     </>
