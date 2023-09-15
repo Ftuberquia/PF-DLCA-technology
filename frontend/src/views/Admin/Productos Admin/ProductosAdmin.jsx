@@ -1,3 +1,5 @@
+import styles from './ProductosAdmin.module.css'
+
 function ProductosAdmin () {
 
     return(
