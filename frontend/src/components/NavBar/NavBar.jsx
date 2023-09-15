@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import personIcon from "../../img/person.svg";
+import personIcon from "../../img/person-circle.svg";
 import heartIcon from "../../img/heart.svg";
 import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
@@ -9,9 +9,10 @@ import axios from "axios";
 import emailjs from '@emailjs/browser';
 import style from "./NavBar.module.css"
 import { LocalStorageCache } from "@auth0/auth0-react";
+
 import TotalItems from "../../views/Cart/TotalItems";
 import useLocalStorage from "./hooks/useLocalStorage";
-
+import { Dropdown, toggleDropdown } from "react-bootstrap";
 export const cache = new LocalStorageCache()
 
 const NavBar = () => {
@@ -77,6 +78,12 @@ const NavBar = () => {
         })
       }
     }, [isAuthenticated, user]);
+
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const toggleDropdown = () => {
+      setDropdownOpen(!dropdownOpen);
+    };
   
 
   return (
@@ -96,7 +103,7 @@ const NavBar = () => {
       </span>
       <span>
         <Link to={"/about"} className={style.links}>
-          Sobre nosotros
+          Sobre DLCA
         </Link>
       </span>
       <span>
@@ -104,27 +111,61 @@ const NavBar = () => {
           Contáctenos
         </Link>
       </span>
-      
-      <div className={style.buttons}>
+       {/* <div className={style.buyContainer}>
+         <NavLink to={'/compra'} className={style.buy}>
+              Comprar
+         </NavLink>
+
+       </div> */}
+      {/* <div className={style.buttons}>
       <NavLink to={"login"} onClick={isAuthenticated ? undefined : () => loginWithPopup()}>
         {isAuthenticated ? (
           <button className={style.userboton2} onClick={handleLogOut}>
             SALIR
           </button>
         ) : (
-          "INGRESAR"
+          ""
         )}
       </NavLink>
-
+      </div> */}
+      <div className={style.icons}>
         <Link to={"/favorites"}>
           <img src={heartIcon} alt="Favorites" />
         </Link>
         <Link to={"/cart"} className={style.cart}>
           <img src={shoppingCartIcon} alt="Shopping Cart" />
+          <div className={style.totals}></div>
           <TotalItems />
         </Link>
+        <br></br>
+        </div> 
+        {/* <Link to={"/login"}>
+          <img src={personIcon} alt="User" />
+        </Link> */}
+        <div className={style.iconuser}> 
+        <div className={style.dropdown}>
+    <button className={style.dropdownToggle} onClick={toggleDropdown}>
+      <img src={personIcon} alt="Person" />
+    </button>
+    {dropdownOpen && (
+      <div className={style.dropdownMenu}>
+        <NavLink to={"/login"} className={style.dropdownItem}>
+          Iniciar Sesión
+        </NavLink>
+        <NavLink to={"/register"} className={style.dropdownItem}>
+          Registro
+        </NavLink>
+        <NavLink to={"/"} className={style.dropdownItem}>
+          Cerrar Sesión
+        </NavLink>
+        <NavLink to={"/admin"} className={style.dropdownItem}>
+          Admin
+        </NavLink>
       </div>
-    </nav>
+    )}
+  </div>
+  </div>
+</nav>
   );
 };
 
