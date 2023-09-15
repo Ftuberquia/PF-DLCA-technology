@@ -76,6 +76,7 @@ const App = () => {
         <Route path="/login" component={UserProfileView} />
         <Route path="/reviews" component={ProductReviewView} />
         <Route path="/aboutUs" component={AboutUs} />
+        <Route path="/misCompras" component={MisComprasView} />
         <Profile />
       </Switch>
       <Footer />
