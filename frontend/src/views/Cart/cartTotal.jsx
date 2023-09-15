@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./cart.css";
 
 const CartTotal = () => {
   // Read cart data from local storage on component load
