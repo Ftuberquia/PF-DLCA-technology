@@ -23,34 +23,33 @@ import Cart from "./views/Cart/cart";
 import UserProfileView from "./views/Login/UserProfileView";
 import Profile from "./views/Login/Profile";
 import ProductReviewView from "./views/ProductReviewView/ProductReviewView";
-import Dashboard from "./views/Admin/Dashboard";
-import UsuariosAdmin from "./views/Admin/UsuariosAdmin";
-import ComprasAdmin from "./views/Admin/ComprasAdmin";
-import ProductosAdmin from "./views/Admin/ProductosAdmin";
-import NavBarAdmin from "./views/Admin/NavBarAdmin";
 
-const AdminLayout = () => {
-  return (
-    <div>
-      <NavBarAdmin />
-      <div>
+import UsuariosAdmin from "./views/Admin/Usuarios Admin/UsuariosAdmin";
+import ComprasAdmin from "./views/Admin/Compras Admin/ComprasAdmin";
+import ProductosAdmin from "./views/Admin/Productos Admin/ProductosAdmin";
+import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
+import Dashboard from "./views/Admin/Dashboard/Dashboard"
+
+const App = () => {
+  const AdminLayout = () => {
+    return (
+      <div className="dashboard" style={{ display: 'flex' }}>      
+        <NavBarAdmin/>
         <Switch>
+          <Route exact path="/admin" component={Dashboard} />
           <Route path="/admin/productos" component={ProductosAdmin} />
           <Route path="/admin/compras" component={ComprasAdmin} />
           <Route path="/admin/usuarios" component={UsuariosAdmin} />
-        </Switch>
+        </Switch>        
       </div>
-    </div>
-  );
-};
+    );
+  };
 
-const App = () => {
-  const { pathname } = useLocation();
 
   // const darkMode = useSelector((state) => state.darkMode); // Agrega esta línea
   // <div className={`App ${darkMode ? "AppDark" : ""}`}>
 
-  /* {pathname !== "*" && <Nav />}// como  cambiar Nav */
+  /* {pathname  !== "*" && <Nav />}// como  cambiar Nav */
 
   return (
     //   <div className={`App ${darkMode ? "AppDark" : ""}`}>
