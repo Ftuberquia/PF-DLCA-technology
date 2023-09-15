@@ -48,7 +48,7 @@ router.use("/carts",carts)
 router.use("/reviews", reviews)
 
 //Ruta para los carritos
-router.use("/compras",compras)
+// router.use("/compras",compras)
 
 module.exports = router;
 

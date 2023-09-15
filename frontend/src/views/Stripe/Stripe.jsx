@@ -10,7 +10,6 @@ import {
 } from "@stripe/react-stripe-js";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import CartTotal from "../Cart/cartTotal";
-import { cache } from "../../components/NavBar/NavBar";
 import { useAuth0 } from "@auth0/auth0-react";
 import Loading from "../../components/Loading/Loading"; 
 
@@ -42,7 +41,7 @@ const CheckoutForm = () => {
       try {
         const { id } = paymentMethod;
         const { data } = await axios.post(
-          "http://localhost:3001/compras",
+          "http://localhost:3001/api/checkout",
           {
             id: id,
             amount: 10000, // precio a cambiar
@@ -72,8 +71,8 @@ const CheckoutForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="">
-      <h2 className={style.precio}>Precio: </h2> // aca va el total
+    <form onSubmit={handleSubmit} method="POST">
+      <h2 className={style.precio}>Precio: </h2> 
       <div className={style.subtituloVisa}>
         <h2>Numero TC. </h2>
         <h2> Fecha Vencimiento</h2>
