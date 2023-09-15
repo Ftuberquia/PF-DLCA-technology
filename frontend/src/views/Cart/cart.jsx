@@ -5,6 +5,8 @@ import TotalItems from "./TotalItems";
 import "./cart.css";
 import axios from "axios";
 import { saveCartToServer } from "../../redux/actions/index";
+import {  Link } from "react-router-dom";
+
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Cart({ cartProducts}) {
@@ -34,6 +36,15 @@ export default function Cart({ cartProducts}) {
 
   return cartData.length > 0 ? (
     <>
+   {isAuthenticated ? (
+            <Link to={`/compras`}>
+              <button className={''} >Comprar Ahora</button>
+            </Link>
+          ) : (
+            <button className={''} >
+            Comprar ahora
+            </button>
+          )}
       <CartElement updateCartData={updateCartData} />
       <CartTotal cartData={cartData} />
       <button onClick={handleSaveDataToServer}>

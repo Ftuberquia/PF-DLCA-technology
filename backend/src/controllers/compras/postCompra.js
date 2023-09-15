@@ -1,39 +1,28 @@
+const express = require('express');
+const router = express.Router();
+const Compras = require('../../models/compras'); // Asegúrate de importar el modelo
 
+// Ruta para guardar la compra en la base de datos
+router.post('/guardar-compra', async (req, res) => {
+  try {
+    const { userId, productId, quantity, total_price } = req.body;
 
-// const createOrder = async (req, res) => {
-//   try {
-//     const { userId, productId, quantity, total_price, id, amount, return_url, } = req.body;
+    // Crea un nuevo registro de compra en la base de datos
+    const nuevaCompra = await Compras.create({
+      userId,
+      productId,
+      quantity,
+      total_price,
+      order_date: new Date(), // Puedes obtener la fecha actual
+      estate: 'Pendiente', // Puedes ajustar el estado según tu lógica
+      created: false, // Puedes ajustar este valor según tu lógica
+    });
 
-    
-//     // Verifica si el usuario y el producto existen
-//     const user = await Users.findByPk(userId);
-//     const product = await Products.findByPk(productId);
+    return res.status(201).json({ message: 'Compra guardada con éxito', compra: nuevaCompra });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Error al guardar la compra' });
+  }
+});
 
-//     if (!user) {
-//       return res.status(404).json({ message: 'Usuario no encontrado' });
-//     }
-//     if (!product) {
-//       return res.status(404).json({ message: 'Producto no encontrado' });
-//     }
-
-//     // Crea una nueva compra en la tabla "orders"
-//     const newOrder = await Orders.create({
-//       userId: user.id,
-//       order_date: new Date(),
-//       state: 'Pendiente',
-//       quantity,
-//       total_price,
-//       created: true,
-//     });
-
-//     // Asocia el producto a la compra utilizando UserOrder
-//     await UserOrder.create({
-//       userId: user.id,
-//       orderId: newOrder.id, // Utiliza el ID de la compra recién creada
-//       productId: product.id, // Utiliza el ID del producto
-//       quantity,
-//     })}
-//     catch{
-
-//     }
-// }
+module.exports = router;

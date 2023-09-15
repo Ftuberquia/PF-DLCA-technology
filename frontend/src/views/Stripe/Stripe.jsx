@@ -1,15 +1,15 @@
-import React, { useState, useRef } from "react";
 import axios from "axios";
 import style from "./Stripe.module.css";
-import { loadStripe } from "@stripe/stripe-js";
+import React, { useState, useRef } from "react";
+import { useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import {
   Elements,
   CardElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import CartTotal from "../Cart/cartTotal";
+import { loadStripe } from "@stripe/stripe-js";
 import { useAuth0 } from "@auth0/auth0-react";
 import Loading from "../../components/Loading/Loading"; 
 
@@ -19,13 +19,17 @@ const stripePromise = loadStripe(
   "pk_test_51NnMQaEUVHui4qp0KnEfLflyUrkDfZDN9jLhIq7Vzb4RGVvCG0tCfEDmgi9GKV1CYCXc5TYzU7FcS4BXCXmSv8tC00L9f6qNwM"
 );
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
   const history = useHistory(); // Inicializa useHistory
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setLoading] = useState(false);
   const cardElement = useRef(null);
+  const dataCart = useSelector((state) => state.cart) // sacar datos del carrito
+  const { user } = useAuth0();
 
+  // Imprime los datos en la consola
+  console.log("infoCART", dataCart)
   
 
   const handleSubmit = async (event) => {
@@ -44,7 +48,11 @@ const CheckoutForm = () => {
           "http://localhost:3001/api/checkout",
           {
             id: id,
-            amount: 10000, // precio a cambiar
+            amount: 10000,
+            userId: user.userId,  
+            productId: productId, 
+            quantity: quantity,  
+            total_price: total_price,  
             return_url: "http://localhost:3000/confirmation",
           }
         );
@@ -72,7 +80,7 @@ const CheckoutForm = () => {
 
   return (
     <form onSubmit={handleSubmit} method="POST">
-      <h2 className={style.precio}>Precio: </h2> 
+      <h2 className={style.precio}>Precio: {total_price} </h2> 
       <div className={style.subtituloVisa}>
         <h2>Numero TC. </h2>
         <h2> Fecha Vencimiento</h2>

@@ -17,6 +17,8 @@ const ConfirmationPage = () => {
 
    // Imprime los datos en la consola
    console.log("Datos de pago:", paymentInfo);
+   console.log("infoCART", purchasedProducts)
+
 
   //  const sendEmail = () => {
 
@@ -66,8 +68,8 @@ const ConfirmationPage = () => {
       <h1 className={styles["confirmation-title"]}>Compra Exitosa</h1>
 
       <div className={styles["payment-info"]}>
-        <p>ID de Pago: {paymentInfo.payment.id}</p>
-        <p>Monto: ${paymentInfo.payment.amount}</p>
+        <p>ID de Pago: {paymentInfo.paymentIntent.id}</p>
+        <p>Monto: ${paymentInfo.paymentIntent.amount}</p>
       </div>
 
       <div className={styles["cart-items"]}>
