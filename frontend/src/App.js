@@ -24,14 +24,34 @@ import UserProfileView from "./views/Login/UserProfileView";
 import Profile from "./views/Login/Profile";
 import ProductReviewView from "./views/ProductReviewView/ProductReviewView";
 import AboutUs from "./views/AboutUs/AboutUs";
+import MisComprasView from "./views/Mis Compras/MisComprasView";
+
+import UsuariosAdmin from "./views/Admin/Usuarios Admin/UsuariosAdmin";
+import ComprasAdmin from "./views/Admin/Compras Admin/ComprasAdmin";
+import ProductosAdmin from "./views/Admin/Productos Admin/ProductosAdmin";
+import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
+import Dashboard from "./views/Admin/Dashboard/Dashboard"
 
 const App = () => {
-  const { pathname } = useLocation();
+  const AdminLayout = () => {
+    return (
+      <div className="dashboard" style={{ display: 'flex' }}>      
+        <NavBarAdmin/>
+        <Switch>
+          <Route exact path="/admin" component={Dashboard} />
+          <Route path="/admin/productos" component={ProductosAdmin} />
+          <Route path="/admin/compras" component={ComprasAdmin} />
+          <Route path="/admin/usuarios" component={UsuariosAdmin} />
+        </Switch>        
+      </div>
+    );
+  };
+
 
   // const darkMode = useSelector((state) => state.darkMode); // Agrega esta línea
   // <div className={`App ${darkMode ? "AppDark" : ""}`}>
 
-  /* {pathname !== "*" && <Nav />}// como  cambiar Nav */
+  /* {pathname  !== "*" && <Nav />}// como  cambiar Nav */
 
   return (
     //   <div className={`App ${darkMode ? "AppDark" : ""}`}>
