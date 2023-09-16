@@ -8,6 +8,7 @@ const products = Router()
 
 //este trae todos los productos y los productos por nombre
 products.get("/", getAllProductsHandler)
+
 //este trae los detalles del producto
 products.get("/:id", getDetailHandler)
 
