@@ -1,0 +1,30 @@
+.usuarios {
+    .tabla {
+      margin-left: 15px;
+      border-collapse: collapse;
+      width: 90%;
+      justify-content: space-between;
+    }
+  
+    .columnas th {
+      text-align: center;
+      font-weight: bold;
+      border-bottom: 2px solid rgb(255, 191, 0);
+      padding: 15px;
+    }
+
+    .filas td {
+      text-align: center;
+      padding: 10px;
+      vertical-align: middle;
+      border-right: 1px solid rgba(255, 191, 0, 0.104);
+      border-bottom: 1px solid rgba(255, 191, 0, 0.505);
+    }
+
+    .avatarimg {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
