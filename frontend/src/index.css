@@ -1,9 +1,9 @@
 :root {
-  --primary-color: #ff00ff; /* rosa fuerte */
+  --primary-color: #c5588f; /* rosa fuerte */
   --secondary-color: #00ffff; /* azul claro */
   --tertiary-color: #ffff00; /* amarillo */
 
-  --button-pago:  rgb(13, 181, 21);/*verde*/
+  --button-pago: rgb(13, 181, 21); /*verde*/
 
   --background-color: #000000; /* negro */
   --text-color: #ffffff; /* blanco */
