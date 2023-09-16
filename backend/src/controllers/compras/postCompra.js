@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Compras = require('../../models/compras'); // Asegúrate de importar el modelo
+const Compra = require('../../models/compra'); // Asegúrate de importar el modelo
 
 // Ruta para guardar la compra en la base de datos
 router.post('/guardar-compra', async (req, res) => {
@@ -8,7 +8,7 @@ router.post('/guardar-compra', async (req, res) => {
     const { userId, productId, quantity, total_price } = req.body;
 
     // Crea un nuevo registro de compra en la base de datos
-    const nuevaCompra = await Compras.create({
+    const nuevaCompra = await Compra.create({
       userId,
       productId,
       quantity,

@@ -35,7 +35,7 @@ server.use((req, res, next) => {
 server.post('/api/checkout', async (req, res) => {
 	const { id, amount, return_url} = req.body;
 	try{
-		const paymentIntent = await stripe.paymentIntents.create({
+		const payment = await stripe.paymentIntents.create({
 			amount,
 			currency: "USD",
 			description: "Producto de tegnologia", // descripcion desde la base de datos
@@ -53,8 +53,8 @@ server.post('/api/checkout', async (req, res) => {
 		// 	userId, // El ID del usuario que realizó la compra
 		// 	productId, // El ID del producto comprado
 		//   });
-		console.log(paymentIntent);
-		res.send({ message: 'Pago exitoso', paymentIntent});
+		console.log(payment);
+		res.send({ message: 'Pago exitoso', payment});
 
 	} catch (error) {
 		console.log(error);

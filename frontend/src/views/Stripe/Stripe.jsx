@@ -1,6 +1,6 @@
 import axios from "axios";
 import style from "./Stripe.module.css";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import {
@@ -25,12 +25,31 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
   const elements = useElements();
   const [isLoading, setLoading] = useState(false);
   const cardElement = useRef(null);
-  const dataCart = useSelector((state) => state.cart) // sacar datos del carrito
+  // const dataCart = useSelector((state) => state.cart) // sacar datos del carrito
   const { user } = useAuth0();
+  const [totalPrice, setTotalPrice] = useState(0);
 
   // Imprime los datos en la consola
-  console.log("infoCART", dataCart)
-  
+  console.log("infoCART", totalPrice)
+
+  useEffect(() => {
+    // Llama a la función para obtener el precio total sin un ID de carrito
+    fetchTotalPrice();
+  }, []);
+
+  const fetchTotalPrice = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3001/carts/totalValor" 
+      );
+
+      // Extrae el precio total del carrito desde la respuesta
+      const { data } = response;
+      setTotalPrice(data);
+    } catch (error) {
+      console.error("Error al obtener el precio total:", error);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -48,11 +67,11 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
           "http://localhost:3001/api/checkout",
           {
             id: id,
-            amount: 10000,
+            amount: 100 * 100,
             userId: user.userId,  
             productId: productId, 
             quantity: quantity,  
-            total_price: total_price,  
+            total_price: totalPrice,  
             return_url: "http://localhost:3000/confirmation",
           }
         );
