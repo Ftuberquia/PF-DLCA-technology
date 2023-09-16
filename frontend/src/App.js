@@ -22,7 +22,7 @@ import About from "./views/About/About";
 import Cart from "./views/Cart/cart";
 import UserProfileView from "./views/Login/UserProfileView";
 import Profile from "./views/Login/Profile";
-
+import AboutUs from "./views/AboutUs/AboutUs";
 import MisComprasView from "./views/Mis Compras/MisComprasView";
 
 import UsuariosAdmin from "./views/Admin/Usuarios Admin/UsuariosAdmin";
@@ -88,7 +88,7 @@ const App = () => {
         <Route path="/about" component={About} />
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={UserProfileView} />
-
+        <Route path="/aboutUs" component={AboutUs} />
         <Route path="/admin" component={AdminLayout} />
         <Route path="/misCompras" component={MisComprasView} />
         <Profile />

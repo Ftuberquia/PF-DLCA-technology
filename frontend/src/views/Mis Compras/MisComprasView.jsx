@@ -36,6 +36,7 @@ const MisComprasView = () => {
         productId,
         comment: formData.comment,
         rating: formData.rating,
+        userEmail: user.email
       };
       await axios.post(`http://localhost:3001/reviews/${productId}`, reviewData);
 

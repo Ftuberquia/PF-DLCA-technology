@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link, useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react"; // Hay que asegurarse de importar useAuth0
+import axios from "axios";
 
-import {getProductDetail,cleanDetail,addToCart} from "../../redux/actions/index";
-import {addFavorite,deleteFavorite,fetchData} from "../../views/Favorites/funcionesFav";
+import { getProductDetail, cleanDetail, addToCart } from "../../redux/actions/index";
+import { addFavorite, deleteFavorite, fetchData } from "../../views/Favorites/funcionesFav";
 import { cache } from "../../components/NavBar/NavBar";
 
 import Swal from "sweetalert2";
@@ -18,6 +19,7 @@ const ProductDetail = () => {
   const product = useSelector((state) => state.productDetail);
   const [isFavorite, setIsFavorite] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [productReviews, setProductReviews] = useState([]);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -50,6 +52,19 @@ const ProductDetail = () => {
       }}
     return null;
   }
+
+  useEffect(() => {
+    const fetchProductReviews = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/reviews/${id}`);
+        setProductReviews(response.data);
+      } catch (error) {
+        console.error('Error al obtener las reseñas del producto', error);
+      }
+    };
+  
+    fetchProductReviews();
+  }, [id]);
 
   //Para obtener el userId desde el localStorage
   useEffect(() => {
@@ -153,7 +168,7 @@ const ProductDetail = () => {
     if (isAuthenticated) {
       if (product.stock > 0) {
         dispatch(addToCart({ ...product, quantity: cartQuantity }));
-        history.push(`/compras`); // agrega el producto al carrito y redirige al usuario a la página de pago.
+        history.push(`/compra`); // agrega el producto al carrito y redirige al usuario a la página de pago.
       } else {
         Swal.fire({
           // De lo contrario, muestra un mensaje de advertencia o solicita al usuario que inicie sesión.
@@ -227,8 +242,18 @@ const ProductDetail = () => {
           <img src={product.imageSrc} alt={product.imageAlt} />
           <hr />
           <div className={style.detalles2}>
-            <h2>Descripción</h2>
+            <h2>Descripción:</h2>
             <p>{product.description}</p>
+            <h2>Reseñas de los usuarios</h2>
+            <ul>
+              {productReviews.map((review) => (
+                <li key={review.id}>
+                  <p>Comentario: {review.comment}</p>
+                  <p>Calificación: {review.rating}</p>
+                  <p>Usuario: {review.userEmail}</p>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
         <div className={style.infoCompra}>
@@ -244,7 +269,7 @@ const ProductDetail = () => {
           </button>
 
           {isAuthenticated ? (
-            <Link to={`/compras`}>
+            <Link to={`/compra`}>
               <button className={style.comprar} onClick={handleBuyNow}>Comprar Ahora</button>
             </Link>
           ) : (
@@ -252,7 +277,7 @@ const ProductDetail = () => {
             Comprar ahora
             </button>
           )}
-         )
+         
             </div>
           </div>
         </div>
