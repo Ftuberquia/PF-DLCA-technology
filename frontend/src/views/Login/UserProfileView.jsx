@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import style from "./UserProfileView.module.css";
 import axios from "axios";
 import Loading from "../../components/Loading/Loading";
+import { Link } from "react-router-dom";
 
 
 const UserProfileView = () => {
-  // const { logout, user, isAuthenticated, isLoading, getIdTokenClaims } = useAuth0();
-  const { loginWithRedirect, logout, user, isAuthenticated, isLoading, getIdTokenClaims } = useAuth0();
+  const { logout, user, isAuthenticated, isLoading, getIdTokenClaims } = useAuth0();
   const [newUsername, setNewUsername] = useState("");
   const [newAvatar, setNewAvatar] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
@@ -26,10 +25,6 @@ const UserProfileView = () => {
 
   const handleLogOut = () => {
     logout({ logoutParams: { returnTo: window.location.origin } });
-  };
-
-  const handleLogin = () => {
-    loginWithRedirect();
   };
 
   const handleUpdateProfile = async () => {
@@ -65,7 +60,6 @@ const UserProfileView = () => {
     return () => clearTimeout(timer);
   }, []);
 
-
   return (
     <>
       {isLoadingTimeout ? (
@@ -73,21 +67,16 @@ const UserProfileView = () => {
           <Loading />
         </div>
       ) : (
-        <div className={style.userprofileview}>
-        <div className={style.userContainer}>
-      {/* <h1>VISTA DE PERFIL DEL USUARIO</h1> */}
-      {/* <button onClick={handleLogin}>Iniciar Sesión</button> */}
-      <h1 className={style.cartmessagecenter}> MI PERFIL</h1>
-      {user && (
         <>
-        <p className={style.cartmessagecenter}>Bienvenido, {user.name}!</p>
+      {/* <h1>VISTA DE PERFIL DEL USUARIO</h1> */}
+        <p className={style.cartmessagecenter}>Bienvenido, {user?.name}!</p>
         {/* <img src={user.avatar_url} alt="User avatar" /> */}
         </>
       )}
       <br></br>
       {isAuthenticated && (
-        <div className={style.avatar} >
-          <img src={newAvatar || user?.picture} alt={user?.name} />
+        <div className={style.avatar}> 
+          <img src={newAvatar || user?.avatar_img} alt={user?.name} />
           <br></br>
           <form className={style.form}>
           <input
@@ -107,20 +96,17 @@ const UserProfileView = () => {
             onChange={(e) => setNewAvatar(e.target.value)}
             placeholder="Nueva URL de avatar"
           />
-          <br></br>
-          <Link to="/misCompras">
+         <Link to="/misCompras">
             <button className={style.button} onClick={handleUpdateProfile} disabled={isUpdating}>
             Guardar Cambios</button>
           </Link>
           </form> 
-          </div>
+        </div>
       )}
-      {/* <button onClick={handleLogOut}>Cerrar Sesión</button> */}
-      </div>
-      </div>
-      )}
-    </>
-    )
-};
+      <button onClick={handleLogOut}>Cerrar Sesión</button>
+      </>
+      )
+    }
+
 
 export default UserProfileView;
