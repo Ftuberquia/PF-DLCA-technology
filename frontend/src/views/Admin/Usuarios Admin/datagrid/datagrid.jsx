@@ -41,6 +41,18 @@ function Datagrid () {
             </button>
         );
     }
+    const desactivarHandler = async(id, isActive) =>{
+      try {
+          if(isActive === true){
+              const response = await axios.put(`/users/${id}`, {isActive: false})
+          }else{
+              const response = await axios.put(`/users/${id}`, {isActive: true})
+      }
+      window.location.reload()
+  }catch (error) {
+      console.log(error)
+      }
+  }
 
     return(
       <div className={styles.usuarios}>
@@ -67,8 +79,8 @@ function Datagrid () {
                 <td>{dato.createdAt}</td>
                 <td>{dato.admin===true?(<p>Administrador</p>):(<p>Usuario</p>)}</td>
                 <td>
-                  <button>Editar</button>
-                  <button>Bloquear</button>
+                  {/* <button>Editar</button> */}
+                  {datos.isActive===true?<button onClick={()=>desactivarHandler(datos.id, datos.isActive)}>Bloquear</button>:<button onClick={()=>desactivarHandler(datos.id, datos.isActive)}>Desbloquear</button>}
                 </td>
               </tr>
             ))}

@@ -7,6 +7,8 @@ function DataProducts () {
     const [datos, setDatos]=useState([])
     const [paginaActual, setPaginaActual] = useState(1);
     const [elementosPorPagina] = useState(5);
+    const [editingProductId, seteditingProductId] = useState(null);
+    const [editedProduct, setEditedProduct] = useState({});
 
     useEffect(()=>{
         const obtenerDatos = async () => {
@@ -42,6 +44,33 @@ function DataProducts () {
         );
     }
 
+    const editHandler = (id) => {
+      seteditingProductId(id);
+    };
+    
+    const saveHandler = async(id)=>{
+        try {
+            const response = await axios.put(`/products/${id}`, editedProduct);
+            seteditingProductId(null);
+            window.location.reload();
+        } catch (error) {
+           console.log(error)
+        }
+    }
+    
+    const desactivarHandler = async(id, isActive) =>{
+        try {
+            if(isActive === true){
+                const response = await axios.put(`/products/${id}`, {isActive: false})
+            }else{
+                const response = await axios.put(`/products/${id}`, {isActive: true})
+        }
+        window.location.reload()
+    }catch (error) {
+        console.log(error)
+        }
+    }
+
     return(
         <div className={styles.productos}>
             <table className={styles.tabla}>
@@ -58,15 +87,64 @@ function DataProducts () {
         <tbody className={styles.filas}>
           {elementosPaginaActual.map((dato) => (
             <tr key={dato.id}>
-              <td><img className={styles.avatarimg} src={dato.imageSrc} alt={dato.name}/></td>
-              <td><p className={styles.name}>{dato.name}</p></td>
-              <td>${dato.price}</td>
-              <td>{dato.stock}</td>
+              <td>
+                {editingProductId===dato.id ? (
+                <input      //ver como cambiar en el form
+                      type="text"
+                      value={editedProduct.imageSrc}
+                      onChange={(e) =>setEditedProduct({
+                        ...editedProduct,
+                        imageSrc: e.target.value,
+                      })}/>)
+                    : (<img className={styles.avatarimg} src={dato.imageSrc} alt={dato.name}/>)}
+              </td>
+              <td>
+                  {editingProductId===dato.id ? (
+                      <input
+                        type="text"
+                        value={editedProduct.name}
+                        onChange={(e) => setEditedProduct({
+                            ...editedProduct,
+                            name: e.target.value,
+                        })
+                        }
+                      />
+                ) : (<p className={styles.name}>{dato.name}</p>)}
+              </td>
+              <td>
+                {editingProductId===dato.id ? (
+                <input
+                    type="text"
+                    value={editedProduct.price}
+                    onChange={(e) =>
+                    setEditedProduct({
+                    ...editedProduct,
+                    price: e.target.value,
+                    })}/>) : 
+                    (<span>${dato.price}</span>)}
+                </td>
+                <td>
+                {editingProductId===dato.id ? (
+                <input
+                type="text"
+                value={editedProduct.stock}
+                onChange={(e) =>
+                setEditedProduct({
+                ...editedProduct,
+                stock: e.target.value,
+            })}/>) 
+            : (<span>{dato.stock}</span>)}
+                </td>
+              {/* UwU */}
               <td>🌟 {dato.rating}</td>
               <td>{dato.isActive===true?(<p>Activo</p>):(<p>Desactivado</p>)}</td>
               <td>
-                <button>Editar</button>
-                <button>Deshabilitar</button>
+                {editingProductId === dato.id ? (
+                <button onClick={() => saveHandler(dato.id)}>Guardar</button>
+                ) : (
+                <button onClick={() => editHandler(dato.id)}>Editar</button>
+                )}
+                {dato.isActive ===true? <button onClick={() => desactivarHandler(dato.id, dato.isActive)}>Deshabilitar</button> : <button onClick={() => desactivarHandler(dato.id, dato.isActive)}>Habilitar</button>}
               </td>
             </tr>
           ))}
