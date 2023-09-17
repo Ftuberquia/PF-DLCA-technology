@@ -25,13 +25,13 @@ import Cart from "./views/Cart/cart";
 import UserProfileView from "./views/Login/UserProfileView";
 // import Profile from "./views/Login/Profile";
 import AboutUs from "./views/AboutUs/AboutUs";
-import Profile from "./views/Login/Profile";import AboutUs from "./views/AboutUs/AboutUs";
 import MisComprasView from "./views/Mis Compras/MisComprasView";
 import UsuariosAdmin from "./views/Admin/Usuarios Admin/UsuariosAdmin";
 import ComprasAdmin from "./views/Admin/Compras Admin/ComprasAdmin";
 import ProductosAdmin from "./views/Admin/Productos Admin/ProductosAdmin";
 import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
 import Dashboard from "./views/Admin/Dashboard/Dashboard"
+import ChatBot from "./components/ChatBot/ChatBot.jsx";
 
 const AdminLayout = () => {
   return (
@@ -95,6 +95,7 @@ const App = () => {
         <Route path="/misCompras" component={MisComprasView} />
         {/* <Profile /> */}
       </Switch>
+      <Route path="/" component={ChatBot} />
       <Footer />
     </Router>
   );
