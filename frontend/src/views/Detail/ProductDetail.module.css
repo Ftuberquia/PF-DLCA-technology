@@ -85,6 +85,7 @@
 .detalles1{
     display: flex;
     flex-direction: column;
+    font-size: 5rem;
     justify-content: center;
     align-items: center;
 }
@@ -162,6 +163,7 @@
 .cantidad button{
     width: 2.7rem;
     height: 2.7rem;
+    font-size: 30px;
     background-color: rgba(198, 199, 205, 0.496);
     border-radius: 25%;
     border-color: rgba(127, 127, 127, 0.065);
@@ -225,3 +227,18 @@
     box-shadow: 0 0 0 -1px #1111128d;
     transform: translateY(1px);
 }
+
+.productreviewslist {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .productreviewslist li {
+    margin-bottom: 10px;
+    border: 1px solid gray;
+    padding: 10px;
+  }
+  
+  .productreviewslist li p {
+    margin: 0;
+  }
