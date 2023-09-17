@@ -12,6 +12,7 @@ const carts = require ("./carts/routeCarts")
 const reviews = require("./reviews/routeReviews")
 const users = require("../routes/users/routeUsers");
 const compras = require("./compra/routeCompra");
+const admin = require("./products/routeProdAdmin")
 
 const router = Router();
 
@@ -49,6 +50,9 @@ router.use("/reviews", reviews)
 
 //Ruta para los carritos
 router.use("/compras",compras)
+
+//Ruta para administrador para traerse todos los productos
+router.use("/prod",admin)
 
 module.exports = router;
 

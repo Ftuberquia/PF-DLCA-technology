@@ -23,7 +23,7 @@ const getFavoriteProducts=async(req, res)=>{
             model: Products,
             as: 'products',
             through: { attributes: [] }, // Evita incluir las columnas de la tabla intermedia en el resultado
-            attributes:{exclude:['href','imageAlt','brand','category','subcategory','description','isActive','categoryId','subcategoryId','brandsId']}
+            attributes:{exclude:['href','imageAlt','brand','category','subcategory','description','categoryId','subcategoryId','brandsId']}
           },
         ],
         attributes: { exclude: ['first_name', 'last_name', 'email', 'password', 'postal_code', 'address', 'phone']}

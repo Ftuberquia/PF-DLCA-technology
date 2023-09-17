@@ -30,7 +30,7 @@ import UsuariosAdmin from "./views/Admin/Usuarios Admin/UsuariosAdmin";
 import ComprasAdmin from "./views/Admin/Compras Admin/ComprasAdmin";
 import ProductosAdmin from "./views/Admin/Productos Admin/ProductosAdmin";
 import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
-import Dashboard from "./views/Admin/Dashboard/Dashboard";
+import Dashboard from "./views/Admin/Dashboard/Dashboard"
 import ChatBot from "./components/ChatBot/ChatBot.jsx";
 
 const AdminLayout = () => {
@@ -51,18 +51,19 @@ const AdminLayout = () => {
 const App = () => {
   const AdminLayout = () => {
     return (
-      <div className="dashboard" style={{ display: "flex", width: "99%" }}>
-        <NavBarAdmin />
+      <div className="dashboard" style={{ display: 'flex', width:'99%'}}>      
+        <NavBarAdmin/>
         <Switch>
           <Route exact path="/admin" component={Dashboard} />
           <Route path="/admin/productos" component={ProductosAdmin} />
           <Route path="/admin/compras" component={ComprasAdmin} />
           <Route path="/admin/usuarios" component={UsuariosAdmin} />
           <Route path="/admin/form" component={Form} />
-        </Switch>
+        </Switch>        
       </div>
     );
   };
+
 
   // const darkMode = useSelector((state) => state.darkMode); // Agrega esta línea
   // <div className={`App ${darkMode ? "AppDark" : ""}`}>
