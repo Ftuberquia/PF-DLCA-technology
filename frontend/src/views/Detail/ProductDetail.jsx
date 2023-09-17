@@ -208,7 +208,7 @@ const ProductDetail = () => {
     return () => clearTimeout(timer);
   }, []);
 
-
+ 
   return (
     <>
       {isLoading ? (
@@ -245,7 +245,7 @@ const ProductDetail = () => {
             <h2>Descripción:</h2>
             <p>{product.description}</p>
             <h2>Reseñas de los usuarios</h2>
-            <ul>
+            <ul className={style.productreviewslist}>
               {productReviews.map((review) => (
                 <li key={review.id}>
                   <p>Comentario: {review.comment}</p>
@@ -281,22 +281,23 @@ const ProductDetail = () => {
             </div>
           </div>
         </div>
-      /* <form>
-                <label htmlFor="comment">Comentario:</label>
-                <textarea id="comment" name="comment" />
-                <button type="submit">Enviar comentario</button>
-            </form>
-            <div className="rating">
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9734;</span>
-                <span className="star">&#9734;</span>
-                <p>Calificación promedio: 3 estrellas</p>
-            </div> */
+            // <form>
+            //     <label htmlFor="comment">Comentario:</label>
+            //     <textarea id="comment" name="comment" />
+            //     <button type="submit">Enviar comentario</button>
+            // </form>
+            // <div className="rating">
+            //     <span className="star">&#9733;</span>
+            //     <span className="star">&#9733;</span>
+            //     <span className="star">&#9733;</span>
+            //     <span className="star">&#9734;</span>
+            //     <span className="star">&#9734;</span>
+            //     <p>Calificación promedio: 3 estrellas</p>
+            // </div>
           )}
       </>
     );
   };
-                
+
+
 export default ProductDetail;

@@ -1,10 +1,10 @@
-import { Link, NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import personIcon from "../../img/person-circle.svg";
 import heartIcon from "../../img/heart.svg";
 import shoppingCartIcon from "../../img/shopping-cart.svg";
 import { useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
-import React, { useState, useEffect } from "react";
 import axios from "axios";
 import emailjs from '@emailjs/browser';
 import style from "./NavBar.module.css"
@@ -17,11 +17,16 @@ export const cache = new LocalStorageCache()
 
 const NavBar = () => {
   const { cart } = useSelector((state) => state?.cart || {});
-  const { loginWithPopup, logout, isAuthenticated, user} = useAuth0();
+  const { loginWithPopup, loginWithRedirect, logout, isAuthenticated, user, isLoading, getIdTokenClaims } = useAuth0();
+  
 
-  const handleLogOut = () =>{
-    logout({ logoutParams: {returnTo: window.location.origin }})
-  }
+  const handleLogOut  = () => {
+    logout("/")
+  };
+
+  const handleLogin = () => {
+    loginWithRedirect();
+  };
 
   const [open, setOpen]= useState(false);
   // Utiliza el hook personalizado para obtener el valor actualizado desde LocalStorage
@@ -79,12 +84,29 @@ const NavBar = () => {
       }
     }, [isAuthenticated, user]);
 
+    const location = useLocation();
+  
+    const isAdmin = () => {
+      // Array de direcciones de correo electrónico permitidas para acceder a la ruta de administrador
+      const allowedEmails = [
+        "frank.tuberquiarojas@gmail.com",
+        "agusvarela5@gmail.com",
+        "hdgomez0@gmail.com",
+        "orlibet@gmail.com",
+        "kayita_y@hotmail.com",
+        "carlosdavidmaya1@gmail.com",
+        "andresinfernoxii@gmail.com",
+      ];
+  
+      return (
+        isAuthenticated && user?.admin === true || allowedEmails.includes(user?.email)// Verificar si el correo del usuario está en la lista
+      );
+    };
+    
     const [dropdownOpen, setDropdownOpen] = useState(false);
-
     const toggleDropdown = () => {
       setDropdownOpen(!dropdownOpen);
     };
-  
 
   return (
     <nav className={style.navbar}>
@@ -120,7 +142,7 @@ const NavBar = () => {
       {/* <div className={style.buttons}>
       <NavLink to={"login"} onClick={isAuthenticated ? undefined : () => loginWithPopup()}>
         {isAuthenticated ? (
-          <button className={style.userboton2} onClick={handleLogOut}>
+          <button className={style.userboton2} onClick={handleLogout}>
             SALIR
           </button>
         ) : (
@@ -139,34 +161,37 @@ const NavBar = () => {
         </Link>
         <br></br>
         </div> 
-        {/* <Link to={"/login"}>
-          <img src={personIcon} alt="User" />
-        </Link> */}
-        <div className={style.iconuser}> 
-        <div className={style.dropdown}>
-    <button className={style.dropdownToggle} onClick={toggleDropdown}>
-      <img src={personIcon} alt="Person" />
-    </button>
-    {dropdownOpen && (
-      <div className={style.dropdownMenu}>
-        <NavLink to={"/login"} className={style.dropdownItem}>
-          Iniciar Sesión
-        </NavLink>
-        <NavLink to={"/register"} className={style.dropdownItem}>
-          Registro
-        </NavLink>
-        <NavLink to={"/"} className={style.dropdownItem}>
-          Cerrar Sesión
-        </NavLink>
-        <NavLink to={"/admin"} className={style.dropdownItem}>
-          Admin
-        </NavLink>
-      </div>
-    )}
-  </div>
-  </div>
-</nav>
+        <div className={style.iconuser}>
+          <div className={style.dropdown}>
+            <button className={style.dropdownToggle} onClick={toggleDropdown}>
+              <img src={personIcon} alt="Person" />
+            </button>
+            {dropdownOpen && (
+            <div className={style.dropdownMenu}>
+            <NavLink
+              to="/login"
+              className={style.dropdownItem}
+              onClick={isAuthenticated ? undefined : () => loginWithPopup()}
+            >
+             {isAuthenticated ? "Cerrar sesión" : "Iniciar sesión"}
+            </NavLink>
+            {/* <NavLink to="/" 
+              className={style.dropdownItem}
+              onClick={isAuthenticated ? undefined : () => loginWithRedirect()}>
+               Cerrar sesión
+            </NavLink> */}
+            <NavLink to="/misCompras" className={style.dropdownItem}>
+               Mi Perfil
+            </NavLink>
+            <NavLink to="/admin" 
+              className={style.dropdownItem} onClick={handleLogOut} >
+              Admin
+            </NavLink>
+          </div>
+          )}
+          </div>
+        </div>
+    </nav>
   );
 };
-
 export default NavBar;
