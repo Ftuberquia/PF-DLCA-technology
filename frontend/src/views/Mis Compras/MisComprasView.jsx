@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
+import style from './MisComprasView.module.css';
+import Loading from "../../components/Loading/Loading";
 
 const MisComprasView = () => {
   const [purchasedProducts, setPurchasedProducts] = useState([]);
@@ -55,10 +57,27 @@ const MisComprasView = () => {
     }
   };
 
+  const [isLoadingTimeout, setIsLoadingTimeout] = useState(true);
+
+  useEffect(() => {
+    // Establecer isLoadingTimeout en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoadingTimeout(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+
   return (
-    <div>
+    <>
+      {isLoadingTimeout ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
+    <div className={style.containerCompras}>
       {isAuthenticated ? (
-        <div>
+        <div className={style.productcomprado}>
           <h1>Productos Comprados</h1>
           {purchasedProducts.length === 0 ? (
             <p>No has comprado ningún producto aún.</p>
@@ -71,7 +90,7 @@ const MisComprasView = () => {
                   <p>Descripción: {product.description}</p>
 
                   {product.review ? (
-                    <div>
+                    <div className={style.resena}>
                       <p>Tu reseña:</p>
                       <p>Comentario: {product.review.comment}</p>
                       <p>Calificación: {product.review.rating}</p>
@@ -111,7 +130,9 @@ const MisComprasView = () => {
       ) : (
         <p>Debes iniciar sesión para ver tus productos comprados.</p>
       )}
-    </div>
+    </div>  
+    )}
+  </>
   );
 };
 
