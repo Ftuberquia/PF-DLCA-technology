@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import ProductDetail from "./views/Detail/ProductDetail";
 import Landing from "./components/Landing/Landing";
 import NavBar from "./components/NavBar/NavBar";
