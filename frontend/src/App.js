@@ -26,12 +26,11 @@ import UserProfileView from "./views/Login/UserProfileView";
 // import Profile from "./views/Login/Profile";
 import AboutUs from "./views/AboutUs/AboutUs";
 import MisComprasView from "./views/Mis Compras/MisComprasView";
-
 import UsuariosAdmin from "./views/Admin/Usuarios Admin/UsuariosAdmin";
 import ComprasAdmin from "./views/Admin/Compras Admin/ComprasAdmin";
 import ProductosAdmin from "./views/Admin/Productos Admin/ProductosAdmin";
 import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
-import Dashboard from "./views/Admin/Dashboard/Dashboard"
+import Dashboard from "./views/Admin/Dashboard/Dashboard";
 import ChatBot from "./components/ChatBot/ChatBot.jsx";
 
 const AdminLayout = () => {
@@ -51,19 +50,19 @@ const AdminLayout = () => {
 
 const App = () => {
   const AdminLayout = () => {
-    return (     
-      <div className="dashboard" style={{ display: 'flex' }}>      
-        <NavBarAdmin/>
+    return (
+      <div className="dashboard" style={{ display: "flex", width: "99%" }}>
+        <NavBarAdmin />
         <Switch>
           <Route exact path="/admin" component={Dashboard} />
           <Route path="/admin/productos" component={ProductosAdmin} />
           <Route path="/admin/compras" component={ComprasAdmin} />
           <Route path="/admin/usuarios" component={UsuariosAdmin} />
-        </Switch>        
+          <Route path="/admin/form" component={Form} />
+        </Switch>
       </div>
     );
   };
-
 
   // const darkMode = useSelector((state) => state.darkMode); // Agrega esta línea
   // <div className={`App ${darkMode ? "AppDark" : ""}`}>
@@ -78,7 +77,6 @@ const App = () => {
       <Switch>
         <Route path="/productos" component={Productos} />
         <Route path="/product/:id" component={ProductDetail} />
-        <Route path="/form" component={Form} />
         <Route path="/contacto" component={ContactUs} />
         <Route exact path="/" component={Landing} />
         <Route path="/compras" component={Stripe} />
