@@ -32,6 +32,7 @@ import ComprasAdmin from "./views/Admin/Compras Admin/ComprasAdmin";
 import ProductosAdmin from "./views/Admin/Productos Admin/ProductosAdmin";
 import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
 import Dashboard from "./views/Admin/Dashboard/Dashboard"
+import ChatBot from "./components/ChatBot/ChatBot.jsx";
 
 const AdminLayout = () => {
   return (
@@ -50,7 +51,7 @@ const AdminLayout = () => {
 
 const App = () => {
   const AdminLayout = () => {
-    return (
+    return (     
       <div className="dashboard" style={{ display: 'flex' }}>      
         <NavBarAdmin/>
         <Switch>
@@ -95,6 +96,7 @@ const App = () => {
         <Route path="/misCompras" component={MisComprasView} />
         {/* <Profile /> */}
       </Switch>
+      <Route path="/" component={ChatBot} />
       <Footer />
     </Router>
   );
