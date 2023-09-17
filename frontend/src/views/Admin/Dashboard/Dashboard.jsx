@@ -23,7 +23,7 @@ function Dashboard () {
                 <CantCompras/>
             </div>
             <div className={style.content5}>
-                algo
+                algo sobre bienvienida
             </div>
             
             
