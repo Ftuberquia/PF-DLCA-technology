@@ -27,7 +27,8 @@ import UsuariosAdmin from "./views/Admin/Usuarios Admin/UsuariosAdmin";
 import ComprasAdmin from "./views/Admin/Compras Admin/ComprasAdmin";
 import ProductosAdmin from "./views/Admin/Productos Admin/ProductosAdmin";
 import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
-import Dashboard from "./views/Admin/Dashboard/Dashboard"
+import Dashboard from "./views/Admin/Dashboard/Dashboard";
+import QrGenerator from "./views/QrCode/QrGenerator";
 
 const AdminLayout = () => {
   return (
@@ -89,6 +90,7 @@ const App = () => {
         <Route path="/aboutUs" component={AboutUs} />
         <Route path="/admin" component={AdminLayout} />
         <Route path="/misCompras" component={MisComprasView} />
+        <Route path="/qrgenerator" component={QrGenerator} />
         <Profile />
       </Switch>
       <Footer />

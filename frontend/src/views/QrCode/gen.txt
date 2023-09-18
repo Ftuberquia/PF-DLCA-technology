@@ -1,0 +1,32 @@
+import React, { useState } from 'react';
+import QRCode from 'qrcode.react';
+import './QRGenerator.css';
+
+function QRGenerator() {
+  const [text, setText] = useState('');
+  const [qrCodeURL, setQRCodeURL] = useState('');
+
+  const generateQRCode = async () => {
+    try {
+      const url = await QRCode.toDataURL(text);
+      setQRCodeURL(url);
+    } catch (error) {
+      console.error('Error al generar el código QR', error);
+    }
+  };
+
+  return (
+    <div className="qr-generator">
+      <input
+        type="text"
+        placeholder="Texto para el código QR"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+      <button onClick={generateQRCode}>Generar QR</button>
+      {qrCodeURL && <img src={qrCodeURL} alt="Código QR generado" className="qr-code" />}
+    </div>
+  );
+}
+
+export default QRGenerator;
