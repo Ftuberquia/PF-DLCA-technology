@@ -32,6 +32,8 @@ import ProductosAdmin from "./views/Admin/Productos Admin/ProductosAdmin";
 import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
 import Dashboard from "./views/Admin/Dashboard/Dashboard"
 import ChatBot from "./components/ChatBot/ChatBot.jsx";
+import QrGenerator from "./views/QrCode/QrGenerator";
+
 
 
 // verificacion del usuario
@@ -97,6 +99,8 @@ const App = () => {
         {/* se debe agregar render{()=(<AdminLayout user={user/>)} para verificacion del usuario */}
         <Route path="/admin" component={AdminLayout} />
         <Route path="/misCompras" component={MisComprasView} />
+        <Route path="/qrqenerator" component={QrGenerator} />
+       
         {/* <Profile /> */}
       </Switch>
       <Route path="/" component={ChatBot} />
@@ -104,4 +108,4 @@ const App = () => {
     </Router>
   );
 };
-export default App;
+export default App
