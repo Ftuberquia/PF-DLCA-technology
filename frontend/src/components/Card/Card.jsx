@@ -9,10 +9,10 @@ import {
   deleteFavorite,
   fetchData,
 } from "../../views/Favorites/funcionesFav";
-import { cache } from "../../components/NavBar/NavBar";
+
+import axios from "axios";
 
 import style from "./Card.module.css";
-import axios from "axios";
 
 const Card = ({
   id,
@@ -37,18 +37,6 @@ const Card = ({
   const [isInCart, setIsInCart] = useState(false);
 
   const { user, isAuthenticated } = useAuth0();
-
-  // const getUserId = async () => {
-  //   if (isAuthenticated && user && user.sub) {
-  //     console.log(user.sub);
-  //     const userId = user.sub;
-  //     setUserId(userId); // Actualiza el estado con el ID del usuario
-  //     // Aquí puedes realizar acciones adicionales con el userId si es necesario
-  //     return userId;
-  //   }
-
-  //   return null;
-  // };
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -188,6 +176,7 @@ const Card = ({
 
   useEffect(() => {
     checkFavoriteStatus();
+    // eslint-disable-next-line
   }, [userId, id]);
 
   const addToFavorites = async () => {
