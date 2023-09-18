@@ -1,0 +1,50 @@
+.topproductos{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+    cursor: default;
+
+    .titulo{
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    .tabla{
+        width: 100%;
+
+    }
+
+    .filas td{
+        padding: 5px;
+        vertical-align: middle;
+        margin-bottom: 5px;
+        border-bottom: 2px solid ;
+
+        .numero{
+            font-size: 25px;
+            font-weight: bold;
+        }
+        .avatarimg{
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+        }
+
+        .name{
+            width: min-content;
+            height: 2rem;
+            font-size: 15px;
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            word-wrap: break-word;
+        }
+
+        .rating{
+            font-weight: bold;
+            font-size: 20px;
+        }
+    }
+}

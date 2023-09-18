@@ -1,10 +1,8 @@
 import  axios  from 'axios';
 import { useEffect, useState } from 'react';
-import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 
 import style from './CantProd.module.css'
-
-
 
 const CantProd=()=>{
  const [data, setData] = useState([])
@@ -25,40 +23,40 @@ const CantProd=()=>{
             name,
             value
           }))
-          setData(formattedData)
+          return setData(formattedData)
         } catch (error) {
           console.log(error)
         }
       }
       datos()
     },[])
-
+    
     const COLORS = ['#8884d8', '#83a6ed', '#8dd1e1', '#82ca9d', '#a4de6c']
-
 
     return(
         <div className={style.products}>
-          <h1>Productos vs categorias</h1>
-          <div className="chart">
-            <ResponsiveContainer>
-            <PieChart width = "99%" height={300}>
-        <Pie
-          data={data}
-          cx={120}
-          cy={200}
-          innerRadius={60}
-          outerRadius={80}
-          fill="#8884d8"
-          paddingAngle={5}
-          dataKey="value"
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-      </PieChart>
+          <h1 className={style.titulo}>Productos en categorias</h1>
+            <ResponsiveContainer width='99%'>
+            <PieChart width = "99%" height='100%'>
+              <Tooltip
+                contentStyle={{background:'white', borderRadious:'20px'}}
+              />          
+              <Pie
+                dataKey="value"
+                data={data}
+                cx='50%'
+                cy='50%'
+                innerRadius='50%'
+                outerRadius='90%'
+                paddingAngle={5} 
+              >      
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+
+              </Pie>
+            </PieChart>
             </ResponsiveContainer>
-          </div>
         </div>
     )
 }
