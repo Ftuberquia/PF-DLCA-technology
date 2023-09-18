@@ -1,4 +1,5 @@
 .menu{
+    width: 180px;
     min-height:280px;
     padding: 10px;
     border-right: 1px solid yellow; /*color borde nav*/

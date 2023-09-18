@@ -73,7 +73,7 @@ const CheckoutForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="">
-      <h2 className={style.precio}>Precio: </h2> // aca va el total
+      <h2 className={style.precio}>Precio: $</h2>
       <div className={style.subtituloVisa}>
         <h2>Numero TC. </h2>
         <h2> Fecha Vencimiento</h2>

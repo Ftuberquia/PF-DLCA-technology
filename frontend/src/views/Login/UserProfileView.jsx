@@ -3,6 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import style from "./UserProfileView.module.css";
 import axios from "axios";
 import Loading from "../../components/Loading/Loading";
+import { Link } from "react-router-dom";
 
 
 const UserProfileView = () => {
@@ -67,11 +68,16 @@ const UserProfileView = () => {
         </div>
       ) : (
         <>
-      <h1>VISTA DE PERFIL DEL USUARIO</h1>
-      
+      {/* <h1>VISTA DE PERFIL DEL USUARIO</h1> */}
+        <p className={style.cartmessagecenter}>Bienvenido, {user?.name}!</p>
+        {/* <img src={user.avatar_url} alt="User avatar" /> */}
+        </>
+      )}
+      <br></br>
       {isAuthenticated && (
-        <div>
+        <div className={style.avatar}> 
           <img src={newAvatar || user?.avatar_img} alt={user?.name} />
+          <br></br>
           <form className={style.form}>
           <input
             type="text"
@@ -79,6 +85,7 @@ const UserProfileView = () => {
             onChange={(e) => setNewUsername(e.target.value)}
             placeholder="Nuevo nombre de usuario"
           />
+          <br></br>
           {isUpdating && <p>Actualizando perfil...</p>}
           <h2>{user?.name}</h2>
           <p>{user?.email}</p>
@@ -89,18 +96,17 @@ const UserProfileView = () => {
             onChange={(e) => setNewAvatar(e.target.value)}
             placeholder="Nueva URL de avatar"
           />
-          <button onClick={handleUpdateProfile} disabled={isUpdating}>
-            Guardar Cambios
-          </button>
-          </form>
+         <Link to="/misCompras">
+            <button className={style.button} onClick={handleUpdateProfile} disabled={isUpdating}>
+            Guardar Cambios</button>
+          </Link>
+          </form> 
         </div>
       )}
       <button onClick={handleLogOut}>Cerrar Sesión</button>
-      
       </>
-      )}
-    </>
-  );
-};
+      )
+    }
+
 
 export default UserProfileView;

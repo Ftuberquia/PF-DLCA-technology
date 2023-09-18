@@ -30,3 +30,10 @@ function QRGenerator() {
 }
 
 export default QRGenerator;
+
+
+
+
+
+
+ 

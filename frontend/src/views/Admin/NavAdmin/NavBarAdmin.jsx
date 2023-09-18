@@ -9,7 +9,7 @@ function NavBarAdmin () {
             <div className={styles.item}>
                 <span className={styles.title}>MAIN</span>
                 <Link to="/admin" className={styles.listItem}>
-                    <span className={styles.itemTitle} >home</span>
+                    <span className={styles.itemTitle} >INICIO</span>
                 </Link>
 
                 <Link to="/admin/usuarios" className={styles.listItem}>
