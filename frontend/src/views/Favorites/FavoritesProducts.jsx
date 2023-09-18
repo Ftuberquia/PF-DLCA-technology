@@ -3,11 +3,10 @@ import { useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import { fetchData } from "./funcionesFav";
-import Cards from "../../components/Cards/Cards";
-import { cache } from "../../components/NavBar/NavBar";
+import Loading from "../../components/Loading/Loading";
+import Contenedor from "./Contenedor/Contenedor";
 
 import style from "./FavoritesProducts.module.css";
-import Loading from "../../components/Loading/Loading";
 
 export default function Favorites() {
   const history = useHistory();
@@ -16,31 +15,14 @@ export default function Favorites() {
   const { user, isAuthenticated } = useAuth0();
   const [userId, setUserId] = useState(null);
 
-  const userIdFromCache = cache.get("userId");
-
-  const getUserId = () => {
-    
-    if (isAuthenticated) {
-      if (userIdFromCache) {
-        setUserId(userIdFromCache);
-        return userIdFromCache;
-      } else if (user && user.sub) {
-        const userId = user.sub;
-        cache.set("userId", userId);
-        setUserId(userId);
-        return userId;
-      }
-    }
-    return null;
-  };
-
   useEffect(() => {
-    getUserId();
-    // eslint-disable-next-line
-  }, []);
+    if (isAuthenticated && user) {
+      const userIdLogin = user.sub;
+      setUserId(userIdLogin);
+    }
+  }, [isAuthenticated, user]);
 
   const fetchFavoriteProducts = async () => {
-    if (isAuthenticated) {
       if (userId) {
         const productsPromise = await fetchData(userId);
         const response = await productsPromise;
@@ -49,14 +31,11 @@ export default function Favorites() {
           setFavoriteProducts(response);
         }
       }
-    } else {
-      alert("Ingresa o registrate para ver tus favoritos!");
-      history.goBack();
-    }
   };
 
   useEffect(() => {
     fetchFavoriteProducts();
+    // eslint-disable-next-line
   }, [userId, isAuthenticated, history]);
 
   const [loading, setIsLoading] = useState(true);
@@ -77,9 +56,8 @@ export default function Favorites() {
         </div>
       ) : (
         <div className={style.favoritesCont}>
-          <h1>Favoritos</h1>
-
-          <Cards products={favoriteProducts} />
+          <h1>Favoritos ❤️</h1>
+          <Contenedor products={favoriteProducts} userId={userId} />
         </div>
       )}
     </>

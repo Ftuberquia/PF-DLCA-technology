@@ -1,5 +1,7 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import ProductDetail from "./views/Detail/ProductDetail";
 import Landing from "./components/Landing/Landing";
 import NavBar from "./components/NavBar/NavBar";
@@ -21,15 +23,30 @@ import Privacy from "./views/Privacy/Privacy";
 import About from "./views/About/About";
 import Cart from "./views/Cart/cart";
 import UserProfileView from "./views/Login/UserProfileView";
-import Profile from "./views/Login/Profile";import AboutUs from "./views/AboutUs/AboutUs";
+// import Profile from "./views/Login/Profile";
+import AboutUs from "./views/AboutUs/AboutUs";
 import MisComprasView from "./views/Mis Compras/MisComprasView";
 import UsuariosAdmin from "./views/Admin/Usuarios Admin/UsuariosAdmin";
 import ComprasAdmin from "./views/Admin/Compras Admin/ComprasAdmin";
 import ProductosAdmin from "./views/Admin/Productos Admin/ProductosAdmin";
 import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
 import Dashboard from "./views/Admin/Dashboard/Dashboard"
+import ChatBot from "./components/ChatBot/ChatBot.jsx";
+import QrGenerator from "./views/QrCode/QrGenerator";
 
-const AdminLayout = () => {
+
+
+// verificacion del usuario
+// const isUserAdmin = (user) =>{
+// return user.isAdmin === true
+// }
+
+const AdminLayout = ({user}) => {
+  // if (!isUserAdmin(user)){
+  //   return<Redirect to="/"/>
+  // }
+
+
   return (
     <div>
       <NavBarAdmin />
@@ -60,15 +77,7 @@ const App = () => {
     );
   };
 
-
-  // const darkMode = useSelector((state) => state.darkMode); // Agrega esta línea
-  // <div className={`App ${darkMode ? "AppDark" : ""}`}>
-
-  /* {pathname  !== "*" && <Nav />}// como  cambiar Nav */
-
   return (
-    //   <div className={`App ${darkMode ? "AppDark" : ""}`}>
-    //     {/* {pathname !== "*" && <Nav />}// como  cambiar Nav */}
     <Router>
       <NavBar />
       <Switch>
@@ -87,12 +96,16 @@ const App = () => {
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={UserProfileView} />
         <Route path="/aboutUs" component={AboutUs} />
+        {/* se debe agregar render{()=(<AdminLayout user={user/>)} para verificacion del usuario */}
         <Route path="/admin" component={AdminLayout} />
         <Route path="/misCompras" component={MisComprasView} />
-        <Profile />
+        <Route path="/qrqenerator" component={QrGenerator} />
+       
+        {/* <Profile /> */}
       </Switch>
+      <Route path="/" component={ChatBot} />
       <Footer />
     </Router>
   );
 };
-export default App;
+export default App

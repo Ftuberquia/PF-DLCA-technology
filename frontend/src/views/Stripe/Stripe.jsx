@@ -98,8 +98,13 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
   };
 
   return (
+<<<<<<< HEAD
     <form onSubmit={handleSubmit} method="POST">
       <h2 className={style.precio}>Precio: {total_price} </h2> 
+=======
+    <form onSubmit={handleSubmit} className="">
+      <h2 className={style.precio}>Precio: $</h2>
+>>>>>>> 4271331095f14287d5c0c8632237d11dfdbb754e
       <div className={style.subtituloVisa}>
         <h2>Numero TC. </h2>
         <h2> Fecha Vencimiento</h2>

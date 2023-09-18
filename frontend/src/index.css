@@ -2,7 +2,7 @@
   --primary-color: #c5588f; /* rosa fuerte */
   --secondary-color: #00ffff; /* azul claro */
   --tertiary-color: #ffff00; /* amarillo */
-
+  --cuartiary-color: rgb(192, 197, 199); /* gris */
   --button-pago: rgb(13, 181, 21); /*verde*/
 
   --background-color: #000000; /* negro */
@@ -12,6 +12,7 @@
 body {
   background-color: var(--background-color);
   color: var(--text-color);
+  font-family: 'Consolas', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 html {
