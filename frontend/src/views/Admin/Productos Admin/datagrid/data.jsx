@@ -44,12 +44,25 @@ function DataProducts () {
         );
     }
 
+    const irPaginaAnterior = () => {
+      if (paginaActual > 1) {
+        setPaginaActual(paginaActual - 1);
+      }
+    };
+    
+    const irPaginaSiguiente = () => {
+      if (paginaActual < Math.ceil(datos.length / elementosPorPagina)) {
+        setPaginaActual(paginaActual + 1);
+      }
+    };
+
     const editHandler = (id) => {
       seteditingProductId(id);
     };
     
     const saveHandler = async(id)=>{
         try {
+            // eslint-disable-next-line
             const response = await axios.put(`/products/${id}`, editedProduct);
             seteditingProductId(null);
             window.location.reload();
@@ -61,8 +74,10 @@ function DataProducts () {
     const desactivarHandler = async(id, isActive) =>{
         try {
             if(isActive === true){
+                // eslint-disable-next-line
                 const response = await axios.put(`/products/${id}`, {isActive: false})
             }else{
+                // eslint-disable-next-line
                 const response = await axios.put(`/products/${id}`, {isActive: true})
         }
         window.location.reload()
@@ -151,7 +166,9 @@ function DataProducts () {
         </tbody> 
             </table>
             <div className={styles.pagination}>
-                {paginacion}
+              {paginaActual===1?null:<button onClick={irPaginaAnterior}>&lt;</button>}
+              <span>{paginaActual}</span>
+              {paginaActual < Math.ceil(datos.length/elementosPorPagina)&&(<button onClick={irPaginaSiguiente}>&gt;</button>)}
             </div>
         </div>
     )
