@@ -33,13 +33,13 @@ const CartItemCounter = ({ product, updateQuantity }) => {
 
   return (
     <>
-      <p className="counter-button" onClick={decrease}>
+      <button className="quantity" onClick={decrease}>
         -
-      </p>
+      </button>
       <p>{quantity}</p>
-      <p className="counter-button" onClick={increase}>
+      <button className="quantity" onClick={increase}>
         +
-      </p>
+      </button>
     </>
   );
 };

@@ -8,6 +8,7 @@ import { saveCartToServer } from "../../redux/actions/index";
 import {  Link } from "react-router-dom";
 
 import { useAuth0 } from "@auth0/auth0-react";
+import Swal from "sweetalert2"; // Importa SweetAlert
 
 export default function Cart({ cartProducts}) {
 
@@ -47,11 +48,25 @@ export default function Cart({ cartProducts}) {
           )}
       <CartElement updateCartData={updateCartData} />
       <CartTotal cartData={cartData} />
-      <button onClick={handleSaveDataToServer}>
+      {/* <button onClick={handleSaveDataToServer}>
         Guardar en la base de datos
-      </button>
+      </button> */}
     </>
   ) : (
-    <h2 className="cart-message-center">Tu Carrito Esta Vacio</h2>
+    // <h2 className="cart-message-center">Tu Carrito Esta Vacio</h2>
+    <button
+      onClick={() =>
+        Swal.fire({
+          title: "¡El carrito está vacío!",
+          text: "Por favor agregue un producto al carrito",
+          icon: "warning",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#28a745",
+        })
+      }
+      className="BUY"
+    >
+      Comprar
+    </button>
   );
 }
