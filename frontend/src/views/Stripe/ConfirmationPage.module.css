@@ -1,51 +1,87 @@
 /* Estilos para el contenedor principal */
-.contenedorConfirm{
+.contenedorConfirm {
   display: flex;
   justify-content: center;
-  
 }
+
 .confirmation-container {
   text-align: center;
   padding: 20px;
   display: grid;
   align-items: center;
   border-radius: 20px;
-  width: 400px;
+  width: 80%;
   height: 70vh;
   padding: 20px;
   background-color: #f0f0f0;
+  box-shadow: 0 10px 25px rgba(119, 112, 112, 0.945);
+}
+
+/* Estilos para el título */
+.confirmation-title {
+  font-size: 30px;
+  font-weight: bolder;
+  margin-bottom: 20px;
+  color: #04ca35;
+}
+
+/* Estilos para la información del pago */
+.payment-info {
+  background-color: #2cc753;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px auto;
+  font-size: larger;
+  font-weight: bold;
+}
+
+/* Estilos para el enlace de volver */
+.back-link {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  font-size: larger;
+  font-weight: bold;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .confirmation-container {
+    width: 90%;
+    height: auto;
   }
-  
-  /* Estilos para el título */
+
   .confirmation-title {
-    font-size: 30px;
-    font-weight: bolder;
-    margin-bottom: 20px;
-    color: #04ca35;
+    font-size: 24px;
   }
-  
-  /* Estilos para la información del pago */
+
   .payment-info {
-    background-color: #2cc753;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px auto;
-    font-size: larger;
-    font-weight: bold;
+    font-size: large;
+    padding: 10px;
   }
-  
-  /* Estilos para el enlace de volver */
+
   .back-link {
-    display: block;
-    text-align: center;
-    margin-top: 20px;
-    font-size: larger;
-    font-weight: bold;
-    text-decoration: none;
-    color: #007bff;
+    font-size: large;
   }
-  
-  .back-link:hover {
-    text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+  .confirmation-title {
+    font-size: 20px;
   }
-  
+
+  .payment-info {
+    font-size: medium;
+    padding: 5px;
+  }
+
+  .back-link {
+    font-size: medium;
+  }
+}
