@@ -1,8 +1,8 @@
 .containerchatbot {
-  position: flex;
-  margin-left: 65rem;
-  /* margin-top: 40rem; */
-  z-index: 10;
+  position: fixed;
+  bottom: 20px;
+  right: 80px;
+  z-index: 9999;
 }
 
 .btnBot {
@@ -46,4 +46,20 @@
 .button:hover {
   background-color: #4caf50; /* Green */
   color: white;
+ }  
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .containerchatbot {
+    right: 20px;
+  }
+
+  .btnBot {
+    right: 2%;
+    bottom: 2%;
+  }
+
+  .img {
+    width: 80px;
+  }
 }
