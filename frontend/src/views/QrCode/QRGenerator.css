@@ -1,0 +1,22 @@
+/* Estilos para el contenedor principal del generador de QR */
+.qr-generator {
+  display: flex;
+  flex-direction: colum;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+    
+  }
+  
+  /* Estilos para el código QR generado */
+  .qr-code {
+    height: 38px;
+    border-radius: 8px;
+    max-width: 300px;
+    width: 100px;
+    margin: 24px 0;
+    padding: 8px;
+    outline: none;
+    border: 1px solid #fffcfc;
+  }
+  
