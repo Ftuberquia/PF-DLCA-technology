@@ -41,11 +41,27 @@ function Datagrid () {
             </button>
         );
     }
+    
+    const irPaginaAnterior = () => {
+      if (paginaActual > 1) {
+        setPaginaActual(paginaActual - 1);
+      }
+    };
+    
+    const irPaginaSiguiente = () => {
+      if (paginaActual < Math.ceil(datos.length / elementosPorPagina)) {
+        setPaginaActual(paginaActual + 1);
+      }
+    };
+
+
     const desactivarHandler = async(id, isActive) =>{
       try {
           if(isActive === true){
+            // eslint-disable-next-line
               const response = await axios.put(`/users/${id}`, {isActive: false})
           }else{
+            // eslint-disable-next-line
               const response = await axios.put(`/users/${id}`, {isActive: true})
       }
       window.location.reload()
@@ -80,14 +96,16 @@ function Datagrid () {
                 <td>{dato.admin===true?(<p>Administrador</p>):(<p>Usuario</p>)}</td>
                 <td>
                   {/* <button>Editar</button> */}
-                  {datos.isActive===true?<button onClick={()=>desactivarHandler(datos.id, datos.isActive)}>Bloquear</button>:<button onClick={()=>desactivarHandler(datos.id, datos.isActive)}>Desbloquear</button>}
+                  {dato.isActive===true?<button onClick={()=>desactivarHandler(dato.id, dato.isActive)}>Bloquear</button>:<button onClick={()=>desactivarHandler(dato.id, dato.isActive)}>Desbloquear</button>}
                 </td>
               </tr>
             ))}
           </tbody>         
         </table>
         <div className={styles.pagination}>
-          {paginacion}
+          {paginaActual===1?null:<button onClick={irPaginaAnterior}>&lt;</button>}
+          <span>{paginaActual}</span>
+          {paginaActual < Math.ceil(datos.length/elementosPorPagina)&&(<button onClick={irPaginaSiguiente}>&gt;</button>)}
         </div>
       </div>
     )

@@ -7,7 +7,7 @@ const getAllUsers = async () => {
       attributes: ['id', 'first_name', 'last_name',"email", 'avatar_img', 'admin', 'isActive','createdAt'],
     });
     const formattedUsers = users.map((user) =>{
-        const formattedCreatedAt = moment(user.creactedAt).format('YYYY-MM-DD')
+        const formattedCreatedAt = moment(user.createdAt).format('YYYY-MM-DD')
         return {
             ...user.toJSON(),
             createdAt: formattedCreatedAt

@@ -3,21 +3,27 @@
     height: 100%;
 
     .info{
-        flex: 3;
+        flex: 2;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         width: auto;
         max-width: max-content;
+        margin-right: 8px;
 
         .title{
-            display: flex;
-            gap:10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor:default;
+        }
+
+        .total{
+            font-size: 2.5rem;
         }
     }
 
     .grafData{
-        flex: 2;
+        flex: 3;
         display: flex;
         flex-direction: column;
         justify-content: space-between;

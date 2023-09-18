@@ -37,7 +37,7 @@ const CantCompras=()=>{
                 <div className={style.title}>
                     <span>Total Compras</span>
                 </div>
-                <h1 className={style.total}>NumTotal</h1>
+                <h1 className={style.total}>Num</h1>
                 <Link to='/admin/compras'>Más Info</Link>
             </div>
             <div className={style.grafData}>
