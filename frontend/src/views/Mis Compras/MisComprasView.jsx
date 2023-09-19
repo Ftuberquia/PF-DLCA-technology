@@ -1,29 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
-import style from './MisComprasView.module.css';
-import Loading from "../../components/Loading/Loading";
+import styles from './MisComprasView.module.css';
+import Loading from '../../components/Loading/Loading';
 
 const MisComprasView = () => {
+  const { isAuthenticated, user, isLoading } = useAuth0();
   const [purchasedProducts, setPurchasedProducts] = useState([]);
-  const { isAuthenticated, user } = useAuth0();
-
-  useEffect(() => {
-    const fetchPurchasedProducts = async () => {
-      try {
-        const response = await axios.get('tu_endpoint'); // aqui el GET al endpoint para obtener los productos comprados por el usuario 
-        setPurchasedProducts(response.data);
-      } catch (error) {
-        console.error('Error al obtener los productos comprados', error);
-      }
-    };
-    fetchPurchasedProducts();
-  }, []);
-
   const [formData, setFormData] = useState({
     comment: '',
     rating: 1,
   });
+  const [isLoadingTimeout, setIsLoadingTimeout] = useState(true);
+  const [renderedProductIds, setRenderedProductIds] = useState(new Set());
+
+  const fetchPurchasedProducts = async () => {
+    if (!isAuthenticated || isLoading) {
+      return;
+    }
+
+    const userId = user?.sub;
+    try {
+      const response = await axios.get(`http://localhost:3001/purchase/${userId}`);
+      setPurchasedProducts(response.data);
+    } catch (error) {
+      console.error('Error al obtener los productos comprados', error);
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoadingTimeout(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    fetchPurchasedProducts();
+  }, [isAuthenticated, isLoading, user]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -34,22 +48,27 @@ const MisComprasView = () => {
     event.preventDefault();
     try {
       const reviewData = {
-        userId: user.sub,
+        userId: user?.sub,
         productId,
         comment: formData.comment,
         rating: formData.rating,
-        userEmail: user.email
+        userEmail: user?.email,
       };
       await axios.post(`http://localhost:3001/reviews/${productId}`, reviewData);
 
-      // Mostrar una alerta o mensaje de éxito aquí si lo deseas
-      window.alert("Reseña agregada al producto")
-      // Actualizar la información de la reseña en el estado local si lo deseas
-      const updatedProducts = purchasedProducts.map((product) => {
-        if (product.id === productId) {
-          return { ...product, review: reviewData };
+      window.alert('Reseña agregada al producto');
+
+      const updatedProducts = purchasedProducts.map((purchase) => {
+        if (purchase.productId === productId) {
+          return {
+            ...purchase,
+            product: {
+              ...purchase.product,
+              review: reviewData,
+            },
+          };
         }
-        return product;
+        return purchase;
       });
       setPurchasedProducts(updatedProducts);
     } catch (error) {
@@ -57,82 +76,74 @@ const MisComprasView = () => {
     }
   };
 
-  const [isLoadingTimeout, setIsLoadingTimeout] = useState(true);
-
-  useEffect(() => {
-    // Establecer isLoadingTimeout en falso después de 2 segundos
-    const timer = setTimeout(() => {
-      setIsLoadingTimeout(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
-
   return (
     <>
       {isLoadingTimeout ? (
-        <div className={style.loadingContainer}>
+        <div>
           <Loading />
         </div>
       ) : (
-    <div className={style.containerCompras}>
-      {isAuthenticated ? (
-        <div className={style.productcomprado}>
-          <h1>Productos Comprados</h1>
-          {purchasedProducts.length === 0 ? (
-            <p>No has comprado ningún producto aún.</p>
-          ) : (
-            <ul>
-              {purchasedProducts.map((product) => (
-                <li key={product.id}>
-                  <h2>{product.name}</h2>
-                  <p>Precio: {product.price}</p>
-                  <p>Descripción: {product.description}</p>
+        <div>
+          {isAuthenticated ? (
+            <div>
+              <h1 className={styles.productHeading}>Mis Compras</h1>
+              {purchasedProducts.length === 0 ? (
+                <p>No has comprado ningún producto aún.</p>
+              ) : (
+                <ul>
+                  {purchasedProducts.map((purchase, index) => {
+                    if (renderedProductIds.has(purchase.productId)) {
+                      return null; // Product already rendered, skip rendering
+                    }
+                    renderedProductIds.add(purchase.productId); // Add product to rendered set
+                    return (
+                      <li key={index} className={styles.productItem}>
+                        <h2 className={styles.productName}>{purchase.product.name}</h2>
+                        <img src={purchase.product.imageSrc} alt={purchase.product.imageAlt} className={styles.productImage} />
+                        <p className={styles.productPrice}>Precio: ${purchase.product.price}</p>
 
-                  {product.review ? (
-                    <div className={style.resena}>
-                      <p>Tu reseña:</p>
-                      <p>Comentario: {product.review.comment}</p>
-                      <p>Calificación: {product.review.rating}</p>
-                    </div>
-                  ) : (
-                    <form onSubmit={(e) => handleSubmitReview(e, product.id)}>
-                      <h3>Deseas dar una reseña a este producto?</h3>
-                      <label>
-                        Comentario:
-                        <textarea
-                          name="comment"
-                          value={formData.comment}
-                          onChange={handleChange}
-                        />
-                      </label>
-                      <label>
-                        Calificación:
-                        <select
-                          name="rating"
-                          value={formData.rating}
-                          onChange={handleChange}>
-                          {[1, 2, 3, 4, 5].map((value) => (
-                            <option key={value} value={value}>
-                              {value}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-                      <button type="submit">Enviar reseña</button>
-                    </form>
-                  )}
-                </li>
-              ))}
-            </ul>
+                        {purchase.product.review ? (
+                          <div>
+                            <p>Tu reseña:</p>
+                            <p>Comentario: {purchase.product.review.comment}</p>
+                            <p>Calificación: {purchase.product.review.rating}</p>
+                          </div>
+                        ) : (
+                          <form onSubmit={(e) => handleSubmitReview(e, purchase.productId)}>
+                            <h3>Deseas dar una reseña a este producto?</h3>
+                            <label>
+                              Comentario:
+                              <textarea
+                                name="comment"
+                                value={formData.comment}
+                                onChange={handleChange}
+                              />
+                            </label>
+                            <label>
+                              Calificación:
+                              <select name="rating" value={formData.rating} onChange={handleChange}>
+                                {[1, 2, 3, 4, 5].map((value) => (
+                                  <option key={value} value={value}>
+                                    {value}
+                                  </option>
+                                ))}
+                              </select>
+                            </label>
+                            <button type="submit">Enviar reseña</button>
+                          </form>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
+          ) : (
+            <p>Debes iniciar sesión para ver tus productos comprados.</p>
           )}
         </div>
-      ) : (
-        <p>Debes iniciar sesión para ver tus productos comprados.</p>
       )}
-    </div>  
-    )}
-  </>
+    </>
   );
 };
 
