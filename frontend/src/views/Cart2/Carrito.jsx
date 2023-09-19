@@ -158,7 +158,7 @@ export default function Carrito() {
                     <h1 className={styles.titulo}>Resumen Compra</h1>
                     <h2 className={styles.cantidad}>Productos: {cantidad}</h2>
                     <h2 className={styles.total}>Total a Pagar: ${total}</h2>
-                    {isAuthenticated?(<Link to={'/compra'}><button className={styles.comprar}>Comprar</button></Link>):(<h1>Debes ingresar para poder comprar</h1>)}
+                    {isAuthenticated?(<Link to={'/compras'}><button className={styles.comprar}>Comprar</button></Link>):(<h1>Debes ingresar para poder comprar</h1>)}
                 </div>
             </div>
         ) : (
