@@ -22,16 +22,13 @@ export default function Carrito() {
     getProductsInCart()
   },[])
 
-  //COMO ENVIO LO QUE ESTA EN EL LOCAL STORAGE A LA DB?
-
   function getLocalStorage(){
     const initialCartData = JSON.parse(localStorage.getItem("cartProducts"));
-    setProductsIdinCart(initialCartData)
+    if(initialCartData){setProductsIdinCart(initialCartData)
     let total = initialCartData.reduce((acc, el) => acc + el.price * el.quantity, 0);
     let cantidad=initialCartData.reduce((acc, el)=>acc+el.quantity,0)
-    console.log('productos',productsIdinCart)
     setTotal(total)
-    setCantidad(cantidad)
+    setCantidad(cantidad)}
   }
 
   //Para obtener el id del usuario
@@ -64,17 +61,7 @@ export default function Carrito() {
         getProductsInCart()
     }else{
         setProductsIdinCart(productsIdinCart.filter(e=>e.id!==idProd))
-        //PROBLEMAS CON EL PRECIO TOTAL
-        setTotal(
-            productsIdinCart.reduce(
-                (acc, el) => acc + el.price * el.quantity + 1,
-                0
-            )
-            );
-            setCantidad(
-                productsIdinCart.reduce((acc, el) => acc + el.quantity, 1)
-            );
-        localStorage.setItem("cartProducts", JSON.stringify(productsIdinCart));
+        getProductsInCart()
     }
   }
 
@@ -101,16 +88,7 @@ export default function Carrito() {
             : product
         )
         );
-        //PROBLEMAS CON EL PRECIO TOTAL
-        setTotal(
-        productsIdinCart.reduce(
-            (acc, el) => acc + el.price * el.quantity + 1,0)
-        );
-        setCantidad(
-            productsIdinCart.reduce((acc, el) => acc + el.quantity, 1)
-        );
-        localStorage.setItem("cartProducts", JSON.stringify(productsIdinCart));
-        
+       getProductsInCart()
     }
   }
 
@@ -136,10 +114,7 @@ export default function Carrito() {
               }
             : product
         ));
-        //PROBLEMAS CON EL PRECIO TOTAL
-        setTotal(productsIdinCart.reduce((acc, el) => acc + el.price * el.quantity - 1,0));
-        setCantidad(productsIdinCart.reduce((acc, el) => acc + el.quantity, -1));
-        localStorage.setItem("cartProducts", JSON.stringify(productsIdinCart));
+        getProductsInCart()
     }
   }
 
