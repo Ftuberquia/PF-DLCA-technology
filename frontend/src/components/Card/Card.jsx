@@ -8,6 +8,7 @@ import { addFavorite, deleteFavorite, fetchData } from "../../views/Favorites/fu
 import axios from "axios";
 
 import style from "./Card.module.css";
+import Swal from "sweetalert2";
 
 const Card = ({id,name,imageSrc,price,rating,stock}) => {
 
@@ -180,11 +181,24 @@ const Card = ({id,name,imageSrc,price,rating,stock}) => {
     try {
       await deleteFavorite(id, userId);
       setIsFavorite(false);
-      alert("Producto eliminado de favoritos!");
+      // alert("Producto eliminado de favoritos!");
+      Swal.fire({
+        title: "Desea eliminar su producto de favoritos?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, estoy seguro",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#ff0000",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(removeFromFavorites(id, userId));
+        }
+      });
     } catch (error) {
       console.error("Error al eliminar de favoritos:", error);
     }
   };
+ 
 
   return (
     <div className={style.card}>

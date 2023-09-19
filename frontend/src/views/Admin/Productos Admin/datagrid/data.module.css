@@ -37,3 +37,38 @@
       border-radius: 10px;
     }
   }
+.buttonE{
+
+}
+.buttonflecha{
+   color: #ecf0f1;
+ font-size: 17px;
+ background-color:var(--secondary-color);
+ border: 1px solid #000000;
+ border-radius: 5px;
+ padding: 10px;
+ box-shadow: 0px 6px 0px #000000c9;
+ transition: all .1s;
+}
+.buttonflecha:active{
+  box-shadow: 0px 2px 0px #000000c9;
+  position: relative;
+  top: 2px;  
+}
+.buttonflecha:disabled{
+  background-color: #5e5e5ea2;
+  box-shadow: 0px 2px 0px #5e5e5ea2;
+  border: 1px solid #5e5e5ea2;
+}.buttonflecha:active{
+  box-shadow: 0px 2px 0px #000000c9;
+  position: relative;
+  top: 2px;  
+}
+.buttonflecha:disabled{
+  background-color: #5e5e5ea2;
+  box-shadow: 0px 2px 0px #5e5e5ea2;
+  border: 1px solid #5e5e5ea2;
+}
+.buttonD{
+
+}

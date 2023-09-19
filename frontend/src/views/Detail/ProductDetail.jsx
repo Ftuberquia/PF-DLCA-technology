@@ -228,8 +228,8 @@ const ProductDetail = () => {
   function handleBuyNow(event) {
     if (isAuthenticated) {
       if (product.stock > 0) {
-        //Aqui se envia la informacion de la compra
-        history.push(`/compra`); // agrega el producto al carrito y redirige al usuario a la página de pago.
+        dispatch(addToCart({ ...product, quantity: cartQuantity }));
+        history.push(`/compras`); // agrega el producto al carrito y redirige al usuario a la página de pago.
       } else {
         Swal.fire({
           // De lo contrario, muestra un mensaje de advertencia o solicita al usuario que inicie sesión.
@@ -333,7 +333,7 @@ const ProductDetail = () => {
             </button>)}
 
           {isAuthenticated ? (
-            <Link to={`/compra`}>
+            <Link to={`/compras`}>
               <button className={style.comprar} onClick={handleBuyNow}>Comprar Ahora</button>
             </Link>
           ) : (
@@ -345,19 +345,6 @@ const ProductDetail = () => {
             </div>
           </div>
         </div>
-            // <form>
-            //     <label htmlFor="comment">Comentario:</label>
-            //     <textarea id="comment" name="comment" />
-            //     <button type="submit">Enviar comentario</button>
-            // </form>
-            // <div className="rating">
-            //     <span className="star">&#9733;</span>
-            //     <span className="star">&#9733;</span>
-            //     <span className="star">&#9733;</span>
-            //     <span className="star">&#9734;</span>
-            //     <span className="star">&#9734;</span>
-            //     <p>Calificación promedio: 3 estrellas</p>
-            // </div>
           )}
       </>
     );

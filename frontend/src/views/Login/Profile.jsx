@@ -1,47 +1,55 @@
-// import React, { useEffect, useState } from 'react';
-// import { useAuth0 } from "@auth0/auth0-react";
-// import "./Profile.css";
-// import Loading from "../../components/Loading/Loading";
+import React, { useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import Loading from "../../components/Loading/Loading";
+import style from "./Profile.module.css";
+import { Link } from "react-router-dom";
 
-// const Profile = () => {
-//     const { logout, user, isAuthenticated, isLoading } = useAuth0();
-  
-//     // if (isLoading) {
-//     //   return <div>Loading ...</div>;
-//     // }
-//     const [isLoadingTimeout, setIsLoadingTimeout] = useState(true);
+const Profile = () => {
+  const { user, isAuthenticated } = useAuth0();
 
-//     useEffect(() => {
-//       // Establecer isLoadingTimeout en falso después de 2 segundos
-//       const timer = setTimeout(() => {
-//         setIsLoadingTimeout(false);
-//       }, 2000);
-//       return () => clearTimeout(timer);
-//     }, []);
+  const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    // Set isLoading to false after 2 seconds
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
+  return (
+    <>
+      {isLoading ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
+        isAuthenticated && (
+          <div className={style.containerprofile}>
+            <div className="row">
+              <div className="col-12 text-center">
+              <h1 className={style.message}>Bienvenido/a, {user?.name}!</h1>
+                <div className={style.pictureprofile}>
+                <img
+                  src={user.picture}
+                  alt={user.name}
+                  className="img-fluid rounded-circle"
+                />
+                </div>
+                <h2>{user.name}</h2>
+                <p>{user.email}</p>
+              </div>
+              <div>
+            <Link to="/users">
+              <button className={style.btnprofile}>Mi Perfil</button>
+            </Link>
+          </div>
+            </div>
+          </div>
+        )
+      )}
+    </>
+  );
+};
 
-//     return (
-//       <>
-//       {isLoadingTimeout ? (
-//         <div className="loadingContainer">
-//           <Loading />
-//         </div>
-//       ) : (
-//        isAuthenticated && (
-//         <div className="profile-card">
-//           <h1 className="cart-message-center"> MI PERFIL</h1>
-//            <p className="cart-message-center">Bienvenido, {user.name}!</p>
-//            <p></p>
-//           <img src= {user.picture} alt={user.name}/>
-//           <h2 >Usuario: {user.name}</h2>
-//           <h5 >Correo: {user.email}</h5>  
-//         </div>
-//         )
-//         )}
-//       </>
-//     );
-//   };
-
-     
-// export default Profile;
+export default Profile;

@@ -44,12 +44,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 
 //DESTRUCTURING DE MODEL Y CREACION DE RELACIONES:
-const { Users, Products, Orders, Cart, Brand, Category, Tags, Subcategory, UserProductReviews, CartProduct, UserOrder } = sequelize.models;
+const { Users, Products, Cart, Brand, Category, Tags, Subcategory, UserProductReviews, CartProduct, PurchasedProduct, Order, OrderProduct } = sequelize.models;
 // Aca vendrian las relaciones
-
-// Relación de Users:
-Users.hasMany(Orders, {foreignKey:'userOrderId', as: 'user'});	//hasMany 1 A con muchos B, el as se usa en solicitudes a la DB
-Orders.belongsTo(Users, {foreignKey:'userOrderId', as: 'orders'});
 
 //Relacion usuario con carrito
 Users.hasOne(Cart, {foreignKey: "userId"});
@@ -70,28 +66,31 @@ Cart.belongsToMany(Products, {
 	as: 'productsinCart',
   });
 
-// Relaciones de users con orders
-// Users.hasMany(Orders, {	foreignKey: "userId", as: "orders" });
-// Orders.belongsTo(Users, {	foreignKey: "userId", as: "user" })
-// // Relación de UserOrder con Users (para almacenar la relación muchos a muchos)
-// //tabla intermedia para hacer Un usuario puede tener muchas compras, y cada compra pertenece a un usuario.
-// Users.hasMany(Orders, { foreignKey: 'userId', as: 'orders' }); // Cambiado el alias a 'orders'
-// Orders.belongsTo(Users, { foreignKey: 'userId', as: 'user' });
+// Relaciones con el modelo Order
+Users.hasMany(Order, { foreignKey: 'userId', as: 'orders' });
+Order.belongsTo(Users, { foreignKey: 'userId', as: 'user' });
 
-// //tabla intermedia para hacer Un usuario puede tener muchas compras, y cada compra pertenece a un usuario.
-// Relación de Orders con UserOrder (para almacenar la relación muchos a muchos)
-Orders.belongsToMany(Users, {
-through: UserOrder, // Usa el modelo UserOrder como tabla intermedia
-foreignKey: "orderId", // Clave foránea en la tabla Orders
-otherKey: "userId", // Clave foránea en la tabla UserOrder
-as: "users", 
-});
-Users.belongsToMany(Orders, {
-through: UserOrder, // Usa el modelo UserOrder como tabla intermedia
-foreignKey: "userId", // Clave foránea en la tabla Users
-otherKey: "orderId", // Clave foránea en la tabla UserOrder
-as: "orders", 
-});
+// Relación entre Order y PurchasedProduct
+Order.hasMany(PurchasedProduct, { foreignKey: 'orderId', as: 'purchasedProducts' });
+PurchasedProduct.belongsTo(Order, { foreignKey: 'orderId', as: 'order' });
+
+// Relaciones con PurchasedProduct
+Users.hasMany(PurchasedProduct, { foreignKey: 'userId' });
+PurchasedProduct.belongsTo(Users, { foreignKey: 'userId' });
+
+Products.hasMany(PurchasedProduct, { foreignKey: 'productId' });
+PurchasedProduct.belongsTo(Products, { foreignKey: 'productId' });
+
+// Relación muchos a muchos entre Order y Product usando OrderProduct como tabla intermedia
+Order.belongsToMany(Products, {
+	through: OrderProduct,
+	foreignKey: 'orderId',
+  });
+  
+  Products.belongsToMany(Order, {
+	through: OrderProduct,
+	foreignKey: 'productId',
+  });
 
 
 //creo una tabla intermedia para hacer los favoritos
