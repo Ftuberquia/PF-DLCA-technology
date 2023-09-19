@@ -1,6 +1,5 @@
 import React, {useState,useEffect} from 'react';
 import axios from 'axios'
-
 import styles from './data.module.css'
 
 function DataProducts () {
@@ -150,25 +149,24 @@ function DataProducts () {
             })}/>) 
             : (<span>{dato.stock}</span>)}
                 </td>
-              {/* UwU */}
               <td>🌟 {dato.rating}</td>
               <td>{dato.isActive===true?(<p>Activo</p>):(<p>Desactivado</p>)}</td>
               <td>
                 {editingProductId === dato.id ? (
-                <button onClick={() => saveHandler(dato.id)}>Guardar</button>
+                <button onClick={() => saveHandler(dato.id)} className={styles.buttonE}>Guardar</button>
                 ) : (
-                <button onClick={() => editHandler(dato.id)}>Editar</button>
+                <button onClick={() => editHandler(dato.id)} className= {styles.buttonE}>Editar</button>
                 )}
-                {dato.isActive ===true? <button onClick={() => desactivarHandler(dato.id, dato.isActive)}>Deshabilitar</button> : <button onClick={() => desactivarHandler(dato.id, dato.isActive)}>Habilitar</button>}
+                {dato.isActive ===true? <button onClick={() => desactivarHandler(dato.id, dato.isActive)} className= {styles.buttonD}>Deshabilitar</button> : <button onClick={() => desactivarHandler(dato.id, dato.isActive)} className= {styles.buttonD}>Habilitar</button>}
               </td>
             </tr>
           ))}
         </tbody> 
             </table>
             <div className={styles.pagination}>
-              {paginaActual===1?null:<button onClick={irPaginaAnterior}>&lt;</button>}
+              {paginaActual===1?null:<button onClick={irPaginaAnterior} className= {styles.buttonflecha}>&lt;</button>}
               <span>{paginaActual}</span>
-              {paginaActual < Math.ceil(datos.length/elementosPorPagina)&&(<button onClick={irPaginaSiguiente}>&gt;</button>)}
+              {paginaActual < Math.ceil(datos.length/elementosPorPagina)&&(<button onClick={irPaginaSiguiente} className= {styles.buttonflecha}>&gt;</button>)}
             </div>
         </div>
     )

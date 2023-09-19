@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink} from "react-router-dom";
+import { useDispatch } from "react-redux";
 import personIcon from "../../img/person-circle.svg";
 import heartIcon from "../../img/heart.svg";
 import shoppingCartIcon from "../../img/shopping-cart.svg";
@@ -9,7 +10,7 @@ import axios from "axios";
 import emailjs from "@emailjs/browser";
 import style from "./NavBar.module.css";
 import { LocalStorageCache } from "@auth0/auth0-react";
-
+import { saveUser } from "../../redux/actions";
 import TotalItems from "../../views/Cart/TotalItems";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { Dropdown, toggleDropdown } from "react-bootstrap";
@@ -19,17 +20,8 @@ import { LogoutButton } from "./LogoutButton";
 export const cache = new LocalStorageCache();
 
 const NavBar = () => {
-  const { cart } = useSelector((state) => state?.cart || {});
-  const {
-    loginWithPopup,
-    loginWithRedirect,
-    logout,
-    isAuthenticated,
-    user,
-    isLoading,
-    getIdTokenClaims,
-  } = useAuth0();
-
+  const {loginWithPopup, logout, isAuthenticated, user} = useAuth0();
+  const dispatch = useDispatch()
   const handleLogin = () => {
     loginWithPopup();
   };
@@ -47,17 +39,31 @@ const NavBar = () => {
   useEffect(() => {
     if (isAuthenticated && user) {
       const userId = user.sub;
-
-      const userData = {
-        id: userId,
-        picture: user.picture,
-        first_name: user.given_name,
-        last_name: user.family_name,
-        username: user.nickname,
-        email: user.email,
-        direction: user.direction,
-        phone: user.phone,
+      let userData={}
+      if(user.email === "dlcareact@gmail.com"){
+        userData = {
+          id: userId,
+          first_name: user.given_name,
+          last_name: user.family_name,
+          username: user.nickname,
+          avatar_img: user.picture,
+          email: user.email,
+          admin: true
+        };
+        cache.set("userEmail", user.email )
+      }else{
+        userData = {
+          id: userId,
+          avatar_img: user.picture,
+          first_name: user.given_name,
+          last_name: user.family_name,
+          username: user.nickname,
+          email: user.email,
+          address: user.direction,
+          phone: user.phone,
       };
+        cache.set("userEmail", user.email)
+      }
       // Realiza la solicitud al servidor para guardar los datos del usuario
       axios.post("http://localhost:3001/users/", userData).then((response) => {
         if (response.status === 201) {
@@ -92,27 +98,6 @@ const NavBar = () => {
       });
     }
   }, [isAuthenticated, user]);
-
-  const location = useLocation();
-
-  const isAdmin = () => {
-    // Array de direcciones de correo electrónico permitidas para acceder a la ruta de administrador
-    const allowedEmails = [
-      "frank.tuberquiarojas@gmail.com",
-      "agusvarela5@gmail.com",
-      "hdgomez0@gmail.com",
-      "orlibet@gmail.com",
-      "kayita_y@hotmail.com",
-      "carlosdavidmaya1@gmail.com",
-      "andresinfernoxii@gmail.com",
-    ];
-
-    return (
-      (isAuthenticated && user?.admin === true) ||
-      allowedEmails.includes(user?.email) // Verificar si el correo del usuario está en la lista
-    );
-  };
-
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -164,7 +149,7 @@ const NavBar = () => {
         <Link to={"/favorites"}>
           <img src={heartIcon} alt="Favorites" />
         </Link>
-        <Link to={"/cart"} className={style.cart}>
+        <Link to={"/carrito"} className={style.cart}>
           <img src={shoppingCartIcon} alt="Shopping Cart" />
           <div className={style.totals}></div>
           <TotalItems />
@@ -204,7 +189,6 @@ const NavBar = () => {
               <NavLink
                 to="/admin"
                 className={style.dropdownItem}
-                onClick={handleLogOut}
               >
                 Admin
               </NavLink>
