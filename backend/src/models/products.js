@@ -20,7 +20,7 @@ const Products = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: true,
             defaultValue: function(){
-                return this.getDataValue("name")
+                return this.name
             }
         },
         price: {

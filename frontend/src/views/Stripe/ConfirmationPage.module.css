@@ -13,6 +13,7 @@
   width: 80%;
   height: 70vh;
   padding: 20px;
+  color: #04ca35;
   background-color: #f0f0f0;
   box-shadow: 0 10px 25px rgba(119, 112, 112, 0.945);
 }
@@ -69,11 +70,12 @@
   .back-link {
     font-size: large;
   }
-}
-
-@media (max-width: 576px) {
-  .confirmation-title {
-    font-size: 20px;
+  .cart-items{
+    color: black ;
+  }
+  
+  .back-link:hover {
+    text-decoration: underline;
   }
 
   .payment-info {

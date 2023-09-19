@@ -22,7 +22,6 @@ const Cards = (props) => {
                 price={price}
                 rating={rating}
                 stock={stock}
-                quantity={1}
               />
             );
           }

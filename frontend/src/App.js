@@ -29,9 +29,11 @@ import ProductosAdmin from "./views/Admin/Productos Admin/ProductosAdmin";
 import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
 import Dashboard from "./views/Admin/Dashboard/Dashboard";
 import ChatBot from "./components/ChatBot/ChatBot.jsx";
-import QrGenerator from "./views/QrCode/QrGenerator";
+import QRCodeGenerator from "./views/QRCodeGenerator/QRCodeGenerator";
+import Carrito from "./views/Cart2/Carrito";
 import {cache} from "./components/NavBar/NavBar"
-import  axios  from "axios";
+import QRCode from "qrcode.react";
+
 
 //correo admin: dlcareact@gmail.com
 //contraseña admin: dlca180923
@@ -76,13 +78,14 @@ const App = () => {
         <Route path="/terms" component={Terms} />
         <Route path="/privacy" component={Privacy} />
         <Route path="/about" component={About} />
+        <Route path="/carrito" component={Carrito}/>
         <Route path="/cart" component={Cart} />
         {/* <Route path="/login" component={UserProfileView} /> */}
         <Route path="/aboutUs" component={AboutUs} />
         {/* se debe agregar render{()=(<AdminLayout user={user/>)} para verificacion del usuario */}
         <Route path="/admin" component={AdminLayout} />
         <Route path="/misCompras" component={MisComprasView} />
-        <Route path="/qrqenerator" component={QrGenerator} />
+        <Route path="/qrcodegenerator" component={ QRCodeGenerator} />
         <Route path="/users" component={UserProfile} />
         <Route path="/login" component={Profile} />
 

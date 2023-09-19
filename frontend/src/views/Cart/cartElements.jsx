@@ -9,6 +9,7 @@ const CartElements = ({ updateCartData }) => {
   const initialCartData =
     JSON.parse(localStorage.getItem("cartProducts")) || [];
 
+    console.log(initialCartData)
   const [cart, setCart] = useState(initialCartData);
   const [totalPrice, setTotalPrice] = useState(0);
 

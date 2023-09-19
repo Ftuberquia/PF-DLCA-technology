@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
-const Compras = (sequelize) => {
-    sequelize.define("compras", {
+const Compra = (sequelize) => {
+    sequelize.define("compra", {
         order_numer: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -29,10 +29,10 @@ const Compras = (sequelize) => {
             defaultValue: false
         }
     }, {
-        tableName: 'compras', // Cambia el nombre de la tabla si es necesario
+        tableName: 'compra', // Cambia el nombre de la tabla si es necesario
         timestamps: false, // Si deseas habilitar timestamps, cambia esto a true
         freezeTableName: true, // Para evitar que Sequelize pluralice el nombre de la tabla
     });
 };
 
-module.exports = Compras;
+module.exports = Compra;

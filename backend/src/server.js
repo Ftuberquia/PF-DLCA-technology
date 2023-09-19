@@ -5,14 +5,17 @@ const morgan = require('morgan'); //middleware de registro de solicitudes HTTP. 
 const routes = require('./routes/index.js'); // import definicion de las rutas
 const cors = require('cors'); // solicitudes front
 // const { logout } = require('../../frontend/src/redux/actions/index.js');
-
+const Compras = require('./models/compras.js');
+const Stripe = require('stripe'); //info desde el front
+// KEY secreta de Stripe 
+const stripe = new Stripe("sk_test_51NnMQaEUVHui4qp0BDSWGwhNtmw1gJbJF4tue1zqpRo3l56iE83u0VImKkguK6J1qgqJakEW2NCnVtUffGOoHwQp00qsaUMPZy")
 
 require('./db.js'); 
 
 const server = express(); // instancia express 
 // Configurar el middleware CORS antes de definir rutas
 server.use(cors());
-// server.name = 'API';
+server.name = 'API';
 
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' })); //Establece la opción extended en true para permitir datos anidados en los cuerpos de las solicitudes y establece un límite de tamaño de 50 MB para los cuerpos de las solicitudes.
 server.use(bodyParser.json({ limit: '50mb' })); //También se establece un límite de tamaño de 50 MB para los cuerpos de las solicitudes.
@@ -29,6 +32,35 @@ server.use((req, res, next) => {
 	next();
 });
 
+server.post('/api/checkout', async (req, res) => {
+	const { id, amount, return_url} = req.body;
+	try{
+		const payment = await stripe.paymentIntents.create({
+			amount,
+			currency: "USD",
+			description: "Producto de tegnologia", // descripcion desde la base de datos
+			payment_method: id,
+			confirm: true,
+			return_url,
+		});
+		// Crea un nuevo registro de compra en la base de datos
+		// const nuevaCompra = await Compras.create({
+		// 	order_date: new Date(), // Debes obtener la fecha actual
+		// 	estate: 'Pendiente', // Otra vez, esto puede variar dependiendo de tu lógica
+		// 	quantity,
+		// 	total_price,
+		// 	created: false, // Otra vez, esto puede variar dependiendo de tu lógica
+		// 	userId, // El ID del usuario que realizó la compra
+		// 	productId, // El ID del producto comprado
+		//   });
+		console.log(payment);
+		res.send({ message: 'Pago exitoso', payment});
+
+	} catch (error) {
+		console.log(error);
+		res.json({message: error.raw.message})
+	}
+  });
 
 server.use('/', routes); //Configura las rutas de la API importadas desde el archivo index.js
 

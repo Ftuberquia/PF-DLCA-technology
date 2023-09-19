@@ -1,16 +1,14 @@
-import React, { useState, useRef } from "react";
 import axios from "axios";
 import style from "./Stripe.module.css";
-import { loadStripe } from "@stripe/stripe-js";
+import React, { useState, useRef, useEffect } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import {
   Elements,
   CardElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import CartTotal from "../Cart/cartTotal";
-import { cache } from "../../components/NavBar/NavBar";
+import { loadStripe } from "@stripe/stripe-js";
 import { useAuth0 } from "@auth0/auth0-react";
 import Loading from "../../components/Loading/Loading";
 import { useSelector } from "react-redux"; 
@@ -21,7 +19,7 @@ const stripePromise = loadStripe(
   "pk_test_51Nrjc9CrlqJ1omum6CjPStGPSoGeeDMHzYPnRaQT4tylICxHdiYEytpJe9UqmYhzN4kCARZRxWaFxWWcaCRCkjjt008m1oWbUr"
 );
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
   const history = useHistory(); // Inicializa useHistory
   const stripe = useStripe();
   const elements = useElements();
@@ -53,7 +51,7 @@ const CheckoutForm = () => {
     }, 0);
 
       try {
-        const { data } = await axios.post("http://localhost:3001/purchase", {
+        const { data } = await axios.post("http://localhost:3001/api/checkout", {
           userId,
           productIds,
           quantities: productQuantities,
@@ -64,10 +62,20 @@ const CheckoutForm = () => {
           payment_method: "pm_card_visa",
         })
         console.log(data);
-
-      } catch (error) {
-        console.log(error);
-      }
+          elements.getElement(CardElement).clear();
+          history.push({
+              pathname: "/confirmation",
+              state: {
+                  paymentInfo: data,
+                 },
+           });
+                  
+            } catch (error) {
+                console.error("Error al realizar la solicitud al servidor:", error);
+                history.push("/cancel");
+            } finally {
+                setLoading(false);
+            }
       
     }
     // setLoading(true);
@@ -106,8 +114,8 @@ const CheckoutForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="">
-      <h2 className={style.precio}>Precio: $</h2>
+    <form onSubmit={handleSubmit} method="POST">
+      <h2 className={style.precio}>Precio: {total_price} </h2> 
       <div className={style.subtituloVisa}>
         <h2>Numero TC. </h2>
         <h2> Fecha Vencimiento</h2>
