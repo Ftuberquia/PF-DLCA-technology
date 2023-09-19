@@ -3,7 +3,6 @@ const { CartProduct, Cart, Products } = require("../../db");
 //Agrega un producto a la tabla intermedia
 const postProduct = async ( userId, productId, quantity_prod) => {
 
-  // const cId=parseInt(cartId);
   const pId=parseInt(productId);
 
   if (!quantity_prod) {
@@ -22,24 +21,39 @@ const postProduct = async ( userId, productId, quantity_prod) => {
       throw Error("El producto no existe");
     }
 
+    const priceProduct=product.price;
+    const totalPriceProduct=quantity_prod*priceProduct;
 
-    const priceProduct=product.price
-    const totalPriceProduct=quantity_prod*priceProduct
-
-    //crear la nueva entrada de producto en el carrito
-    const newCartProduct = await CartProduct.create({
-      cartId:cart.id,
-      productId:pId,
-      quantity_prod,
-      total_price_product:totalPriceProduct
-    })
-
-    //Obtenemos todos los productos asociados al carrito
-    const allProducts=await CartProduct.findAll({
-      where:{
-        cartId:cart.id
+    //Verificamos si el producto esta en el carrito ya
+    const existingProduct = await CartProduct.findOne({
+      where: {
+        cartId: cart.id,
+        productId: pId,
       },
-    })
+    });
+
+    if (existingProduct) {
+      // Si el producto ya existe en el carrito, actualiza la cantidad
+      existingProduct.quantity_prod += quantity_prod;
+      existingProduct.total_price_product += totalPriceProduct;
+      await existingProduct.save();
+      console.log("Cantidad del producto actualizada exitosamente en la base de datos");
+    } else {
+      // Si no existe, crea una nueva entrada en la tabla
+      await CartProduct.create({
+        cartId: cart.id,
+        productId: pId,
+        quantity_prod,
+        total_price_product: totalPriceProduct,
+      });
+      console.log("Producto agregado exitosamente en el carrito");
+    }
+
+    const allProducts = await CartProduct.findAll({
+      where: {
+        cartId: cart.id,
+      },
+    });
 
     //Calculamos la suma de todos los productos asociados al carrito
     const productsSuma=allProducts.reduce((sum,prod)=>sum+prod.quantity_prod,0)
@@ -49,8 +63,6 @@ const postProduct = async ( userId, productId, quantity_prod) => {
 
     //Actualizamos la cantidad de productos totales del carrito
     await cart.update({quantity: productsSuma, total_precio: totalPrice})
-
-    return newCartProduct;
 
   } catch (error) {
     console.error("Error al agregar producto en el carrito:", error);
