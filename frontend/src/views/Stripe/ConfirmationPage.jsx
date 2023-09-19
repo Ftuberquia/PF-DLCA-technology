@@ -1,23 +1,34 @@
 import React from "react";
 import styles from "./ConfirmationPage.module.css"; // Importa los estilos
-import { useLocation } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useLocation, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import emailjs from '@emailjs/browser';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
 import Loading from '../../components/Loading/Loading';
+import { clearCart } from "../../redux/actions";
 
 const ConfirmationPage = () => {
 
   const location = useLocation();
   const paymentInfo = location.state.paymentInfo;
   const purchasedProducts = useSelector((state) => state.cart)
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const { user } = useAuth0();
 
    // Imprime los datos en la consola
    console.log("Datos de pago:", paymentInfo);
    console.log("infoCART", purchasedProducts)
+
+   const handleReturnToProducts = () => {
+    // Limpia el carrito
+    dispatch(clearCart());
+
+    // Redirige a la página de productos
+    history.push('/productos');
+  };
 
 
   //  const sendEmail = () => {
@@ -81,11 +92,8 @@ const ConfirmationPage = () => {
           </ul>
       </div>
 
-      <a href="/productos" className={styles["back-link"]}>
-        Volver a Productos
-      </a>
-      <a href="/reviews" className={styles["back-link"]}>
-        Reseña tus compras
+      <a onClick={handleReturnToProducts} className={styles["back-link"]}>
+              Volver a Productos
       </a>
     </div>
     </div>
