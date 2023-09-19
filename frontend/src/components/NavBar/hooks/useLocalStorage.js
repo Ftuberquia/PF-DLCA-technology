@@ -2,12 +2,12 @@
 import { useState, useEffect } from "react";
 
 function useLocalStorage(key) {
-  const [value, setValue] = useState(localStorage.getItem(key) || 0);
+  const [value, setValue] = useState(localStorage.getItem(key) || "");
 
   useEffect(() => {
     const handleStorageChange = (e) => {
       if (e.key === key) {
-        setValue(e.newValue || 0);
+        setValue(e.newValue || "");
       }
     };
 
