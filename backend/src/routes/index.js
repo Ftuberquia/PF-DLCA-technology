@@ -48,8 +48,8 @@ router.use("/carts",carts)
 //Ruta para los reviews
 router.use("/reviews", reviews)
 
-//Ruta para los carritos
-router.use("/compras",compras)
+//Ruta para las compras 
+router.use("/purchase", compras)
 
 //Ruta para administrador para traerse todos los productos
 router.use("/prod",admin)

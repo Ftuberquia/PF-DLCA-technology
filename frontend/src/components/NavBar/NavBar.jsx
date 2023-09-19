@@ -14,8 +14,8 @@ import { saveUser } from "../../redux/actions";
 import TotalItems from "../../views/Cart/TotalItems";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { Dropdown, toggleDropdown } from "react-bootstrap";
-// import { LoginButton } from "./LoginButton";
-// import { LogoutButton } from "./LogoutButton";
+import { LoginButton } from "./LoginButton";
+import { LogoutButton } from "./LogoutButton";
 
 export const cache = new LocalStorageCache();
 
@@ -46,7 +46,7 @@ const NavBar = () => {
           first_name: user.given_name,
           last_name: user.family_name,
           username: user.nickname,
-          avatar_img: user?.picture,
+          avatar_img: user.picture,
           email: user.email,
           admin: true
         };
@@ -54,16 +54,16 @@ const NavBar = () => {
       }else{
         userData = {
           id: userId,
+          avatar_img: user.picture,
           first_name: user.given_name,
           last_name: user.family_name,
           username: user.nickname,
-          avatar_img: user.picture,
           email: user.email,
-        };
+          address: user.direction,
+          phone: user.phone,
+      };
         cache.set("userEmail", user.email)
-
       }
-
       // Realiza la solicitud al servidor para guardar los datos del usuario
       axios.post("http://localhost:3001/users/", userData).then((response) => {
         if (response.status === 201) {
@@ -177,7 +177,7 @@ const NavBar = () => {
                   </button>
                 )}
               </NavLink>
-              //{" "}
+            
               {/* <NavLink to="/" 
             //   className={style.dropdownItem}
             //   onClick={isAuthenticated ? undefined : () => loginWithRedirect()}>
