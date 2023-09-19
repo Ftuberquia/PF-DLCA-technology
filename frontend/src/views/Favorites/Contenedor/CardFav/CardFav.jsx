@@ -7,19 +7,19 @@ import { deleteFavorite} from "../../funcionesFav";
 
 import style from './CardFav.module.css'
 const CardFav = (props) => {
-    const { id, name, imageSrc, price, userId } = props
+    const { id, name, imageSrc, price, userId, setFavoriteProducts } = props
 
     //favoritos
     const [isFavorite, setIsFavorite] = useState(true);
 
     const removeFromFavorites = async () => {
         try {
-        await deleteFavorite(id, userId);
-        setIsFavorite(false);
-        alert("Producto eliminado de favoritos!");
-        window.location.reload()
+            await deleteFavorite(id, userId);
+            setIsFavorite(false);
+            alert("Producto eliminado de favoritos!");
+            setFavoriteProducts(id)
         } catch (error) {
-        console.error("Error al eliminar de favoritos:", error);
+            console.error("Error al eliminar de favoritos:", error);
         }
     };
 

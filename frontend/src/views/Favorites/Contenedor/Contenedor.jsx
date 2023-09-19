@@ -3,7 +3,7 @@ import CardFav from './CardFav/CardFav'
 import style from './Contenedor.module.css'
 const Contenedor = (props) => {
 
-    const { products, userId } = props;
+    const { products, userId, setFavoriteProducts } = props;
 
     return (
       <div className={style.contGeneral}>
@@ -23,6 +23,7 @@ const Contenedor = (props) => {
                 stock={stock}
                 quantity={1}
                 userId={userId}
+                setFavoriteProducts={setFavoriteProducts}
               />
             );
           }
