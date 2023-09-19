@@ -1,9 +1,9 @@
 const { CartProduct, Cart, Products } = require("../../db");
 
 //Agrega un producto a la tabla intermedia
-const postProduct = async ( cartId, productId, quantity_prod) => {
+const postProduct = async ( userId, productId, quantity_prod) => {
 
-  const cId=parseInt(cartId);
+  // const cId=parseInt(cartId);
   const pId=parseInt(productId);
 
   if (!quantity_prod) {
@@ -11,7 +11,7 @@ const postProduct = async ( cartId, productId, quantity_prod) => {
   }
 
   try {
-    const cart = await Cart.findByPk(cId);
+    const cart = await Cart.findOne({where:{userId:userId}});
     const product=await Products.findByPk(pId);
 
     if (!cart) {
@@ -28,7 +28,7 @@ const postProduct = async ( cartId, productId, quantity_prod) => {
 
     //crear la nueva entrada de producto en el carrito
     const newCartProduct = await CartProduct.create({
-      cartId:cId,
+      cartId:cart.id,
       productId:pId,
       quantity_prod,
       total_price_product:totalPriceProduct
@@ -37,7 +37,7 @@ const postProduct = async ( cartId, productId, quantity_prod) => {
     //Obtenemos todos los productos asociados al carrito
     const allProducts=await CartProduct.findAll({
       where:{
-        cartId
+        cartId:cart.id
       },
     })
 
