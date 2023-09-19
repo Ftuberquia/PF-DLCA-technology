@@ -17,9 +17,11 @@ const ProductDetail = () => {
   const { id } = useParams();
 
   const product = useSelector((state) => state.productDetail);
+
   const [isFavorite, setIsFavorite] = useState(false);
   const [userId, setUserId] = useState(null);
   const [productReviews, setProductReviews] = useState([]);
+  const [inCart, setInCart] = useState(false)
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -38,21 +40,7 @@ const ProductDetail = () => {
     };
   }, [dispatch, id]);
 
-  const getUserId = async ()=>{
-    if(isAuthenticated){
-      const userIdFromCache = cache.get("userId");
-      if (userIdFromCache) {
-        setUserId(userIdFromCache);
-        return userIdFromCache;
-      } else if (user && user.id) {
-        const userId = user.id;
-        cache.set("userId", userId);
-        setUserId(userId);
-        return userId;
-      }}
-    return null;
-  }
-
+  //Reviews
   useEffect(() => {
     const fetchProductReviews = async () => {
       try {
@@ -66,11 +54,18 @@ const ProductDetail = () => {
     fetchProductReviews();
   }, [id]);
 
-  //Para obtener el userId desde el localStorage
+  //UsuarioId
   useEffect(() => {
-    getUserId()
-    // eslint-disable-next-line
-  }, []);
+    if (isAuthenticated && user) {
+      const userIdLogin = user.sub;
+      setUserId(userIdLogin);
+    }
+  }, [isAuthenticated, user]);
+
+  useEffect(() => {
+    checkFavoriteStatus();
+    checkCart();
+  }, [userId, product.id]);
 
   //verificar si el producto esta en favoritos
   const checkFavoriteStatus = async () => {
@@ -80,7 +75,7 @@ const ProductDetail = () => {
         const favoriteProducts = await fetchData(userId);
         if(!favoriteProducts.message){
           // Verificar si el producto actual está en la lista de productos favoritos
-          const isProductFavorite = favoriteProducts.some((p) => p.id === id);
+          const isProductFavorite = favoriteProducts.some((p) => p.id === product.id);
           setIsFavorite(isProductFavorite);
         };
       } catch (error) {
@@ -90,17 +85,44 @@ const ProductDetail = () => {
       setIsFavorite(false)
     }
   };
-
-  useEffect(() => {
-    checkFavoriteStatus();
-  }, [userId, id]);
+  
+  //verifico si esta en el carrito
+  const checkCart = async () => {
+    if (userId === null) {
+      const storedCartProducts = localStorage.getItem("cartProducts");
+      const parsedCartProducts = storedCartProducts
+        ? JSON.parse(storedCartProducts)
+        : [];
+      // Buscar si ya existe un producto con el mismo 'id' en el carrito
+      const existingProductIndex = parsedCartProducts.findIndex(
+        (item) => item.id === product.id
+      );
+      if (existingProductIndex !== -1) {
+        // Si el producto ya existe en el carrito
+        setInCart(existingProductIndex)
+      }else setInCart(false)
+    }else if(userId!==null){
+      try {
+        const response = await axios.get(`carts/${userId}`)
+        const data= await response.data
+        let productInCart=data[1].some((prod)=>prod.productId===product.id)
+        if(productInCart){
+          setInCart(true)
+        }else{
+          setInCart(false)
+        }
+      } catch (error) {
+        console.error("Error en el front al revisar el carrito", error);
+      }
+    }
+  }
 
   const addToFavorites = async () => {
     if (userId===null) {
       alert("Debes iniciar sesión para agregar a favoritos");
     } else {
       try {
-        await addFavorite(id,userId);
+        await addFavorite(product.id,userId);
         setIsFavorite(true);
       } catch (error) {
         console.error("Error al agregar a favoritos:", error);
@@ -110,21 +132,13 @@ const ProductDetail = () => {
 
   const removeFromFavorites = async () => {
     try {
-      await deleteFavorite(id, userId);
+      await deleteFavorite(product.id, userId);
       setIsFavorite(false);
       alert('Producto eliminado de favoritos!');
     } catch (error) {
       console.error('Error al eliminar de favoritos:', error);
     }
   };
-
-  // if (!product) {
-  //   return (
-  //     <div>
-  //       <Loading />
-  //     </div>
-  //   );
-  // }
 
   function decrementCartQuantity() {
     // disminuye en 1 la cantidad del producto en el carrito, pero solo si la cantidad actual es mayor que 1.
@@ -139,11 +153,58 @@ const ProductDetail = () => {
       setCartQuantity(cartQuantity + 1);
     }
   }
+
   // Agrego el producto al carrito despachando la acción con el producto y su cantidad.
+  const addProductToCart=async()=>{
+    if (userId === null) {
+      // Almacena en el localStorage
+      const productToAdd = {
+        id:product.id,
+        name:product.name,
+        imageSrc:product.imageSrc,
+        price:product.price,
+        rating:product.rating,
+        stock:product.stock,
+        quantity:cartQuantity};
+      const storedCartProducts = localStorage.getItem("cartProducts");
+      const parsedCartProducts = storedCartProducts
+        ? JSON.parse(storedCartProducts)
+        : [];
+
+      // Buscar si ya existe un producto con el mismo 'id' en el carrito
+      const existingProductIndex = parsedCartProducts.findIndex(
+        (item) => item.id === productToAdd.id
+      );
+
+      if (existingProductIndex !== -1) {
+        // Si el producto ya existe en el carrito, suma la cantidad al producto existente
+        parsedCartProducts[existingProductIndex].quantity +=
+          productToAdd.quantity;
+      } else {
+        // Si no existe, agrega el producto al carrito
+        parsedCartProducts.push(productToAdd);
+      }
+
+      localStorage.setItem("cartProducts", JSON.stringify(parsedCartProducts));
+      setInCart(true); // Establece el estado como "en el carrito"
+    } else {
+      try {
+        const body={quantity_prod:cartQuantity}
+        const response = await axios.post(`carts/${userId}/${product.id}`,body)
+        const data= await response.data
+        if(data.message==="producto agregado al carrito"){
+          setInCart(true)
+        }
+      } catch (error) {
+        console.error("Error en el front al agregar al carrito", error);
+      }
+    }
+  }
+
   const handleAddToCart = () => {
     if (product.stock > 0) {
+      addProductToCart()
       // Si el producto tiene stock, muestra un mensaje de éxito y redirige al usuario a la página del carrito.
-      dispatch(addToCart({ ...product, quantity: cartQuantity }));
       Swal.fire({
         title: "Agregado",
         text: "¡Producto añadido al carrito!",
@@ -151,7 +212,7 @@ const ProductDetail = () => {
         confirmButtonText: "Ok",
         confirmButtonColor: "#28a745",
       });
-      history.push("/cart"); // Redirige a cart para continuar la compra
+      history.push("/carrito"); // Redirige a cart para continuar la compra
     } else {
       Swal.fire({
         // En caso contrario, muestra un mensaje de advertencia.
@@ -167,7 +228,7 @@ const ProductDetail = () => {
   function handleBuyNow(event) {
     if (isAuthenticated) {
       if (product.stock > 0) {
-        dispatch(addToCart({ ...product, quantity: cartQuantity }));
+        //Aqui se envia la informacion de la compra
         history.push(`/compra`); // agrega el producto al carrito y redirige al usuario a la página de pago.
       } else {
         Swal.fire({
@@ -208,7 +269,6 @@ const ProductDetail = () => {
     return () => clearTimeout(timer);
   }, []);
 
- 
   return (
     <>
       {isLoading ? (
@@ -258,15 +318,19 @@ const ProductDetail = () => {
         </div>
         <div className={style.infoCompra}>
           <h2>${product.price}</h2>
-          <div className={style.cantidad}>
-            <button onClick={decrementCartQuantity}>-</button>
-            <p>{cartQuantity}</p>
-            <button onClick={incrementCartQuantity}>+</button>
-          </div>
 
-          <button className={style.agregarCarrito} onClick={handleAddToCart}>
-            Agregar al carrito
-          </button>
+          {inCart?(<p>producto en carrito</p>):(
+            <div className={style.cantidad}>
+              <button onClick={decrementCartQuantity}>-</button>
+              <p>{cartQuantity}</p>
+              <button onClick={incrementCartQuantity}>+</button>
+            </div>
+          )}
+
+          {inCart?(<Link to={'/carrito'}><button>Ir a carrito</button></Link>):(
+            <button className={style.agregarCarrito} onClick={handleAddToCart}>
+              Agregar al carrito
+            </button>)}
 
           {isAuthenticated ? (
             <Link to={`/compra`}>
