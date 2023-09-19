@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 // import Spinner from "../Loading/Loading";
 import { Link } from "react-router-dom";
-import style from './profile.module.css';
+import style from './Profile.module.css';
 import Loading from '../Loading/Loading';
+
 
 export const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [userData, setUserData] = useState(null);
 
-  
+
   const saveUserDataToLocal = (data) => {
     localStorage.setItem('userData', JSON.stringify(data));
   }
