@@ -191,7 +191,7 @@ input1[type="nickname"]:hover:hover {
 } */ 
 
 
-.usercontainer {
+/* .usercontainer {
   position: relative;
   display: flex;
   align-items: center;
@@ -331,4 +331,4 @@ input1[type="nickname"]:hover:hover {
   color: #fff;
   cursor: pointer;
   transform: translateY(-2px);
-}
+} */

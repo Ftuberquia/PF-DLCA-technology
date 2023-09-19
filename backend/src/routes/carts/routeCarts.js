@@ -10,13 +10,14 @@ const getTotalPriceCartHandler = require('../../handlers/carts/getTotalPriceCart
 
 const carts = Router()
 
-carts.get("/:userId", getCartHandler)
-carts.get("/totalValor/:cartId", getTotalPriceCartHandler)
-carts.get('/idcarrito/:userId',getIdCartHandler)
-carts.put('/:userId',clearCartHandler)
-carts.delete("/:productId/:cartId", deleteProdCartHandler)
-carts.post("/:cartId/:productId", saveProductsInCart)
-carts.put("/:cartId", updateProductsInCart)
-carts.put("/:cartId/:productId", updateQuantityProductHandler)
+carts.get("/:userId", getCartHandler)   //funciona, devuelve idCart, quantity, pagado, tota_price, userId, productId de los productos del carrito
+carts.get('/idcarrito/:userId',getIdCartHandler)  //Funciona, devuelve el idCart como un numero, sin llaves, sin corchetes
+carts.post("/:userId/:productId", saveProductsInCart)  //Funciona, se usa para agregar solo una vez el producto al carrito, requiere userId y productId por params y quantity por body
+carts.delete("/:productId/:userId", deleteProdCartHandler)  //Funciona, se usa para eliminar el producto del carrito, sin importar la cantidad que tenga.
+carts.put("/:cartId", updateProductsInCart)  //Funciona, cambia el estado de pagado(creo no es necesaria)
+carts.put('/:userId',clearCartHandler)  //Funciona, limpia el carrito, reiniciando los valores a 0
+carts.put("/:userId/:productId", updateQuantityProductHandler)  //Para los + y - dentro del carrito, actualiza cantidad y precios
+
+carts.get("/totalValor/:cartId", getTotalPriceCartHandler) //Funciona, devuelve solo el valor total del carrito
 
 module.exports = carts

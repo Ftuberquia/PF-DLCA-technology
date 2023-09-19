@@ -69,20 +69,12 @@
   .back-link {
     font-size: large;
   }
-<<<<<<< HEAD
   .cart-items{
     color: black ;
   }
   
   .back-link:hover {
     text-decoration: underline;
-=======
-}
-
-@media (max-width: 576px) {
-  .confirmation-title {
-    font-size: 20px;
->>>>>>> c96bd214a587e4917073b11b4ade6a8131a6a934
   }
 
   .payment-info {

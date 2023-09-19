@@ -10,7 +10,7 @@ import {  Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import Swal from "sweetalert2"; // Importa SweetAlert
 
-export default function Cart({ cartProducts}) {
+export default function Cart() {
 
   const { user, isAuthenticated } = useAuth0();
 

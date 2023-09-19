@@ -17,7 +17,11 @@ const getCart = async (userId) => {
     where:{
       cartId:cart.id
     },
+    order:[
+      ["id", "ASC"]
+  ]
   });
+
 
   let infoCarritoCompleta=[cart,infoCart]
 

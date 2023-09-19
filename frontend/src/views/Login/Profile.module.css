@@ -1,0 +1,97 @@
+/* .cart-message-center{
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .profile-card {
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px #ccc;
+  }
+  .profile-card h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .profile-card p {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  .profile-card img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 50%; /* Make the image a circle */
+    /* object-fit: cover; Scale the image to fit the container
+  } */ 
+
+  .containerprofile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    background-color: white;
+    width: 30rem;
+    margin: 0 auto;
+    border: 1px solid #9cb8eb;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(121, 154, 192, 0.89);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .containerprofile:hover {
+    transform: scale(1.05);
+  }
+  
+  .message {
+    margin-bottom: 10px;
+    font-size: 30px;
+    text-align: center;
+    margin-top: -60px;
+  }
+  
+  .btnprofile {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 50px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20rem;
+  }
+  
+  .btnprofile:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 768px) {
+    .containerprofile {
+      width: 90%;
+    }
+  }
+
+  .containerprofile img {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .containerprofile h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    .containerprofile {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+  
+   

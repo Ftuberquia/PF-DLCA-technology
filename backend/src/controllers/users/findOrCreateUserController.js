@@ -3,7 +3,7 @@ const { Users, Cart } = require("../../db")
 const findOrCreateUserController = async (userData) => {
 
     try {
-        const { id, first_name, last_name, username, email } = userData;
+        const {id, first_name, last_name, username, email, avatar_img, admin } = userData;
     
         // Utiliza findOrCreate para buscar o crear un usuario
         const [user, created] = await Users.findOrCreate({
@@ -13,6 +13,8 @@ const findOrCreateUserController = async (userData) => {
             last_name, 
             username,
             email,
+            avatar_img,
+            admin
             // Otros campos de datos que quieras asignar por defecto
           },
         });

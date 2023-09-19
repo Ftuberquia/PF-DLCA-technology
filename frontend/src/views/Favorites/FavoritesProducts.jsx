@@ -33,8 +33,13 @@ export default function Favorites() {
       }
   };
 
+  function deleteFav(idProd){
+    setFavoriteProducts(favoriteProducts.filter(e=>e.id!==idProd))
+  }
+
   useEffect(() => {
     fetchFavoriteProducts();
+    
     // eslint-disable-next-line
   }, [userId, isAuthenticated, history]);
 
@@ -57,7 +62,7 @@ export default function Favorites() {
       ) : (
         <div className={style.favoritesCont}>
           <h1>Favoritos ❤️</h1>
-          <Contenedor products={favoriteProducts} userId={userId} />
+          <Contenedor products={favoriteProducts} userId={userId} setFavoriteProducts={deleteFav}/>
         </div>
       )}
     </>

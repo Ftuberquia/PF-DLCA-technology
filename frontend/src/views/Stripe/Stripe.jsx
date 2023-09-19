@@ -1,7 +1,6 @@
 import axios from "axios";
 import style from "./Stripe.module.css";
 import React, { useState, useRef, useEffect } from "react";
-import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import {
   Elements,
@@ -11,12 +10,13 @@ import {
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useAuth0 } from "@auth0/auth0-react";
-import Loading from "../../components/Loading/Loading"; 
+import Loading from "../../components/Loading/Loading";
+import { useSelector } from "react-redux"; 
 
 
 // Key visible ** la secreta esta en el Server
 const stripePromise = loadStripe(
-  "pk_test_51NnMQaEUVHui4qp0KnEfLflyUrkDfZDN9jLhIq7Vzb4RGVvCG0tCfEDmgi9GKV1CYCXc5TYzU7FcS4BXCXmSv8tC00L9f6qNwM"
+  "pk_test_51Nrjc9CrlqJ1omum6CjPStGPSoGeeDMHzYPnRaQT4tylICxHdiYEytpJe9UqmYhzN4kCARZRxWaFxWWcaCRCkjjt008m1oWbUr"
 );
 
 const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
@@ -25,31 +25,10 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
   const elements = useElements();
   const [isLoading, setLoading] = useState(false);
   const cardElement = useRef(null);
-  // const dataCart = useSelector((state) => state.cart) // sacar datos del carrito
+  const ProductsIds = useSelector((state) => state.cart);
+  const ProductsQuantities = useSelector((state) => state.cart)
+  const ProductsPrices = useSelector((state) => state.cart)
   const { user } = useAuth0();
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  // Imprime los datos en la consola
-  console.log("infoCART", totalPrice)
-
-  useEffect(() => {
-    // Llama a la función para obtener el precio total sin un ID de carrito
-    fetchTotalPrice();
-  }, []);
-
-  const fetchTotalPrice = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:3001/carts/totalValor" 
-      );
-
-      // Extrae el precio total del carrito desde la respuesta
-      const { data } = response;
-      setTotalPrice(data);
-    } catch (error) {
-      console.error("Error al obtener el precio total:", error);
-    }
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -58,43 +37,70 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
       type: "card",
       card: cardElement.current || elements.getElement(CardElement),
     });
-    setLoading(true);
 
-    if (!error && paymentMethod) {
+    if (!error){
+      const { id: stripePaymentIntentId } = paymentMethod;
+      const userId = user.sub;
+      const productIds = ProductsIds.map((product) => product.id);
+      const productQuantities = ProductsQuantities.map((product) => product.quantity)
+      const productsPrices = ProductsPrices.map((product) => product.price)
+
+    // Calculate totalPrice based on quantities and prices
+    const totalPrice = productQuantities.reduce((total, quantity, index) => {
+      return total + quantity * productsPrices[index];
+    }, 0);
+
       try {
-        const { id } = paymentMethod;
-        const { data } = await axios.post(
-          "http://localhost:3001/api/checkout",
-          {
-            id: id,
-            amount: 100 * 100,
-            userId: user.userId,  
-            productId: productId, 
-            quantity: quantity,  
-            total_price: totalPrice,  
-            return_url: "http://localhost:3000/confirmation",
-          }
-        );
+        const { data } = await axios.post("http://localhost:3001/purchase", {
+          userId,
+          productIds,
+          quantities: productQuantities,
+          totalPrice,
+          amount: totalPrice,
+          currency: "USD",
+          return_url: "http://localhost:3000/confirmation",
+          payment_method: "pm_card_visa",
+        })
         console.log(data);
-        elements.getElement(CardElement).clear();
-        // Ahora puedes usar paymentIntentId para redirigir a la página de confirmación
-        history.push({
-          pathname: "/confirmation",
-          state: {
-            paymentInfo: data,
-          },
-        });
+
       } catch (error) {
-        console.error("Error al realizar la solicitud al servidor:", error);
-        history.push("/cancel");
-      } finally {
-        setLoading(false);
+        console.log(error);
       }
-    } else {
-      console.error("Error al crear el método de pago:", error);
-      history.push("/cancel");
+      
     }
-    setLoading(false);
+    // setLoading(true);
+
+    // if (!error && paymentMethod) {
+    //   try {
+    //     const { id } = paymentMethod;
+    //     const { data } = await axios.post(
+    //       "http://localhost:3001/compras",
+    //       {
+    //         id: id,
+    //         amount: 10000, // precio a cambiar
+    //         return_url: "http://localhost:3000/confirmation",
+    //       }
+    //     );
+    //     console.log(paymentMethod);
+    //     elements.getElement(CardElement).clear();
+    //     // Ahora puedes usar paymentIntentId para redirigir a la página de confirmación
+    //     history.push({
+    //       pathname: "/confirmation",
+    //       state: {
+    //         paymentInfo: data,
+    //       },
+    //     });
+    //   } catch (error) {
+    //     console.error("Error al realizar la solicitud al servidor:", error);
+    //     history.push("/cancel");
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // } else {
+    //   console.error("Error al crear el método de pago:", error);
+    //   history.push("/cancel");
+    // }
+    // setLoading(false);
   };
 
   return (
