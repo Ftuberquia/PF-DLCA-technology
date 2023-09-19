@@ -34,6 +34,7 @@ import Carrito from "./views/Cart2/Carrito";
 import {cache} from "./components/NavBar/NavBar"
 import QRCode from "qrcode.react";
 
+
 //correo admin: dlcareact@gmail.com
 //contraseña admin: dlca180923
 
@@ -43,7 +44,6 @@ const App = () => {
     const userEmail = cache.get("userEmail")
      const {isAuthenticated, } = useAuth0()
 
-     console.log("aqui",userEmail)
   if(userEmail !== "dlcareact@gmail.com" ||  !isAuthenticated){
     return <Redirect to="/" />
   }else{
@@ -61,7 +61,7 @@ const App = () => {
       );
      };
   }
-
+  
   return (
     <Router>
       <NavBar />

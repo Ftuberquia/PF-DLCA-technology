@@ -35,7 +35,7 @@ const NavBar = () => {
   const cartItemCount = useLocalStorage("cartProducts");
 
   const [welcomeEmailSent, setWelcomeEmailSent] = useState(false);
-
+  
   useEffect(() => {
     if (isAuthenticated && user) {
       const userId = user.sub;
