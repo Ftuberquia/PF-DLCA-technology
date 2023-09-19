@@ -61,39 +61,43 @@ const App = () => {
       );
      };
   }
+  const isActive = cache.get("userActive")
+  //  if( isActive === false ){
+  //    return <Redirect to="/about"/>
+  //  }else{
+    return (
+      <Router>
+        <NavBar />
+        <Switch>
+          <Route path="/productos" component={Productos} />
+          <Route path="/product/:id" component={ProductDetail} />
+          <Route path="/contacto" component={ContactUs} />
+          <Route exact path="/" component={Landing} />
+          <Route path="/compras" component={Stripe} />
+          <Route path="/confirmation" component={ConfirmationPage} />
+          <Route path="/cancel" component={CancelPage} />
+          <Route path="/favorites" component={Favorites} />
+          <Route path="/faq" component={FAQ} />
+          <Route path="/terms" component={Terms} />
+          <Route path="/privacy" component={Privacy} />
+          <Route path="/carrito" component={Carrito}/>
+          <Route path="/cart" component={Cart} />
+          {/* <Route path="/login" component={UserProfileView} /> */}
+          <Route path="/aboutUs" component={AboutUs} />
+          <Route path="/admin" component={AdminLayout} />
+          <Route path="/misCompras" component={MisComprasView} />
+          <Route path="/qrcodegenerator" component={ QRCodeGenerator} />
+          <Route path="/users" component={UserProfile} />
+          <Route path="/about" component={About} />
+          <Route path="/login" component={Profile} />
+          {/* <Profile /> */}
+        </Switch>
+        <Route path="/" component={ChatBot} />
+        <Footer />
+        {/* <Route path= "/nopodesverlapaginaloco" component={AQUIORLI}/> */}
+      </Router>
+    );
+  // }
   
-  return (
-    <Router>
-      <NavBar />
-      <Switch>
-        <Route path="/productos" component={Productos} />
-        <Route path="/product/:id" component={ProductDetail} />
-        <Route path="/contacto" component={ContactUs} />
-        <Route exact path="/" component={Landing} />
-        <Route path="/compras" component={Stripe} />
-        <Route path="/confirmation" component={ConfirmationPage} />
-        <Route path="/cancel" component={CancelPage} />
-        <Route path="/favorites" component={Favorites} />
-        <Route path="/faq" component={FAQ} />
-        <Route path="/terms" component={Terms} />
-        <Route path="/privacy" component={Privacy} />
-        <Route path="/about" component={About} />
-        <Route path="/carrito" component={Carrito}/>
-        <Route path="/cart" component={Cart} />
-        {/* <Route path="/login" component={UserProfileView} /> */}
-        <Route path="/aboutUs" component={AboutUs} />
-        {/* se debe agregar render{()=(<AdminLayout user={user/>)} para verificacion del usuario */}
-        <Route path="/admin" component={AdminLayout} />
-        <Route path="/misCompras" component={MisComprasView} />
-        <Route path="/qrcodegenerator" component={ QRCodeGenerator} />
-        <Route path="/users" component={UserProfile} />
-        <Route path="/login" component={Profile} />
-
-        {/* <Profile /> */}
-      </Switch>
-      <Route path="/" component={ChatBot} />
-      <Footer />
-    </Router>
-  );
 };
 export default App;
