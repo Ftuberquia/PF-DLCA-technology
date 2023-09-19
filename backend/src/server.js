@@ -6,11 +6,11 @@ const routes = require('./routes/index.js'); // import definicion de las rutas
 const cors = require('cors'); // solicitudes front
 // const { logout } = require('../../frontend/src/redux/actions/index.js');
 
-
 require('./db.js'); 
 
 const server = express(); // instancia express 
 // Configurar el middleware CORS antes de definir rutas
+
 server.use(cors());
 // server.name = 'API';
 
