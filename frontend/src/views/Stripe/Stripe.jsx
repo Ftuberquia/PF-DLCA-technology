@@ -51,7 +51,7 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
     }, 0);
 
       try {
-        const { data } = await axios.post("http://localhost:3001/purchase", {
+        const { data } = await axios.post("http://localhost:3001/api/checkout", {
           userId,
           productIds,
           quantities: productQuantities,
@@ -62,10 +62,20 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
           payment_method: "pm_card_visa",
         })
         console.log(data);
-
-      } catch (error) {
-        console.log(error);
-      }
+          elements.getElement(CardElement).clear();
+          history.push({
+              pathname: "/confirmation",
+              state: {
+                  paymentInfo: data,
+                 },
+           });
+                  
+            } catch (error) {
+                console.error("Error al realizar la solicitud al servidor:", error);
+                history.push("/cancel");
+            } finally {
+                setLoading(false);
+            }
       
     }
     // setLoading(true);

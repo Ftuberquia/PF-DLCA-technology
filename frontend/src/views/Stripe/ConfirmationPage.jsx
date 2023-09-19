@@ -66,11 +66,11 @@ const ConfirmationPage = () => {
     <div className={styles.contenedorConfirm}>
       <div className={styles["confirmation-container"]}>
       <h1 className={styles["confirmation-title"]}>Compra Exitosa</h1>
-
+{/* 
       <div className={styles["payment-info"]}>
         <p>ID de Pago: {paymentInfo.payment.id}</p>
         <p>Monto: ${paymentInfo.payment.amount}</p>
-      </div>
+      </div> */}
 
       <div className={styles["cart-items"]}>
           <h2>Productos adquiridos:</h2>
