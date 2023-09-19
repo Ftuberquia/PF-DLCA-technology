@@ -1,5 +1,6 @@
 const {Router} = require ("express");
 const { handlePurchase } = require("../../handlers/purchase/purchaseHandler");
+const { getPurchasedProductsByUser } = require("../../handlers/purchase/purchasedProductsByUserHandler");
 
 // const Stripe = require('stripe'); //info desde el front
 // // KEY secreta de Stripe 
@@ -8,5 +9,6 @@ const { handlePurchase } = require("../../handlers/purchase/purchaseHandler");
 const compras = Router()
 
 compras.post("/", handlePurchase);
+compras.get("/:userId", getPurchasedProductsByUser)
 
 module.exports = compras
