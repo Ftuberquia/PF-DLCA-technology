@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import ProductDetail from "./views/Detail/ProductDetail";
 import Landing from "./components/Landing/Landing";
 import NavBar from "./components/NavBar/NavBar";
@@ -22,30 +27,27 @@ import Terms from "./views/Terms/Terms";
 import Privacy from "./views/Privacy/Privacy";
 import About from "./views/About/About";
 import Cart from "./views/Cart/cart";
-import UserProfileView from "./views/Login/UserProfileView";
-// import Profile from "./views/Login/Profile";
+// import UserProfileView from "./views/Login/UserProfileView";
+import Profile from "./views/Login/Profile.jsx";
 import AboutUs from "./views/AboutUs/AboutUs";
 import MisComprasView from "./views/Mis Compras/MisComprasView";
 import UsuariosAdmin from "./views/Admin/Usuarios Admin/UsuariosAdmin";
 import ComprasAdmin from "./views/Admin/Compras Admin/ComprasAdmin";
 import ProductosAdmin from "./views/Admin/Productos Admin/ProductosAdmin";
 import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
-import Dashboard from "./views/Admin/Dashboard/Dashboard"
+import Dashboard from "./views/Admin/Dashboard/Dashboard";
 import ChatBot from "./components/ChatBot/ChatBot.jsx";
 import QrGenerator from "./views/QrCode/QrGenerator";
-
-
 
 // verificacion del usuario
 // const isUserAdmin = (user) =>{
 // return user.isAdmin === true
 // }
 
-const AdminLayout = ({user}) => {
+const AdminLayout = ({ user }) => {
   // if (!isUserAdmin(user)){
   //   return<Redirect to="/"/>
   // }
-
 
   return (
     <div>
@@ -64,15 +66,15 @@ const AdminLayout = ({user}) => {
 const App = () => {
   const AdminLayout = () => {
     return (
-      <div className="dashboard" style={{ display: 'flex', width:'99%'}}>      
-        <NavBarAdmin/>
+      <div className="dashboard" style={{ display: "flex", width: "99%" }}>
+        <NavBarAdmin />
         <Switch>
           <Route exact path="/admin" component={Dashboard} />
           <Route path="/admin/productos" component={ProductosAdmin} />
           <Route path="/admin/compras" component={ComprasAdmin} />
           <Route path="/admin/usuarios" component={UsuariosAdmin} />
           <Route path="/admin/form" component={Form} />
-        </Switch>        
+        </Switch>
       </div>
     );
   };
@@ -94,13 +96,15 @@ const App = () => {
         <Route path="/privacy" component={Privacy} />
         <Route path="/about" component={About} />
         <Route path="/cart" component={Cart} />
-        <Route path="/login" component={UserProfileView} />
+        {/* <Route path="/login" component={UserProfileView} /> */}
         <Route path="/aboutUs" component={AboutUs} />
         {/* se debe agregar render{()=(<AdminLayout user={user/>)} para verificacion del usuario */}
         <Route path="/admin" component={AdminLayout} />
         <Route path="/misCompras" component={MisComprasView} />
         <Route path="/qrqenerator" component={QrGenerator} />
-       
+        <Route path="/users" component={UserProfile} />
+        <Route path="/login" component={Profile} />
+
         {/* <Profile /> */}
       </Switch>
       <Route path="/" component={ChatBot} />
@@ -108,4 +112,4 @@ const App = () => {
     </Router>
   );
 };
-export default App
+export default App;

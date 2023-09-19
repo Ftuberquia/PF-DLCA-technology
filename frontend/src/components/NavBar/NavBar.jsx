@@ -13,8 +13,8 @@ import { LocalStorageCache } from "@auth0/auth0-react";
 import TotalItems from "../../views/Cart/TotalItems";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { Dropdown, toggleDropdown } from "react-bootstrap";
-// import { LoginButton } from "./LoginButton";
-// import { LogoutButton } from "./LogoutButton";
+import { LoginButton } from "./LoginButton";
+import { LogoutButton } from "./LogoutButton";
 
 export const cache = new LocalStorageCache();
 
@@ -50,10 +50,13 @@ const NavBar = () => {
 
       const userData = {
         id: userId,
+        picture: user.picture,
         first_name: user.given_name,
         last_name: user.family_name,
         username: user.nickname,
         email: user.email,
+        direction: user.direction,
+        phone: user.phone,
       };
       // Realiza la solicitud al servidor para guardar los datos del usuario
       axios.post("http://localhost:3001/users/", userData).then((response) => {
@@ -189,7 +192,7 @@ const NavBar = () => {
                   </button>
                 )}
               </NavLink>
-              //{" "}
+            
               {/* <NavLink to="/" 
             //   className={style.dropdownItem}
             //   onClick={isAuthenticated ? undefined : () => loginWithRedirect()}>
