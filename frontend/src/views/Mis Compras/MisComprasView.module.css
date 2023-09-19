@@ -1,126 +1,26 @@
-.containerCompras {
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin: 0 auto;
-  justify-content: center;
-  max-width: 500px;
-  height: 300px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  padding: 32px;
-  overflow: hidden;
-  flex-direction: column;
-  gap: 15px;
-  border-radius: 10px;
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
-}
+/* MisComprasView.module.css */
 
-
-.containerCompras .red {
-  background-color: #f43f5e;
-}
-
-.containerCompras .blue {
-  background-color: #3b82f6;
-}
-
-
-.containerCompras .card {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  height: 100px;
-  width: 250px;
-  border-radius: 10px;
-  color: white;
-  cursor: pointer;
-  transition: 400ms transform, 400ms box-shadow, 400ms background-color;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-
-
-.containerCompras:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-  background-color: rgba(250, 246, 246, 0.884);
-  color: #1f1c1c;
-}
-
-
-
-.productcomprado {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
-.resena {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-  color: black;
-  font-size: 20px;
-  font-family: 'Consolas', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-.resena p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  color: black;
-  font-family: 'Consolas', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-.label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.productHeading {
+  font-size: 24px;
+  font-weight: bold;
   margin-bottom: 20px;
 }
 
-.btn{
-  width: 20%;
-  height: 2rem;
-  background-color: var(--secundary-color);
-  color: white;
-  border: none;
-  border-radius: .7rem;
-  transition: 0.4s;
+.productItem {
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
 }
 
-.btn:hover {
-  background-color: #3b3ef6f6;
-  box-shadow: 0 2px 0 2px #1111128d;
-  color: #fff;
-  cursor: pointer;
-  transform: translateY(-2px);
-}
-form {
-  margin-top: 10px;
+.productImage {
+  max-width: 100px; /* Define el tamaño máximo de la imagen */
 }
 
-.form h3 {
-  justify-content: center;
-  font-size: 20px;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  color: var(--text-color);
+.productName {
+  font-size: 18px;
+  font-weight: bold;
 }
 
-textarea,
-select {
-  margin-left: 10px;
-}
-
-button[type="submit"] {
-  margin-left: 10px;
+.productPrice {
+  font-size: 14px;
 }

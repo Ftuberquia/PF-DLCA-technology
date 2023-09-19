@@ -11,7 +11,8 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import { useAuth0 } from "@auth0/auth0-react";
 import Loading from "../../components/Loading/Loading";
-import { useSelector } from "react-redux"; 
+import { useSelector, useDispatch } from "react-redux"; 
+import { clearCart } from "../../redux/actions";
 
 
 // Key visible ** la secreta esta en el Server
@@ -28,6 +29,7 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
   const ProductsIds = useSelector((state) => state.cart);
   const ProductsQuantities = useSelector((state) => state.cart)
   const ProductsPrices = useSelector((state) => state.cart)
+  const dispatch = useDispatch();
   const { user } = useAuth0();
 
   const handleSubmit = async (event) => {
@@ -51,7 +53,7 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
     }, 0);
 
       try {
-        const { data } = await axios.post("http://localhost:3001/api/checkout", {
+        const { data } = await axios.post("http://localhost:3001/purchase", {
           userId,
           productIds,
           quantities: productQuantities,
