@@ -180,7 +180,6 @@ const Card = ({id,name,imageSrc,price,rating,stock}) => {
   const removeFromFavorites = async () => {
     try {
       await deleteFavorite(id, userId);
-      setIsFavorite(false);
       // alert("Producto eliminado de favoritos!");
       Swal.fire({
         title: "Desea eliminar su producto de favoritos?",
@@ -191,7 +190,7 @@ const Card = ({id,name,imageSrc,price,rating,stock}) => {
         confirmButtonColor: "#ff0000",
       }).then((result) => {
         if (result.isConfirmed) {
-          dispatch(removeFromFavorites(id, userId));
+          setIsFavorite(false);
         }
       });
     } catch (error) {
