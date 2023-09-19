@@ -1,22 +1,18 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import ProductDetail from "./views/Detail/ProductDetail";
 import Landing from "./components/Landing/Landing";
 import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
-import Ofertas from "./views/Ofertas/Ofertas";
 import Form from "./views/Form/FormProduct";
-import UserProfile from "./components/UserProfile/UserProfile";
 import Productos from "./views/Productos/Productos";
 import { ContactUs } from "./views/ContactUs/ContactUs";
 import Favorites from "./views/Favorites/FavoritesProducts";
 import Stripe from "./views/Stripe/Stripe";
 import ConfirmationPage from "./views/Stripe/ConfirmationPage";
 import CancelPage from "./views/Stripe/CancelPage";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import FAQ from "./views/FAQ/FAQ";
 import Terms from "./views/Terms/Terms";
 import Privacy from "./views/Privacy/Privacy";
@@ -33,49 +29,35 @@ import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
 import Dashboard from "./views/Admin/Dashboard/Dashboard"
 import ChatBot from "./components/ChatBot/ChatBot.jsx";
 import QrGenerator from "./views/QrCode/QrGenerator";
+import {cache} from "./components/NavBar/NavBar"
 
+//correo admin: dlcareact@gmail.com
+//contraseña admin: dlca180923
 
-
-// verificacion del usuario
-// const isUserAdmin = (user) =>{
-// return user.isAdmin === true
-// }
-
-const AdminLayout = ({user}) => {
-  // if (!isUserAdmin(user)){
-  //   return<Redirect to="/"/>
-  // }
-
-
-  return (
-    <div>
-      <NavBarAdmin />
-      <div>
-        <Switch>
-          <Route path="/admin/productos" component={ProductosAdmin} />
-          <Route path="/admin/compras" component={ComprasAdmin} />
-          <Route path="/admin/usuarios" component={UsuariosAdmin} />
-        </Switch>
-      </div>
-    </div>
-  );
-};
 
 const App = () => {
   const AdminLayout = () => {
+    const userEmail = cache.get("userEmail")
+     const {isAuthenticated, } = useAuth0()
+
+     console.log("aqui",userEmail)
+  if(userEmail !== "dlcareact@gmail.com" ||  !isAuthenticated){
+    return <Redirect to="/" />
+  }else{
     return (
-      <div className="dashboard" style={{ display: 'flex', width:'99%'}}>      
-        <NavBarAdmin/>
-        <Switch>
-          <Route exact path="/admin" component={Dashboard} />
-          <Route path="/admin/productos" component={ProductosAdmin} />
-          <Route path="/admin/compras" component={ComprasAdmin} />
-          <Route path="/admin/usuarios" component={UsuariosAdmin} />
-          <Route path="/admin/form" component={Form} />
-        </Switch>        
-      </div>
-    );
-  };
+    <div className="dashboard" style={{ display: 'flex', width:'99%'}}>      
+          <NavBarAdmin/>
+          <Switch>
+            <Route exact path="/admin" component={Dashboard} />
+            <Route path="/admin/productos" component={ProductosAdmin} />
+            <Route path="/admin/compras" component={ComprasAdmin} />
+            <Route path="/admin/usuarios" component={UsuariosAdmin} />
+            <Route path="/admin/form" component={Form} />
+          </Switch>        
+        </div>
+      );
+     };
+  }
 
   return (
     <Router>
