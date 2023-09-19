@@ -1,29 +1,23 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useAuth0 } from "@auth0/auth0-react";
+import React from "react";
+
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import ProductDetail from "./views/Detail/ProductDetail";
 import Landing from "./components/Landing/Landing";
 import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
-import Ofertas from "./views/Ofertas/Ofertas";
 import Form from "./views/Form/FormProduct";
-import UserProfile from "./components/UserProfile/UserProfile";
 import Productos from "./views/Productos/Productos";
 import { ContactUs } from "./views/ContactUs/ContactUs";
 import Favorites from "./views/Favorites/FavoritesProducts";
 import Stripe from "./views/Stripe/Stripe";
 import ConfirmationPage from "./views/Stripe/ConfirmationPage";
 import CancelPage from "./views/Stripe/CancelPage";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import FAQ from "./views/FAQ/FAQ";
 import Terms from "./views/Terms/Terms";
 import Privacy from "./views/Privacy/Privacy";
 import About from "./views/About/About";
 import Cart from "./views/Cart/cart";
 import UserProfileView from "./views/Login/UserProfileView";
-// import Profile from "./views/Login/Profile";
 import AboutUs from "./views/AboutUs/AboutUs";
 import MisComprasView from "./views/Mis Compras/MisComprasView";
 import UsuariosAdmin from "./views/Admin/Usuarios Admin/UsuariosAdmin";
@@ -32,6 +26,7 @@ import ProductosAdmin from "./views/Admin/Productos Admin/ProductosAdmin";
 import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
 import Dashboard from "./views/Admin/Dashboard/Dashboard"
 import ChatBot from "./components/ChatBot/ChatBot.jsx";
+import Purchase from "./views/Purchase/Purchase";
 
 
 // verificacion del usuario
@@ -84,6 +79,7 @@ const App = () => {
         <Route path="/contacto" component={ContactUs} />
         <Route exact path="/" component={Landing} />
         <Route path="/compras" component={Stripe} />
+        {/* <Route path="/purchase" component={Purchase} /> */}
         <Route path="/confirmation" component={ConfirmationPage} />
         <Route path="/cancel" component={CancelPage} />
         <Route path="/favorites" component={Favorites} />
