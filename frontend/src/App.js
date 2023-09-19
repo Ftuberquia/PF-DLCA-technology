@@ -31,6 +31,7 @@ import Dashboard from "./views/Admin/Dashboard/Dashboard";
 import ChatBot from "./components/ChatBot/ChatBot.jsx";
 import QrGenerator from "./views/QrCode/QrGenerator";
 import {cache} from "./components/NavBar/NavBar"
+import  axios  from "axios";
 
 //correo admin: dlcareact@gmail.com
 //contraseña admin: dlca180923
@@ -41,7 +42,6 @@ const App = () => {
     const userEmail = cache.get("userEmail")
      const {isAuthenticated, } = useAuth0()
 
-     console.log("aqui",userEmail)
   if(userEmail !== "dlcareact@gmail.com" ||  !isAuthenticated){
     return <Redirect to="/" />
   }else{
@@ -59,7 +59,7 @@ const App = () => {
       );
      };
   }
-
+  
   return (
     <Router>
       <NavBar />
