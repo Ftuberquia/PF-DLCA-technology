@@ -30,6 +30,7 @@ import NavBarAdmin from "./views/Admin/NavAdmin/NavBarAdmin";
 import Dashboard from "./views/Admin/Dashboard/Dashboard";
 import ChatBot from "./components/ChatBot/ChatBot.jsx";
 import QrGenerator from "./views/QrCode/QrGenerator";
+import Carrito from "./views/Cart2/Carrito";
 import {cache} from "./components/NavBar/NavBar"
 
 //correo admin: dlcareact@gmail.com
@@ -76,6 +77,7 @@ const App = () => {
         <Route path="/terms" component={Terms} />
         <Route path="/privacy" component={Privacy} />
         <Route path="/about" component={About} />
+        <Route path="/carrito" component={Carrito}/>
         <Route path="/cart" component={Cart} />
         {/* <Route path="/login" component={UserProfileView} /> */}
         <Route path="/aboutUs" component={AboutUs} />

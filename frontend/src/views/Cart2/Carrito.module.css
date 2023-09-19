@@ -1,0 +1,56 @@
+.carrito{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 20px;
+
+    .contCard{
+        width: 70%;
+        justify-content: center;
+        align-items: center;
+    }
+    .resumenCompra{
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap:1rem;
+        
+        .titulo{
+            font-size: 2rem;
+            margin: .5rem;
+        }
+        .cantidad{
+            font-size: 1.5rem;
+            margin: .5rem;
+        }
+        .total{
+            font-size: 1.5rem;
+            margin: .5rem;
+        }
+        .comprar{
+            width: 10rem;
+            height: 2rem;
+            background-color: rgb(13, 181, 21);
+            color: white;
+            border: none;
+            border-radius: .7rem;
+            transition: 0.4s;
+        }
+        .comprar:hover {
+            background-color: #26ec0ce5;
+            box-shadow: 0 2px 0 2px #303a308d;
+            color: #fff;
+            cursor: pointer;
+          
+            transform: translateY(-2px);
+          }
+          
+          .comprar:active{
+            box-shadow: 0 0 0 -1px #1111128d;
+            transform: translateY(1px);
+          }
+    }
+}

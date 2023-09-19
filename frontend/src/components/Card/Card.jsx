@@ -1,35 +1,19 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
-import { addToCart, removeFromCart } from "../../redux/actions";
-import {
-  addFavorite,
-  deleteFavorite,
-  fetchData,
-} from "../../views/Favorites/funcionesFav";
+import { addFavorite, deleteFavorite, fetchData } from "../../views/Favorites/funcionesFav";
 
 import axios from "axios";
 
 import style from "./Card.module.css";
 import Swal from "sweetalert2";
 
-const Card = ({
-  id,
-  name,
-  imageSrc,
-  price,
-  rating,
-  stock,
-  quantity,
-  disabled,
-}) => {
-  const dispatch = useDispatch();
+const Card = ({id,name,imageSrc,price,rating,stock}) => {
 
   //Para guardar el userId
   const [userId, setUserId] = useState(null);
-  const [cartId, setCartId] = useState(null);
 
   //favoritos
   const [isFavorite, setIsFavorite] = useState(false);
@@ -45,15 +29,35 @@ const Card = ({
       setUserId(userIdLogin);
     }
   }, [isAuthenticated, user]);
-
-  // Verificar si el producto está en el carrito
-  const cartProducts = useSelector((state) => state.cart);
-  if (cartProducts) {
-    cartProducts.forEach((product) => {
-      if (product.id === id) {
-        setIsInCart(true);
+ 
+  const checkCart=async()=>{
+    if (userId === null) {
+      const storedCartProducts = localStorage.getItem("cartProducts");
+      const parsedCartProducts = storedCartProducts
+        ? JSON.parse(storedCartProducts)
+        : [];
+      // Buscar si ya existe un producto con el mismo 'id' en el carrito
+      const existingProductIndex = parsedCartProducts.findIndex(
+        (item) => item.id === id
+      );
+      if (existingProductIndex !== -1) {
+        // Si el producto ya existe en el carrito
+        setIsInCart(existingProductIndex)
+      }else setIsInCart(false)
+    } else if(userId!==null){
+      try {
+        const response = await axios.get(`carts/${userId}`)
+        const data= await response.data
+        let productInCart=data[1].some((prod)=>prod.productId===id)
+        if(productInCart){
+          setIsInCart(true)
+        }else{
+          setIsInCart(false)
+        }
+      } catch (error) {
+        console.error("Error en el front al revisar el carrito", error);
       }
-    });
+    }
   }
 
   const addToCartHandler = async () => {
@@ -66,7 +70,7 @@ const Card = ({
         price,
         rating,
         stock,
-        quantity,
+        quantity:1
       };
       const storedCartProducts = localStorage.getItem("cartProducts");
       const parsedCartProducts = storedCartProducts
@@ -90,40 +94,16 @@ const Card = ({
       localStorage.setItem("cartProducts", JSON.stringify(parsedCartProducts));
       setIsInCart(true); // Establece el estado como "en el carrito"
     } else {
-
-      const requestBody = {
-        quantity_prod: 1, // Reemplaza 10 con el valor que desees enviar
-      };
-
-      axios
-      .get(`/carts/idcarrito/${userId}`)
-      .then((response) => {
-        const cartId = response.data; // Obtén el cartId de la respuesta GET
-        console.log("Respuesta de la solicitud GET:", cartId);
-    
-        // Luego, realiza la solicitud POST utilizando el cartId obtenido
-        return axios.post(`/carts/${cartId}/${id}`,requestBody);
-      })
-      .then((response) => {
-        console.log("Respuesta de la solicitud POST:", response.data);
-      })
-      .catch((error) => {
-        // Maneja los errores aquí
-        console.error("Error en la solicitud:", error);
-      });
-
-      // // Usa Redux para agregar el producto al carrito
-      // dispatch(
-      //   addToCart({
-      //     id,
-      //     name,
-      //     imageSrc,
-      //     price,
-      //     rating,
-      //     stock,
-      //   })
-      // );
-      // setIsInCart(true); // Establece el estado como "en el carrito"
+      try {
+        const body={quantity_prod:1}
+        const response = await axios.post(`carts/${userId}/${id}`,body)
+        const data= await response.data
+        if(data.message==="producto agregado al carrito"){
+          setIsInCart(true)
+        }
+      } catch (error) {
+        console.error("Error en el front al agregar al carrito", error);
+      }
     }
   };
 
@@ -150,9 +130,12 @@ const Card = ({
         alert("Producto eliminado del carrito");
       }
     } else {
-      // Usa Redux para eliminar el producto del carrito
-      dispatch(removeFromCart(id));
-      setIsInCart(false); // Establece el estado como "no en el carrito"
+      const response = await axios.delete(`carts/${id}/${userId}`);
+      const status = response.status;
+      if (status === 200){
+        alert("Producto eliminado del carrito");
+        setIsInCart(false); // Establece el estado como "no en el carrito"
+      }
     }
   };
 
@@ -177,6 +160,7 @@ const Card = ({
 
   useEffect(() => {
     checkFavoriteStatus();
+    checkCart();
     // eslint-disable-next-line
   }, [userId, id]);
 
