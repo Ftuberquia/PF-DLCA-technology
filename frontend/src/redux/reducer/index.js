@@ -20,8 +20,8 @@ import { SAVE_CART_ERROR } from "../actions/index.js";
 import { SAVE_PRODUCT_IN_CART_SERVER } from "../actions/index.js";
 import { SAVE_PRODUCT_IN_CART_ERROR } from "../actions/index.js";
 import { GET_PURCHASED_PRODUCTS } from "../actions/index.js";
-import { SAVE_USER } from "../actions/index.js";
-import { CLEAN_USER } from "../actions/index.js";
+import { SAVE_COMPRA } from "../actions/index.js";
+import { CLEAN_COMPRA } from "../actions/index.js";
 
 
 const initialState = {
@@ -41,6 +41,7 @@ const initialState = {
   cartItems: JSON.parse(localStorage.getItem("cartProducts")) || [],
   purchasedProducts: [], // Nuevo estado para los productos comprados!!!!!!
   user: {},
+  compra: {}
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -174,15 +175,15 @@ const rootReducer = (state = initialState, action) => {
         isLoading: false,
         error: action.error,
       };
-    case SAVE_USER:
+    case SAVE_COMPRA:
       return {
         ...state,
-        user: action.payload,
+        compra: action.payload,
       }
-    case CLEAN_USER:
+    case CLEAN_COMPRA:
       return{
         ...state,
-        user: {}
+        compra: {}
       }
     default:
       return { ...state };
