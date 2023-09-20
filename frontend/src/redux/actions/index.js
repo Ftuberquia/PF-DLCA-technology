@@ -24,8 +24,11 @@ export const SAVE_CART_ERROR = 'SAVE_CART_ERROR'
 export const GET_PURCHASED_PRODUCTS = 'GET_PURCHASED_PRODUCTS'
 export const SAVE_PRODUCT_IN_CART_SERVER = 'SAVE_PRODUCT_IN_CART_SERVER'
 export const SAVE_PRODUCT_IN_CART_ERROR = 'SAVE_PRODUCT_IN_CART_ERROR'
-export const SAVE_COMPRA = "SAVE_COMPRA"
-export const CLEAN_COMPRA = "CLEAN_COMPRA"
+
+export const SAVE_USER = "SAVE_USER"
+export const CLEAN_USER = "CLEAN_USER"
+export const UPDATE_USER = "UPDATE_USER"
+
 
 export const getAllProducts = () => async dispatch => {
     try {
@@ -280,6 +283,27 @@ export const updateCartItems = (cartItems) => ({
     }
   };
 
+  export const saveUser = (email, picture) => {
+    return async (dispatch) => {
+      try {
+        // Realiza una llamada a la API para guardar el usuario en la base de datos
+        const response = await axios.post("/api/users", {
+          email,
+          picture,
+        });
+  
+        // Si la llamada a la API es exitosa, dispatch una acción para guardar el usuario en el estado
+        return dispatch({
+          type: SAVE_USER,
+          payload: [response.data.msg, response.data.data, response.data.complited],
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    };
+  };
+  export const cleanUser = () =>{
+
   export const saveCompra = (payload) => {
     return {
         type: SAVE_COMPRA,
@@ -287,7 +311,15 @@ export const updateCartItems = (cartItems) => ({
     }
   }
   export const cleanCompra = () =>{
+
     return {
         type: CLEAN_COMPRA
     }
   }
+
+  export const updateUser = (data) => {
+    return {
+      type: UPDATE_USER,
+      payload: data,
+    };
+  };
