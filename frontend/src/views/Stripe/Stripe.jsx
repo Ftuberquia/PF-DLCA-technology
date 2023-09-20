@@ -25,10 +25,12 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
   const elements = useElements();
   const [isLoading, setLoading] = useState(false);
   const cardElement = useRef(null);
-  const ProductsIds = useSelector((state) => state.cart);
-  const ProductsQuantities = useSelector((state) => state.cart)
-  const ProductsPrices = useSelector((state) => state.cart)
+  // const ProductsIds = useSelector((state) => state.cart);
+  // const ProductsQuantities = useSelector((state) => state.cart)
+  // const ProductsPrices = useSelector((state) => state.cart)
   const { user } = useAuth0();
+
+  const infoCarrito = useSelector((state)=>state.compra)
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -41,27 +43,35 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
     if (!error){
       const { id: stripePaymentIntentId } = paymentMethod;
       const userId = user.sub;
-      const productIds = ProductsIds.map((product) => product.id);
-      const productQuantities = ProductsQuantities.map((product) => product.quantity)
-      const productsPrices = ProductsPrices.map((product) => product.price)
+    //   const productIds = ProductsIds.map((product) => product.id);
+    //   const productQuantities = ProductsQuantities.map((product) => product.quantity)
+    //   const productsPrices = ProductsPrices.map((product) => product.price)
 
-    // Calculate totalPrice based on quantities and prices
-    const totalPrice = productQuantities.reduce((total, quantity, index) => {
-      return total + quantity * productsPrices[index];
-    }, 0);
+    // // Calculate totalPrice based on quantities and prices
+    // const totalPrice = productQuantities.reduce((total, quantity, index) => {
+    //   return total + quantity * productsPrices[index];
+    // }, 0);
+      
+    const productIds=infoCarrito.productsIdinCart
+    const quantities=infoCarrito.quantityProduct
+    const priceProductTotal=infoCarrito.priceProductTotal
+    const totalPrice=infoCarrito.totalPriceAllProducts
+    const totalQuantityProducts=infoCarrito.totalQuantityProducts
 
       try {
-        const { data } = await axios.post("http://localhost:3001/api/checkout", {
+        const { data } = await axios.post("http://localhost:3001/purchase", {
           userId,
           productIds,
-          quantities: productQuantities,
+          quantities,
           totalPrice,
+          totalQuantityProducts,
+          priceProductTotal,
           amount: totalPrice,
           currency: "USD",
           return_url: "http://localhost:3000/confirmation",
           payment_method: "pm_card_visa",
         })
-        console.log(data);
+        
           elements.getElement(CardElement).clear();
           history.push({
               pathname: "/confirmation",
@@ -69,7 +79,7 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
                   paymentInfo: data,
                  },
            });
-                  
+
             } catch (error) {
                 console.error("Error al realizar la solicitud al servidor:", error);
                 history.push("/cancel");

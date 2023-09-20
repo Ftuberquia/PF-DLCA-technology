@@ -1,23 +1,99 @@
 import React from "react";
 import styles from "./ConfirmationPage.module.css"; // Importa los estilos
-import { useLocation } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useLocation, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import emailjs from '@emailjs/browser';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
 import Loading from '../../components/Loading/Loading';
+import { cleanCompra } from "../../redux/actions";
+import {cache} from '../../components/NavBar/NavBar';
+import axios from "axios";
+import { Prev } from "react-bootstrap/esm/PageItem";
 
 const ConfirmationPage = () => {
 
   const location = useLocation();
   const paymentInfo = location.state.paymentInfo;
-  const purchasedProducts = useSelector((state) => state.cart)
+  const purchasedProducts = useSelector((state) => state.compra)
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [nombres,setNombres]=useState([])
+  const [stocks,setStocks]=useState([])
 
   const { user } = useAuth0();
 
-   // Imprime los datos en la consola
-   console.log("Datos de pago:", paymentInfo);
-   console.log("infoCART", purchasedProducts)
+   const handleReturnToProducts = () => {
+    // Limpia el carrito
+    dispatch(cleanCompra());
+
+    // Redirige a la página de productos
+    history.push('/productos');
+
+  };
+
+  const ids=purchasedProducts.productsIdinCart
+  const quantities=purchasedProducts.quantityProduct
+  
+  useEffect(()=>{
+    obtenerProd(ids);
+    let userId=cache.get('userId')
+    return ()=>{
+      limpiarCartDB(userId,ids)
+    }
+  },[])
+  
+  useEffect(()=>{
+    cambiarStock(ids)
+  },[nombres])
+  
+  
+  async function obtenerProd(ids){
+    try {
+      for(let i=0;i<ids.length;i++){
+        let id=ids[i]
+        let response = await axios.get(`/products/${id}`)
+        setStocks((prevStocks)=>[...prevStocks, response.data.stock])
+        setNombres((prevNombres) => [response.data.name, ...prevNombres])
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function cambiarStock(ids){
+    try {
+      for(let i=0;i<ids.length;i++){
+        let id=ids[i]
+        console.log('stoks', stocks[i] ,'q', quantities[i])
+        let newStock=stocks[i]-quantities[i]
+        console.log('newStock',newStock)
+        let body={
+          stock:newStock
+        }
+        let response = await axios.put(`/products/${id}`,body)
+        console.log(response.status)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function limpiarCartDB(userId,ids){
+    try {
+      const response=await axios.put(`/carts/clear/${userId}`)
+    } catch (error) {
+      console.log(error)
+    }
+    try {
+      for(let i=0;i<ids.length;i++){
+        let productId=ids[i]
+        const response2=await axios.delete(`carts/${productId}/${userId}`)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
 
   //  const sendEmail = () => {
@@ -30,7 +106,7 @@ const ConfirmationPage = () => {
   // //     from_email: "adlctech01@gmail.com",
   // //     to_name: user.given_name,
   // //     to_email: user.email,
-  // //     message: `Productos adquiridos:\n${purchasedProducts.map((product) => product.name).join('\n')}`,
+  // //     message: `Productos adquiridos:\n${nombres.join('\n')}`,
   // //   };
 
   // //   emailjs.send(serviceId, templateId, emailParams, userId)
@@ -52,7 +128,7 @@ const ConfirmationPage = () => {
     // Establecer isLoadingTimeout en falso después de 2 segundos
     const timer = setTimeout(() => {
       setIsLoadingTimeout(false);
-    }, 2000);
+    }, 2500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -75,17 +151,14 @@ const ConfirmationPage = () => {
       <div className={styles["cart-items"]}>
           <h2>Productos adquiridos:</h2>
           <ul>
-            {purchasedProducts.map((product) => (
-              <li key={product.id}>{product.name}</li>
+            {nombres.map((product,index) => (
+              <li key={index}>{product}</li>
             ))}
           </ul>
       </div>
 
-      <a href="/productos" className={styles["back-link"]}>
-        Volver a Productos
-      </a>
-      <a href="/reviews" className={styles["back-link"]}>
-        Reseña tus compras
+      <a onClick={handleReturnToProducts} className={styles["back-link"]}>
+              Volver a Productos
       </a>
     </div>
     </div>

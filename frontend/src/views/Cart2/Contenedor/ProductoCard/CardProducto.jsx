@@ -20,6 +20,22 @@ const CardProducto = (props) => {
     if(productosLocal.length===0){
         return <Loading/>
     }
+
+    function updateQuantityInLocalStorage(productId, quantity) {
+      const cartProducts = JSON.parse(localStorage.getItem("cartProducts"));
+    
+      const updatedCartProducts = cartProducts.map((product) => {
+        if (product.id === productId) {
+          return {
+            ...product,
+            quantity: quantity,
+          };
+        }
+        return product;
+      });
+    
+      localStorage.setItem("cartProducts", JSON.stringify(updatedCartProducts));
+    }
     
     async function agregarHandler(productId,quantity){
         if(userId){try {
@@ -41,17 +57,20 @@ const CardProducto = (props) => {
         } catch (error) {
             console.log(error)
         }}else{
+            const updatedQuantity = quantity + 1;
             const updatedProductos = productosLocal.map((producto) => {
                 if (producto.id === productId) {
+                  
                   return {
                     ...producto,
-                    quantity: quantity + 1,
+                    quantity: updatedQuantity,
                   };
                 }
                 return producto;
-              });
-              setProductosLocal(updatedProductos);
-              increaseQuantity(productId)
+            });
+            updateQuantityInLocalStorage(productId,updatedQuantity)
+            setProductosLocal(updatedProductos);
+            increaseQuantity(productId);
         }
     }
 
@@ -73,19 +92,30 @@ const CardProducto = (props) => {
         } catch (error) {
             console.log(error)
         }}else{
+            const updatedQuantity = quantity - 1;
             const updatedProductos = productosLocal.map((producto) => {
                 if (producto.id === productId) {
                   return {
                     ...producto,
-                    quantity: quantity - 1,
+                    quantity: updatedQuantity,
                   };
                 }
                 return producto;
             });
+            updateQuantityInLocalStorage(productId,updatedQuantity)
             setProductosLocal(updatedProductos);
             decreaseQuantity(productId)
         }
     }
+    function deleteFromLocalStorage(productId) {
+        const cartProducts = JSON.parse(localStorage.getItem("cartProducts"));
+      
+        const updatedCartProducts = cartProducts.filter(
+          (product) => product.id !== productId
+        );
+      
+        localStorage.setItem("cartProducts", JSON.stringify(updatedCartProducts));
+      }
 
     async function eliminarHandler(productId){
         if(userId){try {
@@ -96,6 +126,7 @@ const CardProducto = (props) => {
             console.log(error);
         }}else{
             setProductosLocal(productosLocal.filter(e=>e.id!==productId))
+            deleteFromLocalStorage(productId)
             deleteProd(productId)
         }
     }

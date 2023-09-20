@@ -6,9 +6,10 @@ const postCreateProduct = async(name, imageSrc, price, stock, brand, category, s
     }
 
     //busco los brands que coincidan con los ingresados
-    const categoryDB = await Category.findOrCreate({where:{name:category}})
-    const subcategoryDb = await Subcategory.findOrCreate({where:{name:subcategory}})
-    const brandsDB = await Brand.findOrCreate({where:{name:brand}})
+    
+        const categoryDB = await Category.findOne({where:{name:category}})
+        const subcategoryDb = await Subcategory.findOne({where:{name:subcategory}})
+        const brandsDB = await Brand.findOne({where:{name:brand}})
 
     let newProduct = await Products.create({
         name, imageSrc, price, stock, brand, category, subcategory, description

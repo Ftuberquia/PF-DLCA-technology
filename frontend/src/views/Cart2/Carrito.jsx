@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import Swal from "sweetalert2"; // Importa SweetAlert
 import axios from "axios";
@@ -7,6 +7,8 @@ import axios from "axios";
 import ProdCarrito from "./Contenedor/ContenedorProductos";
 
 import styles from './Carrito.module.css'
+import { useDispatch } from "react-redux";
+import { saveCompra } from "../../redux/actions";
 
 export default function Carrito() {
 
@@ -17,21 +19,22 @@ export default function Carrito() {
   const [ total, setTotal ]=useState(0)
   const [ cantidad, setCantidad ]=useState(0)
 
+  const dispatch = useDispatch()
+
+  const historyCarrito = useHistory();
+
   useEffect(()=>{
     getLocalStorage()
     getProductsInCart()
   },[])
 
-  //COMO ENVIO LO QUE ESTA EN EL LOCAL STORAGE A LA DB?
-
   function getLocalStorage(){
     const initialCartData = JSON.parse(localStorage.getItem("cartProducts"));
-    setProductsIdinCart(initialCartData)
+    if(initialCartData){setProductsIdinCart(initialCartData)
     let total = initialCartData.reduce((acc, el) => acc + el.price * el.quantity, 0);
     let cantidad=initialCartData.reduce((acc, el)=>acc+el.quantity,0)
-    console.log('productos',productsIdinCart)
     setTotal(total)
-    setCantidad(cantidad)
+    setCantidad(cantidad)}
   }
 
   //Para obtener el id del usuario
@@ -58,23 +61,15 @@ export default function Carrito() {
       }
   }
 
+  console.log(productsIdinCart)
+
   function deleteProd(idProd){
     if(userId!==null){
         setProductsIdinCart(productsIdinCart.filter(e=>e.productId!==idProd))
         getProductsInCart()
     }else{
         setProductsIdinCart(productsIdinCart.filter(e=>e.id!==idProd))
-        //PROBLEMAS CON EL PRECIO TOTAL
-        setTotal(
-            productsIdinCart.reduce(
-                (acc, el) => acc + el.price * el.quantity + 1,
-                0
-            )
-            );
-            setCantidad(
-                productsIdinCart.reduce((acc, el) => acc + el.quantity, 1)
-            );
-        localStorage.setItem("cartProducts", JSON.stringify(productsIdinCart));
+        getProductsInCart()
     }
   }
 
@@ -101,16 +96,7 @@ export default function Carrito() {
             : product
         )
         );
-        //PROBLEMAS CON EL PRECIO TOTAL
-        setTotal(
-        productsIdinCart.reduce(
-            (acc, el) => acc + el.price * el.quantity + 1,0)
-        );
-        setCantidad(
-            productsIdinCart.reduce((acc, el) => acc + el.quantity, 1)
-        );
-        localStorage.setItem("cartProducts", JSON.stringify(productsIdinCart));
-        
+       getProductsInCart()
     }
   }
 
@@ -136,16 +122,26 @@ export default function Carrito() {
               }
             : product
         ));
-        //PROBLEMAS CON EL PRECIO TOTAL
-        setTotal(productsIdinCart.reduce((acc, el) => acc + el.price * el.quantity - 1,0));
-        setCantidad(productsIdinCart.reduce((acc, el) => acc + el.quantity, -1));
-        localStorage.setItem("cartProducts", JSON.stringify(productsIdinCart));
+        getProductsInCart()
     }
   }
 
   useEffect(() => {
     getProductsInCart();
   }, [userId]);
+
+  function comprarHandler(){
+    const info={
+      productsIdinCart:productsIdinCart.map((p)=>p.productId),  /// Esto tiene un array con los distintos ID. Ejemplo: [1,8,19]
+      quantityProduct:productsIdinCart.map((p)=>p.quantity),   /// Esto tiene un array con las distintas cantidades de c/producto. [1,1,3]
+      priceProductTotal:productsIdinCart.map((p)=>p.priceT),   /// Esto tiene un aray con los diferentes precios totales de c/producto. [25,70,120]
+      totalQuantityProducts:cantidad, ///Esto tiene la cantidad total de todos los productos dentro del carrito
+      totalPriceAllProducts:total ///Esto tiene el precio TOTAL de todos los productos dentro del carrito (PRECIO FINAL) 
+    }
+    
+    dispatch(saveCompra(info))
+    historyCarrito.push("/compras")
+  }
 
   return(
     <>
@@ -158,7 +154,7 @@ export default function Carrito() {
                     <h1 className={styles.titulo}>Resumen Compra</h1>
                     <h2 className={styles.cantidad}>Productos: {cantidad}</h2>
                     <h2 className={styles.total}>Total a Pagar: ${total}</h2>
-                    {isAuthenticated?(<Link to={'/compras'}><button className={styles.comprar}>Comprar</button></Link>):(<h1>Debes ingresar para poder comprar</h1>)}
+                    {isAuthenticated?(<button className={styles.comprar} onClick={comprarHandler}>Comprar</button>):(<h1>Debes ingresar para poder comprar</h1>)}
                 </div>
             </div>
         ) : (

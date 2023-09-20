@@ -42,6 +42,9 @@ const updateProduct = async (name, imageSrc, price, stock, brand, category, subc
     }
     if(stock !== undefined) {
       updates.stock = stock;
+      if(stock===0){
+        updates.isActive=false
+      }
     }  
     if(description !== undefined || description !== "") {
       updates.description = description;

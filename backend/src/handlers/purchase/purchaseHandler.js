@@ -6,14 +6,16 @@ const stripe = new Stripe(stripeSecretKey)
 
 const handlePurchase = async (req, res) => {
   try {
-    const { userId, productIds, quantities, totalPrice, stripePaymentIntentId, amount, currency } = req.body;
+    const { userId, productIds, quantities, totalPrice, totalQuantityProducts,priceProductTotal, stripePaymentIntentId, amount, currency } = req.body;
 
     // Realizar la compra (suponiendo que purchaseController.createPurchase devuelve la compra creada)
     const purchase = await purchaseController.createPurchase(
       userId,
       productIds,
       quantities,
-      totalPrice
+      totalPrice,
+      totalQuantityProducts,
+      priceProductTotal
     );
 
     // Crear un pago en Stripe

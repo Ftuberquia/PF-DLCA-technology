@@ -21,13 +21,13 @@ export const cache = new LocalStorageCache();
 
 const NavBar = () => {
   const {loginWithPopup, logout, isAuthenticated, user} = useAuth0();
-  const dispatch = useDispatch()
   const handleLogin = () => {
     loginWithPopup();
   };
 
   const handleLogOut = () => {
     logout({ logoutParams: { returnTo: window.location.origin } });
+    cache.remove("userActive");
   };
 
   const [open, setOpen] = useState(false);
@@ -35,6 +35,16 @@ const NavBar = () => {
   const cartItemCount = useLocalStorage("cartProducts");
 
   const [welcomeEmailSent, setWelcomeEmailSent] = useState(false);
+  
+  const userDb = async(email) =>{
+    try {
+      const response = await axios.get(`/users/${email}`);
+      cache.set("userActive", response.data.isActive )
+      console.log("isactive owo", response.data.isActive)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -51,6 +61,7 @@ const NavBar = () => {
           admin: true
         };
         cache.set("userEmail", user.email )
+        cache.set("userId",user.sub)
       }else{
         userData = {
           id: userId,
@@ -63,11 +74,12 @@ const NavBar = () => {
           phone: user.phone,
       };
         cache.set("userEmail", user.email)
-      }
+        cache.set("userId",user.sub)
+      }      
       // Realiza la solicitud al servidor para guardar los datos del usuario
-      axios.post("http://localhost:3001/users/", userData).then((response) => {
+    axios.post("http://localhost:3001/users/", userData).then((response) => {
         if (response.status === 201) {
-          console.log("Usuario creado con éxito en el servidor");
+        console.log("Usuario creado con éxito en el servidor");
 
           // NO DESCOMENTAR LAS LINEAS ABAJO! ES LA FUNCIONALIDAD DEL CORREO, PARA NO GASTAR LA CUOTA
           // GRATIS DE CORREO QUE TENEMOS!!!!!!
@@ -93,11 +105,36 @@ const NavBar = () => {
           //    })
           //    .catch((error) => {
           //      console.error("Error al enviar el correo de bienvenida", error);
-          //    });
-        }
+         //    });
+      }
       });
-    }
+      cargaDeCartDB(userId)
+      userDb(user.email)
+    } 
   }, [isAuthenticated, user]);
+
+  //carga de datos del localStorage a la base de datos
+  async function cargaDeCartDB(userId){
+    const cartProducts = JSON.parse(localStorage.getItem("cartProducts"));
+
+    if (cartProducts && cartProducts.length > 0) {
+      try {
+        for (const product of cartProducts) {
+          const { id, quantity } = product;
+          const body = { quantity_prod: quantity };
+  
+          await axios.post(`carts/${userId}/${id}`, body);
+          console.log(`Producto con ID ${id} cargado exitosamente en la base de datos`);
+        }
+        localStorage.removeItem("cartProducts");
+        console.log("Productos eliminados del localStorage después de la carga exitosa a la base de datos");
+      } catch (error) {
+        console.error("Error al cargar los datos en la base de datos:", error);
+      }
+    }
+  }
+
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -151,8 +188,6 @@ const NavBar = () => {
         </Link>
         <Link to={"/carrito"} className={style.cart}>
           <img src={shoppingCartIcon} alt="Shopping Cart" />
-          <div className={style.totals}></div>
-          <TotalItems />
         </Link>
         <br></br>
       </div>
