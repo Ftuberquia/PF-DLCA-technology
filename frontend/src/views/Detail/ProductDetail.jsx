@@ -21,7 +21,6 @@ const ProductDetail = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [userId, setUserId] = useState(null);
   const [productReviews, setProductReviews] = useState([]);
-  const [inCart, setInCart] = useState(false)
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -64,7 +63,6 @@ const ProductDetail = () => {
 
   useEffect(() => {
     checkFavoriteStatus();
-    checkCart();
   }, [userId, product.id]);
 
   //verificar si el producto esta en favoritos
@@ -85,37 +83,6 @@ const ProductDetail = () => {
       setIsFavorite(false)
     }
   };
-  
-  //verifico si esta en el carrito
-  const checkCart = async () => {
-    if (userId === null) {
-      const storedCartProducts = localStorage.getItem("cartProducts");
-      const parsedCartProducts = storedCartProducts
-        ? JSON.parse(storedCartProducts)
-        : [];
-      // Buscar si ya existe un producto con el mismo 'id' en el carrito
-      const existingProductIndex = parsedCartProducts.findIndex(
-        (item) => item.id === product.id
-      );
-      if (existingProductIndex !== -1) {
-        // Si el producto ya existe en el carrito
-        setInCart(existingProductIndex)
-      }else setInCart(false)
-    }else if(userId!==null){
-      try {
-        const response = await axios.get(`carts/${userId}`)
-        const data= await response.data
-        let productInCart=data[1].some((prod)=>prod.productId===product.id)
-        if(productInCart){
-          setInCart(true)
-        }else{
-          setInCart(false)
-        }
-      } catch (error) {
-        console.error("Error en el front al revisar el carrito", error);
-      }
-    }
-  }
 
   const addToFavorites = async () => {
     if (userId===null) {
@@ -186,15 +153,11 @@ const ProductDetail = () => {
       }
 
       localStorage.setItem("cartProducts", JSON.stringify(parsedCartProducts));
-      setInCart(true); // Establece el estado como "en el carrito"
     } else {
       try {
         const body={quantity_prod:cartQuantity}
         const response = await axios.post(`carts/${userId}/${product.id}`,body)
         const data= await response.data
-        if(data.message==="producto agregado al carrito"){
-          setInCart(true)
-        }
       } catch (error) {
         console.error("Error en el front al agregar al carrito", error);
       }
@@ -318,21 +281,18 @@ const ProductDetail = () => {
         </div>
         <div className={style.infoCompra}>
           <h2>${product.price}</h2>
+         
+          <div className={style.cantidad}>
+            <button onClick={decrementCartQuantity}>-</button>
+            <p>{cartQuantity}</p>
+            <button onClick={incrementCartQuantity}>+</button>
+          </div>
 
-          {inCart?(<p>producto en carrito</p>):(
-            <div className={style.cantidad}>
-              <button onClick={decrementCartQuantity}>-</button>
-              <p>{cartQuantity}</p>
-              <button onClick={incrementCartQuantity}>+</button>
-            </div>
-          )}
+          <button className={style.agregarCarrito} onClick={handleAddToCart}>
+            Agregar al carrito
+          </button>
 
-          {inCart?(<Link to={'/carrito'}><button>Ir a carrito</button></Link>):(
-            <button className={style.agregarCarrito} onClick={handleAddToCart}>
-              Agregar al carrito
-            </button>)}
-
-          {isAuthenticated ? (
+          {/* {isAuthenticated ? (
             <Link to={`/compras`}>
               <button className={style.comprar} onClick={handleBuyNow}>Comprar Ahora</button>
             </Link>
@@ -340,8 +300,7 @@ const ProductDetail = () => {
             <button className={style.comprar} onClick={handleCartLogin}>
             Comprar ahora
             </button>
-          )}
-         
+          )} */}
             </div>
           </div>
         </div>
@@ -349,6 +308,5 @@ const ProductDetail = () => {
       </>
     );
   };
-
 
 export default ProductDetail;

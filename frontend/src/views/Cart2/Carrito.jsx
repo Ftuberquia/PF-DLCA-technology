@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import Swal from "sweetalert2"; // Importa SweetAlert
 import axios from "axios";
@@ -7,6 +7,8 @@ import axios from "axios";
 import ProdCarrito from "./Contenedor/ContenedorProductos";
 
 import styles from './Carrito.module.css'
+import { useDispatch } from "react-redux";
+import { saveCompra } from "../../redux/actions";
 
 export default function Carrito() {
 
@@ -16,6 +18,10 @@ export default function Carrito() {
   const [ userId, setUserId ] = useState(null);
   const [ total, setTotal ]=useState(0)
   const [ cantidad, setCantidad ]=useState(0)
+
+  const dispatch = useDispatch()
+
+  const historyCarrito = useHistory();
 
   useEffect(()=>{
     getLocalStorage()
@@ -54,6 +60,8 @@ export default function Carrito() {
         getLocalStorage()
       }
   }
+
+  console.log(productsIdinCart)
 
   function deleteProd(idProd){
     if(userId!==null){
@@ -122,6 +130,19 @@ export default function Carrito() {
     getProductsInCart();
   }, [userId]);
 
+  function comprarHandler(){
+    const info={
+      productsIdinCart:productsIdinCart.map((p)=>p.productId),  /// Esto tiene un array con los distintos ID. Ejemplo: [1,8,19]
+      quantityProduct:productsIdinCart.map((p)=>p.quantity),   /// Esto tiene un array con las distintas cantidades de c/producto. [1,1,3]
+      priceProductTotal:productsIdinCart.map((p)=>p.priceT),   /// Esto tiene un aray con los diferentes precios totales de c/producto. [25,70,120]
+      totalQuantityProducts:cantidad, ///Esto tiene la cantidad total de todos los productos dentro del carrito
+      totalPriceAllProducts:total ///Esto tiene el precio TOTAL de todos los productos dentro del carrito (PRECIO FINAL) 
+    }
+    
+    dispatch(saveCompra(info))
+    historyCarrito.push("/compras")
+  }
+
   return(
     <>
         {productsIdinCart?(
@@ -133,7 +154,7 @@ export default function Carrito() {
                     <h1 className={styles.titulo}>Resumen Compra</h1>
                     <h2 className={styles.cantidad}>Productos: {cantidad}</h2>
                     <h2 className={styles.total}>Total a Pagar: ${total}</h2>
-                    {isAuthenticated?(<Link to={'/compras'}><button className={styles.comprar}>Comprar</button></Link>):(<h1>Debes ingresar para poder comprar</h1>)}
+                    {isAuthenticated?(<button className={styles.comprar} onClick={comprarHandler}>Comprar</button>):(<h1>Debes ingresar para poder comprar</h1>)}
                 </div>
             </div>
         ) : (

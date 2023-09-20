@@ -24,8 +24,8 @@ export const SAVE_CART_ERROR = 'SAVE_CART_ERROR'
 export const GET_PURCHASED_PRODUCTS = 'GET_PURCHASED_PRODUCTS'
 export const SAVE_PRODUCT_IN_CART_SERVER = 'SAVE_PRODUCT_IN_CART_SERVER'
 export const SAVE_PRODUCT_IN_CART_ERROR = 'SAVE_PRODUCT_IN_CART_ERROR'
-export const SAVE_USER = "SAVE_USER"
-export const CLEAN_USER = "CLEAN_USER"
+export const SAVE_COMPRA = "SAVE_COMPRA"
+export const CLEAN_COMPRA = "CLEAN_COMPRA"
 
 export const getAllProducts = () => async dispatch => {
     try {
@@ -280,14 +280,14 @@ export const updateCartItems = (cartItems) => ({
     }
   };
 
-  export const saveUser = (payload) => {
+  export const saveCompra = (payload) => {
     return {
-        type: SAVE_USER,
+        type: SAVE_COMPRA,
         payload
     }
   }
-  export const cleanUser = () =>{
+  export const cleanCompra = () =>{
     return {
-        type: CLEAN_USER
+        type: CLEAN_COMPRA
     }
   }
