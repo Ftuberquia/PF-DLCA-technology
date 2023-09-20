@@ -64,7 +64,7 @@ function Datagrid () {
             // eslint-disable-next-line
               const response = await axios.put(`/users/${id}`, {isActive: true})
       }
-      window.location.reload()
+      window.location.reload() // revisar
   }catch (error) {
       console.log(error)
       }

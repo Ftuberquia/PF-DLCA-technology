@@ -24,6 +24,7 @@ import { SAVE_USER } from "../actions/index.js";
 import { CLEAN_USER } from "../actions/index.js";
 import { UPDATE_USER } from "../actions/index.js";
 
+
 const initialState = {
   products: [],
   order: [],
@@ -41,6 +42,7 @@ const initialState = {
   cartItems: JSON.parse(localStorage.getItem("cartProducts")) || [],
   purchasedProducts: [], // Nuevo estado para los productos comprados!!!!!!
   user: {},
+  compra: {}
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -174,15 +176,15 @@ const rootReducer = (state = initialState, action) => {
         isLoading: false,
         error: action.error,
       };
-    case SAVE_USER:
+    case SAVE_COMPRA:
       return {
         ...state,
-        user: action.payload,
+        compra: action.payload,
       }
-    case CLEAN_USER:
+    case CLEAN_COMPRA:
       return{
         ...state,
-        user: {}
+        compra: {}
       }
     case UPDATE_USER:
       return {

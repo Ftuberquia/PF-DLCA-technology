@@ -61,6 +61,7 @@ const NavBar = () => {
           admin: true
         };
         cache.set("userEmail", user.email )
+        cache.set("userId",user.sub)
       }else{
         userData = {
           id: userId,
@@ -73,6 +74,7 @@ const NavBar = () => {
           phone: user.phone,
       };
         cache.set("userEmail", user.email)
+        cache.set("userId",user.sub)
       }      
       // Realiza la solicitud al servidor para guardar los datos del usuario
     axios.post("http://localhost:3001/users/", userData).then((response) => {
@@ -186,8 +188,6 @@ const NavBar = () => {
         </Link>
         <Link to={"/carrito"} className={style.cart}>
           <img src={shoppingCartIcon} alt="Shopping Cart" />
-          <div className={style.totals}></div>
-          <TotalItems/>
         </Link>
         <br></br>
       </div>
