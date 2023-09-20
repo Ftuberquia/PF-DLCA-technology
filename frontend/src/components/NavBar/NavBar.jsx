@@ -40,7 +40,6 @@ const NavBar = () => {
     try {
       const response = await axios.get(`/users/${email}`);
       cache.set("userActive", response.data.isActive )
-      console.log("isactive owo", response.data.isActive)
     } catch (error) {
       console.log(error)
     }
