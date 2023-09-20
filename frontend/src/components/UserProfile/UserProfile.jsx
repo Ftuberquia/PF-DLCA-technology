@@ -43,13 +43,11 @@ const UserProfile = () => {
     async (id) => {
       try {
         const response = await axios.put(`/users/${id}`);
-        dispatch(putUser(response.data));
         setIsUserDataUpdated(false);
       } catch (error) {
         console.error("Error updating user:", error);
       }
-    },
-    [dispatch]
+    },[]
   );
 
   const email = user?.email;
