@@ -4,6 +4,7 @@
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+  color: black;
 }
 
 .productItem {
@@ -19,8 +20,35 @@
 .productName {
   font-size: 18px;
   font-weight: bold;
+  color: blue
 }
 
 .productPrice {
   font-size: 14px;
+  color: red;
 }
+
+.comprascontainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  background-color: rgb(233, 198, 108);
+  width: 60rem;
+  margin: 0 auto;
+  border: 1px solid #9cb8eb;
+  border-radius: 10px;
+  /* box-shadow: 0 0 10px rgba(121, 154, 192, 0.89); */
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 15px 15px 30px #bebebe,
+             -15px -15px 30px #ffffff;
+}
+
+/* .favoritesCont h1{
+  font-size: 2rem;
+  margin-left: 1rem;
+  color: red;
+  margin-bottom: -10rem;
+  cursor: default;
+} */

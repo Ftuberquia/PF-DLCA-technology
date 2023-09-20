@@ -22,7 +22,7 @@ import { SAVE_PRODUCT_IN_CART_ERROR } from "../actions/index.js";
 import { GET_PURCHASED_PRODUCTS } from "../actions/index.js";
 import { SAVE_USER } from "../actions/index.js";
 import { CLEAN_USER } from "../actions/index.js";
-
+import { UPDATE_USER } from "../actions/index.js";
 
 const initialState = {
   products: [],
@@ -184,6 +184,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         user: {}
       }
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };  
     default:
       return { ...state };
   }

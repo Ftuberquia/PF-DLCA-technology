@@ -1,56 +1,80 @@
 .carrito{
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     border-radius: 5px;
     padding: 20px;
-
-    .contCard{
-        width: 70%;
-        justify-content: center;
-        align-items: center;
+    background-color: azure;
+  }
+  
+  .contCard {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    color: black;
+  }
+  
+  .resumenCompra {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    color: black;
+  }
+  
+  .titulo {
+    font-size: 2rem;
+    margin: 0.5rem;
+    color: rgb(23, 23, 24);
+  }
+  
+  .cantidad {
+    font-size: 1.5rem;
+    margin: 0.5rem;
+    color: blue;
+  }
+  
+  .total {
+    font-size: 1.5rem;
+    margin: 0.5rem;
+    color: red;
+  }
+  
+  .comprar {
+    width: 10rem;
+    height: 2rem;
+    background-color: rgb(13, 181, 21);
+    color: rgb(23, 23, 24);
+    border: none;
+    border-radius: 0.7rem;
+    transition: 0.4s;
+  }
+  
+  .comprar:hover {
+    background-color: #26ec0ce5;
+    box-shadow: 0 2px 0 2px #303a308d;
+    color: #4b4747;
+    cursor: pointer;
+    transform: translateY(-2px);
+  }
+  
+  .comprar:active {
+    box-shadow: 0 0 0 -1px #1111128d;
+    transform: translateY(1px);
+  }
+  
+  @media screen and (min-width: 768px) {
+    .carrito {
+      flex-direction: row;
     }
-    .resumenCompra{
-        width: 30%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap:1rem;
-        
-        .titulo{
-            font-size: 2rem;
-            margin: .5rem;
-        }
-        .cantidad{
-            font-size: 1.5rem;
-            margin: .5rem;
-        }
-        .total{
-            font-size: 1.5rem;
-            margin: .5rem;
-        }
-        .comprar{
-            width: 10rem;
-            height: 2rem;
-            background-color: rgb(13, 181, 21);
-            color: white;
-            border: none;
-            border-radius: .7rem;
-            transition: 0.4s;
-        }
-        .comprar:hover {
-            background-color: #26ec0ce5;
-            box-shadow: 0 2px 0 2px #303a308d;
-            color: #fff;
-            cursor: pointer;
-          
-            transform: translateY(-2px);
-          }
-          
-          .comprar:active{
-            box-shadow: 0 0 0 -1px #1111128d;
-            transform: translateY(1px);
-          }
+  
+    .contCard {
+      width: 70%;
     }
-}
+  
+    .resumenCompra {
+      width: 30%;
+    }
+  }

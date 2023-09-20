@@ -4,10 +4,10 @@
 }
 
 .container {
-  background-color: var(--background-color);
+  background-color: rgb(233, 198, 108);
   border: 2px solid #c3c6ce;
   border-radius: 1.5rem;
-  width: 80%;
+  width: 50%;
   height: 400px;
   display: grid;
   text-align: center;

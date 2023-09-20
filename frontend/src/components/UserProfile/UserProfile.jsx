@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -6,64 +6,95 @@ import { putUser } from "../../redux/actions/index.js";
 import { Link } from "react-router-dom";
 import style from "./UserProfile.module.css";
 import Loading from "../Loading/Loading";
-
+import Swal from "sweetalert2";
 
 const UserProfile = () => {
   const { user } = useAuth0();
-  const userData = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user);
+
+  const [isUserDataUpdated, setIsUserDataUpdated] = useState(false);
+  const [prevUserData, setPrevUserData] = useState(userData);
 
   useEffect(() => {
-    // Comprueba si los datos del usuario están disponibles en localStorage
     const localStorageData = localStorage.getItem("dataUser");
 
     if (localStorageData) {
-      //Envíe la acción putUser con el correo electrónico y localStorageData analizado
-      dispatch(putUser(email, JSON.parse(localStorageData)));
+      dispatch(putUser(JSON.parse(localStorageData)));
+      setIsUserDataUpdated(true);
     }
-  }, [userData]);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (user && isUserDataUpdated) {
+      updateUserInDatabase(user.sub);
+    }
+  }, [user, isUserDataUpdated]);
+
+  useEffect(() => {
+    if (user && userData && userData !== prevUserData) {
+      updateUserInDatabase(user.sub);
+      setPrevUserData(userData);
+    }
+  }, [user, userData, prevUserData]);
+
+  //Función para actualizar los datos del usuario en la base de datos.
+  const updateUserInDatabase = useCallback(
+    async (id) => {
+      try {
+        const response = await axios.put(`/users/${id}`);
+        dispatch(putUser(response.data));
+        setIsUserDataUpdated(false);
+      } catch (error) {
+        console.error("Error updating user:", error);
+      }
+    },
+    [dispatch]
+  );
 
   const email = user?.email;
 
-  const handleModifyUserData = () => {
-    // Actualizar datos de usuario en estado
-    // Guarda los datos del usuario en localStorage
-    dispatch(putUser(email, data));
-    console.log(userData);
-  };
-
+  // Estado para entradas y datos de formulario
   const [data, setData] = useState({
-    picture: userData?.picture ? userData.picture : user.picture,
-    name: userData?.name ? userData.name : user.name,
-    address: userData?.address ? userData.address : "",
-    phone: userData?.phone ? userData.phone : "",
+    id: userData.data?.id,
+    first_name: userData.data?.first_name || user?.given_name || "",
+    last_name: userData.data?.last_name || user?.family_name || "",
+    address: userData.data?.direction || "",
+    phone: userData.data?.phone || "",
+    picture: userData?.avatar_img
+      ? userData?.avatar_img
+      : "https://i.ibb.co/9byM8Fk/avatar-user.png",
+    username: userData?.username ? userData.username : user?.username,
   });
 
+  // Estado para manejar errores de validación de formulario
   const [error, setError] = useState({
-    name: "¡Se requiere el nombre!",
+    first_name: "¡Se requiere el nombre!",
     address: "¡Se requiere la dirección!",
     phone: "¡Se requiere el teléfono!",
   });
 
+  // Función para validar entradas de formulario.
   const validate = (data) => {
-    const error = {};
-    if (data.name.length < 1) {
-      error.name = "¡Ingrese un nombre!";
+    const errors = {};
+    if (!data.first_name) {
+      errors.first_name = "¡Se requiere el nombre!";
     }
-    if (data.address.length < 1) {
-      error.address = "¡Inserte una dirección!";
+    if (!data.address) {
+      errors.address = "¡Se requiere la dirección!";
     }
-    if (isNaN(data.phone) === true || data.phone < 1) {
-      error.phone = "¡Se requiere un teléfono válido!";
+    if (isNaN(data.phone) || data.phone.length < 1) {
+      errors.phone = "¡Se requiere un teléfono válido!";
     }
-    if (!data.picture) {
-      error.picture = "¡Inserte imagen!";
-    }
-    return error;
+    return errors;
   };
 
-  const inputOnChange = (event) => {
-    setData({ ...data, [event.target.name]: event.target.value });
+  // Función para manejar cambios de entrada de formulario
+  const changeHandler = (event) => {
+    setData({
+      ...data,
+      [event.target.name]: event.target.value,
+    });
     setError(
       validate({
         ...data,
@@ -72,53 +103,89 @@ const UserProfile = () => {
     );
   };
 
-
-  const handleImageUpload = async (event) => {
-    const file = event.target.files[0];
+  // Función para manejar la carga de imágenes.
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
     const formData = new FormData();
     formData.append("image", file);
-    formData.append("key", "a3bb92510110e7900867b1fac5cb8924"); // ImgBB API key
+    formData.append("key", "1492e57d06d94a35b2f3124b4c2b79a2"); // Reemplace con su clave API ImgBB
+
     try {
       const response = await axios.post(
         "https://api.imgbb.com/1/upload",
         formData
       );
       const imageUrl = response.data.data.url;
-      console.log(imageUrl);
       setData({
         ...data,
-        picture: imageUrl,
+        avatar_img: imageUrl,
       });
       setError(
         validate({
           ...data,
-          picture: imageUrl,
+          avatar_img: imageUrl,
         })
       );
-      // setImageSrcError(""); // Borra el error imageSrc si lo hay
     } catch (error) {
-      // console.error("Error subiendo imagen:", error);
-      // setImageSrcError("No se pudo cargar la imagen. Inténtalo de nuevo.");
+      console.error("Error uploading image:", error);
     }
   };
 
-  const [showForm, setshowForm] = useState(false);
+  // Función para manejar la modificación de datos del usuario.
+  const handleModifyUserData = async () => {
+    const { username, avatar_img, address, phone } = data;
+    const updates = {};
 
-  const handleFormModify = () => {
-    if (showForm === false) setshowForm(true);
-    if (showForm === true) setshowForm(false);
+    if (username !== undefined || username === "") {
+      updates.username = username;
+    }
+    if (avatar_img !== undefined || avatar_img === "") {
+      updates.avatar_img = avatar_img;
+    }
+    if (address !== undefined || address === "") {
+      updates.address = address;
+    }
+    if (phone !== undefined || phone === "") {
+      updates.phone = phone;
+    }
+
+    try {
+      await axios.post("/api/users/update", updates);
+      dispatch(putUser(updates));
+
+      Swal.fire({
+        title: "¡Usuario actualizado correctamente!",
+        icon: "success",
+        confirmButtonText: "Ok",
+        confirmButtonColor: "#28a745",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload();
+        }
+      });
+    } catch (error) {
+      console.error("Error updating user:", error);
+
+      Swal.fire({
+        title: "¡No se pudo modificar al usuario!",
+        text: "Por favor llene las casillas vacias o revise sus errores",
+        icon: "warning",
+        confirmButtonText: "Ok",
+      });
+    }
   };
 
-  
-  const [isLoading, setIsLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
 
-  useEffect(() => {
-    // Establecer isLoading en falso después de 2 segundos
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
+  const isLoading = useSelector((state) => state.isLoading);
+
+  if (!user || !user.sub) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -127,36 +194,15 @@ const UserProfile = () => {
           <Loading />
         </div>
       ) : (
-        <div className={style.form__C}>
-          {showForm === true ? (
-            <div className={style.formImg}>
-               {data.picture && (
-              <img
-                src={data.picture}
-                alt="Producto"
-                className={style.imgModify}
-              />
-            )}
-              <label className={style.label}>Eliga una nueva imagen: </label>
-              <input
-                type="file"
-                onChange={(e) => handleImageUpload(e)}
-                name="picture"
-                accept="image/*"
-              />
-            </div>
-          ) : null}
-          {error.picture && <strong>{error.picture}</strong>}
-
-          {showForm === false ? (
-            <div className={style.img}>
-              <img
-                className={style.img}
-                src={userData?.picture ? userData?.picture : user.picture}
-                alt=""
-              />
-            </div>
-          ) : null}
+        <div className={style.formperfil}>
+          {/* Información del perfil de usuario */}
+          <div className={style.img}>
+            <img
+              className={style.img}
+              src={userData?.picture ? userData?.picture : user.picture}
+              alt=""
+            />
+          </div>
           <div>
             <h1>Mi Perfil</h1>
             <div>
@@ -171,42 +217,41 @@ const UserProfile = () => {
               )}
             </div>
 
-            {showForm === false ? (
-              <div>
-                <h2>Datos personales:</h2>
-                <p className={style.label}>
-                  Usuario: {userData?.name ? userData?.name : user.name}
-                </p>
-                <p className={style.label}>
-                  Dirección:{" "}
-                  {userData?.address
-                    ? userData.address
-                    : "Todavía no tiene una dirección registrada..."}
-                </p>
-                <p className={style.label}>
-                  Teléfono:{" "}
-                  {userData?.phone
-                    ? userData.phone
-                    : "Todavía no tiene número de teléfono registrado..."}
-                </p>
-              </div>
-            ) : null}
+            <div>
+              <h2>Datos personales:</h2>
+              <p className={style.label}>
+                Usuario: {userData?.name ? userData?.name : user.name}
+              </p>
+              <p className={style.label}>
+                Dirección:{" "}
+                {userData?.address
+                  ? userData.address
+                  : "Todavía no tiene una dirección registrada..."}
+              </p>
+              <p className={style.label}>
+                Teléfono:{" "}
+                {userData?.phone
+                  ? userData.phone
+                  : "Todavía no tiene número de teléfono registrado..."}
+              </p>
+            </div>
 
-            {showForm === true ? (
+            {/* Formulario para modificar datos de usuario */}
+            {showForm && (
               <div>
                 <h2>Modifica tus datos:</h2>
-                <form className={style.form}>
+                <form className={style.formperfil}>
                   <label className={style.label}>Nuevo Nombre:</label>
                   <input
                     className={style.input}
                     type="text"
-                    value={data.name}
-                    name="name"
-                    onChange={inputOnChange}
+                    value={data.first_name}
+                    name="first_name"
+                    onChange={changeHandler}
                     placeholder="Escriba un nuevo nombre..."
                   />
-                  {error.name && (
-                    <strong className={style.error}>{error.name}</strong>
+                  {error.first_name && (
+                    <strong className={style.error}>{error.first_name}</strong>
                   )}
 
                   <label className={style.label}>Nueva Dirección:</label>
@@ -215,7 +260,7 @@ const UserProfile = () => {
                     type="text"
                     value={data.address}
                     name="address"
-                    onChange={inputOnChange}
+                    onChange={changeHandler}
                     placeholder="Escriba una nueva dirección..."
                   />
                   {error.address && (
@@ -230,29 +275,36 @@ const UserProfile = () => {
                     type="text"
                     value={data.phone}
                     name="phone"
-                    onChange={inputOnChange}
+                    onChange={changeHandler}
                     placeholder="Escriba un nuevo número de teléfono..."
                   />
                   {error.phone && (
                     <strong className={style.error}>{error.phone}</strong>
                   )}
 
-                  {error.name || error.address || error.phone ? null : (
+                  {/* Botón para modificar datos del usuario */}
+                  {error.first_name || error.address || error.phone ? null : (
                     <button
                       className={style.btnForm}
                       onClick={handleModifyUserData}
                     >
-                      Modificar mis Datos
+                      <span>Modificar mis Datos</span>
                     </button>
                   )}
                 </form>
               </div>
-            ) : null}
+            )}
 
-            <button className={style.btnEdit} onClick={handleFormModify}>
+            {/* Botón para alternar la visibilidad del formulario */}
+            <button
+              className={style.btnEdit}
+              onClick={() => setShowForm(!showForm)}
+            >
               {showForm === false ? "Editar Datos" : "Cancelar"}
             </button>
           </div>
+
+          {/* Botones para la navegación */}
           <div>
             <Link to="/misCompras">
               <button className={style.btnForm}>Mis Compras</button>
