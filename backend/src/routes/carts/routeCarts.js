@@ -15,7 +15,7 @@ carts.get('/idcarrito/:userId',getIdCartHandler)  //Funciona, devuelve el idCart
 carts.post("/:userId/:productId", saveProductsInCart)  //Funciona, se usa para agregar solo una vez el producto al carrito, requiere userId y productId por params y quantity por body
 carts.delete("/:productId/:userId", deleteProdCartHandler)  //Funciona, se usa para eliminar el producto del carrito, sin importar la cantidad que tenga.
 carts.put("/:cartId", updateProductsInCart)  //Funciona, cambia el estado de pagado(creo no es necesaria)
-carts.put('/:userId',clearCartHandler)  //Funciona, limpia el carrito, reiniciando los valores a 0
+carts.put('/clear/:userId',clearCartHandler)  //Funciona, limpia el carrito, reiniciando los valores a 0
 carts.put("/:userId/:productId", updateQuantityProductHandler)  //Para los + y - dentro del carrito, actualiza cantidad y precios
 
 carts.get("/totalValor/:cartId", getTotalPriceCartHandler) //Funciona, devuelve solo el valor total del carrito
