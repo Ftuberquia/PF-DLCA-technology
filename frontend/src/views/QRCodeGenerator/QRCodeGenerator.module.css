@@ -1,86 +1,4 @@
-/* Estilos para el contenedor principal */
-.container {
-  display: flex;
-  justify-content: flex-start; /* Alinear contenido a la izquierda */
-  align-items: center; /* Alinear verticalmente al centro */
-}
-
-/* Estilos para el QR Code */
-.qrcode {
-  width: 150px; /* Ancho más pequeño */
-  height: 150px; /* Alto más pequeño */
-  margin-right: 20px; /* Espacio a la derecha del QR Code */
-}
-
-/* Estilos para el input */
-.input {
-  width: 10%; /* Utilizar todo el espacio restante en el contenedor */
-  padding: 10px; /* Añadir un poco de espacio interior */
-  font-size: 16px; /* Tamaño de fuente */
-}
-
-/* Estilos para la imagen */
-.img {
-  width: 10px; /* Ancho de la imagen */
-  height: 150px; /* Alto de la imagen */
-  margin-top: 20px; /* Espacio superior de la imagen */
-}
-
-/* Estilos para el enlace de descarga */
-a {
-  text-decoration: none; /* Quitar subrayado del enlace */
-  background-color: #007bff; /* Color de fondo del enlace */
-  color: #fff; /* Color de texto del enlace */
-  padding: 10px 20px; /* Espaciado interior del enlace */
-  border-radius: 5px; /* Bordes redondeados del enlace */
-  display: inline-block;
-  margin-top: 20px; /* Espacio superior del enlace */
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* .container{
+.container{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -89,7 +7,7 @@ a {
   }
   
 
-  .input{
+.input{
     height: 38px;
     border-radius: 8px;
     max-width: 30px;
@@ -100,7 +18,7 @@ a {
     border: 1px solid #b6b6b6;
   }
   
-  .img {
+.img {
     height: 38px;
     border-radius: 8px;
     max-width: 30px;
@@ -109,4 +27,4 @@ a {
     padding: 8px;
     outline: none;
     border: 1px solid #b6b6b6;
-  } */
+  } 
