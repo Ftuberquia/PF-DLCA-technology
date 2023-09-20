@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -7,14 +6,19 @@ import Loading from "../../../../components/Loading/Loading";
 
 import style from './CardProducto.module.css'
 const CardProducto = (props) => {
-    const {productos, userId, deleteProd, increaseQuantity, decreaseQuantity, getLocalStorage} = props
+    const {productos, userId, deleteProd, increaseQuantity, decreaseQuantity, getLocalStorage, sinStock} = props
 
     const [productosLocal, setProductosLocal] = useState([]);
 
     useEffect(() => {
         if(productos){
             setProductosLocal(productos)
-        }      
+            productos.map((producto)=>{
+              if(producto?.isActive===false||producto?.stock===0){
+                sinStock(false)
+              }else sinStock(true)
+            })
+        }
     },[productos])
 
     if(productosLocal.length===0){
@@ -60,7 +64,9 @@ const CardProducto = (props) => {
             const updatedQuantity = quantity + 1;
             const updatedProductos = productosLocal.map((producto) => {
                 if (producto.id === productId) {
-                  
+                  if(producto?.isActive===false||producto?.stock===0){
+                    sinStock(false)
+                  }else sinStock(true)
                   return {
                     ...producto,
                     quantity: updatedQuantity,
@@ -80,6 +86,9 @@ const CardProducto = (props) => {
             await axios.put(`carts/${userId}/${productId}`, body);
             const updatedProductos = productosLocal.map((producto) => {
                 if (producto.id === productId) {
+                  if(producto?.isActive===false||producto?.stock===0){
+                    sinStock(false)
+                  }else sinStock(true)
                   return {
                     ...producto,
                     quantity: quantity - 1,
@@ -115,13 +124,19 @@ const CardProducto = (props) => {
         );
       
         localStorage.setItem("cartProducts", JSON.stringify(updatedCartProducts));
-      }
+    }
 
     async function eliminarHandler(productId){
         if(userId){try {
             await axios.delete(`carts/${productId}/${userId}`)
             setProductosLocal(productosLocal.filter(e=>e.id!==productId))
             deleteProd(productId)
+            // productos.map((producto)=>{
+            //   if(producto?.isActive===false||producto?.stock===0){
+            //     sinStock(false)
+            //   }else{
+            //     sinStock(true)
+            //   }})
         } catch (error) {
             console.log(error);
         }}else{
@@ -138,12 +153,20 @@ const CardProducto = (props) => {
                     <img className={style.imagen} src={producto.imagen} alt={producto.name}/>
                     <h3 className={style.nombre}>{producto.nombre}</h3>
                     <p className={style.precio}>${producto.priceT}</p>
+                    {producto?.isActive===false||producto?.stock===0?(
+                      <span>Fuera de stock</span>
+                    ):(
                     <div className={style.cantidad}>
                         {producto.quantity===1?(<button disabled>-</button>):(<button onClick={()=>quitarHandler(producto.id,producto.quantity)}>-</button>)}
                         <p>{producto.quantity}</p>
-                        {producto.quantity===producto.stock?(<p>No mas stock</p>):(<button onClick={()=>agregarHandler(producto.id,producto.quantity)}>+</button>)}
-                    </div>
-                    <button onClick={()=>eliminarHandler(producto.id)}>🗑️</button>
+                        {producto.quantity===producto.stock?(<button disabled>+</button>):(<button onClick={()=>agregarHandler(producto.id,producto.quantity)}>+</button>)}
+                    </div>  
+                    )
+                  }
+                    <button onClick={()=>{
+                      eliminarHandler(producto.id)
+                    
+                      }}>🗑️</button>
                 </div>
             ))}
         </div>

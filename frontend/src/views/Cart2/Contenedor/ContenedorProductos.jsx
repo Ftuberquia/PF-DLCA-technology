@@ -6,7 +6,7 @@ import CardProducto from "./ProductoCard/CardProducto";
 import style from "./ContenedorProductos.module.css";
 
 export default function ProdCarrito(props){
-    const {userId, productsCart, deleteProd, increaseQuantity, decreaseQuantity, getLocalStorage}=props
+    const {userId, productsCart, deleteProd, increaseQuantity, decreaseQuantity, getLocalStorage, sinStock}=props
 
     const [cart, setCart]=useState([])
 
@@ -48,6 +48,7 @@ export default function ProdCarrito(props){
                     nombre: producto.name,
                     precio: producto.precio,
                     stock: producto.stock,
+                    isActive: producto.isActive,
                     priceT: productsCart.find((item) => item.productId === producto.id)?.priceT||0,
                     quantity: productsCart.find((item) => item.productId === producto.id)?.quantity||0,
                 }))}
@@ -55,6 +56,7 @@ export default function ProdCarrito(props){
                 deleteProd={deleteProd}
                 increaseQuantity={increaseQuantity} 
                 decreaseQuantity={decreaseQuantity}
+                sinStock={sinStock}
             />
         </div>
             ):(
@@ -67,6 +69,7 @@ export default function ProdCarrito(props){
                         nombre: producto.name,
                         precio: producto.precio,
                         stock: producto.stock,
+                        isActive: producto.isActive,
                         priceT: producto.priceT,
                         quantity: producto.quantity,
                     }))}
@@ -75,6 +78,7 @@ export default function ProdCarrito(props){
                     increaseQuantity={increaseQuantity} 
                     decreaseQuantity={decreaseQuantity}
                     getLocalStorage={getLocalStorage}
+                    sinStock={sinStock}
                 />
             </div>
             )}
