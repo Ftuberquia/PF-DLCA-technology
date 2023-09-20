@@ -35,15 +35,7 @@ const NavBar = () => {
   const cartItemCount = useLocalStorage("cartProducts");
 
   const [welcomeEmailSent, setWelcomeEmailSent] = useState(false);
-  
-  const userDb = async(email) =>{
-    try {
-      const response = await axios.get(`/users/${email}`);
-      cache.set("userActive", response.data.isActive )
-    } catch (error) {
-      console.log(error)
-    }
-  }
+
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -108,7 +100,6 @@ const NavBar = () => {
       }
       });
       cargaDeCartDB(userId)
-      userDb(user.email)
     } 
   }, [isAuthenticated, user]);
 
