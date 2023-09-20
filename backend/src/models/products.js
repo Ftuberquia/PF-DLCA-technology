@@ -19,9 +19,7 @@ const Products = (sequelize) => {
         imageAlt: {
             type: DataTypes.STRING,
             allowNull: true,
-            defaultValue: function(){
-                return this.name
-            }
+            defaultValue: "algo"
         },
         price: {
             type: DataTypes.FLOAT,
