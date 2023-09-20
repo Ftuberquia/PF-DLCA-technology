@@ -85,7 +85,7 @@ const MisComprasView = () => {
       ) : (
         <div>
           {isAuthenticated ? (
-            <div>
+            <div className={styles.comprascontainer}>
               <h1 className={styles.productHeading}>Mis Compras</h1>
               {purchasedProducts.length === 0 ? (
                 <p>No has comprado ningún producto aún.</p>
