@@ -175,7 +175,7 @@ const ProductDetail = () => {
         confirmButtonText: "Ok",
         confirmButtonColor: "#28a745",
       });
-      history.push("/carrito"); // Redirige a cart para continuar la compra
+      // history.push("/carrito"); // Redirige a cart para continuar la compra
     } else {
       Swal.fire({
         // En caso contrario, muestra un mensaje de advertencia.
