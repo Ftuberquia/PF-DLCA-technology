@@ -90,9 +90,7 @@ const App = () => {
           <Route path="/about" component={About} />
           <Route path="/login" component={Profile} />
           {/* <Profile /> */}
-          {/* <Route exact path="/">
-          <LoginPopup />
-          </Route> */}
+          
         </Switch>
         <Route path="/" component={ChatBot} />
         <Footer />

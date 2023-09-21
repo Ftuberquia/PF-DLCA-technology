@@ -17,8 +17,8 @@ function  QRCodeGenerator() {
 
 function handleGenerate(link_url){
   QRCodeLink.toDataURL(link_url,{
-    width: 600,
-    margin: 3,
+    width: 1,
+    margin: 1,
   }, function(err, url){
     setQrcodeLink(url);
   })
