@@ -102,15 +102,7 @@ function DataProducts () {
           {elementosPaginaActual.map((dato) => (
             <tr key={dato.id}>
               <td>
-                {editingProductId===dato.id ? (
-                <input      //ver como cambiar en el form
-                      type="text"
-                      value={editedProduct.imageSrc}
-                      onChange={(e) =>setEditedProduct({
-                        ...editedProduct,
-                        imageSrc: e.target.value,
-                      })}/>)
-                    : (<img className={styles.avatarimg} src={dato.imageSrc} alt={dato.name}/>)}
+                <img className={styles.avatarimg} src={dato.imageSrc} alt={dato.name}/>
               </td>
               <td>
                   {editingProductId===dato.id ? (
