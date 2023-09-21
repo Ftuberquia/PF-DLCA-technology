@@ -59,7 +59,7 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
     const totalQuantityProducts=infoCarrito.totalQuantityProducts
 
       try {
-        const { data } = await axios.post("http://localhost:3001/purchase", {
+        const { data } = await axios.post("/purchase", {
           userId,
           productIds,
           quantities,
@@ -68,7 +68,7 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
           priceProductTotal,
           amount: totalPrice,
           currency: "USD",
-          return_url: "http://localhost:3000/confirmation",
+          return_url: "/confirmation",
           payment_method: "pm_card_visa",
         })
         

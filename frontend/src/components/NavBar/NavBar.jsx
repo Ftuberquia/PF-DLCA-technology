@@ -68,7 +68,7 @@ const NavBar = () => {
         cache.set("userId",user.sub)
       }      
       // Realiza la solicitud al servidor para guardar los datos del usuario
-    axios.post("http://localhost:3001/users/", userData).then((response) => {
+    axios.post("/users/", userData).then((response) => {
         if (response.status === 200) {
         console.log("El usuario ingreso con exito");
           const isActive=response.data.user.isActive
@@ -80,28 +80,28 @@ const NavBar = () => {
           // NO DESCOMENTAR LAS LINEAS ABAJO! ES LA FUNCIONALIDAD DEL CORREO, PARA NO GASTAR LA CUOTA
           // GRATIS DE CORREO QUE TENEMOS!!!!!!
 
-          //   // Datos de configuración de EmailJS
-          //   const serviceId = "service_u05znjz"; // Reemplaza con tu ID de servicio
-          //   const templateId = "template_ech9g6n"; // Reemplaza con tu ID de plantilla
-          //   const userId = "dl6sI5xgzMzAmHsFV"; // Reemplaza con tu ID de usuario
+            // Datos de configuración de EmailJS
+            const serviceId = "service_u05znjz"; // Reemplaza con tu ID de servicio
+            const templateId = "template_ech9g6n"; // Reemplaza con tu ID de plantilla
+            const userId = "dl6sI5xgzMzAmHsFV"; // Reemplaza con tu ID de usuario
 
-          //   // Datos para rellenar la plantilla de correo
-          //   const emailParams = {
-          //     from_email: "dlcatech01@gmail.com",
-          //     to_name: user.given_name,
-          //     to_email: user.email,
-          //     // Agrega otros campos de datos si es necesario
-          //   };
+            // Datos para rellenar la plantilla de correo
+            const emailParams = {
+              from_email: "dlcatech01@gmail.com",
+              to_name: user.given_name,
+              to_email: user.email,
+              // Agrega otros campos de datos si es necesario
+            };
 
-          //  // Envía el correo utilizando EmailJS
-          //  emailjs
-          //    .send(serviceId, templateId, emailParams, userId)
-          //    .then((response) => {
-          //      console.log("Correo de bienvenida enviado con éxito", response);
-          //    })
-          //    .catch((error) => {
-          //      console.error("Error al enviar el correo de bienvenida", error);
-         //    });
+           // Envía el correo utilizando EmailJS
+           emailjs
+             .send(serviceId, templateId, emailParams, userId)
+             .then((response) => {
+               console.log("Correo de bienvenida enviado con éxito", response);
+             })
+             .catch((error) => {
+               console.error("Error al enviar el correo de bienvenida", error);
+            });
       }
       });
       cargaDeCartDB(userId)

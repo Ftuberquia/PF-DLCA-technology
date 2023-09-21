@@ -43,7 +43,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProductReviews = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/reviews/${id}`);
+        const response = await axios.get(`/reviews/${id}`);
         setProductReviews(response.data);
       } catch (error) {
         console.error('Error al obtener las reseñas del producto', error);

@@ -16,7 +16,7 @@ const MisComprasView = () => {
 
     const userId = user?.sub;
     try {
-      const response = await axios.get(`http://localhost:3001/purchase/${userId}`);
+      const response = await axios.get(`/purchase/${userId}`);
       setPurchasedProducts(response.data);
     } catch (error) {
       console.error('Error al obtener los productos comprados', error);

@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import emailjs from '@emailjs/browser';
 import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
 
 
 const CancelPage = () => {
@@ -20,37 +21,54 @@ const CancelPage = () => {
   }, []);
 
   const location = useLocation();
-  const canceledProducts = useSelector((state) => state.cart)
+  const canceledProducts =  useSelector((state) => state.compra)
+  const [nombres,setNombres]=useState([])
 
   const { user } = useAuth0();
+
+  const ids=canceledProducts.productsIdinCart
   
-  // const sendEmail = () => {
+  useEffect(()=>{
+    obtenerProd(ids);
+  },[])
 
-  //   const serviceId = "service_u05znjz"; // Reemplaza con tu ID de servicio
-  //   const templateId = "template_c9zye1k"; // Reemplaza con tu ID de plantilla
-  //   const userId = "dl6sI5xgzMzAmHsFV"; // Reemplaza con tu ID de usuario
+  async function obtenerProd(ids){
+    try {
+      for(let i=0;i<ids.length;i++){
+        let id=ids[i]
+        let response = await axios.get(`/products/${id}`)
+        setNombres((prevNombres) => [response.data.name, ...prevNombres])
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+  const sendEmail = () => {
 
-  //   const emailParams = {
-  //     from_email: "adlctech01@gmail.com",
-  //     to_name: user.given_name,
-  //     to_email: user.email,
-  //     message: `Compra cancelada. Productos que no se han adquirido:\n${canceledProducts.map((product) => product.name).join('\n')}`
-     
-  //   };
+    const serviceId = "service_u05znjz"; // Reemplaza con tu ID de servicio
+    const templateId = "template_c9zye1k"; // Reemplaza con tu ID de plantilla
+    const userId = "dl6sI5xgzMzAmHsFV"; // Reemplaza con tu ID de usuario
 
+    const emailParams = {
+      from_email: "adlctech01@gmail.com",
+      to_name: user.given_name,
+      to_email: user.email,
+      message: `Compra cancelada. Productos que no se han adquirido:\n${nombres.join('\n')}`
+    };
 
-  //   emailjs.send(serviceId, templateId, emailParams, userId)
-  //     .then((response) => {
-  //       console.log('Email enviado con éxito:', response);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error al enviar el email:', error);
-  //     });
-  // };
+    emailjs.send(serviceId, templateId, emailParams, userId)
+      .then((response) => {
+        console.log('Email enviado con éxito:', response);
+      })
+      .catch((error) => {
+        console.error('Error al enviar el email:', error);
+      });
+  };
 
-  // useEffect(() => {
-  //   sendEmail();
-  // }, []);
+  useEffect(() => {
+    sendEmail();
+  }, []);
 
 
   return (

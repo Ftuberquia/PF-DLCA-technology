@@ -30,7 +30,7 @@ const AgregarResena = (props) => {
         userEmail: isAuthenticated ? user.email : null,
       };
 
-      await axios.post(`http://localhost:3001/reviews/${productId}`, reviewData);
+      await axios.post(`/reviews/${productId}`, reviewData);
 
       // Mostrar confirmación de reseña creada
       setReviewCreated(true);
