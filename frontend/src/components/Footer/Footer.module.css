@@ -1,5 +1,5 @@
 footer {
-  background-color: #303030;
+  background-color: var(--background-color);
   text-align: center;
   padding: 15px 0;
   margin-top: 15px; 
@@ -17,9 +17,27 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
-  margin-top: 12px;
+  gap: 50px;
+  margin-top: 3px;
+  font-size: 5rem;
+  max-width: 18rem;
+  max-height: 20rem;
+  width: 50px;
+  height: 50px;
 }
+/* .topFooter .qr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  margin-left: 65px;
+  margin-top: 22px;
+  max-width: 12px;
+  max-height: 30px;
+  width: 20px;
+  height: 20px;
+} */
+
 footer .topFooter > div {
   color: white;
 }
@@ -48,7 +66,7 @@ footer .topFooter > div .contact li {
   gap: 10px;
 }
 footer .topFooter > div .contact li .address {
-  color: var(--main-default);
+  color: var(--background-color);
 }
 footer .bottomFooter {
   display: flex;
@@ -68,12 +86,12 @@ footer .bottomFooter .rightPart {
   display: flex;
   gap: 16px;
   padding: 14px 0;
-  font-size: 12px;
+  font-size: 14px;
 }
 @media screen and (min-width: 992px) {
   footer {
     text-align: left;
-    background-color: #262626;
+    background-color: var(--background-color);
   }
   .topFooter {
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -81,7 +99,7 @@ footer .bottomFooter .rightPart {
   }
   .topFooter .socialIcons {
     justify-content: left;
-    /* align-items: center; */
+    align-items: center;
   }
   footer .bottomFooter {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -94,5 +112,21 @@ footer .bottomFooter .rightPart {
     order: unset;
     width: unset;
     border-top: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .topFooter .socialIcons {
+    font-size: 2rem;
+    max-width: 8rem;
+    max-height: 8rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .topFooter .socialIcons {
+    font-size: 1.5rem;
+    max-width: 6rem;
+    max-height: 6rem;
   }
 }

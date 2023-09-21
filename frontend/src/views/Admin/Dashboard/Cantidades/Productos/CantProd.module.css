@@ -1,0 +1,12 @@
+.products{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+
+    .titulo{
+        font-size: 1.5rem;
+        font-weight: bold;
+        cursor:default;
+    }
+}

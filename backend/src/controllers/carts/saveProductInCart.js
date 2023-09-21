@@ -1,54 +1,73 @@
 const { CartProduct, Cart, Products } = require("../../db");
 
-const postProduct = async (
-  cartId,
-  productId,
-  quantity_prod
-) => {
+//Agrega un producto a la tabla intermedia
+const postProduct = async ( userId, productId, quantity_prod) => {
+
+  const pId=parseInt(productId);
+
   if (!quantity_prod) {
     throw Error("El campo es obligatorio");
   }
 
   try {
-  // Buscar el registro en la tabla CartProduct con los valores de cartId y productId
-  const cartProduct = await CartProduct.findOne({
-    where: { CartId: cartId, ProductId: productId },
-  });
+    const cart = await Cart.findOne({where:{userId:userId}});
+    const product=await Products.findByPk(pId);
 
-    if (!cartProduct) {
-      throw Error("El usuario no existe");
+    if (!cart) {
+      throw Error("El carrito no existe");
+    }
+    
+    if(!product){
+      throw Error("El producto no existe");
     }
 
-    // Creamos la revisión asociándola al usuario
-    const newReview = await UserProductReviews.create({
-      userId: user.id,
-      productId,
-      comment,
-      rating,
-    });
+    const priceProduct=product.price;
+    const totalPriceProduct=quantity_prod*priceProduct;
 
-    // Obtenemos todos los reviews asociados al producto
-    const allReviews = await UserProductReviews.findAll({
+    //Verificamos si el producto esta en el carrito ya
+    const existingProduct = await CartProduct.findOne({
       where: {
-        productId,
+        cartId: cart.id,
+        productId: pId,
       },
     });
 
-    // Calculamos el nuevo rating promedio
-    const ratingsSum = allReviews.reduce(
-      (sum, review) => sum + review.rating,
-      0
-    );
-    const newRating = ratingsSum / allReviews.length;
+    if (existingProduct) {
+      // Si el producto ya existe en el carrito, actualiza la cantidad
+      existingProduct.quantity_prod += quantity_prod;
+      existingProduct.total_price_product += totalPriceProduct;
+      await existingProduct.save();
+      console.log("Cantidad del producto actualizada exitosamente en la base de datos");
+    } else {
+      // Si no existe, crea una nueva entrada en la tabla
+      await CartProduct.create({
+        cartId: cart.id,
+        productId: pId,
+        quantity_prod,
+        total_price_product: totalPriceProduct,
+      });
+      console.log("Producto agregado exitosamente en el carrito");
+    }
 
-    // Actualizamos el rating del producto
-    await product.update({ rating: newRating });
+    const allProducts = await CartProduct.findAll({
+      where: {
+        cartId: cart.id,
+      },
+    });
 
-    return newReview;
+    //Calculamos la suma de todos los productos asociados al carrito
+    const productsSuma=allProducts.reduce((sum,prod)=>sum+prod.quantity_prod,0)
+
+    //Calculamos la suma total de todos los productos asociados al carrito
+    const totalPrice=allProducts.reduce((sum,prod)=>sum+prod.total_price_product,0)
+
+    //Actualizamos la cantidad de productos totales del carrito
+    await cart.update({quantity: productsSuma, total_precio: totalPrice})
+
   } catch (error) {
-    console.error("Error al insertar en la base de datos:", error);
-    throw error; // Manejar errores adecuadamente en tu aplicación
+    console.error("Error al agregar producto en el carrito:", error);
+    throw error
   }
 };
 
-// module.exports = postReviews;
+module.exports = postProduct;

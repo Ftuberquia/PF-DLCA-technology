@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./cart.css";
 
 const CartItemCounter = ({ product, updateQuantity }) => {
   // Estado local para almacenar la cantidad
@@ -11,9 +12,13 @@ const CartItemCounter = ({ product, updateQuantity }) => {
     const updatedCart = storedCartProducts.map((item) =>
       item.id === product.id ? { ...item, quantity } : item
     );
-    localStorage.setItem("cartProducts", JSON.stringify(updatedCart));
-    // Llama a la función de actualización en el componente padre (CartElements)
-    updateQuantity(product.id, quantity);
+
+    if (quantity !== product.quantity) {
+      localStorage.setItem("cartProducts", JSON.stringify(updatedCart));
+      // Llama a la función de actualización en el componente padre (CartElements)
+      updateQuantity(product.id, quantity);
+    }
+
   }, [quantity, product, updateQuantity]);
 
   const decrease = () => {
@@ -28,13 +33,13 @@ const CartItemCounter = ({ product, updateQuantity }) => {
 
   return (
     <>
-      <p className="counter-button" onClick={decrease}>
+      <button className="quantity" onClick={decrease}>
         -
-      </p>
+      </button>
       <p>{quantity}</p>
-      <p className="counter-button" onClick={increase}>
+      <button className="quantity" onClick={increase}>
         +
-      </p>
+      </button>
     </>
   );
 };

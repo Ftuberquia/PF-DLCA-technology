@@ -2,27 +2,35 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link, useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react"; // Hay que asegurarse de importar useAuth0
+import axios from "axios";
 
-import {getProductDetail,cleanDetail,addToCart} from "../../redux/actions/index";
-import {addFavorite,deleteFavorite,fetchData} from "../../views/Favorites/funcionesFav";
+import { getProductDetail, cleanDetail, addToCart } from "../../redux/actions/index";
+import { addFavorite, deleteFavorite, fetchData } from "../../views/Favorites/funcionesFav";
 import { cache } from "../../components/NavBar/NavBar";
 
 import Swal from "sweetalert2";
 import style from "./ProductDetail.module.css";
+import Loading from "../../components/Loading/Loading";
+
 
 const ProductDetail = () => {
   const { id } = useParams();
 
   const product = useSelector((state) => state.productDetail);
+
   const [isFavorite, setIsFavorite] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [productReviews, setProductReviews] = useState([]);
 
   const dispatch = useDispatch();
   const history = useHistory();
   const [cartQuantity, setCartQuantity] = useState(1); // Estado para la cantidad en el carrito
 
+ // STATE
+ const [isLoading, setIsLoading] = useState(true);
+
   // Estado de autenticación
-  const { isAuthenticated, loginWithRedirect, getIdTokenClaims } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, user } = useAuth0();
 
   useEffect(() => {
     dispatch(getProductDetail(id));
@@ -31,38 +39,41 @@ const ProductDetail = () => {
     };
   }, [dispatch, id]);
 
-  const getUserId = async ()=>{
-    try {
-      const tokenClaims = await getIdTokenClaims();
-      const userIdFromCache = cache.get("userId");
-      if (userIdFromCache) {        
-        setUserId(userIdFromCache);
-        return userIdFromCache;
-      } else if (tokenClaims && tokenClaims.sub) {
-        const userId = tokenClaims.sub;
-        cache.set("userId", userId);
-        setUserId(userId);
-        return userId;
-      }
-    }catch (error) {
-      console.error("Error al obtener los claims del token de identificación:", error);
-    }
-  }
-
-  //Para obtener el userId desde el localStorage
+  //Reviews
   useEffect(() => {
-    getUserId()
-  }, []);
+    const fetchProductReviews = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/reviews/${id}`);
+        setProductReviews(response.data);
+      } catch (error) {
+        console.error('Error al obtener las reseñas del producto', error);
+      }
+    };
+  
+    fetchProductReviews();
+  }, [id]);
+
+  //UsuarioId
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      const userIdLogin = user.sub;
+      setUserId(userIdLogin);
+    }
+  }, [isAuthenticated, user]);
+
+  useEffect(() => {
+    checkFavoriteStatus();
+  }, [userId, product.id]);
 
   //verificar si el producto esta en favoritos
   const checkFavoriteStatus = async () => {
-    if(userId){
+    if(userId!==null){
       try {
         // Llamar a la función fetchData para obtener los productos favoritos del usuario
         const favoriteProducts = await fetchData(userId);
         if(!favoriteProducts.message){
           // Verificar si el producto actual está en la lista de productos favoritos
-          const isProductFavorite = favoriteProducts.some((p) => p.id === id);
+          const isProductFavorite = favoriteProducts.some((p) => p.id === product.id);
           setIsFavorite(isProductFavorite);
         };
       } catch (error) {
@@ -73,37 +84,28 @@ const ProductDetail = () => {
     }
   };
 
-  useEffect(() => {
-    checkFavoriteStatus();
-  }, [userId, id]);
-
   const addToFavorites = async () => {
-    if (!userId) {
+    if (userId===null) {
       alert("Debes iniciar sesión para agregar a favoritos");
     } else {
-      const body = { productId: id, userId: userId }; // Crea un objeto con productId y userId
       try {
-        await addFavorite(body);
+        await addFavorite(product.id,userId);
         setIsFavorite(true);
       } catch (error) {
-        console.error('Error al agregar a favoritos:', error);
+        console.error("Error al agregar a favoritos:", error);
       }
     }
   };
 
   const removeFromFavorites = async () => {
     try {
-      await deleteFavorite(id, userId);
+      await deleteFavorite(product.id, userId);
       setIsFavorite(false);
       alert('Producto eliminado de favoritos!');
     } catch (error) {
       console.error('Error al eliminar de favoritos:', error);
     }
   };
-
-  if (!product) {
-    return <div>Cargando...</div>;
-  }
 
   function decrementCartQuantity() {
     // disminuye en 1 la cantidad del producto en el carrito, pero solo si la cantidad actual es mayor que 1.
@@ -118,11 +120,54 @@ const ProductDetail = () => {
       setCartQuantity(cartQuantity + 1);
     }
   }
+
   // Agrego el producto al carrito despachando la acción con el producto y su cantidad.
+  const addProductToCart=async()=>{
+    if (userId === null) {
+      // Almacena en el localStorage
+      const productToAdd = {
+        id:product.id,
+        name:product.name,
+        imageSrc:product.imageSrc,
+        price:product.price,
+        rating:product.rating,
+        stock:product.stock,
+        quantity:cartQuantity};
+      const storedCartProducts = localStorage.getItem("cartProducts");
+      const parsedCartProducts = storedCartProducts
+        ? JSON.parse(storedCartProducts)
+        : [];
+
+      // Buscar si ya existe un producto con el mismo 'id' en el carrito
+      const existingProductIndex = parsedCartProducts.findIndex(
+        (item) => item.id === productToAdd.id
+      );
+
+      if (existingProductIndex !== -1) {
+        // Si el producto ya existe en el carrito, suma la cantidad al producto existente
+        parsedCartProducts[existingProductIndex].quantity +=
+          productToAdd.quantity;
+      } else {
+        // Si no existe, agrega el producto al carrito
+        parsedCartProducts.push(productToAdd);
+      }
+
+      localStorage.setItem("cartProducts", JSON.stringify(parsedCartProducts));
+    } else {
+      try {
+        const body={quantity_prod:cartQuantity}
+        const response = await axios.post(`carts/${userId}/${product.id}`,body)
+        const data= await response.data
+      } catch (error) {
+        console.error("Error en el front al agregar al carrito", error);
+      }
+    }
+  }
+
   const handleAddToCart = () => {
     if (product.stock > 0) {
+      addProductToCart()
       // Si el producto tiene stock, muestra un mensaje de éxito y redirige al usuario a la página del carrito.
-      dispatch(addToCart({ ...product, quantity: cartQuantity }));
       Swal.fire({
         title: "Agregado",
         text: "¡Producto añadido al carrito!",
@@ -130,7 +175,7 @@ const ProductDetail = () => {
         confirmButtonText: "Ok",
         confirmButtonColor: "#28a745",
       });
-      history.push("/cart"); // Redirige a cart para continuar la compra
+      history.push("/carrito"); // Redirige a cart para continuar la compra
     } else {
       Swal.fire({
         // En caso contrario, muestra un mensaje de advertencia.
@@ -147,7 +192,7 @@ const ProductDetail = () => {
     if (isAuthenticated) {
       if (product.stock > 0) {
         dispatch(addToCart({ ...product, quantity: cartQuantity }));
-        history.push(`/compra`); // agrega el producto al carrito y redirige al usuario a la página de pago.
+        history.push(`/compras`); // agrega el producto al carrito y redirige al usuario a la página de pago.
       } else {
         Swal.fire({
           // De lo contrario, muestra un mensaje de advertencia o solicita al usuario que inicie sesión.
@@ -179,7 +224,21 @@ const ProductDetail = () => {
     event.preventDefault();
   };
 
+  useEffect(() => {
+    // Establecer isLoading en falso después de 2 segundos
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
+    <>
+      {isLoading ? (
+        <div className={style.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
     <div className={style.conteiner}>
       <div className={style.contNavCat}>
         <Link to={"/productos"} className={style.volver}>
@@ -206,12 +265,23 @@ const ProductDetail = () => {
           <img src={product.imageSrc} alt={product.imageAlt} />
           <hr />
           <div className={style.detalles2}>
-            <h2>Descripción</h2>
+            <h2>Descripción:</h2>
             <p>{product.description}</p>
+            <h2>Reseñas de los usuarios</h2>
+            <ul className={style.productreviewslist}>
+              {productReviews.map((review) => (
+                <li key={review.id}>
+                  <p>Comentario: {review.comment}</p>
+                  <p>Calificación: {review.rating}</p>
+                  <p>Usuario: {review.userEmail}</p>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
         <div className={style.infoCompra}>
           <h2>${product.price}</h2>
+         
           <div className={style.cantidad}>
             <button onClick={decrementCartQuantity}>-</button>
             <p>{cartQuantity}</p>
@@ -222,33 +292,21 @@ const ProductDetail = () => {
             Agregar al carrito
           </button>
 
-          {isAuthenticated ? (
-            <Link to={`/compra`}>
+          {/* {isAuthenticated ? (
+            <Link to={`/compras`}>
               <button className={style.comprar} onClick={handleBuyNow}>Comprar Ahora</button>
             </Link>
           ) : (
             <button className={style.comprar} onClick={handleCartLogin}>
             Comprar ahora
             </button>
-          )}
+          )} */}
+            </div>
+          </div>
         </div>
-      </div>
-
-      {/* <form>
-                <label htmlFor="comment">Comentario:</label>
-                <textarea id="comment" name="comment" />
-                <button type="submit">Enviar comentario</button>
-            </form>
-            <div className="rating">
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9734;</span>
-                <span className="star">&#9734;</span>
-                <p>Calificación promedio: 3 estrellas</p>
-            </div> */}
-    </div>
-  );
-};
+          )}
+      </>
+    );
+  };
 
 export default ProductDetail;

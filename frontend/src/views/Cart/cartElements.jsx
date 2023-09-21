@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import CartItemCounter from "./cartItemCounter";
+import "./cart.css";
+
 
 const CartElements = ({ updateCartData }) => {
   // Leer los datos del carrito desde el Local Storage en el inicio
   const initialCartData =
     JSON.parse(localStorage.getItem("cartProducts")) || [];
 
+    console.log(initialCartData)
   const [cart, setCart] = useState(initialCartData);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -43,17 +47,76 @@ const CartElements = ({ updateCartData }) => {
   return cart.map((producto) => {
     const totalPrice = producto.price * producto.quantity;
     return (
-      <div className="cartContent" key={producto.id}>
-        <img src={producto.imageSrc} alt="product-card" />
-        <h3 className="name">{producto.name}</h3>
-        <CartItemCounter product={producto} updateQuantity={updateQuantity}/>
-        <h4 className="price">${totalPrice}</h4>
-        <h3
-          className="cart-delete-button"
-          onClick={() => deleteProduct(producto.id)}
-        >
-          ❌
-        </h3>
+      <div className="cartcontainer" key={producto.id}>
+        <h1>Carrito de Compras</h1>
+        <div className="row">
+          <div className="col-md-6">
+            <h2>Productos</h2>
+            <div className="imgsrc">
+              <img src={producto.imageSrc} alt="product-card" />
+              <h3 className="name">{producto.name}</h3>
+              <CartItemCounter
+                product={producto}
+                updateQuantity={updateQuantity}
+              />
+            </div>
+            <div className="cardproducto">
+              {/* <button type="button" className="dismiss">×</button> */}
+              <div className="header">
+                <div className="image">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+                    <g
+                      stroke-linejoin="round"
+                      stroke-linecap="round"
+                      id="SVGRepo_tracerCarrier"
+                    ></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <path
+                        stroke-linejoin="round"
+                        stroke-linecap="round"
+                        stroke-width="1.5"
+                        stroke="#000000"
+                        d="M20 7L9.00004 18L3.99994 13"
+                      ></path>
+                    </g>
+                  </svg>
+                </div>
+                <div className="content"></div>
+              </div>
+              <div className="col-md-6">
+                <span className="title">Resumen</span>
+                <div className="actions">
+                  <li>Subtotal:</li>
+                  <button type="button" className="price">
+                    ${totalPrice}
+                  </button>
+                  {/* <Link to={`/compra`}>
+                <button type="button" className="track">Pagar</button>
+              </Link> */}
+                  <Link to={`/compras`}>
+                    <button className="comprar">Comprar ahora</button>
+                  </Link>
+                  <Link to={`/favorites`}>
+                    <button className="fav">Mis Favoritos</button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button
+                className="cart-delete"
+                onClick={() => deleteProduct(producto.id)}
+              >
+                ❌
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     );
   });

@@ -1,0 +1,195 @@
+  .carrito{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color:#f7f7f7;;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* width: 100%; */
+    /* justify-content: center; */
+  }
+  
+  .contCard {
+    width: 100%;
+    max-width: 800px;
+    color:#333;
+    /* justify-content: center; */
+    /* align-items: center; */
+  }
+  
+  .resumenCompra {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    color:#333;
+  }
+  
+  .titulo {
+    font-size: 1.8rem;
+    margin: 0.5rem 0;
+    color: #1e1e1e;
+  }
+  
+  .cantidad {
+    font-size: 1.4rem;
+    margin: 0.5rem 0;
+    color:#007bff;
+  }
+  
+  .total {
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+    color: red;
+  }
+  
+  .comprar {
+    width: 100%;
+    max-width: 150px;
+    height: 3rem;
+    background-color:#007bff;
+    color:#fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.4s, transform 0.2s, box-shadow 0.3s;
+  }
+  
+  .comprar:hover {
+    background-color:#0056b3;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* color: #4b4747; */
+    /* cursor: pointer; */
+    transform: translateY(-2px);
+  }
+  
+  .comprar:active {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
+    transform: translateY(1px);
+  }
+  
+  @media screen and (min-width: 768px) {
+    .carrito {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  
+    .contCard {
+      width: 70%;
+    }
+  
+    .resumenCompra {
+      width: 30%;
+      max-width: none;
+    }
+  }
+
+
+
+
+  /* .carrito{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: azure;
+  }
+  
+  .contCard {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    color: black;
+  }
+  
+  .resumenCompra {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    color: black;
+  }
+  
+  .titulo {
+    font-size: 2rem;
+    margin: 0.5rem;
+    color: rgb(23, 23, 24);
+  }
+  
+  .cantidad {
+    font-size: 1.5rem;
+    margin: 0.5rem;
+    color: blue;
+  }
+  
+  .total {
+    font-size: 1.5rem;
+    margin: 0.5rem;
+    color: red;
+  }
+  
+  .comprar {
+    width: 10rem;
+    height: 2rem;
+    background-color: rgb(13, 181, 21);
+    color: rgb(23, 23, 24);
+    border: none;
+    border-radius: 0.7rem;
+    transition: 0.4s;
+  }
+  
+  .comprar:hover {
+    background-color: #26ec0ce5;
+    box-shadow: 0 2px 0 2px #303a308d;
+    color: #4b4747;
+    cursor: pointer;
+    transform: translateY(-2px);
+  }
+  
+  .comprar:active {
+    box-shadow: 0 0 0 -1px #1111128d;
+    transform: translateY(1px);
+  }
+
+  .botones1 {
+    width: 10rem;
+    height: 2rem;
+    background-color: rgb(13, 181, 21);
+    color: rgb(23, 23, 24);
+    border: none;
+    border-radius: 0.7rem;
+    transition: 0.4s;
+  }
+  
+  .botones1:hover {
+    background-color: #26ec0ce5;
+    box-shadow: 0 2px 0 2px #303a308d;
+    color: #4b4747;
+    cursor: pointer;
+    transform: translateY(-2px);
+  }
+  
+  .botones1:active {
+    box-shadow: 0 0 0 -1px #1111128d;
+    transform: translateY(1px);
+  }
+  
+  @media screen and (min-width: 768px) {
+    .carrito {
+      flex-direction: row;
+    }
+  
+    .contCard {
+      width: 70%;
+    }
+  
+    .resumenCompra {
+      width: 30%;
+    }
+  } */

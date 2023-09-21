@@ -1,24 +1,20 @@
 :root {
-  --main-default: #c00606;
-  --main-black-300: #bbbbbb;
-  --gray-1: #310d0d;
-  --gray-2: #4f4f4f;
-  --gray-3: #828282;
-  --gray-4: #bdbdbd;
-  --gray-5: #0c0c0c;
-  --gray-6: #f2f2f2;
-  --transparent-success-16: rgba(238, 123, 123, 0.966);
-  --success-400: #222423;
-  --basic-200: #f7f9fc;
-  --basic-300: #030303;
-  --basic-400: #e6410f;
-  --basic-600: #8f9bb3;
-  --basic-700: #e8edf8f3;
-  --danger-600: #db4f2c;
-  --blue-link: #155b83;
-  --menuBackground: #faf9f9;
-  --text-color-accent-link: rgb(69, 91, 156);
+  --primary-color: #c5588f; /* rosa fuerte */
+  --secondary-color: #00ffff; /* azul claro */
+  --tertiary-color: #ffff00; /* amarillo */
+  --cuartiary-color: rgb(192, 197, 199); /* gris */
+  --button-pago: rgb(13, 181, 21); /*verde*/
+
+  --background-color: #000000; /* negro */
+  --text-color: #ffffff; /* blanco */
 }
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Consolas', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -167,7 +163,7 @@ a {
   display: flex;
   flex-direction: column;
   padding: 40px 16px 88px;
-  background: #fdfbfbef;
+  /* background: #fdfbfbef; */
   gap: 16px;
 }
 @media screen and (min-width: 768px) {

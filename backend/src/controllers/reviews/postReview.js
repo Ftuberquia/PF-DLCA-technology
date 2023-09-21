@@ -1,7 +1,7 @@
 const { UserProductReviews, Users, Products } = require("../../db")
 
-const postReviews = async (userId, productId, comment, rating) => {
-    if (!rating || !comment || !userId) {
+const postReviews = async (userId, productId, comment, rating, userEmail) => {
+    if (!rating || !comment || !userId || !userEmail) {
       throw Error('Todos los campos son obligatorios');
     }
   
@@ -22,6 +22,7 @@ const postReviews = async (userId, productId, comment, rating) => {
         productId,
         comment,
         rating,
+        userEmail
       });
 
       // Obtenemos todos los reviews asociados al producto
@@ -40,9 +41,13 @@ const postReviews = async (userId, productId, comment, rating) => {
 
       return newReview;
     } catch (error) {
+      if (error.name === 'SequelizeUniqueConstraintError') {
+        throw Error('Ya hiciste la reseña de este producto!');
+      } else {
         console.error('Error al insertar en la base de datos:', error);
       throw error; // Manejar errores adecuadamente en tu aplicación
-    }
+     } 
+  }
   };
 
 module.exports = postReviews

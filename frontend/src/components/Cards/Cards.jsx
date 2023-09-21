@@ -11,8 +11,8 @@ const Cards = (props) => {
              {products.length === 0 ? (
         <h1 className={style.noCards}>No hay productos con esas características</h1>
       ) : (
-        products?.map(({ id, name, imageSrc, price, rating, stock, disabled }) => {
-          if (!disabled) {
+        products?.map(({ id, name, imageSrc, price, rating, stock, isActive }) => {
+          if (isActive===true) {
             return (
               <Card
                 key={id}
@@ -22,7 +22,6 @@ const Cards = (props) => {
                 price={price}
                 rating={rating}
                 stock={stock}
-                quantity={1}
               />
             );
           }

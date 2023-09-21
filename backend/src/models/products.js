@@ -9,7 +9,7 @@ const Products = (sequelize) => {
         },
         href: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             defaultValue:'#',
         },
         imageSrc: {
@@ -18,7 +18,8 @@ const Products = (sequelize) => {
         },
         imageAlt: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true,
+            defaultValue: "algo"
         },
         price: {
             type: DataTypes.FLOAT,
@@ -26,7 +27,7 @@ const Products = (sequelize) => {
         },
         stock: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         brand: {
             type: DataTypes.STRING,

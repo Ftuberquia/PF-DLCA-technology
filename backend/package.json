@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "test": "mocha -w ./tests/**/*.spec.js"
   },
   "author": "Henry",
@@ -14,17 +14,20 @@
     "npm": ">=6.14.6"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^2.3.0",
+    "@stripe/stripe-js": "^2.1.5",
     "axios": "^1.4.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.18.2",
+    "moment": "^2.29.4",
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.4",
     "pg": "^8.5.1",
     "sequelize": "^6.3.5",
-    "stripe": "^13.4.0",
+    "stripe": "^13.5.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

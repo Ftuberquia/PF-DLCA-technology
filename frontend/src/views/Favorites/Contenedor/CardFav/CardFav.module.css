@@ -1,0 +1,71 @@
+.card {
+    border: 2px solid #92959fbe;
+    border-radius: 0.8rem;
+    width: 14rem;
+    height: 18rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: inset 0 -2em 2em rgba(0, 0, 0, 0.094);
+    transition: 0.2s ease;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  
+  .card:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 1rem rgb(108, 108, 108);
+    background-color: rgba(208, 208, 208, 0.137);
+  }
+  
+  .image {
+    background-color: white;
+    border-bottom: 1px solid #92959f87;
+    width: 14rem;
+    height: 8rem;
+    margin: 0.2rem;
+    object-fit: contain;
+  }
+  
+  .detailCard {
+    flex-grow: 1;
+    width: 100%;
+    color: var(--text-color);
+  }
+  
+  .detailCard h1 {
+    font-size: 1.9rem;
+    font-weight: 500;
+    text-align: center;
+    margin: 2px;
+    color: red;
+  }
+  
+  .detailCard h3 {
+    
+    font-size: 1.1rem;
+    font-weight: 400;
+    text-align: center;
+    margin: 10px;
+    color: var(--text-color);
+  }
+  
+  .fav {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: none;
+  }
+  
+  .card:hover .fav {
+    display: block;
+  }
+  
+  .fav:hover {
+    display: block;
+    transform: scale(1.02);
+  }

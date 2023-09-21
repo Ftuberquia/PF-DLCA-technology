@@ -1,19 +1,26 @@
 .navbar {
 	padding: 16px 16px 16px;
-	margin-bottom: 25px;
+	margin-bottom: 27px;
 	display: flex;
 	flex-wrap: wrap;
-	background-color: white;
+	background-color: var(--background-color);
 	justify-content: space-between;
 	align-items: center;
-	border-bottom: 5px solid var(--success-500);
+	bottom: 20px;
+	border-bottom: 3px solid var(--tertiary-color);
   }
   
   .navbar span {
-	font-size: 22px;
-	color: rgb(65, 60, 60);
+	font-size: 27px;
+	color: var(--secondary-color);
 	display: inline-block;
-	margin: 10px;
+	margin-bottom: 10px;
+	text-shadow: 2px 2px 4px var(--secondary-color);
+  }
+
+.navbar span:hover {
+	transform: translateY(-10px);
+	text-shadow: 0px 10px 10px 1px var(--secondary-color); 
   }
 
   navbar.name {
@@ -22,25 +29,29 @@
 	box-shadow: 5px;
 	color: rgb(221, 26, 26);
 	font-weight: 15px;
-	border-color: azure;
+	border-color: var(--secondary-color);
   }
   
   .navbar .buttons {
 	margin-left: auto;
 	display: flex;
 	gap: 8px;
-	height: 18px;
+	height: 32px;
+	color:var(--secondary-color);
 	border-radius: 10px;
+	text-shadow: var(--secondary-color);
   }
   
   .navbar .buttons a img {
 	height: 100%;
-	color:rgb(66, 61, 61);
+	color:var(--secondary-color);
+	margin-bottom: 10rem;
+	text-shadow: 0 10px 10px;
   }
   
   .navbar .buttons .cart {
 	position: relative;
-	color:rgb(34, 33, 33);
+	color:var(--secondary-color);
   }
   
   .navbar .buttons .cart span {
@@ -48,11 +59,47 @@
 	top: 18px;
 	right: -6px;
 	font-size: 22px;
-	color: rgb(44, 42, 42);
-	background-color: var(--main-default);
+	color: var(--text-color);
+	color: var(--secondary-color);
 	padding: 3px 5px;
 	border-radius: 50%;
   }
+
+  .icons {
+	display: flex;
+	justify-content: space-between;
+  }
+  
+  .icons img {
+	width: 40px;
+	height: 40px;
+	filter: invert(100%);
+	margin-right: 10px;
+  }
+
+  .iconuser img {
+	width: 40px;
+	height: 40px;
+	filter: invert(100%);
+	margin-right: 30px;
+  }
+
+  .totals {
+	position: absolute;
+	top: 20px; /* adjust the value as needed */
+	right: 0;
+	transform: translate(50%, -50%);
+  }
+  
+  .totals span {
+	font-size: 18px;
+	color: var(--secondary-color);
+	display: wrap;
+	margin: 25px;
+	position: relative;
+	top: -7rem; /* adjust the value as needed */
+  }
+
   .buyContainer{
 	display: grid;
 	text-align: center;
@@ -85,7 +132,7 @@
 	  order: 3;
 	  gap: 24px;
 	  height: 16px;
-	  color:rgb(24, 23, 23);
+	  color:var(--text-color);
 	}
   
 	.navbar .buttons .cart {
@@ -98,4 +145,38 @@
 	  position: unset;
 	  font-size: 22px;
 	}
+  }
+
+  .dropdown {
+	position: relative;
+  }
+  
+  .dropdownToggle {
+	background: none;
+	border: none;
+	cursor: pointer;
+  }
+  
+  .dropdownMenu {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background-color: var(--tertiary-color);
+	border: 1px solid var(--secondary-color);
+	border-radius: 4px;
+	padding: 8px;
+	z-index: 1;
+	width: 8rem;
+	text-align: center;
+  }
+  
+  .dropdownItem {
+	display: block;
+	padding: 8px;
+	text-decoration: none;
+	color: #333;
+  }
+  
+  .dropdownItem:hover {
+	background-color: #ddd;
   }

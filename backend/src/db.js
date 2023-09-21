@@ -44,12 +44,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 
 //DESTRUCTURING DE MODEL Y CREACION DE RELACIONES:
-const { Users, Products, Orders, Cart, Brand, Category, Tags, Subcategory, UserProductReviews, CartProduct } = sequelize.models;
+const { Users, Products, Cart, Brand, Category, Tags, Subcategory, UserProductReviews, CartProduct, PurchasedProduct, Order, OrderProduct } = sequelize.models;
 // Aca vendrian las relaciones
-
-// Relación de Users:
-Users.hasMany(Orders, {foreignKey:'userOrderId', as: 'user'});	//hasMany 1 A con muchos B, el as se usa en solicitudes a la DB
-Orders.belongsTo(Users, {foreignKey:'userOrderId', as: 'orders'});
 
 //Relacion usuario con carrito
 Users.hasOne(Cart, {foreignKey: "userId"});
@@ -65,14 +61,37 @@ Cart.belongsToMany(Products, {
   
   Products.belongsToMany(Cart, {
 	through: CartProduct, // Usa el modelo CartProduct como tabla intermedia
-	foreignKey: 'cartId',
-	otherKey: 'userId',
+	foreignKey: 'productId',
+	otherKey: 'cartId',
 	as: 'productsinCart',
   });
 
-//tabla intermedia para hacer Un usuario puede tener muchas compras, y cada compra pertenece a un usuario.
-Users.hasMany(Orders, { foreignKey: "userId", as: "orders" });
-Orders.belongsTo(Users, { foreignKey: "userId", as: "user" });
+// Relaciones con el modelo Order
+Users.hasMany(Order, { foreignKey: 'userId', as: 'orders' });
+Order.belongsTo(Users, { foreignKey: 'userId', as: 'user' });
+
+// Relación entre Order y PurchasedProduct
+Order.hasMany(PurchasedProduct, { foreignKey: 'orderId', as: 'purchasedProducts' });
+PurchasedProduct.belongsTo(Order, { foreignKey: 'orderId', as: 'order' });
+
+// Relaciones con PurchasedProduct
+Users.hasMany(PurchasedProduct, { foreignKey: 'userId' });
+PurchasedProduct.belongsTo(Users, { foreignKey: 'userId' });
+
+Products.hasMany(PurchasedProduct, { foreignKey: 'productId' });
+PurchasedProduct.belongsTo(Products, { foreignKey: 'productId' });
+
+// Relación muchos a muchos entre Order y Product usando OrderProduct como tabla intermedia
+Order.belongsToMany(Products, {
+	through: OrderProduct,
+	foreignKey: 'orderId',
+  });
+  
+  Products.belongsToMany(Order, {
+	through: OrderProduct,
+	foreignKey: 'productId',
+  });
+
 
 //creo una tabla intermedia para hacer los favoritos
 Products.belongsToMany(Users, { through: 'favorites', as: 'users', foreignKey: 'productId' });
@@ -109,6 +128,17 @@ Users.belongsToMany(Products, {
 	as: 'reviewsByUsers',
   });
 
+  PurchasedProduct.hasMany(UserProductReviews, {
+	foreignKey: 'productId',
+	sourceKey: 'id',
+	as: 'reviews',
+  });
+
+  // Relación de UserProductReviews con Products
+UserProductReviews.belongsTo(Products, {
+	foreignKey: 'productId',
+	as: 'product',
+  });
 // Users.hasMany(Review, { foreignKey: 'userId', as: 'reviews' });
 // Review.belongsTo(Users, { foreignKey: 'userId' });
 
@@ -126,6 +156,3 @@ module.exports = {
 ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
 conn: sequelize, // para importar la conexión { conn } = require('./db.js');
 };
-
-
-//Preguntar como establecer la restricción de que un usuario solo pueda hacer un review a un producto, como agregar una restricción UNIQUE en la tabla intermedia entre "users" y "products" en la columna "userId" y "productId"

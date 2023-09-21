@@ -12,7 +12,6 @@ const Tags = (sequelize) => {
 
         name : {
             type: DataTypes.STRING,
-            allowNull : false,
         }
 
     }, {

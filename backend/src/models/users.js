@@ -1,4 +1,4 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, Sequelize } = require("sequelize");
 
 const Users = (sequelize) => {
   sequelize.define(
@@ -13,16 +13,17 @@ const Users = (sequelize) => {
       first_name: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: "nombre"
       },
 
       last_name: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: "apellido"
       },
 
       username: {
         type: DataTypes.TEXT,
-        allowNull: false,
         unique: true,
       },
 
@@ -63,6 +64,12 @@ const Users = (sequelize) => {
         allowNull: false,
         defaultValue: true, // Puedes establecer el valor predeterminado como "true" (activo)
       },
+
+      createdAt:{
+        type: DataTypes.DATEONLY,
+        defaultValue: DataTypes.NOW,
+        allowNull: false
+      }
     },
     {
       tableName: "users",
