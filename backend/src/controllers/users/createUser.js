@@ -9,7 +9,7 @@ const createUser = async (req, res) => {
       // Verifica si el usuario ya existe en la base de datos
       const user = await Users.findByPk(id);
       if (user) {
-        return res.status(201).json({ message: 'El usuario ya existe en la base de datos' });
+        return res.status(201).json({ message: 'El usuario ya existe en la base de datos', user });
       }else{
         // Crea el nuevo usuario en la base de datos
         const newUser = await Users.create({
