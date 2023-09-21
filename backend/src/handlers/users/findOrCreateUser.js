@@ -1,4 +1,4 @@
-const findOrCreateUserController = require("../../controllers/Users/findOrCreateUserController");
+const findOrCreateUserController = require("../../controllers/users/findOrCreateUserController");
 
 const findOrCreateUserHandler = async (req, res) => {
 

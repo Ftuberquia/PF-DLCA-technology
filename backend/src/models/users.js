@@ -13,10 +13,13 @@ const Users = (sequelize) => {
       first_name: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: "nombre"
       },
 
       last_name: {
         type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "apellido"
       },
 
       username: {

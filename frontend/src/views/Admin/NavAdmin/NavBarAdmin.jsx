@@ -19,9 +19,9 @@ function NavBarAdmin () {
                 <Link to="/admin/productos" className={styles.listItem}>
                     <span className={styles.itemTitle} >Productos</span>
                 </Link>
-                <Link to="/admin/compras" className={styles.listItem}>
+                {/* <Link to="/admin/compras" className={styles.listItem}>
                     <span className={styles.itemTitle} >Compras</span>
-                </Link>
+                </Link> */}
             </div>
         </div> 
     )

@@ -69,8 +69,13 @@ const NavBar = () => {
       }      
       // Realiza la solicitud al servidor para guardar los datos del usuario
     axios.post("http://localhost:3001/users/", userData).then((response) => {
-        if (response.status === 201) {
-        console.log("Usuario creado con éxito en el servidor");
+        if (response.status === 200) {
+        console.log("El usuario ingreso con exito");
+          const isActive=response.data.user.isActive
+          if(isActive===false){
+            alert('Tu cuenta esta bloqueada')
+            handleLogOut()
+          }
 
           // NO DESCOMENTAR LAS LINEAS ABAJO! ES LA FUNCIONALIDAD DEL CORREO, PARA NO GASTAR LA CUOTA
           // GRATIS DE CORREO QUE TENEMOS!!!!!!

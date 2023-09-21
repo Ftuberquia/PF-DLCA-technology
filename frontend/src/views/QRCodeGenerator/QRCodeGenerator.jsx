@@ -4,9 +4,10 @@ import QRCode from "qrcode.react";
 import QRCodeLink from "qrcode";
 
 import style from "./QRCodeGenerator.module.css";
+//import imagen from "./imagen/qrcode.png"
 
- //https://pf-dlca-technology-3davhwpi3-ftuberquia.vercel.app/productos
-//"https://www.instagram.com/dlcatecnology/?igshid=MzRlODBiNWFlZA%3D%3D"
+ // https://pf-dlca-technology-3davhwpi3-ftuberquia.vercel.app/productos
+//  https://www.instagram.com/dlcatecnology/?igshid=MzRlODBiNWFlZA%3D%3D
   
 
 function  QRCodeGenerator() {
@@ -34,7 +35,7 @@ function handleGenerate(link_url){
      
       <QRCode 
        value={link}
-
+      
       />
 
       <input
@@ -45,7 +46,11 @@ function handleGenerate(link_url){
 
       />
       
-      <a href={qrcodeLink} download={`qrcode.png`}>Bajar QrCode</a>
+      <a href={qrcodeLink} download={`qrcode.png`}>Descargar QrCode</a>
+      <div>
+
+      {/* <img src={imagen} alt="qrcode" /> */}
+      </div>
 
     </div>
   );
