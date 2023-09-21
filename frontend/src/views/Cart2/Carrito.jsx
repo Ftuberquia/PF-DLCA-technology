@@ -18,6 +18,7 @@ export default function Carrito() {
   const [ userId, setUserId ] = useState(null);
   const [ total, setTotal ]=useState(0)
   const [ cantidad, setCantidad ]=useState(0)
+  const [ stock, setStock]=useState(true)
 
   const dispatch = useDispatch()
 
@@ -130,6 +131,12 @@ export default function Carrito() {
     getProductsInCart();
   }, [userId]);
 
+  function sinStock(stockP){
+    if(stockP===false){
+      setStock(false)
+    }
+  }
+
   function comprarHandler(){
     const info={
       productsIdinCart:productsIdinCart.map((p)=>p.productId),  /// Esto tiene un array con los distintos ID. Ejemplo: [1,8,19]
@@ -148,13 +155,13 @@ export default function Carrito() {
         {productsIdinCart?(
             <div className={styles.carrito}>
                 <div className={styles.contCard}>
-                    <ProdCarrito userId={userId} productsCart={productsIdinCart} deleteProd={deleteProd} increaseQuantity={increaseQuantity} decreaseQuantity={decreaseQuantity} getLocalStorage={getLocalStorage}/>
+                    <ProdCarrito userId={userId} productsCart={productsIdinCart} deleteProd={deleteProd} increaseQuantity={increaseQuantity} decreaseQuantity={decreaseQuantity} getLocalStorage={getLocalStorage} sinStock={sinStock}/>
                 </div>
                 <div className={styles.resumenCompra}>
                     <h1 className={styles.titulo}>Resumen Compra</h1>
                     <h2 className={styles.cantidad}>Productos: {cantidad}</h2>
                     <h2 className={styles.total}>Total a Pagar: ${total}</h2>
-                    {isAuthenticated?(<button className={styles.comprar} onClick={comprarHandler}>Comprar</button>):(<h1>Debes ingresar para poder comprar</h1>)}
+                    {isAuthenticated?(stock===true?(<button className={styles.comprar} onClick={comprarHandler}>Comprar</button>):(<h1>Tienes productos fuera de stock</h1>)):(<h1>Debes ingresar para poder comprar</h1>)}
                 </div>
             </div>
         ) : (

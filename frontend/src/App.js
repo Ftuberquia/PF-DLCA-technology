@@ -62,10 +62,7 @@ const App = () => {
       );
      };
   }
-  const isActive = cache.get("userActive")
-  //  if( isActive === false ){
-  //    return <Redirect to="/about"/>
-  //  }else{
+  
     return (
       <Router>
         <NavBar />
@@ -83,7 +80,6 @@ const App = () => {
           <Route path="/privacy" component={Privacy} />
           <Route path="/carrito" component={Carrito}/>
           <Route path="/cart" component={Cart} />
-          {/* <Route path="/login" component={UserProfileView} /> */}
           <Route path="/aboutUs" component={AboutUs} />
           <Route path="/admin" component={AdminLayout} />
           <Route path="/misCompras" component={MisComprasView} />
