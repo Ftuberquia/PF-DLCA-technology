@@ -21,7 +21,7 @@ const getProductsByUser = async (userId) => {
   
       const productsWithReviews = purchasedProducts.map((product) => ({
         ...product.toJSON(),
-        hasReviews: product.reviews && product.reviews.length > 0
+        hasReviews: product.reviewsByUsers
       }));
   
       return productsWithReviews;
