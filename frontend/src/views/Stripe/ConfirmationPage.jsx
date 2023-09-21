@@ -51,10 +51,10 @@ const ConfirmationPage = () => {
   async function obtenerProd(ids){
     try {
       for(let i=0;i<ids.length;i++){
-        let id=ids[i]
+        if(stocks!==null){let id=ids[i]
         let response = await axios.get(`/products/${id}`)
         setStocks((prevStocks)=>[...prevStocks, response.data.stock])
-        setNombres((prevNombres) => [response.data.name, ...prevNombres])
+        setNombres((prevNombres) => [response.data.name, ...prevNombres])}
       }
     } catch (error) {
       console.log(error)
@@ -64,16 +64,19 @@ const ConfirmationPage = () => {
   async function cambiarStock(ids){
     try {
       for(let i=0;i<ids.length;i++){
+        if(stocks!==null){
         let id=ids[i]
         console.log('stoks', stocks[i] ,'q', quantities[i])
-        let newStock=stocks[i]-quantities[i]
+        let newStock= stocks[i]-quantities[i]
         console.log('newStock',newStock)
-        let body={
-          stock:newStock
+        if(newStock !== null){
+          let body={
+            stock:newStock
+          }
+          let response = await axios.put(`/products/${id}`,body)
+          console.log(response.status)
         }
-        let response = await axios.put(`/products/${id}`,body)
-        console.log(response.status)
-      }
+      }}
     } catch (error) {
       console.log(error)
     }
