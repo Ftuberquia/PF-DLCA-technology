@@ -35,7 +35,7 @@ function handleGenerate(link_url){
      
       <QRCode 
        value={link}
-
+      
       />
 
       <input
@@ -46,7 +46,7 @@ function handleGenerate(link_url){
 
       />
       
-      <a href={qrcodeLink} download={`qrcode.png`}>Bajar QrCode</a>
+      <a href={qrcodeLink} download={`qrcode.png`}>Descargar QrCode</a>
       <div>
 
       {/* <img src={imagen} alt="qrcode" /> */}
