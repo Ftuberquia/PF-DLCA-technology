@@ -59,7 +59,9 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
     const totalQuantityProducts=infoCarrito.totalQuantityProducts
 
       try {
+        const { id } = paymentMethod;
         const { data } = await axios.post("/purchase", {
+          id: id,
           userId,
           productIds,
           quantities,
