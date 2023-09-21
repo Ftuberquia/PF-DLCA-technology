@@ -70,7 +70,7 @@ const CheckoutForm = ({ userId, productId, quantity, total_price }) => {
           priceProductTotal,
           amount: totalPrice,
           currency: "USD",
-          return_url: "/confirmation",
+          return_url: "https://pf-dlca-technology-production.up.railway.app/confirmation",
           payment_method: "pm_card_visa",
         })
         
