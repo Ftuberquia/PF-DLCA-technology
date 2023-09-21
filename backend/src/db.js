@@ -128,6 +128,11 @@ Users.belongsToMany(Products, {
 	as: 'reviewsByUsers',
   });
 
+  PurchasedProduct.hasMany(UserProductReviews, {
+	foreignKey: 'productId',
+	sourceKey: 'id',
+	as: 'reviews',
+  });
 // Users.hasMany(Review, { foreignKey: 'userId', as: 'reviews' });
 // Review.belongsTo(Users, { foreignKey: 'userId' });
 

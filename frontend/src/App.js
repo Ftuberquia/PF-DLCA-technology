@@ -33,6 +33,7 @@ import QRCodeGenerator from "./views/QRCodeGenerator/QRCodeGenerator";
 import Carrito from "./views/Cart2/Carrito";
 import {cache} from "./components/NavBar/NavBar"
 import QRCode from "qrcode.react";
+import AgregarResena from "./views/AgregarResena/AgregarResena";
 // import LoginPopup from "./components/LoginPopup";
 
 
@@ -83,6 +84,7 @@ const App = () => {
           <Route path="/aboutUs" component={AboutUs} />
           <Route path="/admin" component={AdminLayout} />
           <Route path="/misCompras" component={MisComprasView} />
+          <Route path="/agregarResena" component={AgregarResena} />
           <Route path="/qrcodegenerator" component={ QRCodeGenerator} />
           <Route path="/users" component={UserProfile} />
           <Route path="/about" component={About} />
