@@ -37,6 +37,7 @@ const UserProductReviews = (sequelize) => {
       },
     ],
   });
+
 };
 
 module.exports = UserProductReviews;
