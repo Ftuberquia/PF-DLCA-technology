@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import emailjs from "@emailjs/browser";
-import style from "./NavBar.module.css";
 import { LocalStorageCache } from "@auth0/auth0-react";
 import { saveUser } from "../../redux/actions";
 import TotalItems from "../../views/Cart/TotalItems";
