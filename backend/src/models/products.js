@@ -27,7 +27,7 @@ const Products = (sequelize) => {
         },
         stock: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         brand: {
             type: DataTypes.STRING,

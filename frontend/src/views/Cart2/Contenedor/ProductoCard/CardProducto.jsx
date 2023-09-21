@@ -131,12 +131,6 @@ const CardProducto = (props) => {
             await axios.delete(`carts/${productId}/${userId}`)
             setProductosLocal(productosLocal.filter(e=>e.id!==productId))
             deleteProd(productId)
-            // productos.map((producto)=>{
-            //   if(producto?.isActive===false||producto?.stock===0){
-            //     sinStock(false)
-            //   }else{
-            //     sinStock(true)
-            //   }})
         } catch (error) {
             console.log(error);
         }}else{
@@ -148,7 +142,7 @@ const CardProducto = (props) => {
 
     return (
         <div className={style.product}>
-            {productosLocal.map((producto) => (
+            {productosLocal?.map((producto) => (
                 <div key={producto.id} className={style.card}>
                     <img className={style.imagen} src={producto.imagen} alt={producto.name}/>
                     <h3 className={style.nombre}>{producto.nombre}</h3>

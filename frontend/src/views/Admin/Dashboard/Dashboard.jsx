@@ -13,9 +13,9 @@ function Dashboard () {
             <div className={style.content1}>
                 <CantUsuarios/>
             </div>
-            <div className={style.content4}>
+            {/* <div className={style.content4}>
                 <CantCompras/>
-            </div>
+            </div> */}
             <div className={style.content}>
                 <TopProducts/>
             </div>
