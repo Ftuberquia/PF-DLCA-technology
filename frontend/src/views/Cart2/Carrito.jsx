@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import Swal from "sweetalert2"; // Importa SweetAlert
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 import ProdCarrito from "./Contenedor/ContenedorProductos";
 
 import styles from './Carrito.module.css'
@@ -66,11 +66,23 @@ export default function Carrito() {
 
   function deleteProd(idProd){
     if(userId!==null){
-        setProductsIdinCart(productsIdinCart.filter(e=>e.productId!==idProd))
-        getProductsInCart()
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Esta acción eliminará el producto de tu carrito",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setProductsIdinCart(productsIdinCart.filter(e=>e.productId!==idProd))
+          getProductsInCart()
+          Swal.fire("Eliminado", "El producto ha sido eliminado de tu carrito", "success");
+        }
+      });
     }else{
-        setProductsIdinCart(productsIdinCart.filter(e=>e.id!==idProd))
-        getProductsInCart()
+      setProductsIdinCart(productsIdinCart.filter(e=>e.id!==idProd))
+      getProductsInCart()
     }
   }
 
@@ -181,6 +193,16 @@ export default function Carrito() {
                 >
                 Comprar
                 </button>
+                <div>
+            <Link to="/favorites">
+              <button className={styles.botones1}>Favoritos</button>
+            </Link>
+          </div>
+          <div>
+            <Link to="/productos">
+              <button className={styles.botones1}>Volver a Productos</button>
+            </Link>
+          </div>
             </div>
         )}
     </>

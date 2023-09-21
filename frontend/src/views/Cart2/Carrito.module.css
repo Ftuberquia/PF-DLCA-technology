@@ -64,6 +64,29 @@
     box-shadow: 0 0 0 -1px #1111128d;
     transform: translateY(1px);
   }
+
+  .botones1 {
+    width: 10rem;
+    height: 2rem;
+    background-color: rgb(13, 181, 21);
+    color: rgb(23, 23, 24);
+    border: none;
+    border-radius: 0.7rem;
+    transition: 0.4s;
+  }
+  
+  .botones1:hover {
+    background-color: #26ec0ce5;
+    box-shadow: 0 2px 0 2px #303a308d;
+    color: #4b4747;
+    cursor: pointer;
+    transform: translateY(-2px);
+  }
+  
+  .botones1:active {
+    box-shadow: 0 0 0 -1px #1111128d;
+    transform: translateY(1px);
+  }
   
   @media screen and (min-width: 768px) {
     .carrito {

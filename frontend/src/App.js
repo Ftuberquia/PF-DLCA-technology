@@ -33,7 +33,7 @@ import QRCodeGenerator from "./views/QRCodeGenerator/QRCodeGenerator";
 import Carrito from "./views/Cart2/Carrito";
 import {cache} from "./components/NavBar/NavBar"
 import QRCode from "qrcode.react";
-// import LoginPopup from "./components/LoginPopup";
+
 
 
 //correo admin: dlcareact@gmail.com
@@ -88,9 +88,7 @@ const App = () => {
           <Route path="/about" component={About} />
           <Route path="/login" component={Profile} />
           {/* <Profile /> */}
-          {/* <Route exact path="/">
-          <LoginPopup />
-          </Route> */}
+          
         </Switch>
         <Route path="/" component={ChatBot} />
         <Footer />

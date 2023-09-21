@@ -5,12 +5,14 @@ import twitterIcon from "../../img/twitter.svg";
 import pinIcon from "../../img/pin.svg";
 import mailIcon from "../../img/mail.svg";
 import phoneIcon from "../../img/phone.svg";
+import QRCodeGenerator from "../../views/QRCodeGenerator/QRCodeGenerator";
 
 const Footer = () => {
   return (
     <footer>
       <div className={style.topFooter}>
-        <div>
+        <div className={style.qr}>
+        {/* <QRCodeGenerator /> */}
           <div className={style.socialIcons}>
             <a href="https://www.instagram.com/dlcatecnology/">
               <img src={instagramIcon} alt="Instagram" />
